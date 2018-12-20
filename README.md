@@ -11,7 +11,7 @@
 
 ### 注意
 * 弹幕使用的我的另一个项目[NSDanmaku](https://github.com/xiaoyaocz/NSDanmaku)，需要单独引用
-* 删除了部分代码可能Win10 Mobile无法兼容
+* 该项目现在不能很好兼容Win10 Mobile(~~额..应该没人用了吧~~)
 
 ### 引用及参考
 * [You-get](https://github.com/soimort/you-get)
@@ -19,4 +19,4 @@
 * [VLC.MediaElement](https://github.com/kakone/VLC.MediaElement)
 * [biliroku](https://github.com/zyzsdy/biliroku)
 * [bilibili-service](https://github.com/WhiteBlue/bilibili-service)
-
+* [弹弹Play](https://api.acplay.net/swagger/ui/index)
