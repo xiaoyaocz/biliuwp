@@ -510,6 +510,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
+            
             <PivotItem Margin="0">
                 <PivotItem.Header>
                     <TextBlock FontSize="16">下载/通知</TextBlock>

@@ -187,7 +187,31 @@ namespace BiliBili3
             }
             return color;
         }
+        public static Color ToColor2(this string obj)
+        {
+            obj = obj.Replace("#", "");
 
+            Color color = new Color();
+            if (obj.Length == 4)
+            {
+                obj = "00" + obj;
+            }
+            if (obj.Length == 6)
+            {
+                color.R = byte.Parse(obj.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+                color.G = byte.Parse(obj.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+                color.B = byte.Parse(obj.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+                color.A = 255;
+            }
+            if (obj.Length == 8)
+            {
+                color.R = byte.Parse(obj.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+                color.G = byte.Parse(obj.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+                color.B = byte.Parse(obj.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+                color.A = byte.Parse(obj.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+            }
+            return color;
+        }
         public static string DecodeHTML(this string obj)
         {
             obj = System.Net.WebUtility.HtmlDecode(obj);

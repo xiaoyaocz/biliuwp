@@ -43,14 +43,14 @@ namespace BiliBili3
         {
             this.InitializeComponent();
             var bg = new Color() { R = 233, G = 233, B = 233 };
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                // StatusBar.GetForCurrentView().HideAsync();
-                StatusBar statusBar = StatusBar.GetForCurrentView();
-                statusBar.ForegroundColor = Colors.Black;
-                statusBar.BackgroundColor = bg;
-                statusBar.BackgroundOpacity = 100;
-            }
+            //if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            //{
+            //    // StatusBar.GetForCurrentView().HideAsync();
+            //    StatusBar statusBar = StatusBar.GetForCurrentView();
+            //    statusBar.ForegroundColor = Colors.Black;
+            //    statusBar.BackgroundColor = bg;
+            //    statusBar.BackgroundOpacity = 100;
+            //}
 
             var titleBar = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().TitleBar;
             titleBar.BackgroundColor = bg;
@@ -203,17 +203,17 @@ namespace BiliBili3
                         await bit.SetSourceAsync(buff.AsStream().AsRandomAccessStream());
                         if (!pc)
                         {
-                            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-                            {
-                                var applicationView = ApplicationView.GetForCurrentView();
-                                applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+                            //if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                            //{
+                            //    var applicationView = ApplicationView.GetForCurrentView();
+                            //    applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
 
-                                // StatusBar.GetForCurrentView().HideAsync();
-                                StatusBar statusBar = StatusBar.GetForCurrentView();
-                                statusBar.ForegroundColor = Colors.Gray;
-                                statusBar.BackgroundColor = Color.FromArgb(255, 55, 63, 76);
-                                statusBar.BackgroundOpacity = 0;
-                            }
+                            //    // StatusBar.GetForCurrentView().HideAsync();
+                            //    StatusBar statusBar = StatusBar.GetForCurrentView();
+                            //    statusBar.ForegroundColor = Colors.Gray;
+                            //    statusBar.BackgroundColor = Color.FromArgb(255, 55, 63, 76);
+                            //    statusBar.BackgroundOpacity = 0;
+                            //}
                         }
                         else
                         {

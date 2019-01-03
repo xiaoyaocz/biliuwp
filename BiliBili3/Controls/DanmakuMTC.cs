@@ -303,7 +303,22 @@ namespace BiliBili3.Controls
             }
         }
 
-
+        public void SetSubtitle(string text)
+        {
+            (GetTemplateChild("text_subtitle") as TextBlock).Text = text;
+        }
+        public string GetSubtitle()
+        {
+            return (GetTemplateChild("text_subtitle") as TextBlock).Text;
+        }
+        public void HideSubtitle()
+        {
+            (GetTemplateChild("grid_subtitle") as Grid).Visibility = Visibility.Collapsed ;
+        }
+        public void ShowSubtitle()
+        {
+            (GetTemplateChild("grid_subtitle") as Grid).Visibility = Visibility.Visible;
+        }
         private void Btn_Send_Click(object sender, RoutedEventArgs e)
         {
             if (SendDanmakued != null)
@@ -652,7 +667,14 @@ namespace BiliBili3.Controls
         public static readonly DependencyProperty GestureContentProperty =
             DependencyProperty.Register("GestureContent", typeof(UIElement), typeof(MediaTransportControls), new PropertyMetadata(null));
 
-
-
+        //CCSelectFlyout
+        public FlyoutBase CCSelectFlyout
+        {
+            get { return (FlyoutBase)GetValue(CCSelectFlyoutProperty); }
+            set { SetValue(CCSelectFlyoutProperty, value); }
+        }
+        
+        public static readonly DependencyProperty CCSelectFlyoutProperty =
+            DependencyProperty.Register("CCSelectFlyout", typeof(FlyoutBase), typeof(MediaTransportControls), new PropertyMetadata(0));
     }
 }

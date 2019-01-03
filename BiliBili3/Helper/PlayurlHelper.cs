@@ -70,7 +70,7 @@ namespace BiliBili3.Helper
                     url2 += "&sign=" + ApiHelper.GetSign_VIDEO(url2);
                     re = await WebClientClass.GetResultsUTF8Encode(new Uri(url2));
                     FlvPlyaerUrlModel m = JsonConvert.DeserializeObject<FlvPlyaerUrlModel>(re);
-                    if (m.code == 0 && !re.Contains("8986943")&&(m.status==13&&m.vip_status!=0))
+                    if (m.code == 0 && !re.Contains("8986943") )
                     {
                         //if (m.durl.Count==1)
                         //{
@@ -93,7 +93,7 @@ namespace BiliBili3.Helper
                         string rnd = ApiHelper.GetTimeSpan.ToString();
                         if (SettingHelper.Get_UseVIP())
                         {
-                            rnd = "true"+ rnd;
+                            rnd = "true" + rnd;
                         }
                         var re3 = await WebClientClass.GetResults(new Uri(string.Format("https://moe.nsapps.cn/api/v1/BiliAnimeUrl?animeid={0}&cid={1}&epid={2}&rnd={3}", model.banId, model.Mid, model.banInfo.episode_id, rnd)));
                         JObject obj = JObject.Parse(re3);
@@ -107,7 +107,7 @@ namespace BiliBili3.Helper
                                     usePlayMode = UsePlayMode.System,
                                     url = obj["data"][0]["url"].ToString(),
                                     urls = urls,
-                                    from="server"
+                                    from = "server"
                                 };
                             }
                             else
@@ -130,7 +130,7 @@ namespace BiliBili3.Helper
 
                         if (SettingHelper.Get_UseOtherSite())
                         {
-                            var playurl = await _5DMHelper.GetUrl(model.banId, Convert.ToInt32(model.No) );
+                            var playurl = await _5DMHelper.GetUrl(model.banId, Convert.ToInt32(model.No));
 
                             if (playurl == "")
                             {
@@ -545,7 +545,7 @@ namespace BiliBili3.Helper
                     url2 += "&sign=" + ApiHelper.GetSign_VIDEO(url2);
                     re = await WebClientClass.GetResultsUTF8Encode(new Uri(url2));
                     FlvPlyaerUrlModel m = JsonConvert.DeserializeObject<FlvPlyaerUrlModel>(re);
-                    if (m.code == 0 && !re.Contains("8986943") && (m.status == 13 && m.vip_status != 0))
+                    if (m.code == 0 && !re.Contains("8986943") )
                     {
 
                         foreach (var item in m.accept_description)
@@ -628,8 +628,81 @@ namespace BiliBili3.Helper
            };
         }
 
+        public static async Task<HasSubtitleModel> GetHasSubTitle(string aid, string cid)
+        {
+            try
+            {
+                var url = $"https://api.bilibili.com/x/player.so?id=cid:{cid}&aid={aid}";
+                var results = await WebClientClass.GetResults(new Uri(url));
+                if (results.Contains("subtitle"))
+                {
+                    var json = Regex.Match(results, @"<subtitle>(.*?)</subtitle>").Groups[1].Value;
+                    return JsonConvert.DeserializeObject<HasSubtitleModel>(json);
+                }
+                else
+                {
+                    return new HasSubtitleModel() { allow_submit = false };
+                }
+            }
+            catch (Exception)
+            {
+                return new HasSubtitleModel() { allow_submit = false };
+            }
+        }
+        public static async Task<SubtitleModel> GetSubtitle(string url)
+        {
+            try
+            {
+                if (!url.Contains("http:") || !url.Contains("https:"))
+                {
+                    url = "https:" + url;
+                }
+                var results = await WebClientClass.GetResults(new Uri(url));
+
+
+                return JsonConvert.DeserializeObject<SubtitleModel>(results);
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+
+
     }
 
+    public class HasSubtitleModel
+    {
+        public bool allow_submit { get; set; }
+        public List<HasSubtitleItemModel> subtitles { get; set; }
+    }
+
+    public class HasSubtitleItemModel
+    {
+        public long id { get; set; }
+        public string lan { get; set; }
+        public string lan_doc { get; set; }
+        public string subtitle_url { get; set; }
+    }
+    public class SubtitleModel
+    {
+        public double font_size { get; set; }
+        public string font_color { get; set; }
+        public double background_alpha { get; set; }
+        public string background_color { get; set; }
+        public string Stroke { get; set; }
+
+        public List<SubtitleItemModel> body { get; set; }
+    }
+    public class SubtitleItemModel
+    {
+        public double from { get; set; }
+        public double to { get; set; }
+        public int location { get; set; }
+        public string content { get; set; }
+    }
     public class QualityModel
     {
         public int qn { get; set; }

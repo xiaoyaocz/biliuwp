@@ -756,6 +756,7 @@ namespace BiliBili3.Pages
                 }
 
                 LastPost = 0;
+                ClearSubTitle();
                 MTC.ClearLog();
                 //txt_Title.Text = playNow.Title + " - " + playNow.No + " " + playNow.VideoTitle;
                 MTC.VideoTitle = playNow.Title + " - " + playNow.VideoTitle;
@@ -863,6 +864,10 @@ namespace BiliBili3.Pages
                             break;
                     }
 
+                    AddLog("读取是否包含字幕");
+                    var hasSub= await PlayurlHelper.GetHasSubTitle(playNow.Aid,playNow.Mid);
+                   
+                    LaodSubTitleMenu(hasSub);
                 }
                 else
                 {
@@ -875,6 +880,12 @@ namespace BiliBili3.Pages
                     // var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
                     mediaElement.SetSource(readStream, file.ContentType);
                 }
+
+
+            
+                
+
+
                 AddLog("准备开始播放...");
                 HeartBeat(HeartBeatType.Start);
                 MTC.HideLog();
@@ -914,6 +925,132 @@ namespace BiliBili3.Pages
                 }
             }
         }
+
+        private void LaodSubTitleMenu(HasSubtitleModel hasSub)
+        {
+            if (hasSub.subtitles != null && hasSub.subtitles.Count != 0)
+            {
+                AddLog($"该视频包含了{hasSub.subtitles.Count}个字幕文件");
+                var menu = new MenuFlyout();
+              
+
+                foreach (var item in hasSub.subtitles)
+                {
+                    ToggleMenuFlyoutItem menuitem = new ToggleMenuFlyoutItem() { Text = item.lan_doc,Tag=item.subtitle_url };
+                    menuitem.Click += Menuitem_Click;
+                    menu.Items.Add(menuitem);
+                }
+                ToggleMenuFlyoutItem noneItem = new ToggleMenuFlyoutItem() { Text = "无" };
+                noneItem.Click += Menuitem_Click;
+                menu.Items.Add(noneItem);
+                (menu.Items[0] as ToggleMenuFlyoutItem).IsChecked = true;
+                SetSubTitle((menu.Items[0] as ToggleMenuFlyoutItem).Tag.ToString());
+                MTC.CCSelectFlyout = menu;
+            }
+            else
+            {
+                AddLog("该视频没有字幕文件");
+                var menu = new MenuFlyout();
+                menu.Items.Add(new ToggleMenuFlyoutItem() { Text = "无", IsChecked = true });
+                MTC.CCSelectFlyout = menu;
+            }
+          
+
+        }
+        /// <summary>
+        /// 字幕文件
+        /// </summary>
+        SubtitleModel subtitles;
+        /// <summary>
+        /// 字幕Timer
+        /// </summary>
+        DispatcherTimer subtitleTimer;
+        /// <summary>
+        /// 选择字幕
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Menuitem_Click(object sender, RoutedEventArgs e)
+        {
+          
+            foreach (ToggleMenuFlyoutItem item in (MTC.CCSelectFlyout as MenuFlyout).Items)
+            {
+                item.IsChecked = false;
+            }
+            var menuitem = (sender as ToggleMenuFlyoutItem);
+            if (menuitem.Text == "无")
+            {
+                ClearSubTitle();
+            }
+            else
+            {
+                SetSubTitle(menuitem.Tag.ToString());
+            }
+            menuitem.IsChecked = true;
+        }
+        /// <summary>
+        /// 设置字幕文件
+        /// </summary>
+        /// <param name="url"></param>
+        private async void SetSubTitle(string url)
+        {
+            try
+            {
+                subtitles = await PlayurlHelper.GetSubtitle(url);
+                if (subtitles!=null)
+                {
+
+                    subtitleTimer = new DispatcherTimer();
+                    subtitleTimer.Interval = TimeSpan.FromMilliseconds(100);
+                    subtitleTimer.Tick += SubtitleTimer_Tick;
+                    subtitleTimer.Start();
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowMessageToast("加载字幕失败了");
+            }
+            
+
+        }
+
+        private void SubtitleTimer_Tick(object sender, object e)
+        {
+            if (mediaElement.CurrentState== MediaElementState.Playing)
+            {
+             
+                var time = mediaElement.Position.TotalSeconds;
+                var first = subtitles.body.FirstOrDefault(x => x.from <= time && x.to >= time);
+                if (first!=null)
+                {
+                    if (first.content != MTC.GetSubtitle())
+                    {
+                        MTC.ShowSubtitle();
+                        MTC.SetSubtitle(first.content);
+                    }
+                }
+                else
+                {
+                    MTC.HideSubtitle();
+                }
+            }
+        }
+
+        private void ClearSubTitle()
+        {
+            if (subtitles!=null)
+            {
+                if (subtitleTimer!=null)
+                {
+                    subtitleTimer.Stop();
+                    subtitleTimer = null;
+                }
+                MTC.HideSubtitle();
+                subtitles = null;
+            }
+        }
+
 
         private async void ChangeQuality()
         {

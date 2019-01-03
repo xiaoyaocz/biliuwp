@@ -232,23 +232,23 @@ namespace BiliBili3
             {
                 if (SettingHelper.Get_HideStatus())
                 {
-                    if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent(typeof(StatusBar).ToString()))
-                    {
-                        StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
-                        await statusBar.HideAsync();
-                    }
+                    //if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent(typeof(StatusBar).ToString()))
+                    //{
+                    //    StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+                    //    await statusBar.HideAsync();
+                    //}
                     bor_Width.Width = (this.ActualWidth / 6) - 2;
                 }
 
             }
             else
             {
-                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent(typeof(StatusBar).ToString()))
-                {
-                    StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
-                    await statusBar.ShowAsync();
-                    bor_Width.Width = (this.ActualWidth / 6) - 2;
-                }
+                //if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent(typeof(StatusBar).ToString()))
+                //{
+                //    StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+                //    await statusBar.ShowAsync();
+                //    bor_Width.Width = (this.ActualWidth / 6) - 2;
+                //}
             }
         }
         Account account;
@@ -802,11 +802,11 @@ namespace BiliBili3
                 var applicationView = ApplicationView.GetForCurrentView();
                 applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
                 // StatusBar.GetForCurrentView().HideAsync();
-                StatusBar statusBar = StatusBar.GetForCurrentView();
+                //StatusBar statusBar = StatusBar.GetForCurrentView();
 
-                statusBar.ForegroundColor = Color.FromArgb(255, 254, 254, 254);
-                statusBar.BackgroundColor = ((SolidColorBrush)grid_Top.Background).Color;
-                statusBar.BackgroundOpacity = 100;
+                //statusBar.ForegroundColor = Color.FromArgb(255, 254, 254, 254);
+                //statusBar.BackgroundColor = ((SolidColorBrush)grid_Top.Background).Color;
+                //statusBar.BackgroundOpacity = 100;
             }
 
             var titleBar = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().TitleBar;

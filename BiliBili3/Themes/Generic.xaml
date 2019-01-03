@@ -560,6 +560,9 @@
                                 </VisualState>
                             </VisualStateGroup>-->
                         </VisualStateManager.VisualStateGroups>
+                        <Grid x:Name="grid_subtitle" Margin="24" Visibility="Collapsed" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="8" Background="#7F000000">
+                            <TextBlock  x:Name="text_subtitle" Foreground="White" FontSize="25" Text="这是一条测试的字幕"></TextBlock>
+                        </Grid>
                         <c:Danmaku x:Name="danmuControls"></c:Danmaku>
                         <Grid Background="#99000000" Opacity="{TemplateBinding Brightness}"></Grid>
                         <Border x:Name="ControlPanel_ControlPanelVisibilityStates_Border" >
@@ -577,7 +580,7 @@
                                     </AppBarButton>
 
                                     <TextBlock x:Name="Text_Title" Grid.Column="1" Margin="8 0" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Text="{TemplateBinding VideoTitle}"></TextBlock>
-                                    
+
                                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Grid.Column="2">
                                         <TextBlock VerticalAlignment="Center" x:Name="txt_time"></TextBlock>
                                         <ContentPresenter Content="{TemplateBinding QuityContent}" VerticalAlignment="Center" Margin="4 0"></ContentPresenter>
@@ -610,11 +613,11 @@
                                             <AppBarButton.Icon>
                                                 <BitmapIcon UriSource="ms-appx:///Assets/PlayerAssets/ic_player_setting.png"></BitmapIcon>
                                             </AppBarButton.Icon>
-                                            
+
                                         </AppBarButton>
                                     </StackPanel>
                                 </Grid>
-                                
+
                                 <Grid x:Name="ControlPanelGrid"
                               
                                 Background="{ThemeResource SystemControlPageBackgroundAltMediumBrush}"
@@ -732,7 +735,6 @@
                                                 </AppBarButton>
                                                 <AppBarButton x:Name='btn_danmaku'
                                                 ToolTipService.ToolTip="打开/关闭弹幕"
-                                               
                                                 Visibility="{TemplateBinding ShowDanmakuBtn}"
                                                 Style='{StaticResource AppBarButtonStyle}'
                                                 MediaTransportControlsHelper.DropoutOrder='19'>
@@ -755,6 +757,16 @@
                                               Style='{StaticResource AppBarButtonStyle}'
                                               MediaTransportControlsHelper.DropoutOrder='15'
                                               Visibility='Collapsed'>
+                                                    <AppBarButton.Icon>
+                                                        <FontIcon Glyph="&#xED1E;"/>
+                                                    </AppBarButton.Icon>
+                                                </AppBarButton>
+                                                <AppBarButton x:Name='CCSelect'
+                                                  ToolTipService.ToolTip="选择字幕"
+                                              Style='{StaticResource AppBarButtonStyle}'
+                                              MediaTransportControlsHelper.DropoutOrder='15'
+                                              Flyout="{TemplateBinding CCSelectFlyout}"
+                                              Visibility='Visible'>
                                                     <AppBarButton.Icon>
                                                         <FontIcon Glyph="&#xED1E;"/>
                                                     </AppBarButton.Icon>
@@ -789,7 +801,7 @@
                                                 Style='{StaticResource AppBarButtonStyle}'
                                                 MediaTransportControlsHelper.DropoutOrder='3'
                                                 Visibility='Collapsed'/>
-                                                
+
                                                 <AppBarButton x:Name='btn_Previous'
                                                 Icon='Previous'
                                                 Width="48" Height="48"
@@ -798,7 +810,7 @@
                                                 IsEnabled="{TemplateBinding ShowPreviousButton}"
                                                 ToolTipService.ToolTip="上一P"
                                             />
-                                                
+
                                                 <AppBarButton x:Name='RewindButton'
                                               Style='{StaticResource AppBarButtonStyle}'
                                               MediaTransportControlsHelper.DropoutOrder='1'
@@ -918,7 +930,7 @@
                             </Grid>
 
                         </Border>
-                     
+
                         <Border x:Name="ErrorBorder"></Border>
                         <Border  VerticalAlignment="Bottom" Margin="0 0 0 82" HorizontalAlignment="Left">
                             <TextBlock x:Name="Txt_Log" Foreground="Gray"
@@ -931,7 +943,7 @@
         </Setter>
     </Style>
 
-    
+
 
     <Style TargetType="local2:FlipSpotControl" >
         <Setter Property="Template">

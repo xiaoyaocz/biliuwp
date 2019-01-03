@@ -258,7 +258,10 @@
                                         <MenuFlyoutItem x:Name="menuitem_Info" Click="menuitem_Info_Click">视频信息</MenuFlyoutItem>
                                     </MenuFlyout>
                                 </c:DanmakuMTC.MoreMenuFlyout>
-
+                                <c:DanmakuMTC.CCSelectFlyout>
+                                    <MenuFlyout x:Name="menu_SubTitle">
+                                    </MenuFlyout>
+                                </c:DanmakuMTC.CCSelectFlyout>
                             </c:DanmakuMTC>
                         </MediaElement.TransportControls>
                     </MediaElement>
