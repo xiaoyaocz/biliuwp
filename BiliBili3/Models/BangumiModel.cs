@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,7 +44,7 @@ namespace BiliBili3.Models
             {
                 double i = double.Parse(favourites);
                 double d = i / 10000;
-                if (d>=1)
+                if (d >= 1)
                 {
                     return d.ToString("0.0") + "万";
                 }
@@ -113,7 +113,7 @@ namespace BiliBili3.Models
         public int is_new { get; set; }
         public string title { get; set; }
         public string onDt { get; set; }
-       // public string cover { get; set; }
+        // public string cover { get; set; }
         private string _cover;
         public string cover
         {
@@ -136,7 +136,7 @@ namespace BiliBili3.Models
 
         public string badge { get; set; }
         public string brief { get; set; }
-       // public string cover { get; set; }
+        // public string cover { get; set; }
 
         private string _cover;
         public string cover
@@ -153,14 +153,14 @@ namespace BiliBili3.Models
         public string total_count { get; set; }
 
         public MyBangumiModel user_season { get; set; }
-        public string last_ep_index{ get; set; }
+        public string last_ep_index { get; set; }
         public string weekday { get; set; }
 
         public Visibility vis
         {
             get
             {
-                if (badge!=null&&badge.Length != 0)
+                if (badge != null && badge.Length != 0)
                 {
                     return Visibility.Visible;
                 }
@@ -175,13 +175,13 @@ namespace BiliBili3.Models
         {
             get
             {
-                if (ApiHelper.access_key.Length==0)
+                if (ApiHelper.access_key.Length == 0)
                 {
                     return "尚未登录";
                 }
-                if (user_season.last_ep_index.Length!=0)
+                if (user_season.last_ep_index.Length != 0)
                 {
-                    return "看到第"+ user_season.last_ep_index+"话";
+                    return "看到第" + user_season.last_ep_index + "话";
                 }
                 else
                 {
@@ -193,9 +193,9 @@ namespace BiliBili3.Models
         {
             get
             {
-                if (is_finish=="0")
+                if (is_finish == "0")
                 {
-                    if (newest_ep_index=="-1")
+                    if (newest_ep_index == "-1")
                     {
                         return "尚未开播";
                     }
@@ -203,7 +203,7 @@ namespace BiliBili3.Models
                     {
                         return "更新至第" + newest_ep_index + "话";
                     }
-                    
+
                 }
                 else
                 {
@@ -309,8 +309,10 @@ namespace BiliBili3.Models
                 }
             }
         }
-        public string NoStr {
-            get {
+        public string NoStr
+        {
+            get
+            {
                 int i = new Random().Next(0, 2);
                 switch (i)
                 {
@@ -321,7 +323,8 @@ namespace BiliBili3.Models
                     default:
                         return "这天没有番剧播出";
                 }
-            } }
+            }
+        }
 
     }
     public class FilterModel
@@ -329,7 +332,7 @@ namespace BiliBili3.Models
         public string name { get; set; }
         public string data { get; set; }
 
-       
+
     }
     public class BantagModel
     {
@@ -355,68 +358,21 @@ namespace BiliBili3.Models
         public int pages { get; set; }
         public AllBanModel result { get; set; }
 
-        public List<AllBanModel> list { get; set; }
+        public List<AllBanModel> data { get; set; }
         public string badge { get; set; }
         public string brief { get; set; }
         //@160w_214h.webp
         private string _cover;
-        public string cover { get {return _cover+ "@160w_214h.jpg"; } set { _cover=value; } }
-
-
-
+        public string cover { get { return _cover + "@160w_214h.jpg"; } set { _cover = value; } }
         public string is_finish { get; set; }
         public int is_started { get; set; }
         public string title { get; set; }
         public int season_id { get; set; }
-        public string newest_ep_index { get; set; }
-        public int total_count { get; set; }
-        public string favorites { get; set; }
-        public string New
-        {
-            get
-            {
-                if (is_finish == "0")
-                {
-                    if (newest_ep_index == "-1")
-                    {
-                        return "尚未开播";
-                    }
-                    else
-                    {
-                        return "更新至第" + newest_ep_index + "话";
-                    }
+        public string index_show { get; set; }
+        public AllBanOrderModel order { get; set; }
+        public int media_id { get; set; }
 
-                }
-                else
-                {
-                    if (total_count == -1)
-                    {
-                        return "尚未开播";
-                    }
-                    else
-                    {
-                        return total_count + "话全";
-                    }
-                   
-                }
-            }
-        }
-        public string favouritesCount
-        {
-            get
-            {
-                double i = double.Parse(favorites);
-                double d = i / 10000;
-                if (d >= 1)
-                {
-                    return d.ToString("0.0") + "万";
-                }
-                else
-                {
-                    return favorites;
-                }
-            }
-        }
+
 
 
         public Visibility vis
@@ -436,7 +392,12 @@ namespace BiliBili3.Models
 
     }
 
-
+    public class AllBanOrderModel
+    {
+        public string follow { get; set; }
+        public string play { get; set; }
+        public string score { get; set; }
+    }
 
 
 }

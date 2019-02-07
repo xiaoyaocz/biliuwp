@@ -109,7 +109,8 @@ namespace BiliBili3.Controls
                 return;
             }
             IsPrimaryButtonEnabled = false;
-            var results = await account.LoginV2(txt_Username.Text, txt_Password.Password, txt_captcha.Text);
+            //var results = await account.LoginV3(txt_Username.Text, txt_Password.Password);
+            var results = await account.LoginV2(txt_Username.Text, txt_Password.Password,txt_captcha.Text);
             switch (results.status)
             {
                 case Modules.LoginStatus.Success:
@@ -120,10 +121,17 @@ namespace BiliBili3.Controls
                     IsPrimaryButtonEnabled = true;
                     break;
                 case Modules.LoginStatus.NeedCaptcha:
+                    //V2
                     chatcha.Visibility = Visibility.Visible;
                     IsPrimaryButtonEnabled = true;
                     GetCaptcha();
+                    //V3
                     //webView.Visibility = Visibility.Visible;
+                    //var httpRequestMessage = new Windows.Web.Http.HttpRequestMessage(Windows.Web.Http.HttpMethod.Get, new Uri(results.url));
+                    //var userAgent = "BiliMangaUwp/0.3.0.0 Windows BiliApp BiliComic/0.3.0.0";
+                    //httpRequestMessage.Headers.Add("User-Agent", userAgent);
+                    //httpRequestMessage.Headers.Add("Upgrade-Insecure-Requests", "1");
+                    //webView.NavigateWithHttpRequestMessage(httpRequestMessage);
                     //webView.Source = new Uri(results.url);
                     break;
                 case Modules.LoginStatus.NeedValidate:

@@ -204,7 +204,6 @@ namespace BiliBili3.Modules
                 var model = JsonConvert.DeserializeObject<HomeFeedModel>(results);
                 if (model.code == 0)
                 {
-
                     return new ReturnModel()
                     {
                         success = true,
@@ -433,7 +432,7 @@ namespace BiliBili3.Modules
                     if (cover != null && cover.Length != 0)
                     {
 
-                        return cover + ((_goto == "av"||_goto== "bangumi_rcmd") ? "" : "@160w_100h_1e_1c.jpg");
+                        return cover + ((_goto == "av"||_goto== "bangumi_rcmd") ? "" : "@320w_200h_1e_1c.jpg");
                     }
                     if (banner_url != null && banner_url.Length != 0)
                     {
@@ -715,7 +714,7 @@ namespace BiliBili3.Modules
                     {
                         return cover + "@100w_100h_1e_1c.jpg";
                     }
-                    return cover + "@160w_100h.jpg";
+                    return cover + "@320w_200h.jpg";
 
                 }
             }

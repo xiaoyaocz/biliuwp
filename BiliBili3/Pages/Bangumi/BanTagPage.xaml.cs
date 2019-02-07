@@ -75,7 +75,7 @@ namespace BiliBili3.Pages
         private void LoadLocal()
         {
             List<FilterModel> LX = new List<FilterModel>() {
-                new FilterModel() {name="全部",data="0"},
+                new FilterModel() {name="全部",data="-1"},
                 new FilterModel() {name="TV版",data="1"},
                 new FilterModel() {name="OVA·OAD版",data="2" },
                 new FilterModel() {name="剧场版",data="3" },
@@ -85,14 +85,14 @@ namespace BiliBili3.Pages
             view_LX.SelectedIndex = 0;
 
             List<FilterModel> ZT = new List<FilterModel>() {
-                new FilterModel() {name="全部",data="0"},
+                new FilterModel() {name="全部",data="-1"},
                 new FilterModel() {name="完结",data="2"},
                 new FilterModel() {name="连载",data="1" }
             };
             view_ZT.ItemsSource = ZT;
             view_ZT.SelectedIndex = 0;
             List<FilterModel> DQ = new List<FilterModel>() {
-                new FilterModel() {name="全部",data="0"},
+                new FilterModel() {name="全部",data="-1"},
                  new FilterModel() {name="国产",data="1"},
                 new FilterModel() {name="日本",data="2" },
                 new FilterModel() {name="美国",data="3" },
@@ -101,7 +101,7 @@ namespace BiliBili3.Pages
             view_DQ.ItemsSource = DQ;
             view_DQ.SelectedIndex = 0;
             List<FilterModel> Quarter = new List<FilterModel>() {
-                new FilterModel() {name="全部",data="0"},
+                new FilterModel() {name="全部",data="-1"},
                  new FilterModel() {name="1月",data="1"},
                 new FilterModel() {name="4月",data="2" },
                 new FilterModel() {name="7月",data="3" },
@@ -125,13 +125,13 @@ namespace BiliBili3.Pages
                    
                     List<FilterModel> Years = new List<FilterModel>();
                     m.result.years.OrderByDescending(x => x).ToList().ForEach(x => Years.Add(new FilterModel() { name=x,data=x}));
-                    Years.Insert(0,new FilterModel() { name = "全部", data = "0" });
+                    Years.Insert(0,new FilterModel() { name = "全部", data = "-1" });
                     view_Year.ItemsSource = Years;
                     view_Year.SelectedIndex = 0;
 
                     List<FilterModel> Tags = new List<FilterModel>();
                     m.result.category.ForEach(x=>Tags.Add(new FilterModel() { name=x.tag_name,data=x.tag_id}));
-                    Tags.Insert(0,new FilterModel() { name = "全部", data = "" } );
+                    Tags.Insert(0,new FilterModel() { name = "全部", data = "-1" } );
                     view_FG.ItemsSource = Tags;
                     view_FG.SelectedIndex = 0;
 
@@ -170,15 +170,16 @@ namespace BiliBili3.Pages
                 {
                     gv1.Items.Clear();
                 }
-               
-                string url = "https://bangumi.bilibili.com/web_api/season/index_global?page=" + PageNum+"&page_size=30&version="+ (view_LX.SelectedItem as FilterModel).data + "&is_finish="+ (view_ZT.SelectedItem as FilterModel).data + "&start_year=" + (view_Year.SelectedItem as FilterModel).data + "&quarter="+ (view_Quarter.SelectedItem as FilterModel).data + "&tag_id="+ (view_FG.SelectedItem as FilterModel).data + "&index_type="+index_type+"&index_sort="+index_sort+ ((view_DQ.SelectedIndex!=0)?"&area=" + (view_DQ.SelectedItem as FilterModel).data:"");
-                string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
+
+                //string url = "https://bangumi.bilibili.com/web_api/season/index_global?page=" + PageNum+"&page_size=30&version="+ (view_LX.SelectedItem as FilterModel).data + "&is_finish="+ (view_ZT.SelectedItem as FilterModel).data + "&start_year=" + (view_Year.SelectedItem as FilterModel).data + "&quarter="+ (view_Quarter.SelectedItem as FilterModel).data + "&tag_id="+ (view_FG.SelectedItem as FilterModel).data + "&index_type="+index_type+"&index_sort="+index_sort+ ((view_DQ.SelectedIndex!=0)?"&area=" + (view_DQ.SelectedItem as FilterModel).data:"");
+                string url = $"https://bangumi.bilibili.com/media/web_api/search/result?season_version={(view_LX.SelectedItem as FilterModel).data}&area={(view_DQ.SelectedItem as FilterModel).data}&is_finish={(view_ZT.SelectedItem as FilterModel).data}&copyright=-1&season_status=-1&season_month={(view_Quarter.SelectedItem as FilterModel).data}&pub_date={(view_Year.SelectedItem as FilterModel).data}&style_id={(view_FG.SelectedItem as FilterModel).data}&order={index_type}&st=1&sort={index_sort}&page={PageNum}&season_type=1&pagesize=20";
+                string results = await WebClientClass.GetResults(new Uri(url));
                 AllBanModel m = JsonConvert.DeserializeObject<AllBanModel>(results);
                 if (m.code == 0)
                 {
-                    if (m.result.list.Count!=0)
+                    if (m.result.data.Count!=0)
                     {
-                        m.result.list.ForEach(x => gv1.Items.Add(x));
+                        m.result.data.ForEach(x => gv1.Items.Add(x));
                         PageNum++;
                     }
                     else

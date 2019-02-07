@@ -703,7 +703,7 @@ namespace BiliBili3.Views
         private string _cover;
         public string cover
         {
-            get { return _cover + "@300w.jpg"; }
+            get { return _cover + "@500w.png"; }
             set { _cover = value; }
         }
 

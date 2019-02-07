@@ -232,23 +232,23 @@ namespace BiliBili3
             {
                 if (SettingHelper.Get_HideStatus())
                 {
-                    //if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent(typeof(StatusBar).ToString()))
-                    //{
-                    //    StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
-                    //    await statusBar.HideAsync();
-                    //}
+                    if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent(typeof(StatusBar).ToString()))
+                    {
+                        StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+                        await statusBar.HideAsync();
+                    }
                     bor_Width.Width = (this.ActualWidth / 6) - 2;
                 }
 
             }
             else
             {
-                //if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent(typeof(StatusBar).ToString()))
-                //{
-                //    StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
-                //    await statusBar.ShowAsync();
-                //    bor_Width.Width = (this.ActualWidth / 6) - 2;
-                //}
+                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent(typeof(StatusBar).ToString()))
+                {
+                    StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+                    await statusBar.ShowAsync();
+                    bor_Width.Width = (this.ActualWidth / 6) - 2;
+                }
             }
         }
         Account account;

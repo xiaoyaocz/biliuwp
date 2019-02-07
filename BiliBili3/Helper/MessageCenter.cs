@@ -366,11 +366,11 @@ namespace BiliBili3
                 var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
                 ApplicationView.PreferredLaunchViewSize = new Size(bounds.Width, bounds.Height);
                 ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-
+               
                 ApplicationView.GetForCurrentView().Consolidated += (sender, args) =>
                 {
                     frame.Navigate(typeof(BlankPage));//跳转到空白页
-                    newView.CoreWindow.Close();
+                    //newView.CoreWindow.Close();
                     //Window.Current.Close(); //出现线程错误
                     //Debug.WriteLine("????");
                 };
@@ -382,6 +382,7 @@ namespace BiliBili3
 
 
         }
+
         private static void ChangeTheme(Frame f)
         {
             string ThemeName = SettingHelper.Get_Theme();

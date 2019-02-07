@@ -1349,7 +1349,7 @@ namespace BiliBili3
         public int vip_status { get; set; }
         public List<string> accept_description { get; set; }
         public List<int> accept_quality { get; set; }
-
+        public FlvPlyaerUrlModel data { get; set; }
         public List<FlvPlyaerUrlModel> durl { get; set; }
         public int order { get; set; }
         public int length { get; set; }

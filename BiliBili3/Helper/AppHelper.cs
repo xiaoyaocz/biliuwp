@@ -82,6 +82,9 @@ namespace BiliBili3.Helper
             return verStr.Split('/')[0];
         }
         public static string verStr = string.Format(@"Ver {0} 
+01、修复视频无法播放
+
+/Ver 3.9.8.0 2018-11
 01、支持字幕显示
 02、更新API
 03、修复无法加载弹弹Play弹幕问题

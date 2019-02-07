@@ -235,7 +235,8 @@ namespace BiliBili3.Helper
 
                 //https://interface.bilibili.com/v2/playurl?cid=31452468&appkey=84956560bc028eb7&otype=json&type=&quality=112&qn=112&sign=38b1355368ee65d055c12b57bdb26e3a
 
-                string url = string.Format("https://interface.bilibili.com/v2/playurl?cid={1}&appkey={0}&otype=json&type=&quality={2}&qn={2}&ts={3}", ApiHelper._appKey_VIDEO, cid, qn, ApiHelper.GetTimeSpan_2);
+                //string url = string.Format("https://interface.bilibili.com/v2/playurl?cid={1}&appkey={0}&otype=json&type=&quality={2}&qn={2}&ts={3}", ApiHelper._appKey_VIDEO, cid, qn, ApiHelper.GetTimeSpan_2);
+                string url = $"https://api.bilibili.com/x/player/playurl?avid={aid}&cid={cid}&qn={qn}&type=&otype=json&appkey={0}";
                 url += "&sign=" + ApiHelper.GetSign_VIDEO(url);
 
 
@@ -247,7 +248,7 @@ namespace BiliBili3.Helper
                 var playList = new SYEngine.Playlist(SYEngine.PlaylistTypes.NetworkHttp);
                 if (m.code == 0)
                 {
-                    foreach (var item in m.durl)
+                    foreach (var item in m.data.durl)
                     {
                         urls.Add(item.url);
                         playList.Append(item.url, item.size, item.length / 1000);

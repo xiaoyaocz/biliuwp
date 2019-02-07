@@ -96,11 +96,13 @@ namespace BiliBili3.Modules
                 httpBaseProtocolFilter.IgnorableServerCertificateErrors.Add(Windows.Security.Cryptography.Certificates.ChainValidationResult.Expired);
                 httpBaseProtocolFilter.IgnorableServerCertificateErrors.Add(Windows.Security.Cryptography.Certificates.ChainValidationResult.Untrusted);
                 Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient(httpBaseProtocolFilter);
-                string url = "https://passport.bilibili.com/login?act=getkey&_=" + ApiHelper.GetTimeSpan;
-                string stringAsync = await WebClientClass.GetResults(new Uri(url));
+                string url = "https://passport.bilibili.com/api/oauth2/getKey";
+                string content = $"appkey={ApiHelper._appKey}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
+                content += "&sign=" + ApiHelper.GetSign(content);
+                string stringAsync = await WebClientClass.PostResults(new Uri(url), content);
                 JObject jObjects = JObject.Parse(stringAsync);
-                string str = jObjects["hash"].ToString();
-                string str1 = jObjects["key"].ToString();
+                string str = jObjects["data"]["hash"].ToString();
+                string str1 = jObjects["data"]["key"].ToString();
                 string str2 = string.Concat(str, passWord);
                 string str3 = Regex.Match(str1, "BEGIN PUBLIC KEY-----(?<key>[\\s\\S]+)-----END PUBLIC KEY").Groups["key"].Value.Trim();
                 byte[] numArray = Convert.FromBase64String(str3);
@@ -122,16 +124,14 @@ namespace BiliBili3.Modules
         /// <param name="password">密码</param>
         /// <param name="captcha">验证码</param>
         /// <returns></returns>
-        public async Task<LoginCallbackModel> LoginV3(string username, string password, string captcha = "")
+        public async Task<LoginCallbackModel> LoginV3(string username, string password)
         {
             try
             {
                 string url = "https://passport.bilibili.com/api/v3/oauth2/login";
-                string data = $"appkey={ApiHelper._appKey}&build={ApiHelper.build}&mobi_app=android&password={Uri.EscapeDataString(await EncryptedPassword(password))}&platform=android&ts={ApiHelper.GetTimeSpan}&username={Uri.EscapeDataString(username)}";
-                if (data != "")
-                {
-                    data += "&captcha=" + captcha;
-                }
+                var pwd = Uri.EscapeDataString(await EncryptedPassword(password));
+
+                string data = $"username={username}&password={pwd}&gee_type=10&appkey={ApiHelper._appKey}&mobi_app=android_comic&platform=android&ts={ApiHelper.GetTimeSpan}";
                 data += "&sign=" + ApiHelper.GetSign(data);
                 var results = await WebClientClass.PostResults(new Uri(url), data);
                 var m = JsonConvert.DeserializeObject<AccountLoginModel>(results);
