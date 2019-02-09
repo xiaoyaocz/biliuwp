@@ -82,6 +82,12 @@ namespace BiliBili3.Helper
             return verStr.Split('/')[0];
         }
         public static string verStr = string.Format(@"Ver {0} 
+01、修复视频无法下载问题
+02、修复番剧索引无法读取问题
+03、修复音频只能播放30秒问题
+04、修复直播搜索失败问题
+
+/Ver 3.9.10.0
 01、修复视频无法播放
 
 /Ver 3.9.8.0 2018-11

@@ -66,24 +66,24 @@ namespace BiliBili3.Pages
                 _loadUser = true;
                 pr_Load.Visibility = Visibility.Visible;
 
-                string url = string.Format("https://search.bilibili.com/api/search?search_type=live&keyword={0}&page=1",
+                string url = string.Format("https://api.bilibili.com/x/web-interface/search/type?search_type=live&highlight=0&keyword={0}&page=1",
                     Uri.EscapeDataString(_keyword));
                 // url += "&sign=" + ApiHelper.GetSign(url);
-                string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
+                string results = await WebClientClass.GetResults(new Uri(url));
                 JObject jObject = JObject.Parse(results);
                 LiveSearchModel m = JsonConvert.DeserializeObject<LiveSearchModel>(results);
                 if (m.code == 0)
                 {
-                    if (Convert.ToInt32(jObject["pageinfo"]["live_user"]["total"].ToString()) != 0)
+                    if (Convert.ToInt32(jObject["data"]["pageinfo"]["live_user"]["total"].ToString()) != 0)
                     {
-                        txt_hea_1.Text = "主播(" + jObject["pageinfo"]["live_user"]["total"].ToString() + ")";
-                        JsonConvert.DeserializeObject<List<LiveSearchModel>>(jObject["result"]["live_user"].ToString()).ForEach(x => list_Feed.Items.Add(x));
+                        txt_hea_1.Text = "主播(" + jObject["data"]["pageinfo"]["live_user"]["total"].ToString() + ")";
+                        JsonConvert.DeserializeObject<List<LiveSearchModel>>(jObject["data"]["result"]["live_user"].ToString()).ForEach(x => list_Feed.Items.Add(x));
                         //_page_user++;
                     }
-                    if (Convert.ToInt32(jObject["pageinfo"]["live_room"]["total"].ToString()) != 0)
+                    if (Convert.ToInt32(jObject["data"]["pageinfo"]["live_room"]["total"].ToString()) != 0)
                     {
-                        txt_hea_0.Text = "正在直播(" + jObject["pageinfo"]["live_room"]["total"].ToString() + ")";
-                        JsonConvert.DeserializeObject<List<LiveSearchModel>>(jObject["result"]["live_room"].ToString()).ForEach(x => gv_Room.Items.Add(x));
+                        txt_hea_0.Text = "正在直播(" + jObject["data"]["pageinfo"]["live_room"]["total"].ToString() + ")";
+                        JsonConvert.DeserializeObject<List<LiveSearchModel>>(jObject["data"]["result"]["live_room"].ToString()).ForEach(x => gv_Room.Items.Add(x));
                         _page_room++;
                     }
                     
@@ -120,14 +120,14 @@ namespace BiliBili3.Pages
                 _loadUser = true;
                 pr_Load.Visibility = Visibility.Visible;
 
-                string url = string.Format("https://search.bilibili.com/api/search?search_type=live_user&keyword={0}&page={1}&order=online&coverType=user_cover&_t={2}", Uri.EscapeDataString(_keyword), _page_user, ApiHelper.GetTimeSpan_2);
+                string url = string.Format("https://api.bilibili.com/x/web-interface/search/type?search_type=live_user&highlight=0&keyword={0}&page={1}&order=online&coverType=user_cover", Uri.EscapeDataString(_keyword), _page_user);
                 //url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
                 LiveSearchModel m = JsonConvert.DeserializeObject<LiveSearchModel>(results);
                 JObject jObject = JObject.Parse(results);
                 if (m.code == 0)
                 {
-                    List<LiveSearchModel> ls = JsonConvert.DeserializeObject<List<LiveSearchModel>>(jObject["result"].ToString());
+                    List<LiveSearchModel> ls = JsonConvert.DeserializeObject<List<LiveSearchModel>>(jObject["data"]["result"].ToString());
 
 
                     if (ls.Count != 0)
@@ -172,14 +172,14 @@ namespace BiliBili3.Pages
                 _loadRoom = true;
                 pr_Load.Visibility = Visibility.Visible;
 
-                string url = string.Format("https://search.bilibili.com/api/search?search_type=live_room&keyword={0}&page={1}&_t={2}", Uri.EscapeDataString(_keyword), _page_room, ApiHelper.GetTimeSpan_2);
+                string url = string.Format("https://api.bilibili.com/x/web-interface/search/type?search_type=live&highlight=0&keyword={0}&page={1}", Uri.EscapeDataString(_keyword), _page_room);
                 //url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
                 LiveSearchModel m = JsonConvert.DeserializeObject<LiveSearchModel>(results);
                 JObject jObject = JObject.Parse(results);
                 if (m.code == 0)
                 {
-                    List<LiveSearchModel> ls = JsonConvert.DeserializeObject<List<LiveSearchModel>>(jObject["result"].ToString());
+                    List<LiveSearchModel> ls = JsonConvert.DeserializeObject<List<LiveSearchModel>>(jObject["data"]["result"]["live_room"].ToString());
 
 
                     if (ls.Count != 0)

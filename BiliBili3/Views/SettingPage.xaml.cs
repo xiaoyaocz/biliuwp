@@ -39,14 +39,13 @@ namespace BiliBili3.Views
             
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            
             if (e.NavigationMode== NavigationMode.New)
             {
-                await Task.Delay(200);
                 GetSetting();
             }   
-           
         }
         bool get_ing = true;
         bool loadsetting = true;
@@ -61,180 +60,189 @@ namespace BiliBili3.Views
             //    CustomBg.Visibility = Visibility.Visible;
 
             //}
-            loadsetting = true;
-            pr_Load.Visibility = Visibility.Visible;
-            CustomBg.Visibility = Visibility.Visible;
-            sw_HideStatus.IsOn = SettingHelper.Get_HideStatus();
-
-
-            sw_NewWidnows.IsOn= SettingHelper.Get_NewWindow();
-            sw_LoadSe.IsOn = SettingHelper.Get_LoadSplash();
-            sw_CloseAD.IsOn = SettingHelper.Get_HideAD();
-            sw_ForceAudio.IsOn = SettingHelper.Get_ForceAudio();
-            sw_ForceVideo.IsOn = SettingHelper.Get_ForceVideo();
-            sw_DanmuBorder.IsOn = SettingHelper.Get_DMBorder();
-            sw_Use4GDown.IsOn = SettingHelper.Get_Use4GDown();
-            sw_RefreshButton.IsOn = SettingHelper.Get_RefreshButton();
-
-            sw_Play4G.IsOn = SettingHelper.Get_Use4GPlay();
-            sw_BackgroundPlay.IsOn = SettingHelper.Get_BackPlay();
-            sw_HideCursor.IsOn = SettingHelper.Get_HideCursor();
-
-            sw_MouseBack.IsOn = SettingHelper.Get_MouseBack();
-            sw_MergeDanmu.IsOn = SettingHelper.Get_MergeDanmu();
-
-            sw_NotSubtitle.IsOn = SettingHelper.Get_DanmuNotSubtitle();
-            sw_BoldDanmu.IsOn=SettingHelper.Get_BoldDanmu();
-
-            sw_DTCT.IsOn = SettingHelper.Get_DTCT();
-            sw_DT.IsOn = SettingHelper.Get_DT();
-            sw_FJ.IsOn = SettingHelper.Get_FJ();
-            sw_CustomPath.IsOn = SettingHelper.Get_CustomDownPath();
-            sw_FFmpeg.IsOn = SettingHelper.Get_FFmpeg();
-
-            sw_NewFeed.IsOn = SettingHelper.Get_NewFeed();
-
-            tw_MNGA.IsOn = SettingHelper.Get_UseHK();
-            tw_MNTW.IsOn = SettingHelper.Get_UseTW();
-            tw_MNDL.IsOn = SettingHelper.Get_UseCN();
-            tw_PlayerMode.IsOn = SettingHelper.Get_PlayerMode();
-            tw_VipMode.IsOn= SettingHelper.Get_UseVIP();
-            tw_OtherSiteMode.IsOn = SettingHelper.Get_UseOtherSite();
-
-            sw_QZHP.IsOn = SettingHelper.Get_QZHP();
-            sw_AutoFull.IsOn = SettingHelper.Get_AutoFull();
-
-            slider_DanmuSize.Value = SettingHelper.Get_NewDMSize();
-            slider_Num.Value = SettingHelper.Get_DMNumber();
-            slider_DanmuTran.Value = SettingHelper.Get_NewDMTran();
-            slider_DanmuSpeed.Value = SettingHelper.Get_DMSpeed();
-            
-            List<string> fonts= SystemHelper.GetSystemFontFamilies();
-            cb_Font.ItemsSource = fonts;
-            if (SettingHelper.Get_DanmuFont()!="")
+            try
             {
-                cb_Font.SelectedIndex = fonts.IndexOf(SettingHelper.Get_DanmuFont());
-            }
-            else
-            {
-                cb_Font.SelectedIndex = fonts.IndexOf(cb_Font.FontFamily.Source);
-            }
-           
+                loadsetting = true;
+                pr_Load.Visibility = Visibility.Visible;
+                CustomBg.Visibility = Visibility.Visible;
+                sw_HideStatus.IsOn = SettingHelper.Get_HideStatus();
 
 
-            cb_PlayQuality.SelectedIndex = SettingHelper.Get_PlayQualit() - 1;
-            cb_DownQuality.SelectedIndex = SettingHelper.Get_DownQualit() - 1;
-            cb_VideoType.SelectedIndex = SettingHelper.Get_VideoType() ;
-            cb_DanmuStyle.SelectedIndex = SettingHelper.Get_DMStyle();
+                sw_NewWidnows.IsOn = SettingHelper.Get_NewWindow();
+                sw_LoadSe.IsOn = SettingHelper.Get_LoadSplash();
+                sw_CloseAD.IsOn = SettingHelper.Get_HideAD();
+                sw_ForceAudio.IsOn = SettingHelper.Get_ForceAudio();
+                sw_ForceVideo.IsOn = SettingHelper.Get_ForceVideo();
+                sw_DanmuBorder.IsOn = SettingHelper.Get_DMBorder();
+                sw_Use4GDown.IsOn = SettingHelper.Get_Use4GDown();
+                sw_RefreshButton.IsOn = SettingHelper.Get_RefreshButton();
 
-            cb_DownMode.SelectedIndex = SettingHelper.Get_DownMode();
+                sw_Play4G.IsOn = SettingHelper.Get_Use4GPlay();
+                sw_BackgroundPlay.IsOn = SettingHelper.Get_BackPlay();
+                sw_HideCursor.IsOn = SettingHelper.Get_HideCursor();
 
-            sw_Playback.SelectedIndex = SettingHelper.Get_Playback();
+                sw_MouseBack.IsOn = SettingHelper.Get_MouseBack();
+                sw_MergeDanmu.IsOn = SettingHelper.Get_MergeDanmu();
 
+                sw_NotSubtitle.IsOn = SettingHelper.Get_DanmuNotSubtitle();
+                sw_BoldDanmu.IsOn = SettingHelper.Get_BoldDanmu();
 
-            sw_CustomBg.IsOn = SettingHelper.Get_CustomBG();
+                sw_DTCT.IsOn = SettingHelper.Get_DTCT();
+                sw_DT.IsOn = SettingHelper.Get_DT();
+                sw_FJ.IsOn = SettingHelper.Get_FJ();
+                sw_CustomPath.IsOn = SettingHelper.Get_CustomDownPath();
+                sw_FFmpeg.IsOn = SettingHelper.Get_FFmpeg();
 
-            txt_BGPath.Text = SettingHelper.Get_BGPath();
-            txt_CustomDownPath.Text = SettingHelper.Get_DownPath();
-            
+                sw_NewFeed.IsOn = SettingHelper.Get_NewFeed();
 
-            cb_BGStretch.SelectedIndex = SettingHelper.Get_BGStretch();
-            cb_Ver.SelectedIndex = SettingHelper.Get_BGVer();
-            cbHor.SelectedIndex = SettingHelper.Get__BGHor();
-            cb_BGOpacity.SelectedIndex = SettingHelper.Get_BGOpacity() - 1;
-            cb_FrostedGlass.SelectedIndex = SettingHelper.Get_FrostedGlass();
-            cb_ClaerLiveComment.SelectedIndex = SettingHelper.Get_ClearLiveComment();
-            sw_H5.IsOn = SettingHelper.Get_UseH5();
+                tw_MNGA.IsOn = SettingHelper.Get_UseHK();
+                tw_MNTW.IsOn = SettingHelper.Get_UseTW();
+                tw_MNDL.IsOn = SettingHelper.Get_UseCN();
+                tw_PlayerMode.IsOn = SettingHelper.Get_PlayerMode();
+                tw_VipMode.IsOn = SettingHelper.Get_UseVIP();
+                tw_OtherSiteMode.IsOn = SettingHelper.Get_UseOtherSite();
 
-            txt_BGMaxHeight.Text = SettingHelper.Get_BGMaxHeight().ToString();
-            txt_BGMaxWidth.Text = SettingHelper.Get_BGMaxWidth().ToString();
+                sw_QZHP.IsOn = SettingHelper.Get_QZHP();
+                sw_AutoFull.IsOn = SettingHelper.Get_AutoFull();
 
-            cb_BanPlayer.SelectedIndex = SettingHelper.Get_BanPlayer();
-            if (sw_CustomBg.IsOn)
-            {
-                grid_CustomBg.Visibility = Visibility.Visible;
-                grid_BgHeigth.Visibility = Visibility.Visible;
-                grid_BgWdith.Visibility = Visibility.Visible;
-                grid_Hor.Visibility = Visibility.Visible;
-                grid_Stretch.Visibility = Visibility.Visible;
-                grid_Ver.Visibility = Visibility.Visible;
-                grid_Opacity.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                grid_CustomBg.Visibility = Visibility.Collapsed;
-                grid_BgHeigth.Visibility = Visibility.Collapsed;
-                grid_BgWdith.Visibility = Visibility.Collapsed;
-                grid_Hor.Visibility = Visibility.Collapsed;
-                grid_Stretch.Visibility = Visibility.Collapsed;
-                grid_Ver.Visibility = Visibility.Collapsed;
-                grid_Opacity.Visibility = Visibility.Collapsed;
-            }
+                slider_DanmuSize.Value = SettingHelper.Get_NewDMSize();
+                slider_Num.Value = SettingHelper.Get_DMNumber();
+                slider_DanmuTran.Value = SettingHelper.Get_NewDMTran();
+                slider_DanmuSpeed.Value = SettingHelper.Get_DMSpeed();
 
-
-            txt_version.Text = "Ver "+SettingHelper.GetVersion();
-
-
-
-
-            get_ing = true;
-            switch (SettingHelper.Get_Theme())
-            {
-                case "Red":
-                    cb_Theme.SelectedIndex = 2;
-                    break;
-                case "Blue":
-                    cb_Theme.SelectedIndex = 5;
-                    break;
-                case "Green":
-                    cb_Theme.SelectedIndex = 4;
-                    break;
-                case "Pink":
-                    cb_Theme.SelectedIndex = 0;
-                    break;
-                case "Purple":
-                    cb_Theme.SelectedIndex = 6;
-                    break;
-                case "Yellow":
-                    cb_Theme.SelectedIndex = 3;
-                    break;
-                case "EMT":
-                    cb_Theme.SelectedIndex = 7;
-                    break;
-                case "Dark":
-                    cb_Theme.SelectedIndex = 1;
-                    break;
-                default:
-                    break;
-            }
-            get_ing = false;
-
-            cb_Rigth.SelectedIndex = SettingHelper.Get_Rigth();
-
-
-            if (SettingHelper.Get_BGPath().Length!=0)
-            {
-                StorageFile file = await StorageFile.GetFileFromPathAsync(SettingHelper.Get_BGPath());
-                if (file == null)
+                List<string> fonts = SystemHelper.GetSystemFontFamilies();
+                cb_Font.ItemsSource = fonts;
+                if (SettingHelper.Get_DanmuFont() != "")
                 {
-                    txt_BGPath.Text = "没有背景啊，右侧自定义-->";
+                    cb_Font.SelectedIndex = fonts.IndexOf(SettingHelper.Get_DanmuFont());
                 }
-                else 
-
+                else
                 {
-                    txt_BGPath.Text = file.DisplayName;
+                    cb_Font.SelectedIndex = fonts.IndexOf(cb_Font.FontFamily.Source);
                 }
 
-            }
 
-            txt_Ver.Text = AppHelper.verStr.Replace("/","");
-            pr_Load.Visibility = Visibility.Collapsed;
-            loadsetting = false;
+
+                cb_PlayQuality.SelectedIndex = SettingHelper.Get_PlayQualit() - 1;
+                cb_DownQuality.SelectedIndex = SettingHelper.Get_DownQualit() - 1;
+                cb_VideoType.SelectedIndex = SettingHelper.Get_VideoType();
+                cb_DanmuStyle.SelectedIndex = SettingHelper.Get_DMStyle();
+
+                cb_DownMode.SelectedIndex = SettingHelper.Get_DownMode();
+
+                sw_Playback.SelectedIndex = SettingHelper.Get_Playback();
+
+
+                sw_CustomBg.IsOn = SettingHelper.Get_CustomBG();
+
+                txt_BGPath.Text = SettingHelper.Get_BGPath();
+                txt_CustomDownPath.Text = SettingHelper.Get_DownPath();
+
+
+                cb_BGStretch.SelectedIndex = SettingHelper.Get_BGStretch();
+                cb_Ver.SelectedIndex = SettingHelper.Get_BGVer();
+                cbHor.SelectedIndex = SettingHelper.Get__BGHor();
+                cb_BGOpacity.SelectedIndex = SettingHelper.Get_BGOpacity() - 1;
+                cb_FrostedGlass.SelectedIndex = SettingHelper.Get_FrostedGlass();
+                cb_ClaerLiveComment.SelectedIndex = SettingHelper.Get_ClearLiveComment();
+                sw_H5.IsOn = SettingHelper.Get_UseH5();
+
+                txt_BGMaxHeight.Text = SettingHelper.Get_BGMaxHeight().ToString();
+                txt_BGMaxWidth.Text = SettingHelper.Get_BGMaxWidth().ToString();
+
+                cb_BanPlayer.SelectedIndex = SettingHelper.Get_BanPlayer();
+                if (sw_CustomBg.IsOn)
+                {
+                    grid_CustomBg.Visibility = Visibility.Visible;
+                    grid_BgHeigth.Visibility = Visibility.Visible;
+                    grid_BgWdith.Visibility = Visibility.Visible;
+                    grid_Hor.Visibility = Visibility.Visible;
+                    grid_Stretch.Visibility = Visibility.Visible;
+                    grid_Ver.Visibility = Visibility.Visible;
+                    grid_Opacity.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    grid_CustomBg.Visibility = Visibility.Collapsed;
+                    grid_BgHeigth.Visibility = Visibility.Collapsed;
+                    grid_BgWdith.Visibility = Visibility.Collapsed;
+                    grid_Hor.Visibility = Visibility.Collapsed;
+                    grid_Stretch.Visibility = Visibility.Collapsed;
+                    grid_Ver.Visibility = Visibility.Collapsed;
+                    grid_Opacity.Visibility = Visibility.Collapsed;
+                }
+
+
+                txt_version.Text = "Ver " + SettingHelper.GetVersion();
+
+
+
+
+                get_ing = true;
+                switch (SettingHelper.Get_Theme())
+                {
+                    case "Red":
+                        cb_Theme.SelectedIndex = 2;
+                        break;
+                    case "Blue":
+                        cb_Theme.SelectedIndex = 5;
+                        break;
+                    case "Green":
+                        cb_Theme.SelectedIndex = 4;
+                        break;
+                    case "Pink":
+                        cb_Theme.SelectedIndex = 0;
+                        break;
+                    case "Purple":
+                        cb_Theme.SelectedIndex = 6;
+                        break;
+                    case "Yellow":
+                        cb_Theme.SelectedIndex = 3;
+                        break;
+                    case "EMT":
+                        cb_Theme.SelectedIndex = 7;
+                        break;
+                    case "Dark":
+                        cb_Theme.SelectedIndex = 1;
+                        break;
+                    default:
+                        break;
+                }
+                get_ing = false;
+
+                cb_Rigth.SelectedIndex = SettingHelper.Get_Rigth();
+
+
+                if (SettingHelper.Get_BGPath().Length != 0)
+                {
+                    StorageFile file = await StorageFile.GetFileFromPathAsync(SettingHelper.Get_BGPath());
+                    if (file == null)
+                    {
+                        txt_BGPath.Text = "没有背景啊，右侧自定义-->";
+                    }
+                    else
+
+                    {
+                        txt_BGPath.Text = file.DisplayName;
+                    }
+
+                }
+
+                txt_Ver.Text = AppHelper.verStr.Replace("/", "");
+                pr_Load.Visibility = Visibility.Collapsed;
+                loadsetting = false;
+            }
+            catch (Exception)
+            {
+                Utils.ShowMessageToast("设置读取失败");
+            }
+            
 
         }
       
         private async void cb_Theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
             if (cb_Theme.SelectedItem != null&& !get_ing)
             {
                 switch (cb_Theme.SelectedIndex)

@@ -801,12 +801,12 @@ namespace BiliBili3
             {
                 var applicationView = ApplicationView.GetForCurrentView();
                 applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseVisible);
-                // StatusBar.GetForCurrentView().HideAsync();
-                //StatusBar statusBar = StatusBar.GetForCurrentView();
+                //StatusBar.GetForCurrentView().HideAsync();
+                StatusBar statusBar = StatusBar.GetForCurrentView();
 
-                //statusBar.ForegroundColor = Color.FromArgb(255, 254, 254, 254);
-                //statusBar.BackgroundColor = ((SolidColorBrush)grid_Top.Background).Color;
-                //statusBar.BackgroundOpacity = 100;
+                statusBar.ForegroundColor = Color.FromArgb(255, 254, 254, 254);
+                statusBar.BackgroundColor = ((SolidColorBrush)grid_Top.Background).Color;
+                statusBar.BackgroundOpacity = 100;
             }
 
             var titleBar = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().TitleBar;

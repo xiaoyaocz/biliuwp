@@ -183,7 +183,7 @@ namespace BiliBili3.Helper
         {
             try
             {
-                string url = string.Format("https://api.bilibili.com/audio/music-service-c/url?access_key={0}&appkey={1}&build=5250000&mid={2}&mobi_app=android&platform=android&privilege=2&quality={5}&songid={3}&ts={4}",
+                string url = string.Format("https://api.bilibili.com/audio/music-service-c/url?access_key={0}&appkey={1}&build=5370000&mid={2}&mobi_app=android&platform=android&privilege=2&quality={5}&songid={3}&ts={4}",
                ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetUserId(), id, ApiHelper.GetTimeSpan, quality);
                 url += "&sign=" + ApiHelper.GetSign(url);
 

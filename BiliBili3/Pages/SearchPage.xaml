@@ -201,8 +201,8 @@
                                                         <RowDefinition />
                                                     </Grid.RowDefinitions>
                                                     <Image Width="80" Height="80" Grid.RowSpan="2" Source="{Binding cover}"/>
-                                                    <TextBlock Text="{Binding title}" FontSize="14" VerticalAlignment="Center"  Grid.Column="1" TextWrapping="Wrap" MaxLines="2" Margin="10,0" />
-                                                    <TextBlock Text="{Binding evaluate}" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" FontSize="12" Grid.Column="1" Grid.Row="1"  MaxLines="3" Margin="10,0" Foreground="#FF6A6969" />
+                                                    <TextBlock Text="{Binding title}" FontSize="14" VerticalAlignment="Center"  Grid.Column="1" TextTrimming="CharacterEllipsis"  MaxLines="2" Margin="10,0" />
+                                                    <TextBlock Text="{Binding evaluate}" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"   FontSize="12" Grid.Column="1" Grid.Row="1"  MaxLines="2" Margin="10,0" Foreground="#FF6A6969" />
                                                 </Grid>
                                             </Border>
                                         </DataTemplate>

@@ -1,4 +1,4 @@
-﻿ using BiliBili3.Pages;
+﻿using BiliBili3.Pages;
 using BiliBili3.Pages.FindMore;
 using BiliBili3.Views;
 using Newtonsoft.Json;
@@ -773,7 +773,7 @@ namespace BiliBili3.Views
         {
             get
             {
-                if (extension != null&& extension.vote_cfg!=null)
+                if (extension != null && extension.vote_cfg != null)
                 {
                     return Visibility.Visible;
                 }
@@ -1800,7 +1800,7 @@ namespace BiliBili3.Views
         public vote_cfgModel vote_cfg { get; set; }
         public string lott { get; set; }
 
-        public Visibility showExtension { get { if (origin_extension != null&& origin_extension.vote_cfg != null) { return Visibility.Visible; } else { return Visibility.Collapsed; } } }
+        public Visibility showExtension { get { if (origin_extension != null && origin_extension.vote_cfg != null) { return Visibility.Visible; } else { return Visibility.Collapsed; } } }
         public Visibility showLott
         {
             get

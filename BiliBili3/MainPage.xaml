@@ -1246,7 +1246,8 @@
         <Grid x:Name="network_error" Visibility="Collapsed" Background="{ThemeResource Bili-Background}">
             <StackPanel VerticalAlignment="Center">
                 <Image Source="ms-appx:///Assets/Img/ic_img_loading_error.png" MaxWidth="200"></Image>
-                <TextBlock TextAlignment="Center" Margin="8" TextWrapping="Wrap">好像无法链接到服务器,检查下你的网络状况吧</TextBlock>
+                <TextBlock TextAlignment="Center" Margin="8 4" TextWrapping="Wrap">好像无法链接到服务器,检查下你的网络状况吧</TextBlock>
+                <TextBlock TextAlignment="Center" Margin="8 4" TextWrapping="Wrap">如果你开启了代理，请关闭代理重启应用试试</TextBlock>
                 <HyperlinkButton x:Name="btn_IKonwn" Click="btn_IKonwn_Click" HorizontalAlignment="Center" Margin="0" Padding="0">
                     <Border BorderThickness="1" BorderBrush="{ThemeResource Bili-ForeColor}">
                         <TextBlock Foreground="{ThemeResource Bili-ForeColor}" Margin="8 4">知道了</TextBlock>

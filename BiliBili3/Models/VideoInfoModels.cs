@@ -305,13 +305,13 @@ namespace BiliBili3.Models
     }
     public class statModel
     {
-        public string coin { get; set; }
-        public string danmaku { get; set; }
-        public string favorite { get; set; }
+        public long coin { get; set; }
+        public long danmaku { get; set; }
+        public long favorite { get; set; }
        // public int his_rank { get; set; }
        // public int now_rank { get; set; }
-        public string reply { get; set; }
-        public string share { get; set; }
+        public long reply { get; set; }
+        public long share { get; set; }
         public long view { get; set; }
         public string View
         {
@@ -332,14 +332,14 @@ namespace BiliBili3.Models
         {
             get
             {
-                if (Convert.ToInt32(coin) > 10000)
+                if (coin > 10000)
                 {
                     double d = (double)Convert.ToDouble(coin) / 10000;
                     return d.ToString("0.0") + "万";
                 }
                 else
                 {
-                    return coin;
+                    return coin.ToString();
                 }
             }
         }
@@ -347,14 +347,14 @@ namespace BiliBili3.Models
         {
             get
             {
-                if (Convert.ToInt32(danmaku) > 10000)
+                if (danmaku > 10000)
                 {
                     double d = (double)Convert.ToDouble(danmaku) / 10000;
                     return d.ToString("0.0") + "万";
                 }
                 else
                 {
-                    return danmaku;
+                    return danmaku.ToString();
                 }
             }
         }
@@ -362,14 +362,14 @@ namespace BiliBili3.Models
         {
             get
             {
-                if (Convert.ToInt32(favorite) > 10000)
+                if (favorite > 10000)
                 {
                     double d = (double)Convert.ToDouble(favorite) / 10000;
                     return d.ToString("0.0") + "万";
                 }
                 else
                 {
-                    return favorite;
+                    return favorite.ToString();
                 }
             }
         }
