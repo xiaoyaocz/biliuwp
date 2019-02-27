@@ -414,7 +414,7 @@
                             </StackPanel>
 
 
-                            <HyperlinkButton x:Name="btn_CD" Click="btn_CD_Click"  Grid.Column="2" Margin="5 0" Foreground="White" Background="#00000000">
+                            <HyperlinkButton x:Name="btn_CD" Visibility="Collapsed" Click="btn_CD_Click"  Grid.Column="2" Margin="5 0" Foreground="White" Background="#00000000">
                                 <HyperlinkButton.Content>
                                     <Border Background="{ThemeResource Bili-ForeColor}" CornerRadius="5">
                                         <TextBlock Margin="10 5">充电</TextBlock>
@@ -529,8 +529,8 @@
         </Grid>
         <StackPanel Visibility="Collapsed" HorizontalAlignment="Center" x:Name="movie_pay" Padding="10" VerticalAlignment="Center" Grid.RowSpan="4" Background="#7FFFFFFF">
             <Image Source="ms-appx:///Assets/ic_video_pay_movie_22.png" Width="56"></Image>
-            <TextBlock>此电影需要付费(<Run x:Name="txt_PayMonery"></Run>B币)才可观看正片</TextBlock>
-            <Button x:Name="btn_PayMovie"  HorizontalAlignment="Stretch" Margin="0 5" Background="{ThemeResource Bili-ForeColor}" Foreground="White">我要付费看</Button>
+            <TextBlock>此电影需要付费(<Run x:Name="txt_PayMonery"></Run>B币)才可观看正片,本UWP已经暂停付费功能，请到网页购买</TextBlock>
+            <Button x:Name="btn_PayMovie" Visibility="Collapsed"  HorizontalAlignment="Stretch" Margin="0 5" Background="{ThemeResource Bili-ForeColor}" Foreground="White">我要付费看</Button>
         </StackPanel>
         <ProgressRing Width="56" Height="56" x:Name="pr_Load" Grid.RowSpan="2"  IsActive="True" Visibility="Collapsed"></ProgressRing>
       

@@ -19,8 +19,8 @@
     <PackageCertificateKeyFile>BiliBili3_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>638E10B6115780349BE08AF96430AECAEA95CE4E</PackageCertificateThumbprint>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
+    <PackageCertificateThumbprint>E1B5691FD9CA4E2ABBEF479D18D910868010C179</PackageCertificateThumbprint>
     <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppInstallerUpdateFrequency>1</AppInstallerUpdateFrequency>
@@ -1150,8 +1150,8 @@
     <SDKReference Include="ShanYe MediaPlayer Engine %28Windows 10 UWP%29, Version=1.0.7">
       <Name>ShanYe MediaPlayer Engine %28Windows 10 UWP%29</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.26.0">
-      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.26.0%29</Name>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.27.1">
+      <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
       <Name>Windows Mobile Extensions for the UWP</Name>

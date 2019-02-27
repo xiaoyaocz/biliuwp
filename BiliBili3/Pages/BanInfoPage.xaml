@@ -361,7 +361,7 @@
                                 <Run Text="{Binding total_bp_count}"></Run>
                                 <Run>人承包了这部番剧</Run>
                             </TextBlock>
-                            <HyperlinkButton x:Name="btn_CBFJ" Click="btn_CB_Click" FlyoutBase.AttachedFlyout="{StaticResource fy}" Grid.Column="2" Margin="5 0" Foreground="White" Background="#00000000">
+                            <HyperlinkButton x:Name="btn_CBFJ" Visibility="Collapsed" Click="btn_CB_Click" FlyoutBase.AttachedFlyout="{StaticResource fy}" Grid.Column="2" Margin="5 0" Foreground="White" Background="#00000000">
                                 <HyperlinkButton.Content>
                                     <Border Background="{ThemeResource Bili-ForeColor}" CornerRadius="5">
                                         <TextBlock Margin="10 5">我要承包</TextBlock>

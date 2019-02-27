@@ -174,6 +174,11 @@ namespace BiliBili3.Views
         private async void ls_feed_ItemClick(object sender, ItemClickEventArgs e)
         {
             var data = e.ClickedItem as Modules.HomeModels.HomeDataModel;
+            if (data.uri==null)
+            {
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(MyFollowsBangumiPage));
+                return;
+            }
             if (await MessageCenter.HandelUrl(data.uri))
             {
                 return;

@@ -419,7 +419,18 @@ namespace BiliBili3.Modules
             /// <summary>
             /// 【刀剑神域】当你用爱情公寓的方法打开刀剑神域
             /// </summary>
-            public string title { get; set; }
+            
+            private string _title="";
+            public string title {
+                get {
+                    if (_title==""&&uri=="")
+                    {
+                        return "你追的番剧更新啦~";
+                    }
+                    return _title;
+                }
+                set { _title = value; }
+            }
 
             public string cover { get; set; }
             public string banner_url { get; set; }
@@ -431,8 +442,8 @@ namespace BiliBili3.Modules
                 {
                     if (cover != null && cover.Length != 0)
                     {
-
-                        return cover + ((_goto == "av"||_goto== "bangumi_rcmd") ? "" : "@320w_200h_1e_1c.jpg");
+                        return cover + "@320w_200h_1e_1c.jpg";
+                        //return cover + ((_goto == "av"||_goto== "bangumi_rcmd") ? "" : "@320w_200h_1e_1c.jpg");
                     }
                     if (banner_url != null && banner_url.Length != 0)
                     {
