@@ -66,9 +66,14 @@ namespace BiliBili3.Pages
         protected async override void OnNavigatedFrom(NavigationEventArgs e)
         {
             _timer.Stop();
+          
+            if (IsBusy)
+            {
+                await _mediaCapture.StopPreviewAsync();
+            }
             IsBusy = false;
-            await _mediaCapture.StopPreviewAsync();
-            
+
+
         }
 
         private void InitVideoTimer()
@@ -227,7 +232,7 @@ namespace BiliBili3.Pages
 
                 if (_result != null)
                 {
-                   
+
                     Debug.WriteLine(@"[INFO]扫描到二维码:{result}   ->" + _result.Text);
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
@@ -305,11 +310,11 @@ namespace BiliBili3.Pages
 
                             return;
                         }
-                        
-                        string live2 = Regex.Match(_result.Text+"a", @"live.bilibili.com/(.*?)a").Groups[1].Value;
+
+                        string live2 = Regex.Match(_result.Text + "a", @"live.bilibili.com/(.*?)a").Groups[1].Value;
                         if (live2.Length != 0)
                         {
-                            MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(LiveRoomPage), live2.Replace("a",""));
+                            MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(LiveRoomPage), live2.Replace("a", ""));
 
                             return;
                         }
@@ -334,9 +339,10 @@ namespace BiliBili3.Pages
             }
         }
 
+
         private async void InitVideoCapture()
         {
-            
+
             ///摄像头的检测
             var cameraDevice = await FindCameraDeviceByPanelAsync(Windows.Devices.Enumeration.Panel.Back);
             if (cameraDevice == null)
@@ -346,7 +352,7 @@ namespace BiliBili3.Pages
                 return;
             }
 
-          
+
             var settings = new MediaCaptureInitializationSettings
             {
                 StreamingCaptureMode = StreamingCaptureMode.Video,
@@ -376,7 +382,7 @@ namespace BiliBili3.Pages
                 _mediaCapture.SetPreviewRotation(VideoRotation.Clockwise90Degrees);
 
             }
-          
+
 
             VideoCapture.Source = _mediaCapture;
             VideoCapture.FlowDirection = FlowDirection.LeftToRight;
@@ -417,7 +423,7 @@ namespace BiliBili3.Pages
                 await focusControl.FocusAsync();
             }
 
-            
+
             //var angle = CameraRotationHelper.ConvertSimpleOrientationToClockwiseDegrees(_rotationHelper.GetUIOrientation());
             // var transform = new RotateTransform { Angle = 90 };
             // VideoCapture.RenderTransform = transform;

@@ -37,6 +37,7 @@
             <TextBox x:Name="txt_Username" PlaceholderText="请输入用户名"></TextBox>
             <TextBlock  Margin="0 4">密码</TextBlock>
             <PasswordBox x:Name="txt_Password" PlaceholderText="请输入密码" GotFocus="txt_Password_GotFocus"  LostFocus="txt_Password_LostFocus"></PasswordBox>
+            <CheckBox x:Name="cb_AuthBP" Visibility="Collapsed" Margin="0 4" Content="授权BiliPlus(可以解除地区限制)" ></CheckBox>
             <StackPanel x:Name="chatcha" Visibility="Collapsed">
                 <TextBlock Margin="0 4">验证码</TextBlock>
                 <Grid>

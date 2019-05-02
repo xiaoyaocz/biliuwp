@@ -42,6 +42,7 @@ namespace BiliBili3.Models
 
         public elecModel elec { get; set; }
         public audioModel audio { get; set; }
+        public List<staffModel> staff { get; set; }
 
         public string Created_at
         {
@@ -95,6 +96,51 @@ namespace BiliBili3.Models
                 //}
             }
         }
+    }
+    public class staffModel
+    {
+        public int attention { get; set; }
+        private string _face;
+        public string face
+        {
+            get { return _face+"@100w.jpg"; }
+            set { _face = value; }
+        }
+        public string name { get; set; }
+        public string title { get; set; }
+        public long mid { get; set; }
+        public official_verify official_verify { get; set; }
+        public string verify
+        {
+            get
+            {
+                if (official_verify != null)
+                {
+                    switch (official_verify.type)
+                    {
+                        case 0:
+                            return "ms-appx:///Assets/MiniIcon/ic_authentication_personal.png";
+                        case 1:
+                            return "ms-appx:///Assets/MiniIcon/ic_authentication_organization.png";
+                        default:
+                            return "ms-appx:///Assets/MiniIcon/transparent.png";
+                    }
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
+
+       
+
+    }
+    public class official_verify
+    {
+        public string desc { get; set; }
+        public int type { get; set; }
+        
     }
     public class ActorModel
     {

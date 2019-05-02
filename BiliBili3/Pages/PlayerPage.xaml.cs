@@ -913,7 +913,7 @@ namespace BiliBili3.Pages
             catch (Exception ex)
             {
                 AddLog("视频播放失败了" + ex.HResult);
-                await new MessageDialog("无法读取到播放地址 ＞﹏＜ \r\n请尝试登录、更换清晰度或FQ后再试\r\n如果是地区限制番可能无法第一时间观看，请过段时间重试").ShowAsync();
+                await new MessageDialog("无法读取到播放地址 ＞﹏＜ \r\n请尝试登录、更换清晰度、开通大会员或FQ后再试\r\n如果是地区限制番可能无法第一时间观看，请过段时间重试").ShowAsync();
             }
             finally
             {
@@ -1061,15 +1061,21 @@ namespace BiliBili3.Pages
                 case PlayMode.VipBangumi:
 
                     var ban = await PlayurlHelper.GetBangumiUrl(playNow, (cb_Quity.SelectedItem as QualityModel).qn);
-
-                    if (ban.usePlayMode == UsePlayMode.System)
+                    if (ban!=null)
                     {
+                        if (ban.usePlayMode == UsePlayMode.System)
+                        {
 
-                        mediaElement.Source = new Uri(ban.url);
+                            mediaElement.Source = new Uri(ban.url);
+                        }
+                        else
+                        {
+                            mediaElement.Source = await ban.playlist.SaveAndGetFileUriAsync();
+                        }
                     }
                     else
                     {
-                        mediaElement.Source = await ban.playlist.SaveAndGetFileUriAsync();
+                        Utils.ShowMessageToast("更换清晰度失败，无法读取播放地址");
                     }
 
                     break;
@@ -1079,14 +1085,20 @@ namespace BiliBili3.Pages
 
 
                     var ss = await PlayurlHelper.GetVideoUrl(playNow.Aid, playNow.Mid, (cb_Quity.SelectedItem as QualityModel).qn);
-
-                    if (ss.usePlayMode == UsePlayMode.System)
+                    if (ss!=null)
                     {
-                        mediaElement.Source = new Uri(ss.url);
+                        if (ss.usePlayMode == UsePlayMode.System)
+                        {
+                            mediaElement.Source = new Uri(ss.url);
+                        }
+                        else
+                        {
+                            mediaElement.Source = await ss.playlist.SaveAndGetFileUriAsync();
+                        }
                     }
                     else
                     {
-                        mediaElement.Source = await ss.playlist.SaveAndGetFileUriAsync();
+                        Utils.ShowMessageToast("更换清晰度失败，无法读取播放地址");
                     }
 
                     break;

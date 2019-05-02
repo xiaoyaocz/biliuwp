@@ -46,6 +46,23 @@ namespace BiliBili3
                 return results;
             }
         }
+        public static async Task<string> GetResults(Uri url,Dictionary<string,string> header)
+        {
+            HttpBaseProtocolFilter fiter = new HttpBaseProtocolFilter();
+            fiter.IgnorableServerCertificateErrors.Add(Windows.Security.Cryptography.Certificates.ChainValidationResult.Expired);
+            using (HttpClient hc = new HttpClient(fiter))
+            {
+                foreach (var item in header)
+                {
+                    hc.DefaultRequestHeaders.Add(item.Key, item.Value);
+                }
+                HttpResponseMessage hr = await hc.GetAsync(url);
+                hr.EnsureSuccessStatusCode();
+                var encodeResults = await hr.Content.ReadAsBufferAsync();
+                string results = Encoding.UTF8.GetString(encodeResults.ToArray(), 0, encodeResults.ToArray().Length);
+                return results;
+            }
+        }
 
 
         public static async Task<string> GetResults_NoHeader(Uri url)

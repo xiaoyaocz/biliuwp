@@ -117,7 +117,7 @@ namespace BiliBili3.Models
         private string _cover;
         public string cover
         {
-            get { return _cover + "@300w.jpg"; }
+            get { return _cover + "@500w.jpg"; }
             set { _cover = value; }
         }
         public string desc { get; set; }

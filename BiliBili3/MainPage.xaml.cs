@@ -37,6 +37,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -56,6 +58,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using Windows.Web.Http;
+using Windows.Web.Http.Filters;
 using static BiliBili3.Helper.MusicHelper;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
@@ -301,7 +305,7 @@ namespace BiliBili3
             try
             {
                 string _buid = await WebClientClass.GetResults(new Uri("http://data.bilibili.com/gv/"));
-                string results ="";
+                string results = "";
                 results = results.Replace("\"", "");
                 if (results.Length != 0)
                 {
@@ -480,7 +484,7 @@ namespace BiliBili3
             //MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(FuckMSPage));
 
             //await  new Account().SSO();
-           
+
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -1153,7 +1157,7 @@ namespace BiliBili3
 
                     bottom.SelectedIndex = 3;
 
-                    menu_List.SelectedIndex =3;
+                    menu_List.SelectedIndex = 3;
 
                     txt_Header.Text = "番剧";
                     break;
@@ -1333,7 +1337,7 @@ namespace BiliBili3
 
                     txt_Header.Text = "追番";
                     break;
-               
+
                 //case 3:
                 //    main_frame.Navigate(typeof(PartPage));
 
@@ -1413,9 +1417,9 @@ namespace BiliBili3
 
         private void btn_user_Qr_Click(object sender, RoutedEventArgs e)
         {
-          
+
             //var info = gv_user.DataContext as UserInfoModel;
-            
+
             frame.Navigate(typeof(MyQrPage), new object[] { new MyqrModel() {
                   name=Account.myInfo.name,
                   photo=Account.myInfo.face,
@@ -1438,14 +1442,48 @@ namespace BiliBili3
 
         private async void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if ((e.ClickedItem as StackPanel).Tag.ToString() == "ToView")
+            var item = (e.ClickedItem as StackPanel).Tag.ToString();
+            if (item == "ToView")
             {
-                if (!ApiHelper.IsLogin()&&!await Utils.ShowLoginDialog())
+                if (!ApiHelper.IsLogin() && !await Utils.ShowLoginDialog())
                 {
                     Utils.ShowMessageToast("请先登录");
                     return;
                 }
                 MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(ToViewPage));
+            }
+            else if (item == "Test")
+            {
+                string result;
+
+                try
+                {
+                    var url = new Uri($"https://www.biliplus.com/login?act=savekey&mid={UserManage.Uid}&access_key={ApiHelper.access_key}&expire=");
+                    using (HttpClient httpClient = new HttpClient())
+                    {
+                        var rq = await httpClient.GetAsync(url);
+                        var setCookie = rq.Headers["set-cookie"];
+                        StringBuilder stringBuilder = new StringBuilder();
+                        var matches = Regex.Matches(setCookie, "(.*?)=(.*?); ", RegexOptions.Singleline);
+                        foreach (Match match in matches)
+                        {
+                            var key = match.Groups[1].Value.Replace("HttpOnly, ", "");
+                            var value = match.Groups[2].Value;
+                            if (key != "expires"&&key!= "Max-Age"&&key!= "path" && key != "domain")
+                            {
+                                stringBuilder.Append(match.Groups[0].Value.Replace("HttpOnly, ",""));
+                            }
+                        }
+                    }
+                    
+                }
+                catch (Exception ex)
+                {
+                    // Authentication failed. Handle parameter, SSL/TLS, and Network Unavailable errors here. 
+                    result = ex.Message;
+                    throw;
+                }
+
             }
             else
             {

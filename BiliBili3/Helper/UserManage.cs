@@ -20,7 +20,8 @@ namespace BiliBili3.Helper
     static class UserManage
     {
         public static event EventHandler Logined;
-        public static string access_key = string.Empty;
+        public static string access_key { get; set; }
+        public static string username { get; set; }
         public static bool IsLogin()
         {
             if (SettingHelper.Get_Access_key() != "")
@@ -190,11 +191,12 @@ namespace BiliBili3.Helper
             }
             ApiHelper.access_key = string.Empty;
             UserManage.access_key = string.Empty;
-            SettingHelper.Set_Access_key("");
-            SettingHelper.Set_Refresh_Token("");
-            SettingHelper.Set_Password("");
+            SettingHelper.Set_Access_key(string.Empty);
+            SettingHelper.Set_Refresh_Token(string.Empty);
+            SettingHelper.Set_Password(string.Empty);
             SettingHelper.Set_UserID(0);
             SettingHelper.Set_LoginExpires(DateTime.Now);
+            SettingHelper.Set_BiliplusCookie(string.Empty);
         }
 
 
@@ -206,7 +208,7 @@ namespace BiliBili3.Helper
             }
         }
 
-
+      
 
 
         //public static async void UpdateFollowList()

@@ -34,6 +34,7 @@ using Windows.Storage.Streams;
 using Windows.Storage.Provider;
 using System.Threading.Tasks;
 using BiliBili3.Modules;
+using Windows.UI.Popups;
 
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
@@ -116,14 +117,14 @@ namespace BiliBili3.Pages
 
                 if (model.code == 0 || model.code == -404)
                 {
-                    if (model.code==-404)
+                    if (model.code == -404)
                     {
                         string eresults = await WebClientClass.GetResultsUTF8Encode(new Uri("https://bangumi.bilibili.com/view/web_api/season?season_id=" + _banId));
                         eresults = eresults.Replace("ep_id", "episode_id");
                         eresults = eresults.Replace("cid", "danmaku");
                         eresults = eresults.Replace("aid", "av_id");
-                        model  = JsonConvert.DeserializeObject<BangumiDataModel>(eresults);
-                        if (model.code!=0)
+                        model = JsonConvert.DeserializeObject<BangumiDataModel>(eresults);
+                        if (model.code != 0)
                         {
                             Utils.ShowMessageToast(model.message, 3000);
                             return;
@@ -146,10 +147,13 @@ namespace BiliBili3.Pages
                             model.result.episodes = ep;
                         }
                     }
-                   
+
 
                     int i = 0;
+                    model.result.pv_episodes = model.result.episodes.Where(x => x.section_type != 0).ToList();
+                    model.result.pv_episodes.ForEach(x => { x.orderindex = i; i++; });
 
+                    model.result.episodes = model.result.episodes.Where(x=>x.section_type==0).ToList();
                     model.result.episodes.ForEach(x => { x.orderindex = i; i++; });
                     model.result.episodes = model.result.episodes.OrderByDescending(x => x.orderindex).ToList();
 
@@ -159,8 +163,17 @@ namespace BiliBili3.Pages
                     this.DataContext = model.result;
 
 
-                    gv_Play.ItemsSource = model.result.episodes;
 
+                    gv_Play.ItemsSource = model.result.episodes;
+                    gv_Pv.ItemsSource= model.result.pv_episodes;
+                    if (model.result.pv_episodes!=null&&model.result.pv_episodes.Count!=0)
+                    {
+                        pvInfo.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        pvInfo.Visibility = Visibility.Collapsed;
+                    }
                     if (model.result.user_status != null && model.result.user_status.follow != 0)
                     {
                         btn_Like.Visibility = Visibility.Collapsed;
@@ -259,6 +272,40 @@ namespace BiliBili3.Pages
                     {
                         Utils.ShowMessageToast("尚未开播或不支持你所在地区", 3000);
                     }
+                  
+                    if (model.result.dialog != null)
+                    {
+                        dialog.Visibility = Visibility.Visible;
+                        //付费显示弹窗
+                        //MessageDialog dialog = new MessageDialog(model.result.dialog.desc, model.result.dialog.title);
+                        //if (model.result.dialog.btn_left != null)
+                        //{
+                        //    dialog.Commands.Add(new UICommand(model.result.dialog.btn_left.title, (e) =>
+                        //    {
+                        //        if (model.result.dialog.btn_left.type == "pay" || model.result.dialog.btn_left.type == "vip")
+                        //        {
+                        //            Utils.ShowMessageToast("UWP端不支持付费功能，请到网页或手机端购买后观看");
+                        //        }
+                        //    }));
+                        //}
+                        //if (model.result.dialog.btn_right != null)
+                        //{
+                        //    dialog.Commands.Add(new UICommand(model.result.dialog.btn_right.title, (e) =>
+                        //    {
+                        //        if (model.result.dialog.btn_right.type == "pay" || model.result.dialog.btn_right.type == "vip")
+                        //        {
+                        //            Utils.ShowMessageToast("UWP端不支持付费功能，请到网页或手机端购买后观看");
+                        //        }
+                        //    }));
+                        //}
+                        //dialog.Commands.Add(new UICommand("取消"));
+                        //await dialog.ShowAsync();
+                    }
+                    else
+                    {
+                        dialog.Visibility = Visibility.Collapsed;
+                    }
+
                 }
                 else
                 {
@@ -911,15 +958,14 @@ namespace BiliBili3.Pages
         private void gv_Play_ItemClick(object sender, ItemClickEventArgs e)
         {
             var info = e.ClickedItem as episodesModel;
-
-
             List<PlayerModel> ls = new List<PlayerModel>();
-
-
-
-
             // int i = 1;
-            foreach (episodesModel item in gv_Play.Items)
+            var items = gv_Play.Items;
+            if ((sender as GridView).Name== "gv_Pv")
+            {
+                items = gv_Pv.Items;
+            }
+            foreach (episodesModel item in items)
             {
                 if (item.IsDowned == Visibility.Visible)
                 {
@@ -942,8 +988,8 @@ namespace BiliBili3.Pages
                 {
                     if (item.episode_status == 7)
                     {
-                        ls.Add(new PlayerModel() { banId = _banId, banInfo = item, Aid = item.av_id, Mid = item.danmaku.ToString(), Mode = PlayMode.VipBangumi, No = item.orderindex.ToString(), VideoTitle = item.index + " " + item.index_title, Title = txt_Name.Text, episode_id = item.episode_id ,index=item.orderindex});
-                        ls.Add(new PlayerModel() { banId = _banId, banInfo = item, Aid = item.av_id, Mid = item.danmaku.ToString(), Mode = PlayMode.VipBangumi, No = item.orderindex.ToString(), VideoTitle = item.index + " " + item.index_title, Title = txt_Name.Text, episode_id = item.episode_id ,index=item.orderindex});
+                        ls.Add(new PlayerModel() { banId = _banId, banInfo = item, Aid = item.av_id, Mid = item.danmaku.ToString(), Mode = PlayMode.VipBangumi, No = item.orderindex.ToString(), VideoTitle = item.index + " " + item.index_title, Title = txt_Name.Text, episode_id = item.episode_id, index = item.orderindex });
+                        ls.Add(new PlayerModel() { banId = _banId, banInfo = item, Aid = item.av_id, Mid = item.danmaku.ToString(), Mode = PlayMode.VipBangumi, No = item.orderindex.ToString(), VideoTitle = item.index + " " + item.index_title, Title = txt_Name.Text, episode_id = item.episode_id, index = item.orderindex });
                     }
                     else
                     {
@@ -1125,15 +1171,21 @@ namespace BiliBili3.Pages
         {
             var item = ((FrameworkElement)e.OriginalSource).DataContext as episodesModel;
             ToView toView = new ToView();
-            var data= await toView.AddToView(item.av_id);
+            var data = await toView.AddToView(item.av_id);
             if (data.success)
             {
                 Utils.ShowMessageToast("添加成功");
             }
-            else{
+            else
+            {
                 Utils.ShowMessageToast("添加失败 ");
             }
-        } 
+        }
+
+        private void BtnPay_Click(object sender, RoutedEventArgs e)
+        {
+            Utils.ShowMessageToast("UWP端不支持付费功能，请到网页或手机端购买后观看");
+        }
 
         //private void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
@@ -1208,6 +1260,7 @@ namespace BiliBili3.Pages
         public string title { get; set; }
 
         public List<episodesModel> episodes { get; set; }
+        public List<episodesModel> pv_episodes { get; set; }
         public BangumipublishModel publish { get; set; }
         public Banguminewest_epModel newest_ep { get; set; }
         public BangumiratingModel rating { get; set; }
@@ -1217,8 +1270,21 @@ namespace BiliBili3.Pages
         public Bangumiuser_statusModel user_status { get; set; }
 
         public BangumiDetailModel detail { get; set; }
-
+        public BangumiDialogModel dialog { get; set; }
     }
+    public class BangumiDialogModel
+    {
+        public string desc { get; set; }
+        public string title { get; set; }
+        public btn_rightModel btn_right { get; set; }
+        public btn_rightModel btn_left { get; set; }
+    }
+    public class btn_rightModel
+    {
+        public string type { get; set; }
+        public string title { get; set; }
+    }
+
     public class Bangumiuser_statusModel
     {
         public int follow { get; set; }

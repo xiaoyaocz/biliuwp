@@ -244,7 +244,7 @@ namespace BiliBili3.Models
         public string index { get; set; }
         public int orderindex { get; set; }
         public int episode_status { get; set; }
-      
+        public int section_type { get; set; }
 
         public string badge { get; set; }
         public Visibility IsBadge

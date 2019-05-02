@@ -1002,6 +1002,13 @@
                         </ListView>
                         <AppBarButton VerticalAlignment="Bottom" Margin="0 0 0 100" Visibility="Collapsed" Foreground="White" Icon="Clear" Width="48" Height="48" x:Name="btn_CG" Click="btn_CG_Click"></AppBarButton>
                         <ListView VerticalAlignment="Bottom" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
+                            <ListViewItem Visibility="Collapsed" Style="{StaticResource SelectItem}" Height="48" >
+                                <StackPanel Orientation="Horizontal" Tag="Test">
+                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xe633;" Foreground="White"/>
+                                 
+                                    <TextBlock Text="测试" VerticalAlignment="Center" Margin="18 -2 18 0" Foreground="White" />
+                                </StackPanel>
+                            </ListViewItem>
                             <ListViewItem  Style="{StaticResource SelectItem}" Height="48" >
                                 <StackPanel Orientation="Horizontal" Tag="ToView">
                                     <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xe633;" Foreground="White"/>

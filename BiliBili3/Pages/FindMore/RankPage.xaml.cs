@@ -110,21 +110,20 @@ namespace BiliBili3.Pages
             try
             {
                
-                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-3-33.json"));
-                InfoModel model = JsonConvert.DeserializeObject<InfoModel>(results);
-                InfoModel model1 = JsonConvert.DeserializeObject<InfoModel>(model.rank.ToString());
-                List<InfoModel> ls = JsonConvert.DeserializeObject<List<InfoModel>>(model1.list.ToString());
-                List<InfoModel> ReList = new List<InfoModel>();
-                for (int i = 0; i < 15; i++)
+                string results = await WebClientClass.GetResults(new Uri("https://api.bilibili.com/pgc/web/rank/list?day=3&season_type=1"));
+                JObject obj = JObject.Parse(results);
+                if (obj["code"].ToInt32()==0)
                 {
-                    if (i < 3)
-                    {
-                        ls[i].forColor = App.Current.Resources["Bili-ForeColor"] as SolidColorBrush;;
-                    }
-                    ls[i].num = i + 1;
-                    ReList.Add(ls[i]);
+                    List<BangumiRankModel> ls = JsonConvert.DeserializeObject<List<BangumiRankModel>>(obj["result"]["list"].ToString());
+                    QQ_Rank_FJ.ItemsSource = ls;
                 }
-                QQ_Rank_FJ.ItemsSource = ReList;
+                else
+                {
+                    Utils.ShowMessageToast(obj["message"].ToString());
+                }
+               
+              
+               
 
             }
             catch (Exception ex)
@@ -138,7 +137,7 @@ namespace BiliBili3.Pages
             try
             {
                
-                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-03-1.json"));
+                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-3-1.json"));
                 InfoModel model = JsonConvert.DeserializeObject<InfoModel>(results);
                 InfoModel model1 = JsonConvert.DeserializeObject<InfoModel>(model.rank.ToString());
                 List<InfoModel> ls = JsonConvert.DeserializeObject<List<InfoModel>>(model1.list.ToString());
@@ -167,7 +166,7 @@ namespace BiliBili3.Pages
             try
             {
                
-                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-03-3.json"));
+                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-3-3.json"));
                 InfoModel model = JsonConvert.DeserializeObject<InfoModel>(results);
                 InfoModel model1 = JsonConvert.DeserializeObject<InfoModel>(model.rank.ToString());
                 List<InfoModel> ls = JsonConvert.DeserializeObject<List<InfoModel>>(model1.list.ToString());
@@ -195,7 +194,7 @@ namespace BiliBili3.Pages
             try
             {
                
-                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-03-129.json"));
+                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-3-129.json"));
                 InfoModel model = JsonConvert.DeserializeObject<InfoModel>(results);
                 InfoModel model1 = JsonConvert.DeserializeObject<InfoModel>(model.rank.ToString());
                 List<InfoModel> ls = JsonConvert.DeserializeObject<List<InfoModel>>(model1.list.ToString());
@@ -226,7 +225,7 @@ namespace BiliBili3.Pages
             try
             {
                
-                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-03-4.json"));
+                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-3-4.json"));
                 InfoModel model = JsonConvert.DeserializeObject<InfoModel>(results);
                 InfoModel model1 = JsonConvert.DeserializeObject<InfoModel>(model.rank.ToString());
                 List<InfoModel> ls = JsonConvert.DeserializeObject<List<InfoModel>>(model1.list.ToString());
@@ -254,7 +253,7 @@ namespace BiliBili3.Pages
             try
             {
                
-                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-03-36.json"));
+                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-3-36.json"));
                 InfoModel model = JsonConvert.DeserializeObject<InfoModel>(results);
                 InfoModel model1 = JsonConvert.DeserializeObject<InfoModel>(model.rank.ToString());
                 List<InfoModel> ls = JsonConvert.DeserializeObject<List<InfoModel>>(model1.list.ToString());
@@ -285,7 +284,7 @@ namespace BiliBili3.Pages
             try
             {
                
-                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-03-5.json"));
+                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-3-5.json"));
                 InfoModel model = JsonConvert.DeserializeObject<InfoModel>(results);
                 InfoModel model1 = JsonConvert.DeserializeObject<InfoModel>(model.rank.ToString());
                 List<InfoModel> ls = JsonConvert.DeserializeObject<List<InfoModel>>(model1.list.ToString());
@@ -313,7 +312,7 @@ namespace BiliBili3.Pages
             try
             {
                
-                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-03-160.json"));
+                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-3-160.json"));
                 InfoModel model = JsonConvert.DeserializeObject<InfoModel>(results);
                 InfoModel model1 = JsonConvert.DeserializeObject<InfoModel>(model.rank.ToString());
                 List<InfoModel> ls = JsonConvert.DeserializeObject<List<InfoModel>>(model1.list.ToString());
@@ -341,7 +340,7 @@ namespace BiliBili3.Pages
             try
             {
                
-                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-03-119.json"));
+                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-3-119.json"));
                 InfoModel model = JsonConvert.DeserializeObject<InfoModel>(results);
                 InfoModel model1 = JsonConvert.DeserializeObject<InfoModel>(model.rank.ToString());
                 List<InfoModel> ls = JsonConvert.DeserializeObject<List<InfoModel>>(model1.list.ToString());
@@ -371,7 +370,7 @@ namespace BiliBili3.Pages
             try
             {
                
-                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-03-23.json"));
+                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-3-23.json"));
                 InfoModel model = JsonConvert.DeserializeObject<InfoModel>(results);
                 InfoModel model1 = JsonConvert.DeserializeObject<InfoModel>(model.rank.ToString());
                 List<InfoModel> ls = JsonConvert.DeserializeObject<List<InfoModel>>(model1.list.ToString());
@@ -399,7 +398,7 @@ namespace BiliBili3.Pages
             try
             {
                
-                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-03-11.json"));
+                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-3-11.json"));
                 InfoModel model = JsonConvert.DeserializeObject<InfoModel>(results);
                 InfoModel model1 = JsonConvert.DeserializeObject<InfoModel>(model.rank.ToString());
                 List<InfoModel> ls = JsonConvert.DeserializeObject<List<InfoModel>>(model1.list.ToString());
@@ -427,7 +426,7 @@ namespace BiliBili3.Pages
             try
             {
                
-                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-03-155.json"));
+                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/rank/all-3-155.json"));
                 InfoModel model = JsonConvert.DeserializeObject<InfoModel>(results);
                 InfoModel model1 = JsonConvert.DeserializeObject<InfoModel>(model.rank.ToString());
                 List<InfoModel> ls = JsonConvert.DeserializeObject<List<InfoModel>>(model1.list.ToString());
@@ -616,15 +615,25 @@ namespace BiliBili3.Pages
             bor_Width.Width = this.ActualWidth / d - 22;
         }
 
-
-
+        private void QQ_Rank_FJ_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), (e.ClickedItem as BangumiRankModel).season_id.ToString());
+            
+        }
     }
 
     public class InfoModel
     {
         public object list { get; set; }
         public object rank { get; set; }
-        public string pic { get; set; }
+        private string _pic;
+
+        public string pic
+        {
+            get { return _pic+"@200w.jpg"; }
+            set { _pic = value; }
+        }
+
 
         public string title { get; set; }
         public string play { get; set; }
@@ -644,6 +653,29 @@ namespace BiliBili3.Pages
         public string cover { get; set; }
         public string face { get; set; }
         public string roomid { get; set; }
+    }
+    public class BangumiRankModel
+    {
+        public string badge { get; set; }
+        private string _cover;
+
+        public string cover
+        {
+            get { return _cover + "@120h.jpg"; }
+            set { _cover = value; }
+        }
+        public string title { get; set; }
+        public int season_id { get; set; }
+        public int rank { get; set; }
+        public int pts { get; set; }
+        public BangumiRankStatModel stat { get; set; }
+    }
+    public class BangumiRankStatModel
+    {
+       
+        public long danmaku { get; set; }
+        public long follow { get; set; }
+        public long view { get; set; }
     }
 
 }

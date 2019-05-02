@@ -1673,6 +1673,25 @@ namespace BiliBili3
             container.Values["Access_key"] = value;
         }
 
+        public static string Get_BiliplusCookie()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            if (container.Values["BiliplusCookie"] != null)
+            {
+                return (string)container.Values["BiliplusCookie"];
+            }
+            else
+            {
+                return "";
+            }
+        }
+        public static void Set_BiliplusCookie(string value)
+        {
+            container = ApplicationData.Current.LocalSettings;
+            container.Values["BiliplusCookie"] = value;
+        }
+
+
         public static string Get_Refresh_Token()
         {
             container = ApplicationData.Current.LocalSettings;

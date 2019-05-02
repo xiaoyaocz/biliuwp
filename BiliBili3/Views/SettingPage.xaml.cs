@@ -1,4 +1,5 @@
 ﻿using BiliBili3.Helper;
+using BiliBili3.Modules;
 using BiliBili3.Pages;
 using System;
 using System.Collections.Generic;
@@ -36,16 +37,16 @@ namespace BiliBili3.Views
         public SettingPage()
         {
             this.InitializeComponent();
-            
+
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            
-            if (e.NavigationMode== NavigationMode.New)
+
+            if (e.NavigationMode == NavigationMode.New)
             {
                 GetSetting();
-            }   
+            }
         }
         bool get_ing = true;
         bool loadsetting = true;
@@ -121,7 +122,15 @@ namespace BiliBili3.Views
                     cb_Font.SelectedIndex = fonts.IndexOf(cb_Font.FontFamily.Source);
                 }
 
-
+                var c = SettingHelper.Get_BiliplusCookie();
+                if (c != "")
+                {
+                    txtBPState.Text = "(已授权)";
+                }
+                else
+                {
+                    txtBPState.Text = "";
+                }
 
                 cb_PlayQuality.SelectedIndex = SettingHelper.Get_PlayQualit() - 1;
                 cb_DownQuality.SelectedIndex = SettingHelper.Get_DownQualit() - 1;
@@ -236,14 +245,14 @@ namespace BiliBili3.Views
             {
                 Utils.ShowMessageToast("设置读取失败");
             }
-            
+
 
         }
-      
+
         private async void cb_Theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            if (cb_Theme.SelectedItem != null&& !get_ing)
+            if (cb_Theme.SelectedItem != null && !get_ing)
             {
                 switch (cb_Theme.SelectedIndex)
                 {
@@ -276,14 +285,21 @@ namespace BiliBili3.Views
                 }
                 MessageCenter.SendChanageThemeEvent(null);
                 MessageDialog messageDialog = new MessageDialog("重启应用一下，效果更好，是否立即重启应用?", "是否重启应用");
-                messageDialog.Commands.Add(new UICommand("确定", async (x) => { await CoreApplication.RequestRestartAsync(string.Empty); }));
+                messageDialog.Commands.Add(new UICommand("确定", async (x) =>
+                {
+                    var result = await CoreApplication.RequestRestartAsync(string.Empty);
+                    if (result == AppRestartFailureReason.NotInForeground || result == AppRestartFailureReason.Other)
+                    {
+                        Utils.ShowMessageToast("请收到重启应用");
+                    }
+                }));
                 messageDialog.Commands.Add(new UICommand("取消", (x) => { }));
                 await messageDialog.ShowAsync();
             }
             MessageCenter.SendChanageThemeEvent(null);
 
 
-        
+
             //await CoreApplication.RequestRestartAsync(string.Empty);
         }
 
@@ -295,7 +311,7 @@ namespace BiliBili3.Views
         private void cb_Rigth_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SettingHelper.Set_Rigth(cb_Rigth.SelectedIndex);
-            
+
         }
 
         private void sw_HideStatus_Toggled(object sender, RoutedEventArgs e)
@@ -315,7 +331,7 @@ namespace BiliBili3.Views
 
         private void cb_PlayQuality_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SettingHelper.Set_PlayQualit(cb_PlayQuality.SelectedIndex+1);
+            SettingHelper.Set_PlayQualit(cb_PlayQuality.SelectedIndex + 1);
         }
 
         private void cb_VideoType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -362,7 +378,7 @@ namespace BiliBili3.Views
 
         private void slider_DanmuSpeed_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-           
+
             SettingHelper.Set_DMSpeed(slider_DanmuSpeed.Value);
         }
 
@@ -372,7 +388,7 @@ namespace BiliBili3.Views
             {
                 SettingHelper.Set_NewDMTran(slider_DanmuTran.Value);
             }
-            
+
         }
 
         private void slider_Num_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
@@ -525,10 +541,10 @@ namespace BiliBili3.Views
             openPicker.FileTypeFilter.Add(".bmp");
             // 弹出文件选择窗口
             StorageFile file = await openPicker.PickSingleFileAsync(); // 用户在“文件选择窗口”中完成操作后，会返回对应的 StorageFile 对象
-            if (file!=null)
+            if (file != null)
             {
                 StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-                StorageFile ex=null;
+                StorageFile ex = null;
                 try
                 {
                     ex = await localFolder.GetFileAsync(file.Name);
@@ -536,7 +552,7 @@ namespace BiliBili3.Views
                 catch (Exception)
                 {
                 }
-                if (ex==null)
+                if (ex == null)
                 {
                     var cp = await file.CopyAsync(localFolder);
                     SettingHelper.Set_BGPath(cp.Path);
@@ -571,24 +587,24 @@ namespace BiliBili3.Views
 
         private void cb_Ver_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-          
+
             SettingHelper.Set_BGVer(cb_Ver.SelectedIndex);
             MessageCenter.SendChangedBg();
         }
 
         private void cb_BGOpacity_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SettingHelper.Set_BGOpacity(cb_BGOpacity.SelectedIndex+1);
+            SettingHelper.Set_BGOpacity(cb_BGOpacity.SelectedIndex + 1);
             MessageCenter.SendChangedBg();
         }
 
         private void txt_BGMaxWidth_TextChanged(object sender, TextChangedEventArgs e)
         {
             int w = 0;
-            if (!int.TryParse(txt_BGMaxWidth.Text,out  w)||w<0)
+            if (!int.TryParse(txt_BGMaxWidth.Text, out w) || w < 0)
             {
                 txt_BGMaxWidth.Text = "0";
-                Utils.ShowMessageToast("请输入正整数！",2000);
+                Utils.ShowMessageToast("请输入正整数！", 2000);
                 return;
             }
 
@@ -608,10 +624,10 @@ namespace BiliBili3.Views
             }
 
             SettingHelper.Set_BGMaxHeight(h);
-            
-               MessageCenter.SendChangedBg();
 
-           
+            MessageCenter.SendChangedBg();
+
+
         }
 
         private async void sw_CustomPath_Toggled(object sender, RoutedEventArgs e)
@@ -625,8 +641,8 @@ namespace BiliBili3.Views
         {
             FolderPicker fp = new FolderPicker();
             fp.FileTypeFilter.Add(".mp4");
-            var f=await fp.PickSingleFolderAsync();
-            if (f==null)
+            var f = await fp.PickSingleFolderAsync();
+            if (f == null)
             {
                 return;
             }
@@ -792,6 +808,24 @@ namespace BiliBili3.Views
         private void tw_OtherSiteMode_Toggled(object sender, RoutedEventArgs e)
         {
             SettingHelper.Set_UseOtherSite(tw_OtherSiteMode.IsOn);
+        }
+
+        private async void BrnAuthBiliPlus_Click(object sender, RoutedEventArgs e)
+        {
+            if (!ApiHelper.IsLogin() && !await Utils.ShowLoginDialog())
+            {
+                Utils.ShowMessageToast("请登录后再执行此操作");
+                return;
+            }
+            var re = await Account.AuthBiliPlus();
+            if (re != "")
+            {
+                txtBPState.Text = "(已授权)";
+            }
+            else
+            {
+                Utils.ShowMessageToast("授权失败了");
+            }
         }
     }
 }

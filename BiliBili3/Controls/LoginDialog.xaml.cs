@@ -62,7 +62,18 @@ namespace BiliBili3.Controls
                     if (m.success)
                     {
                         this.Hide();
-                        Utils.ShowMessageToast("登录成功");
+                        if (cb_AuthBP.IsChecked.Value)
+                        {
+                            var auth=await Account.AuthBiliPlus();
+                            if (auth=="")
+                            {
+                                Utils.ShowMessageToast("登录成功,但BiliPlus授权失败");
+                            }
+                            else
+                            {
+                                Utils.ShowMessageToast("登录成功");
+                            }
+                        }
                     }
                     else
                     {

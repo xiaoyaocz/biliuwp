@@ -171,7 +171,7 @@
                                                 <RowDefinition/>
                                                 <RowDefinition/>
                                             </Grid.RowDefinitions>
-                                            <Ellipse Width="36" Grid.RowSpan="2" Height="36" Margin="0,0,10 0">
+                                            <Ellipse Width="48" Grid.RowSpan="2" Height="48" Margin="0,0,10 0">
                                                 <Ellipse.Fill>
                                                     <ImageBrush ImageSource="{Binding Path=owner.face}"/>
                                                 </Ellipse.Fill>
@@ -198,7 +198,46 @@
                                         </Border>
                                     </HyperlinkButton>
                                 </Grid>
+                                <Border x:Name="bor_Width" Width="200" VerticalAlignment="Top"></Border>
+                                <Grid  x:Name="staff"  Margin="0 10 0 0" Padding="10 10 10 4" Background="{ThemeResource Bili-List-Background}">
+                                    <StackPanel>
+                                        <TextBlock>创作团队</TextBlock>
+                                        <GridView  x:Name="gv_Staff" ItemClick="Gv_Staff_ItemClick" Margin="0 8 0 0" ItemsSource="{Binding staff}" Height="auto"  SelectionMode="None" IsItemClickEnabled="True"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  >
+                                            <GridView.ItemTemplate >
+                                                <DataTemplate>
+                                                    <Grid  Width="{Binding ElementName=bor_Width,Path=Width}">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition/>
+                                                            <RowDefinition/>
+                                                        </Grid.RowDefinitions>
+                                                        <Grid Grid.RowSpan="2" Margin="0 0 8 0">
+                                                            <Ellipse Width="48" Height="48" >
+                                                                <Ellipse.Fill>
+                                                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding face}"/>
+                                                                </Ellipse.Fill>
+                                                            </Ellipse>
+                                                            <HyperlinkButton x:Name="btn_verify" Click="Btn_verify_Click" ToolTipService.ToolTip="{Binding Path=official_verify.desc}" Padding="0" Margin="0" VerticalAlignment="Bottom"  HorizontalAlignment="Right">
+                                                                <Image Width="20" Height="20" Source="{Binding verify}"></Image>
+                                                            </HyperlinkButton>
 
+                                                        </Grid>
+                                                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding name}"></TextBlock>
+                                                        <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" FontSize="14" Foreground="Gray" Text="{Binding title}"></TextBlock>
+
+                                                    </Grid>
+                                                   
+                                                </DataTemplate>
+                                            </GridView.ItemTemplate>
+                                          
+                                        </GridView>
+                                    </StackPanel>
+
+                                </Grid>
 
                                 <Grid    Margin="0 10 0 0" Padding="10" Background="{ThemeResource Bili-List-Background}">
                                     <StackPanel>

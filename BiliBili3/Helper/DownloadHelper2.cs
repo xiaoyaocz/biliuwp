@@ -53,6 +53,7 @@ namespace BiliBili3.Helper
             if (urls == null || urls.Count == 0)
             {
                 await new MessageDialog(m.epTitle + " 无法读取到下载地址").ShowAsync();
+                return;
                 //throw new Exception(m.epTitle + " 无法读取到下载地址");
             }
             try

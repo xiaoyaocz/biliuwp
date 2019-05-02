@@ -117,7 +117,7 @@
                                 <TextBlock>
 
                                     <Run Text="{Binding index}"></Run>
-                                  
+
                                 </TextBlock>
 
                             </DataTemplate>
@@ -127,8 +127,8 @@
                         <ComboBoxItem>七日榜</ComboBoxItem>
                         <ComboBoxItem>总榜</ComboBoxItem>
                     </ComboBox>
-                
-                    
+
+
                 </Grid>
 
             </Pivot.RightHeader>
@@ -174,6 +174,17 @@
                                         </StackPanel>
                                     </Grid>
                                 </Grid>
+                                <Grid x:Name="dialog" Margin="0 10 0 0" Padding="10" Background="{ThemeResource Bili-List-Background}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Path=dialog.title}" VerticalAlignment="Center"></TextBlock>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center">
+                                        <HyperlinkButton x:Name="btnPay" Click="BtnPay_Click" Content="{Binding Path=dialog.btn_left.title}" Margin="0 0 8 0"></HyperlinkButton>
+                                        <HyperlinkButton Click="BtnPay_Click" Content="{Binding Path=dialog.btn_right.title}"></HyperlinkButton>
+                                    </StackPanel>
+                                </Grid>
                                 <Grid     Margin="0 10 0 0" Padding="10" Background="{ThemeResource Bili-List-Background}">
                                     <StackPanel>
                                         <TextBlock>简介</TextBlock>
@@ -190,13 +201,14 @@
                                     </StackPanel>
 
                                 </Grid>
-                                <Grid Grid.Row="1" Margin="0 10" Background="{ThemeResource Bili-List-Background}">
+
+                                <Grid Grid.Row="1" Margin="0 10 0 0" Background="{ThemeResource Bili-List-Background}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <Grid  Margin="10">
-                                        <TextBlock VerticalAlignment="Center">全部剧集 <Run x:Name="last_view"></Run></TextBlock>
+                                        <TextBlock VerticalAlignment="Center">正片 <Run x:Name="last_view"></Run></TextBlock>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                             <HyperlinkButton Margin="20 0" Foreground="{ThemeResource Main-ForeColor}" x:Name="btn_OrderByUp"  Visibility="Collapsed" Click="btn_OrderByUp_Click">
                                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE17D;"  ></FontIcon>
@@ -207,7 +219,7 @@
                                                         <CompositeTransform Rotation="-180" ScaleX="-1"/>
                                                     </FontIcon.RenderTransform>
                                                 </FontIcon>
-                                              
+
                                             </HyperlinkButton>
 
                                             <HyperlinkButton Margin="5 0" Foreground="{ThemeResource Main-ForeColor}" x:Name="btn_HideAll"  Click="btn_HideAll_Click" Visibility="Collapsed">
@@ -219,6 +231,8 @@
                                         </StackPanel>
 
                                     </Grid>
+
+
 
                                     <Border x:Name="bor_Width" Width="200" VerticalAlignment="Top"></Border>
                                     <GridView  x:Name="gv_Play" Height="auto" Grid.Row="1"  SelectionMode="None" IsItemClickEnabled="True"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ItemContainerStyle="{StaticResource  GridViewItemStyle}" ItemClick="gv_Play_ItemClick" SelectionChanged="gv_Play_SelectionChanged" >
@@ -238,7 +252,7 @@
                                                             <TextBlock FontSize="12" Margin="4" Foreground="White">已下载</TextBlock>
                                                         </Border>
                                                     </StackPanel>
-                                                   
+
                                                 </Grid>
                                             </DataTemplate>
                                         </GridView.ItemTemplate>
@@ -246,6 +260,48 @@
                                     </GridView>
 
                                 </Grid>
+
+                                <Grid Grid.Row="1" x:Name="pvInfo" Background="{ThemeResource Bili-List-Background}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid  Margin="10">
+                                        <TextBlock VerticalAlignment="Center">预告/花絮</TextBlock>
+
+
+                                    </Grid>
+
+
+
+
+                                    <GridView  x:Name="gv_Pv" Height="auto" Grid.Row="1"  SelectionMode="None" IsItemClickEnabled="True"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ItemContainerStyle="{StaticResource  GridViewItemStyle}" ItemClick="gv_Play_ItemClick">
+                                        <GridView.ItemTemplate >
+                                            <DataTemplate>
+                                                <Grid Width="{Binding ElementName=bor_Width,Path=Width}" Holding="Grid_Holding" RightTapped="Grid_RightTapped" ToolTipService.ToolTip="{Binding index_title}">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Foreground="{Binding f}"><Run Text="{Binding index}"></Run><Run xml:space="preserve"> </Run><Run Text="{Binding index_title}"></Run></TextBlock>
+                                                    <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                                                        <Border  Margin="5 0" BorderBrush="White" BorderThickness="1" Visibility="{Binding IsBadge}" CornerRadius="5">
+                                                            <TextBlock FontSize="12" Margin="4" Foreground="White" Text="{Binding badge}"></TextBlock>
+                                                        </Border>
+                                                        <Border  BorderBrush="White" BorderThickness="1" Visibility="{Binding IsDowned}" CornerRadius="5">
+                                                            <TextBlock FontSize="12" Margin="4" Foreground="White">已下载</TextBlock>
+                                                        </Border>
+                                                    </StackPanel>
+
+                                                </Grid>
+                                            </DataTemplate>
+                                        </GridView.ItemTemplate>
+
+                                    </GridView>
+
+                                </Grid>
+
+
                                 <Grid  x:Name="grid_tag" BorderBrush="#4C808080" Padding="10" Margin="0 10 0 0" Background="{ThemeResource Bili-List-Background}">
                                     <StackPanel>
                                         <TextBlock>TAG</TextBlock>
@@ -268,6 +324,7 @@
                                 </Grid>
                             </StackPanel>
                         </ScrollViewer>
+
                     </Grid>
 
 
@@ -296,11 +353,11 @@
                         <StackPanel Margin="8 4" Background="{ThemeResource Bili-List-Background}">
                             <my1:CommentV2Control  x:Name="comment"  Margin="4" ></my1:CommentV2Control>
                         </StackPanel>
-                      
+
                     </ScrollViewer>
                     <Button x:Name="btn_ShowComment" Click="btn_ShowComment_Click" Grid.Row="1" Margin="4" Background="{ThemeResource Bili-ForeColor}" Foreground="White" HorizontalAlignment="Stretch">我要评论</Button>
                 </Grid>
-             
+
                 <!--<my1:CommentControl x:Name="comment" OpenUser="comment_OpenUser" Margin="10 0 10 10"/>-->
             </PivotItem>
             <PivotItem Margin="0">
@@ -422,6 +479,6 @@
             <AppBarButton Icon="Cancel"  x:Name="btn_Cancel" Label="取消" Foreground="White" Click="btn_Cancel_Click"/>
         </CommandBar>
         <ProgressRing Width="56" Height="56" x:Name="pr_Load" Grid.RowSpan="2"  IsActive="True" Visibility="Collapsed"></ProgressRing>
-       
+
     </Grid>
 </Page>

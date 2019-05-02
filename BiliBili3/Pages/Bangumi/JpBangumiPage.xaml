@@ -96,7 +96,7 @@
                         <Grid>
                             <StackPanel Orientation="Horizontal" Margin="10">
                                 <Image Source="ms-appx:///Assets/Icon/bangumi_home_ic_season_.png" Width="24" Height="24" ></Image>
-                                <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="{ThemeResource Bili-FontColor}">10月新番</TextBlock>
+                                <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="{ThemeResource Bili-FontColor}">新番推荐</TextBlock>
                             </StackPanel>
                             <HyperlinkButton x:Name="btn_10Ban" Click="btn_10Ban_Click" HorizontalAlignment="Right" Margin="5 0" Foreground="{ThemeResource Bili-ForeColor}">
                                 <StackPanel Orientation="Horizontal">

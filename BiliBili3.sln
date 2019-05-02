@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiliBili3", "BiliBili3\BiliBili3.csproj", "{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackTask", "BackTask\BackTask.csproj", "{E3691422-CBFD-4DF9-827B-77D195731EEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSDanmaku", "..\NSDanmaku\NSDanmaku\NSDanmaku.csproj", "{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiliBiliJS", "BiliBiliJS\BiliBiliJS.csproj", "{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSDanmaku", "..\NSDanmaku\NSDanmaku\NSDanmaku.csproj", "{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,22 +59,6 @@ Global
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Release|x64.Build.0 = Release|x64
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Release|x86.ActiveCfg = Release|x86
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Release|x86.Build.0 = Release|x86
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|ARM.ActiveCfg = Debug|ARM
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|ARM.Build.0 = Debug|ARM
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|x64.ActiveCfg = Debug|x64
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|x64.Build.0 = Debug|x64
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|x86.ActiveCfg = Debug|x86
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|x86.Build.0 = Debug|x86
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|ARM.ActiveCfg = Release|ARM
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|ARM.Build.0 = Release|ARM
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|x64.ActiveCfg = Release|x64
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|x64.Build.0 = Release|x64
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|x86.ActiveCfg = Release|x86
-		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|x86.Build.0 = Release|x86
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Debug|ARM.ActiveCfg = Debug|ARM
@@ -91,12 +75,28 @@ Global
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Release|x64.Build.0 = Release|x64
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Release|x86.ActiveCfg = Release|x86
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Release|x86.Build.0 = Release|x86
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|ARM.ActiveCfg = Debug|ARM
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|ARM.Build.0 = Debug|ARM
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|x64.ActiveCfg = Debug|x64
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|x64.Build.0 = Debug|x64
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|x86.ActiveCfg = Debug|x86
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Debug|x86.Build.0 = Debug|x86
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|ARM.ActiveCfg = Release|ARM
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|ARM.Build.0 = Release|ARM
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|x64.ActiveCfg = Release|x64
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|x64.Build.0 = Release|x64
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|x86.ActiveCfg = Release|x86
+		{964D5BCC-C063-45CC-AEEA-89169E4A2E5E}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {631FAB1A-4EBB-4E8E-AF78-E6162C32A50F}
 		VisualSVNWorkingCopyRoot = .
+		SolutionGuid = {631FAB1A-4EBB-4E8E-AF78-E6162C32A50F}
 	EndGlobalSection
 EndGlobal

@@ -243,7 +243,15 @@ namespace BiliBili3.Pages
                             tag.Children.Add(hy);
                         }
                     }
+                    if (m.data.staff!=null&& m.data.staff.Count!=0)
+                    {
+                        staff.Visibility = Visibility.Visible;
 
+                    }
+                    else
+                    {
+                        staff.Visibility = Visibility.Collapsed;
+                    }
 
                 }
                 else
@@ -1237,6 +1245,54 @@ namespace BiliBili3.Pages
             else{
                 Utils.ShowMessageToast(data.message);
             }
+        }
+
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            if (availableSize.Width != 0)
+            {
+                int i = 2;
+                if (availableSize.Width > 500)
+                {
+                    i = 3;
+                  
+                    bor_Width.Width = availableSize.Width / i - 39;
+                }
+                else
+                {
+                    bor_Width.Width = availableSize.Width / i - 42;
+                }
+            }
+
+            return base.MeasureOverride(availableSize);
+        }
+
+        private void Btn_verify_Click(object sender, RoutedEventArgs e)
+        {
+            var data = (sender as HyperlinkButton).DataContext as staffModel;
+
+            if (data.official_verify.type == -1)
+            {
+                return;
+            }
+            if (data.official_verify.desc != "")
+            {
+                Utils.ShowMessageToast(data.official_verify.desc);
+            }
+            else if (data.official_verify.type == 0)
+            {
+                Utils.ShowMessageToast("个人认证");
+            }
+            else if (data.official_verify.type == 1)
+            {
+                Utils.ShowMessageToast("企业认证");
+            }
+        }
+
+        private void Gv_Staff_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var data = e.ClickedItem as staffModel;
+            this.Frame.Navigate(typeof(UserInfoPage), new object[] { data.mid });
         }
     }
 }
