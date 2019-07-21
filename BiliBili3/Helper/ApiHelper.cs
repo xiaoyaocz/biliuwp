@@ -62,7 +62,7 @@ namespace BiliBili3
         public static string _buvid = "B3CC4714-C1D3-4010-918B-8E5253E123C16133infoc";
         public static string _hwid = "03008c8c0300d6d1";
 
-        public const string build = "5290000";
+        public const string build = "5442100";
 
         private static string _access_key;
         public static string access_key {
@@ -1340,7 +1340,6 @@ namespace BiliBili3
 
 
     }
-
     public class FlvPlyaerUrlModel
     {
         public string format { get; set; }
@@ -1423,6 +1422,16 @@ namespace BiliBili3
 
         public string banId { get; set; }
         public episodesModel banInfo { get; set; }
+        /// <summary>
+        /// 是否互动视频
+        /// </summary>
+        public bool isInteraction { get; set; } = false;
+        /// <summary>
+        /// 互动视频分支ID
+        /// </summary>
+        public int node_id { get; set; } = 0;
+
+        public int? graph_version { get; set; } = 467;
     }
 
 

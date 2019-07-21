@@ -157,10 +157,10 @@
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
                                         <TextBlock x:Name="txt_Name" Text="{Binding title}" Grid.Row="0"  VerticalAlignment="Top" TextWrapping="Wrap" FontSize="18"/>
-                                        <TextBlock Text="{Binding Path=newest_ep.desc}" Grid.Column="1" Grid.Row="1" FontSize="14" VerticalAlignment="Center" Foreground="#FF555555"/>
+                                        <TextBlock Text="{Binding Path=new_ep.desc}" Grid.Column="1" Grid.Row="1" FontSize="14" VerticalAlignment="Center" Foreground="#FF555555"/>
                                         <StackPanel Orientation="Horizontal" Height="16" Grid.Row="2" VerticalAlignment="Center" Margin="0,5">
                                             <TextBlock Text="地区：" FontSize="14" VerticalAlignment="Center" Foreground="#FF898989"/>
-                                            <TextBlock Text="{Binding Path=detail.area_str}" FontSize="14" VerticalAlignment="Center" Foreground="#FF555555"/>
+                                            <TextBlock Text="{Binding Path=detail_media.area_str}" FontSize="14" VerticalAlignment="Center" Foreground="#FF555555"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Grid.Row="3" Height="16" VerticalAlignment="Center" Margin="0,5">
                                             <TextBlock Text="评分：" FontSize="14" VerticalAlignment="Center" Foreground="#FF898989"/>
@@ -179,16 +179,16 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding Path=dialog.title}" VerticalAlignment="Center"></TextBlock>
+                                    <TextBlock Text="{Binding Path=payment.dialog.title}"  VerticalAlignment="Center"></TextBlock>
                                     <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center">
-                                        <HyperlinkButton x:Name="btnPay" Click="BtnPay_Click" Content="{Binding Path=dialog.btn_left.title}" Margin="0 0 8 0"></HyperlinkButton>
-                                        <HyperlinkButton Click="BtnPay_Click" Content="{Binding Path=dialog.btn_right.title}"></HyperlinkButton>
+                                        <HyperlinkButton x:Name="btnPay" Click="BtnPay_Click" Content="{Binding Path=payment.dialog.btn_left.title}" Margin="0 0 8 0"></HyperlinkButton>
+                                        <HyperlinkButton Click="BtnPay_Click" Content="{Binding Path=payment.dialog.btn_right.title}"></HyperlinkButton>
                                     </StackPanel>
                                 </Grid>
                                 <Grid     Margin="0 10 0 0" Padding="10" Background="{ThemeResource Bili-List-Background}">
                                     <StackPanel>
                                         <TextBlock>简介</TextBlock>
-                                        <TextBlock x:Name="txt_desc" Tapped="TextBlock_Tapped" TextWrapping="Wrap" Foreground="Gray" FontSize="14" MaxLines="3" TextTrimming="CharacterEllipsis" Text="{Binding evaluate}"></TextBlock>
+                                        <TextBlock x:Name="txt_desc" Tapped="TextBlock_Tapped" RightTapped="Txt_desc_RightTapped" TextWrapping="Wrap" Foreground="Gray" FontSize="14" MaxLines="3" TextTrimming="CharacterEllipsis" Text="{Binding evaluate}"></TextBlock>
                                     </StackPanel>
 
                                 </Grid>
@@ -202,7 +202,7 @@
 
                                 </Grid>
 
-                                <Grid Grid.Row="1" Margin="0 10 0 0" Background="{ThemeResource Bili-List-Background}">
+                                <Grid x:Name="gvEpisodes" Grid.Row="1" Margin="0 10 0 0" Background="{ThemeResource Bili-List-Background}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition/>
@@ -235,7 +235,7 @@
 
 
                                     <Border x:Name="bor_Width" Width="200" VerticalAlignment="Top"></Border>
-                                    <GridView  x:Name="gv_Play" Height="auto" Grid.Row="1"  SelectionMode="None" IsItemClickEnabled="True"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ItemContainerStyle="{StaticResource  GridViewItemStyle}" ItemClick="gv_Play_ItemClick" SelectionChanged="gv_Play_SelectionChanged" >
+                                    <GridView  x:Name="gv_Play" Height="auto" Grid.Row="1"  SelectionMode="None" IsItemClickEnabled="True"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ItemContainerStyle="{StaticResource  GridViewItemStyle}" ItemClick="gv_Play_ItemClick" SelectionChanged="gv_Play_SelectionChanged" FontFamily="Segoe UI" >
                                         <GridView.ItemTemplate >
                                             <DataTemplate>
                                                 <Grid Width="{Binding ElementName=bor_Width,Path=Width}" Holding="Grid_Holding" RightTapped="Grid_RightTapped" ToolTipService.ToolTip="{Binding index_title}">
@@ -261,45 +261,48 @@
 
                                 </Grid>
 
-                                <Grid Grid.Row="1" x:Name="pvInfo" Background="{ThemeResource Bili-List-Background}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Grid  Margin="10">
-                                        <TextBlock VerticalAlignment="Center">预告/花絮</TextBlock>
-
-
-                                    </Grid>
-
-
-
-
-                                    <GridView  x:Name="gv_Pv" Height="auto" Grid.Row="1"  SelectionMode="None" IsItemClickEnabled="True"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ItemContainerStyle="{StaticResource  GridViewItemStyle}" ItemClick="gv_Play_ItemClick">
-                                        <GridView.ItemTemplate >
-                                            <DataTemplate>
-                                                <Grid Width="{Binding ElementName=bor_Width,Path=Width}" Holding="Grid_Holding" RightTapped="Grid_RightTapped" ToolTipService.ToolTip="{Binding index_title}">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition Width="auto"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Foreground="{Binding f}"><Run Text="{Binding index}"></Run><Run xml:space="preserve"> </Run><Run Text="{Binding index_title}"></Run></TextBlock>
-                                                    <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
-                                                        <Border  Margin="5 0" BorderBrush="White" BorderThickness="1" Visibility="{Binding IsBadge}" CornerRadius="5">
-                                                            <TextBlock FontSize="12" Margin="4" Foreground="White" Text="{Binding badge}"></TextBlock>
-                                                        </Border>
-                                                        <Border  BorderBrush="White" BorderThickness="1" Visibility="{Binding IsDowned}" CornerRadius="5">
-                                                            <TextBlock FontSize="12" Margin="4" Foreground="White">已下载</TextBlock>
-                                                        </Border>
-                                                    </StackPanel>
-
+                                <ItemsControl x:Name="pvSection" ItemsSource="{Binding section}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Grid.Row="1"  Background="{ThemeResource Bili-List-Background}">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Grid  Margin="10">
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding title}"></TextBlock>
                                                 </Grid>
-                                            </DataTemplate>
-                                        </GridView.ItemTemplate>
+                                                <GridView  x:Name="gv_Pv" Height="auto" ItemsSource="{Binding episodes}" Grid.Row="1"  SelectionMode="None" IsItemClickEnabled="True"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ItemContainerStyle="{StaticResource  GridViewItemStyle}" ItemClick="gv_Play_ItemClick">
+                                                    <GridView.ItemTemplate >
+                                                        <DataTemplate>
+                                                            <Grid Width="{Binding ElementName=bor_Width,Path=Width}" Holding="Grid_Holding" RightTapped="Grid_RightTapped" ToolTipService.ToolTip="{Binding index_title}">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition/>
+                                                                    <ColumnDefinition Width="auto"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Foreground="{Binding f}"><Run Text="{Binding title}"></Run><Run xml:space="preserve"> </Run><Run Text="{Binding long_title}"></Run></TextBlock>
+                                                                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                                                                    <Border  Margin="5 0" BorderBrush="White" BorderThickness="1" Visibility="{Binding IsBadge}" CornerRadius="5">
+                                                                        <TextBlock FontSize="12" Margin="4" Foreground="White" Text="{Binding badge}"></TextBlock>
+                                                                    </Border>
+                                                                    <Border  BorderBrush="White" BorderThickness="1" Visibility="{Binding IsDowned}" CornerRadius="5">
+                                                                        <TextBlock FontSize="12" Margin="4" Foreground="White">已下载</TextBlock>
+                                                                    </Border>
+                                                                </StackPanel>
 
-                                    </GridView>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </GridView.ItemTemplate>
 
-                                </Grid>
+                                                </GridView>
+
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                   
+
+                                </ItemsControl>
+                               
 
 
                                 <Grid  x:Name="grid_tag" BorderBrush="#4C808080" Padding="10" Margin="0 10 0 0" Background="{ThemeResource Bili-List-Background}">
@@ -313,13 +316,13 @@
                                 <Grid  BorderBrush="#4C808080" Padding="10" Margin="0 10 0 0" Background="{ThemeResource Bili-List-Background}">
                                     <StackPanel>
                                         <TextBlock>CV</TextBlock>
-                                        <TextBlock TextWrapping="Wrap" Foreground="Gray" FontSize="14" MaxLines="3"  Tapped="TextBlock_Tapped" TextTrimming="CharacterEllipsis" Text="{Binding Path=detail.actor}"></TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Foreground="Gray" FontSize="14" MaxLines="3"  Tapped="TextBlock_Tapped" TextTrimming="CharacterEllipsis" Text="{Binding Path=detail_media.actor}"></TextBlock>
                                     </StackPanel>
                                 </Grid>
                                 <Grid  BorderBrush="#4C808080" Padding="10" Margin="0 10 0 0" Background="{ThemeResource Bili-List-Background}">
                                     <StackPanel>
                                         <TextBlock>STAFF</TextBlock>
-                                        <TextBlock TextWrapping="Wrap" Foreground="Gray" FontSize="14" MaxLines="3" Tapped="TextBlock_Tapped" TextTrimming="CharacterEllipsis" Text="{Binding Path=detail.staff}"></TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Foreground="Gray" FontSize="14" MaxLines="3" Tapped="TextBlock_Tapped" TextTrimming="CharacterEllipsis" Text="{Binding Path=detail_media.staff}"></TextBlock>
                                     </StackPanel>
                                 </Grid>
                             </StackPanel>

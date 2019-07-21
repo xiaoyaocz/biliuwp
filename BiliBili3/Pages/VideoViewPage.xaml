@@ -242,7 +242,7 @@
                                 <Grid    Margin="0 10 0 0" Padding="10" Background="{ThemeResource Bili-List-Background}">
                                     <StackPanel>
                                         <TextBlock>简介</TextBlock>
-                                        <TextBlock x:Name="txt_desc" Tapped="txt_desc_Tapped" TextWrapping="Wrap" Foreground="Gray" FontSize="14" MaxLines="3" TextTrimming="CharacterEllipsis" Text="{Binding desc}"></TextBlock>
+                                        <TextBlock x:Name="txt_desc" Tapped="txt_desc_Tapped" RightTapped="Txt_desc_RightTapped" TextWrapping="Wrap" Foreground="Gray" FontSize="14" MaxLines="3" TextTrimming="CharacterEllipsis" Text="{Binding desc}"></TextBlock>
                                     </StackPanel>
 
                                 </Grid>
@@ -512,8 +512,8 @@
         </Pivot>
         <CommandBar x:Name="com_bar"   HorizontalAlignment="Right"   Foreground="White"  Background="{ThemeResource Bili-ForeColor}">
             <CommandBar.SecondaryCommands>
-
                 <AppBarButton x:Name="Video_Refresh" Icon="Refresh"  Label="刷新" Click="Video_Refresh_Click"/>
+                <AppBarButton x:Name="btn_Triple" Icon="Like"  Label="一键三连" Click="Btn_Triple_Click"/>
                 <AppBarButton x:Name="btn_AddToView"  Icon="Add"   Label="添加稍后再看" Click="btn_AddToView_Click"/>
                 <AppBarButton x:Name="btn_GoBrowser"  Icon="Go"   Label="浏览器打开" Click="btn_GoBrowser_Click"/>
                 <AppBarButton x:Name="btn_SaveImage"  Icon="Save" Label="保存封面" Click="btn_SaveImage_Click"/>

@@ -197,7 +197,7 @@ namespace BiliBili3.Controls
 
             if (item.desc.type == 512)
             {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), item.bangumi.apiSeasonInfo.season_id.ToString());
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), item.bangumi.apiSeasonInfo.season_id);
                 return;
             }
             if (item.desc.type == 2048)
@@ -472,6 +472,7 @@ namespace BiliBili3.Views
                 case 512:
                 case 4099:
                     card.bangumi = JsonConvert.DeserializeObject<DynamicBangumiModel>(card.card);
+                   
                     return resource["FeedBangumi"] as DataTemplate;
                 case 2048:
                     card.web = JsonConvert.DeserializeObject<DynamicWebModel>(card.card);
@@ -1018,30 +1019,16 @@ namespace BiliBili3.Views
         public int season_id { get; set; }
         public string title { get; set; }
 
-        private string _index;
-
-        public string index
-        {
-            get
-            {
-                if (_index.Contains("第"))
-                {
-                    return _index;
-                }
-                else
-                {
-                    return "第" + _index + "话";
-                }
-            }
-            set { _index = value; }
-        }
+        public string new_desc { get; set; }
 
 
 
         public string index_title { get; set; }
         public string url { get; set; }
-
+        public DynamicBangumiModel season { get; set; }
     }
+
+
     public class DynamicMusicModel
     {
         public long id { get; set; }

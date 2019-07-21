@@ -143,46 +143,6 @@ namespace BiliBili3.Modules
             }
         }
 
-        public ReturnModel HandelError(Exception ex)
-        {
-            if (LogHelper.IsNetworkError(ex))
-            {
-                return new ReturnModel()
-                {
-                    success = false,
-                    message = "无法连接服务器，请检查网络连接"
-                };
-            }
-            else
-            {
-                LogHelper.WriteLog(ex);
-                return new ReturnModel()
-                {
-                    success = false,
-                    message = "出现了一个未处理错误，已记录"
-                };
-            }
-        }
-        public ReturnModel<T> HandelError<T>(Exception ex)
-        {
-            if (LogHelper.IsNetworkError(ex))
-            {
-                return new ReturnModel<T>()
-                {
-                    success = false,
-                    message = "无法连接服务器，请检查网络连接"
-                };
-            }
-            else
-            {
-                LogHelper.WriteLog(ex);
-                return new ReturnModel<T>()
-                {
-                    success = false,
-                    message = "出现了一个未处理错误，已记录"
-                };
-            }
-        }
     }
     namespace LiveCenterModels
     {

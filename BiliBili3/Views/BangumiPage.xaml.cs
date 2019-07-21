@@ -145,7 +145,7 @@ namespace BiliBili3.Views
 
         private void btn_MyBan_Click(object sender, RoutedEventArgs e)
         {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(MyFollowsBangumiPage));
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(FollowSeasonPage), Modules.SeasonType.bangumi);
         }
 
         private void list_ban_mine_ItemClick(object sender, ItemClickEventArgs e)

@@ -55,7 +55,14 @@ namespace BiliBili3.Helper
                 {
                     return bili;
                 }
-               
+                //官方WEBAPI
+                var biliweb = await GetBilibiliBangumiWebUrl(model, qn);
+                if (biliweb != null)
+                {
+                    return biliweb;
+                }
+
+
                 //23moe API
                 var moe = await Get23MoeUrl(model, qn);
                 if (moe != null)
@@ -69,6 +76,14 @@ namespace BiliBili3.Helper
                 {
                     return biliplus;
                 }
+
+                //biliplus API
+                var biliplus2 = await GetBiliPlusUrl2(model);
+                if (biliplus2 != null)
+                {
+                    return biliplus2;
+                }
+
                 return null;
 
             }
@@ -119,7 +134,49 @@ namespace BiliBili3.Helper
                 return null;
             }
         }
-     
+
+        public static async Task<ReturnPlayModel> GetBilibiliBangumiWebUrl(PlayerModel model, int qn)
+        {
+            try
+            {
+                List<string> urls = new List<string>();
+                var playList = new SYEngine.Playlist(SYEngine.PlaylistTypes.NetworkHttp);
+                string url2 = string.Format(
+                    $"https://api.bilibili.com/pgc/player/web/playurl?avid={model.Aid}&cid={model.Mid}&qn={qn}&type=flv&otype=json&ep_id={model.episode_id}&module=bangumi");
+                //url2 += "&sign=" + ApiHelper.GetSign_VIDEO(url2);
+                var re = await WebClientClass.GetResultsUTF8Encode(new Uri(url2));
+                JObject obj = JObject.Parse(re);
+              
+                //是否遇到了地区限制
+                if (obj["code"].ToInt32()==0 && !re.Contains("8986943"))
+                {
+                    foreach (var item in obj["result"]["durl"])
+                    {
+                        urls.Add(item["url"].ToString());
+                        playList.Append(item["url"].ToString(), item["size"].ToInt32(), item["length"].ToInt32() / 1000);
+                    }
+                    playList.NetworkConfigs = CreatePlaylistNetworkConfigs("https://www.bilibili.com/bangumi/play/ep" + model.episode_id);
+                    return new ReturnPlayModel()
+                    {
+                        playlist = playList,
+                        usePlayMode = UsePlayMode.SYEngine,
+                        urls = urls,
+                        from = "bilibili"
+                    };
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+       
+
         public static async Task<ReturnPlayModel> Get23MoeUrl(PlayerModel model, int qn)
         {
             try
@@ -182,7 +239,7 @@ namespace BiliBili3.Helper
         /// <param name="model"></param>
         /// <param name="qn"></param>
         /// <returns></returns>
-        public static async Task<ReturnPlayModel> GetBiliPlusUrl(string cid, int qn,string referer)
+        public static async Task<ReturnPlayModel> GetBiliPlusUrl(string cid, int qn,string referer,string cookie="")
         {
             try
             {
@@ -190,7 +247,11 @@ namespace BiliBili3.Helper
                 Dictionary<string, string> header = new Dictionary<string, string>();
                 if (SettingHelper.Get_BiliplusCookie()!="")
                 {
-                    header.Add("Cookie", SettingHelper.Get_BiliplusCookie());
+                    if (cookie=="")
+                    {
+                        cookie = SettingHelper.Get_BiliplusCookie();
+                    }
+                    header.Add("Cookie", cookie);
                 }
                 
                 string re = await WebClientClass.GetResults(new Uri(url));
@@ -220,10 +281,10 @@ namespace BiliBili3.Helper
                         ReturnPlayModel returnPlayModel = null;
                         MessageDialog messageDialog = new MessageDialog("读取视频地址失败了，是否授权Biliplus后再试一次?");
                         messageDialog.Commands.Add(new UICommand("授权",async (e) => {
-                            var bp =await Account.AuthBiliPlus();
-                            if (bp!="")
+                            var _cookie =await Account.AuthBiliPlus();
+                            if (_cookie != "")
                             {
-                                returnPlayModel =await GetBiliPlusUrl(cid, qn, referer);
+                                returnPlayModel =await GetBiliPlusUrl(cid, qn, referer, _cookie);
                             }
                             else
                             {
@@ -252,6 +313,76 @@ namespace BiliBili3.Helper
 
 
         }
+
+        public static async Task<ReturnPlayModel> GetBiliPlusUrl2(PlayerModel model)
+        {
+            try
+            {
+                List<string> urls = new List<string>();
+                var playList = new SYEngine.Playlist(SYEngine.PlaylistTypes.NetworkHttp);
+                string url2 = string.Format(
+                    $"https://www.biliplus.com//BPplayurl.php?cid={model.Mid}&otype=json");
+                //url2 += "&sign=" + ApiHelper.GetSign_VIDEO(url2);
+                var re = await WebClientClass.GetResultsUTF8Encode(new Uri(url2));
+                JObject obj = JObject.Parse(re);
+
+                if (obj["code"].ToInt32() == 10004)
+                {
+                    if (ApiHelper.IsLogin())
+                    {
+                        ReturnPlayModel returnPlayModel = null;
+                        MessageDialog messageDialog = new MessageDialog("读取视频地址失败了，是否授权Biliplus后再试一次?");
+                        messageDialog.Commands.Add(new UICommand("授权", async (e) => {
+                            var _cookie = await Account.AuthBiliPlus();
+                            if (_cookie != "")
+                            {
+                                returnPlayModel = await GetBiliPlusUrl2(model);
+                            }
+                            else
+                            {
+                                Utils.ShowMessageToast("授权失败了");
+                            }
+                        }));
+                        messageDialog.Commands.Add(new UICommand("取消"));
+                        await messageDialog.ShowAsync();
+                        return returnPlayModel;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+
+                //是否遇到了地区限制
+                if (obj["code"].ToInt32() == 0 && !re.Contains("8986943"))
+                {
+                    foreach (var item in obj["durl"])
+                    {
+                        urls.Add(item["url"].ToString());
+                        playList.Append(item["url"].ToString(), item["size"].ToInt32(), item["length"].ToInt32() / 1000);
+                    }
+                    playList.NetworkConfigs = CreatePlaylistNetworkConfigs("https://www.bilibili.com/bangumi/play/ep" + model.episode_id);
+                    return new ReturnPlayModel()
+                    {
+                        playlist = playList,
+                        usePlayMode = UsePlayMode.SYEngine,
+                        urls = urls,
+                        from = "bilibili"
+                    };
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+
+
 
         /// <summary>
         /// 读取视频播放地址

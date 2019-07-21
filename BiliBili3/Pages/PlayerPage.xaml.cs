@@ -37,6 +37,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.Graphics.Imaging;
 using SYEngine;
 using System.Diagnostics;
+using BiliBili3.Modules;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -58,6 +59,7 @@ namespace BiliBili3.Pages
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Disabled;
             SYEngine.Core.Initialize();
+            danmakuParse = new DanmakuParse();
             MTC.DanmuLoaded += MTC_DanmuLoaded;
             CoreWindow.GetForCurrentThread().KeyDown += PlayerPage_KeyDown;
             if (SettingHelper.Get_BackPlay())
@@ -242,17 +244,19 @@ namespace BiliBili3.Pages
 
 
         private NSDanmaku.Controls.Danmaku danmu;
-
+        DanmakuParse danmakuParse;
         DispatcherTimer timer;
         DispatcherTimer timer_Date;
         List<PlayerModel> playList;
         List<NSDanmaku.Model.DanmakuModel> DanMuPool = null;
         PlayerModel playNow;
-
+        InteractionVideo interactionVideo;
+        NodeInfo nodeInfo;
         //int _index = 0;
         bool playLocal = false;
         bool LoadDanmu = true;
         int LastPost = 0;
+
         public async void LoadPlayer(List<PlayerModel> par, int index)
         {
 
@@ -305,6 +309,16 @@ namespace BiliBili3.Pages
 
             playList = par;
             playNow = playList[index];
+            if (playNow.isInteraction)
+            {
+                interactionVideo = new InteractionVideo(playNow.Aid,playNow.graph_version);
+                nodeInfo = await interactionVideo.GetNodes(playNow.node_id);
+                gridview_node.ItemsSource = nodeInfo?.edges?.choices;
+                gv_story_list.ItemsSource = nodeInfo?.story_list;
+                settingStorylist = true;
+                gv_story_list.SelectedItem = nodeInfo.story_list.FirstOrDefault(x => x.node_id == nodeInfo.node_id);
+                settingStorylist = false;
+            }
 
             //  btn_HideInfo.Visibility = Visibility.Collapsed;
             //   btn_ShowInfo.Visibility = Visibility.Collapsed;
@@ -736,7 +750,10 @@ namespace BiliBili3.Pages
 
                 if (gv_play.Items.Count == 0 || gv_play.Items.Count == 1)
                 {
-                    MTC.ShowPlayListBtn = false;
+
+                   MTC.ShowPlayListBtn = playNow.isInteraction;
+     
+                    
                     MTC.ShowNextButton = false;
                     MTC.ShowPreviousButton = false;
                 }
@@ -771,8 +788,6 @@ namespace BiliBili3.Pages
                 txt_fvideo.Text = SettingHelper.Get_ForceVideo().ToString();
                 AddLog("强制软解视频：" + txt_fvideo.Text);
 
-
-                NSDanmaku.Helper.DanmakuParse danmakuParse = new NSDanmaku.Helper.DanmakuParse();
                 if (!playLocal)
                 {
 
@@ -1179,7 +1194,6 @@ namespace BiliBili3.Pages
         private async Task PlayLocal()
         {
             AddLog("开始读取本地视频...");
-            NSDanmaku.Helper.DanmakuParse danmakuParse = new NSDanmaku.Helper.DanmakuParse();
             StorageFolder f = await StorageFolder.GetFolderFromPathAsync(playNow.Path);
             var ls = await f.GetFilesAsync();
             var paths = new List<string>();
@@ -1595,6 +1609,7 @@ namespace BiliBili3.Pages
         {
 
             gv_play.Visibility = Visibility.Visible;
+            gv_story_list.Visibility = Visibility.Collapsed;
             grid_Setting.Visibility = Visibility.Collapsed;
             grid_DM.Visibility = Visibility.Collapsed;
             grid_Info.Visibility = Visibility.Collapsed;
@@ -1616,13 +1631,35 @@ namespace BiliBili3.Pages
                 }
                 if (gv_play.SelectedIndex == gv_play.Items.Count - 1)
                 {
-                    if (cb_setting_2.IsChecked.Value)
+                    if (playNow.isInteraction)
                     {
-                        gv_play.SelectedIndex = 0;
+                        if (nodeInfo.edges!=null)
+                        {
+                            if (nodeInfo.edges.choices.Count==1)
+                            {
+                                ChangeNode(nodeInfo.edges.choices[0].node_id, nodeInfo.edges.choices[0].cid.ToString());
+                            }
+                            else
+                            {
+                                gridview_node.Visibility = Visibility.Visible;
+                            }
+                        }
+                        else
+                        {
+                            Utils.ShowMessageToast("互动视频已结束，可点击右下角选择节点重新开始", 3000);
+                        }
+
                     }
                     else
                     {
-                        Utils.ShowMessageToast("全部看完了", 3000);
+                        if (cb_setting_2.IsChecked.Value)
+                        {
+                            gv_play.SelectedIndex = 0;
+                        }
+                        else
+                        {
+                            Utils.ShowMessageToast("全部看完了", 3000);
+                        }
                     }
                 }
                 else
@@ -1682,6 +1719,7 @@ namespace BiliBili3.Pages
             sp_View.IsPaneOpen = true;
             grid_Setting.Visibility = Visibility.Visible;
             gv_play.Visibility = Visibility.Collapsed;
+            gv_story_list.Visibility = Visibility.Collapsed;
             grid_DM.Visibility = Visibility.Collapsed;
             grid_Info.Visibility = Visibility.Collapsed;
             grid_PB.Visibility = Visibility.Collapsed;
@@ -1795,6 +1833,7 @@ namespace BiliBili3.Pages
             sp_View.IsPaneOpen = true;
             grid_Setting.Visibility = Visibility.Collapsed;
             gv_play.Visibility = Visibility.Collapsed;
+            gv_story_list.Visibility = Visibility.Collapsed;
             grid_DM.Visibility = Visibility.Visible;
             grid_Info.Visibility = Visibility.Collapsed;
             grid_PB.Visibility = Visibility.Collapsed;
@@ -1809,6 +1848,7 @@ namespace BiliBili3.Pages
             grid_Setting.Visibility = Visibility.Collapsed;
             gv_play.Visibility = Visibility.Collapsed;
             grid_DM.Visibility = Visibility.Collapsed;
+            gv_story_list.Visibility = Visibility.Collapsed;
             grid_Info.Visibility = Visibility.Collapsed;
             grid_PB.Visibility = Visibility.Visible;
             list_DisDanmu.Items.Clear();
@@ -1830,6 +1870,7 @@ namespace BiliBili3.Pages
             }
             grid_Setting.Visibility = Visibility.Collapsed;
             gv_play.Visibility = Visibility.Collapsed;
+            gv_story_list.Visibility = Visibility.Collapsed;
             grid_DM.Visibility = Visibility.Collapsed;
             grid_Info.Visibility = Visibility.Visible;
             grid_PB.Visibility = Visibility.Collapsed;
@@ -2126,7 +2167,6 @@ namespace BiliBili3.Pages
         {
             try
             {
-                DanmakuParse danmakuParse = new DanmakuParse();
                 DanMuPool = await danmakuParse.ParseBiliBili(Convert.ToInt64(playNow.Mid));
                 Utils.ShowMessageToast("已经更新弹幕池", 3000);
             }
@@ -2177,6 +2217,7 @@ namespace BiliBili3.Pages
             sp_View.IsPaneOpen = true;
             grid_Setting.Visibility = Visibility.Collapsed;
             gv_play.Visibility = Visibility.Collapsed;
+            gv_story_list.Visibility = Visibility.Collapsed;
             grid_DM.Visibility = Visibility.Visible;
             grid_Info.Visibility = Visibility.Collapsed;
             grid_PB.Visibility = Visibility.Collapsed;
@@ -2184,7 +2225,18 @@ namespace BiliBili3.Pages
 
         private void MTC_SelectList(object sender, EventArgs e)
         {
-            gv_play.Visibility = Visibility.Visible;
+            if (playNow.isInteraction)
+            {
+                gv_story_list.Visibility = Visibility.Visible;
+                gv_play.Visibility = Visibility.Collapsed;
+               
+            }
+            else
+            {
+                gv_play.Visibility = Visibility.Visible;
+                gv_story_list.Visibility = Visibility.Collapsed;
+            }
+
             grid_Setting.Visibility = Visibility.Collapsed;
             grid_DM.Visibility = Visibility.Collapsed;
             grid_Info.Visibility = Visibility.Collapsed;
@@ -2458,7 +2510,6 @@ namespace BiliBili3.Pages
                 var file = await fileOpenPicker.PickSingleFileAsync();
                 if (file != null)
                 {
-                    DanmakuParse danmakuParse = new DanmakuParse();
                     var ls = await danmakuParse.ParseBiliBili(file);
                     DanMuPool.AddRange(ls);
                 }
@@ -2484,6 +2535,54 @@ namespace BiliBili3.Pages
         private void TantanDialog_ReturnDanmakus(object sender, List<NSDanmaku.Model.DanmakuModel> e)
         {
             DanMuPool.AddRange(e);
+        }
+
+        private void Gridview_node_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ((ItemsWrapGrid)gridview_node.ItemsPanelRoot).ItemWidth = (e.NewSize.Width) / 2;
+        }
+
+        private void Gridview_node_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var clickItem = e.ClickedItem as Choices;
+            ChangeNode(clickItem.node_id, clickItem.cid.ToString());
+        }
+        public async void ChangeNode(int node_id,string cid)
+        {
+            var data = await interactionVideo.GetNodes(node_id);
+            if (data == null)
+            {
+                Utils.ShowMessageToast("加载分支失败，请重试");
+                return;
+            }
+            nodeInfo = data;
+            gridview_node.ItemsSource = nodeInfo.edges?.choices;
+            gv_story_list.ItemsSource = nodeInfo.story_list;
+            settingStorylist = true;
+            gv_story_list.SelectedItem = nodeInfo.story_list.FirstOrDefault(x => x.node_id == data.node_id);
+            settingStorylist = false;
+            playNow.Mid =cid;
+            playNow.node_id = node_id;
+            playNow.VideoTitle = data.title;
+            gridview_node.Visibility = Visibility.Collapsed;
+            DanMuPool = await danmakuParse.ParseBiliBili(Convert.ToInt64(playNow.Mid));
+            danmu.ClearAll();
+            ChangeQuality();
+        }
+
+
+
+        bool settingStorylist = false;
+        private void Gv_story_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (gv_story_list.SelectedItem==null||settingStorylist)
+            {
+                return;
+            }
+           
+            var clickItem = gv_story_list.SelectedItem as StoryList;
+            ChangeNode(clickItem.node_id, clickItem.cid.ToString());
+           
         }
     }
 

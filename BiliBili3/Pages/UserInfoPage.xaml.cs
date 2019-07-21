@@ -328,7 +328,7 @@ namespace BiliBili3.Pages
 
         private void btn_AttBangumi_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MyFollowsBangumiPage));
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(FollowSeasonPage), Modules.SeasonType.bangumi);
         }
 
         private void list_ASubit_ItemClick(object sender, ItemClickEventArgs e)

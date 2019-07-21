@@ -43,6 +43,10 @@ namespace BiliBili3.Models
         public elecModel elec { get; set; }
         public audioModel audio { get; set; }
         public List<staffModel> staff { get; set; }
+        /// <summary>
+        /// 互动视频
+        /// </summary>
+        public interactionModel interaction { get; set; }
 
         public string Created_at
         {
@@ -96,6 +100,18 @@ namespace BiliBili3.Models
                 //}
             }
         }
+    }
+    public class interactionModel
+    {
+        public int graph_version { get; set; }
+        public history_nodeModel history_node { get; set; }
+
+    }
+    public class history_nodeModel
+    {
+        public int node_id { get; set; }
+        public string title { get; set; }
+        public long cid { get; set; }
     }
     public class staffModel
     {

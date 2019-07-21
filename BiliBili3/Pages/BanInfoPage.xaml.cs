@@ -106,7 +106,7 @@ namespace BiliBili3.Pages
             {
 
                 pr_Load.Visibility = Visibility.Visible;
-                string uri = string.Format("https://bangumi.bilibili.com/view/api/season?access_key={0}&appkey={1}&build=5250000&platform=android&season_id={2}&ts={3}", ApiHelper.access_key, ApiHelper._appKey, _banId, ApiHelper.GetTimeSpan);
+                string uri = string.Format("https://api.bilibili.com/pgc/view/app/season?access_key={0}&appkey={1}&build=5341000&platform=android&season_id={2}&ts={3}", ApiHelper.access_key, ApiHelper._appKey, _banId, ApiHelper.GetTimeSpan);
                 uri += "&sign=" + ApiHelper.GetSign(uri);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(uri));
 
@@ -124,6 +124,7 @@ namespace BiliBili3.Pages
                         eresults = eresults.Replace("cid", "danmaku");
                         eresults = eresults.Replace("aid", "av_id");
                         model = JsonConvert.DeserializeObject<BangumiDataModel>(eresults);
+                       
                         if (model.code != 0)
                         {
                             Utils.ShowMessageToast(model.message, 3000);
@@ -142,38 +143,76 @@ namespace BiliBili3.Pages
                             eresults = eresults.Replace("ep_id", "episode_id");
                             eresults = eresults.Replace("cid", "danmaku");
                             eresults = eresults.Replace("aid", "av_id");
+                            eresults = eresults.Replace("index_title", "long_title");
+                            eresults = eresults.Replace("index", "title");
 
                             List<episodesModel> ep = JsonConvert.DeserializeObject<List<episodesModel>>(JObject.Parse(eresults)["result"]["episodes"].ToString());
                             model.result.episodes = ep;
                         }
                     }
 
+                    if (model.result.new_ep == null&& model.result.newest_ep!=null)
+                    {
+                        model.result.new_ep = model.result.newest_ep;
+                    }
 
                     int i = 0;
-                    model.result.pv_episodes = model.result.episodes.Where(x => x.section_type != 0).ToList();
-                    model.result.pv_episodes.ForEach(x => { x.orderindex = i; i++; });
+                    //model.result.pv_episodes = model.result.episodes.Where(x => x.section_type != 0).ToList();
+                    //model.result.pv_episodes.ForEach(x => {
+                    //    x.orderindex = i; i++;
+                    //    if (x.index==null)
+                    //    {
+                    //        x.index = x.title;
+                    //    }
+                    //    if (x.index_title==null)
+                    //    {
+                    //        x.index_title = x.long_title;
+                    //    }
+                    //});
 
-                    model.result.episodes = model.result.episodes.Where(x=>x.section_type==0).ToList();
-                    model.result.episodes.ForEach(x => { x.orderindex = i; i++; });
-                    model.result.episodes = model.result.episodes.OrderByDescending(x => x.orderindex).ToList();
+                    if (model.result.episodes!=null)
+                    {
+                        model.result.episodes.ForEach(x => {
+                            x.orderindex = i;
+                            i++;
+                            if (x.index == null)
+                            {
+                                x.index = x.title;
+                            }
+                            if (x.index_title == null)
+                            {
+                                x.index_title = x.long_title;
+                            }
+                            if ((x.episode_id==null||x.episode_id=="")&&x.id!=0)
+                            {
+                                x.episode_id = x.id.ToString();
+                            }
+                        });
+                        model.result.episodes = model.result.episodes.OrderByDescending(x => x.orderindex).ToList();
+                    }
+                   
 
 
-                    model.result.detail = await GetDetail(model.result.media_id.ToString());
+                    model.result.detail_media = await GetDetail(model.result.media_id.ToString());
+                    model.result.evaluate = model.result.detail_media.evaluate;
 
                     this.DataContext = model.result;
 
 
-
                     gv_Play.ItemsSource = model.result.episodes;
-                    gv_Pv.ItemsSource= model.result.pv_episodes;
-                    if (model.result.pv_episodes!=null&&model.result.pv_episodes.Count!=0)
+
+                   // pvSection.ItemsSource= model.result.pv_episodes;
+                    if (model.result.section != null&&model.result.section.Count!=0)
                     {
-                        pvInfo.Visibility = Visibility.Visible;
+                        pvSection.Visibility = Visibility.Visible;
                     }
                     else
                     {
-                        pvInfo.Visibility = Visibility.Collapsed;
+                        pvSection.Visibility = Visibility.Collapsed;
                     }
+
+
+
                     if (model.result.user_status != null && model.result.user_status.follow != 0)
                     {
                         btn_Like.Visibility = Visibility.Collapsed;
@@ -227,7 +266,7 @@ namespace BiliBili3.Pages
                                 HyperlinkButton btn = new HyperlinkButton();
                                 btn.DataContext = item;
                                 btn.Margin = new Thickness(0, 0, 10, 0);
-                                btn.Content = item.title;
+                                btn.Content = item.season_title;
                                 btn.Foreground = App.Current.Resources["Bili-ForeColor"] as SolidColorBrush;
                                 if (item.season_id.ToString() == _banId)
                                 {
@@ -247,10 +286,10 @@ namespace BiliBili3.Pages
                     }
 
 
-                    if (model.result.detail.style != null)
+                    if (model.result.styles != null)
                     {
                         WrapPanel_tag.Children.Clear();
-                        foreach (var item in model.result.detail.style)
+                        foreach (var item in model.result.styles)
                         {
                             HyperlinkButton btn = new HyperlinkButton();
                             btn.DataContext = item;
@@ -264,16 +303,17 @@ namespace BiliBili3.Pages
 
                     if (gv_Play.Items.Count != 0)
                     {
-
+                        gvEpisodes.Visibility = Visibility.Visible;
                         cb_H.SelectedIndex = gv_Play.Items.Count - 1;
                         gv_Play.SelectedIndex = 0;
                     }
                     else
                     {
+                        gvEpisodes.Visibility = Visibility.Collapsed;
                         Utils.ShowMessageToast("尚未开播或不支持你所在地区", 3000);
                     }
                   
-                    if (model.result.dialog != null)
+                    if (model.result.payment!=null&&model.result.payment.dialog != null)
                     {
                         dialog.Visibility = Visibility.Visible;
                         //付费显示弹窗
@@ -960,11 +1000,8 @@ namespace BiliBili3.Pages
             var info = e.ClickedItem as episodesModel;
             List<PlayerModel> ls = new List<PlayerModel>();
             // int i = 1;
-            var items = gv_Play.Items;
-            if ((sender as GridView).Name== "gv_Pv")
-            {
-                items = gv_Pv.Items;
-            }
+            var items = (sender as GridView).ItemsSource as List<episodesModel>;
+           
             foreach (episodesModel item in items)
             {
                 if (item.IsDowned == Visibility.Visible)
@@ -977,7 +1014,7 @@ namespace BiliBili3.Pages
                         Mid = item.danmaku.ToString(),
                         Mode = PlayMode.Local,
                         No = item.orderindex.ToString(),
-                        VideoTitle = item.index + " " + item.index_title,
+                        VideoTitle = item.title + " " + item.long_title,
                         Title = txt_Name.Text,
                         episode_id = item.episode_id,
                         Path = DownloadHelper2.downloadeds[item.danmaku.ToString()],
@@ -986,15 +1023,19 @@ namespace BiliBili3.Pages
                 }
                 else
                 {
-                    if (item.episode_status == 7)
+                    ls.Add(new PlayerModel()
                     {
-                        ls.Add(new PlayerModel() { banId = _banId, banInfo = item, Aid = item.av_id, Mid = item.danmaku.ToString(), Mode = PlayMode.VipBangumi, No = item.orderindex.ToString(), VideoTitle = item.index + " " + item.index_title, Title = txt_Name.Text, episode_id = item.episode_id, index = item.orderindex });
-                        ls.Add(new PlayerModel() { banId = _banId, banInfo = item, Aid = item.av_id, Mid = item.danmaku.ToString(), Mode = PlayMode.VipBangumi, No = item.orderindex.ToString(), VideoTitle = item.index + " " + item.index_title, Title = txt_Name.Text, episode_id = item.episode_id, index = item.orderindex });
-                    }
-                    else
-                    {
-                        ls.Add(new PlayerModel() { banId = _banId, banInfo = item, Aid = item.av_id, Mid = item.danmaku.ToString(), Mode = PlayMode.Bangumi, No = item.orderindex.ToString(), VideoTitle = item.index + " " + item.index_title, Title = txt_Name.Text, episode_id = item.episode_id, index = item.orderindex });
-                    }
+                        banId = _banId,
+                        banInfo = item,
+                        Aid = item.av_id,
+                        Mid = item.danmaku.ToString(),
+                        Mode = PlayMode.Bangumi,
+                        No = item.orderindex.ToString(),
+                        VideoTitle = item.title + " " + item.long_title,
+                        Title = txt_Name.Text,
+                        episode_id = item.episode_id,
+                        index = item.orderindex
+                    });
                 }
                 //  i++;
             }
@@ -1002,7 +1043,7 @@ namespace BiliBili3.Pages
 
             ls = ls.OrderBy(x => x.index).ToList();
 
-            int index = ls.IndexOf(ls.Find(x => x.episode_id == info.episode_id));
+            int index = ls.IndexOf(ls.Find(x => x.Mid == info.danmaku.ToString()));
 
             MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(PlayerPage), new object[] { ls, index });
             PostHistory(ls[index].Aid, ls[index].VideoTitle);
@@ -1187,6 +1228,11 @@ namespace BiliBili3.Pages
             Utils.ShowMessageToast("UWP端不支持付费功能，请到网页或手机端购买后观看");
         }
 
+        private void Txt_desc_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            txt_desc.IsTextSelectionEnabled = !txt_desc.IsTextSelectionEnabled;
+        }
+
         //private void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
 
@@ -1246,6 +1292,9 @@ namespace BiliBili3.Pages
         public int code { get; set; }
         public string message { get; set; }
         public BangumiDataModel result { get; set; }
+
+
+
         public object rank { get; set; }
         public string cover { get; set; }
         public string evaluate { get; set; }
@@ -1260,8 +1309,10 @@ namespace BiliBili3.Pages
         public string title { get; set; }
 
         public List<episodesModel> episodes { get; set; }
+
         public List<episodesModel> pv_episodes { get; set; }
         public BangumipublishModel publish { get; set; }
+        public Banguminewest_epModel new_ep { get; set; }
         public Banguminewest_epModel newest_ep { get; set; }
         public BangumiratingModel rating { get; set; }
         public BangumirightsModel rights { get; set; }
@@ -1269,9 +1320,37 @@ namespace BiliBili3.Pages
         public BangumistatModel stat { get; set; }
         public Bangumiuser_statusModel user_status { get; set; }
 
-        public BangumiDetailModel detail { get; set; }
+        public string detail { get; set; }
+
+        public BangumiDetailModel detail_media { get; set; }
+        public BangumiPaymentModel payment { get; set; }
+
+       public List<BangumiStyleModel> styles { get; set; }
+
+        public List<BangumiSectionModel> section { get; set; }
+
+    }
+
+    public class BangumiStyleModel
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string url { get; set; }
+    }
+
+    public class BangumiPaymentModel
+    {
         public BangumiDialogModel dialog { get; set; }
     }
+
+    public class BangumiSectionModel
+    {
+        public int id { get; set; }
+        public int episode_id { get; set; }
+        public string title { get; set; }
+        public List<episodesModel> episodes { get; set; }
+    }
+
     public class BangumiDialogModel
     {
         public string desc { get; set; }

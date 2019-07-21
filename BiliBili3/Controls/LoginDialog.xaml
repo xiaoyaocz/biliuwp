@@ -9,7 +9,7 @@
     Title="登录"
     PrimaryButtonText="登录"
     SecondaryButtonText="取消"
-   
+    
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
     <Grid>
@@ -38,6 +38,9 @@
             <TextBlock  Margin="0 4">密码</TextBlock>
             <PasswordBox x:Name="txt_Password" PlaceholderText="请输入密码" GotFocus="txt_Password_GotFocus"  LostFocus="txt_Password_LostFocus"></PasswordBox>
             <CheckBox x:Name="cb_AuthBP" Visibility="Collapsed" Margin="0 4" Content="授权BiliPlus(可以解除地区限制)" ></CheckBox>
+            <HyperlinkButton x:Name="btnWebLogin" Click="BtnWebLogin_Click">
+                <TextBlock>切换至网页登录(可以扫码登录)</TextBlock>
+            </HyperlinkButton>
             <StackPanel x:Name="chatcha" Visibility="Collapsed">
                 <TextBlock Margin="0 4">验证码</TextBlock>
                 <Grid>
@@ -52,7 +55,7 @@
 
 
         </StackPanel>
-        <WebView x:Name="webView" NavigationStarting="webView_NavigationStarting" ScriptNotify="webView_ScriptNotify"  Height="360" Visibility="Collapsed"></WebView>
+        <WebView x:Name="webView" NavigationStarting="webView_NavigationStarting" NavigationCompleted="WebView_NavigationCompleted" ScriptNotify="webView_ScriptNotify"  Height="360" Visibility="Collapsed"></WebView>
     </Grid>
   
 </ContentDialog>

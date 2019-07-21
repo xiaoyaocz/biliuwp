@@ -81,7 +81,15 @@ namespace BiliBili3.Helper
         {
             return verStr.Split('/')[0];
         }
-        public static string verStr = string.Format(@"Ver {0} 2019-05-02
+        public static string verStr = string.Format(@"Ver {0} 2019-07-10
+01、升级部分API
+02、支持互动视频！！！
+03、支持一键三连
+04、升级番剧、影视收藏
+05、支持网页登录(支持扫码登录)
+06、修复一些小BUG
+
+/Ver 3.9.18.0&3.9.19.0 2019-05-02
 01、番剧详情页正片与预告分开显示
 02、增加付费电影提示
 03、优化播放地址读取

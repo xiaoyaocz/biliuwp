@@ -1539,7 +1539,7 @@ namespace BiliBili3
 
         private void btn_user_moviecollect_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(typeof(MovieCollectPage));
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(FollowSeasonPage), Modules.SeasonType.cinema);
             fy.Hide();
 
         }

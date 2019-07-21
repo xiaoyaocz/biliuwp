@@ -176,7 +176,7 @@ namespace BiliBili3.Views
             var data = e.ClickedItem as Modules.HomeModels.HomeDataModel;
             if (data.uri==null)
             {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(MyFollowsBangumiPage));
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(FollowSeasonPage), Modules.SeasonType.bangumi);
                 return;
             }
             if (await MessageCenter.HandelUrl(data.uri))

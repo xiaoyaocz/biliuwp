@@ -82,10 +82,11 @@ namespace BiliBili3.Helper
         {
 
             BackgroundDownloader downloader = new BackgroundDownloader();
-            downloader.SetRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36");
+            downloader.SetRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0");
             if (!url.Contains("360.cn"))
             {
-                downloader.SetRequestHeader("Referer", "https://www.bilibili.com/blackboard/html5player.html?crossDomain=true");
+                downloader.SetRequestHeader("Origin", "https://www.bilibili.com/");
+                downloader.SetRequestHeader("Referer", "https://www.bilibili.com/");
             }
             //设置下载模式
             if (SettingHelper.Get_DownMode() == 0)

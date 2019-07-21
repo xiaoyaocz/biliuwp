@@ -112,7 +112,7 @@ namespace BiliBili3.Pages
                 isMovie = false;
                 tag.Children.Clear();
                 pr_Load.Visibility = Visibility.Visible;
-                string uri = string.Format("http://app.bilibili.com/x/view?access_key={0}&aid={1}&appkey=422fd9d7289a1dd9&build=510000&platform=android&ts={2}", ApiHelper.access_key, _aid, ApiHelper.GetTimeSpan);
+                string uri = $"https://app.bilibili.com/x/v2/view?access_key={ ApiHelper.access_key }&aid={ _aid }&appkey={ApiHelper._appKey}&build={ApiHelper.build}&mobi_app=android&plat=0&platform=android&ts={ApiHelper.GetTimeSpan}";
                 uri += "&sign=" + ApiHelper.GetSign(uri);
                 string results = await WebClientClass.GetResults(new Uri(uri));
 
@@ -133,7 +133,7 @@ namespace BiliBili3.Pages
 
                 if (m.code == 0)
                 {
-                    if (m.data.redirect_url!=null&&m.data.redirect_url!="")
+                    if (m.data.redirect_url != null && m.data.redirect_url != "")
                     {
                         this.Frame.GoBack();
                         Utils.ShowMessageToast("正在跳转至专题");
@@ -170,6 +170,10 @@ namespace BiliBili3.Pages
                     {
                         grid_Movie.Visibility = Visibility.Collapsed;
                         movie_pay.Visibility = Visibility.Collapsed;
+                    }
+                    if (m.data.interaction != null)
+                    {
+                        Utils.ShowMessageToast("这是一个互动视频，你的选项会决定剧情走向哦", 5000);
                     }
 
                     //m.data.pages
@@ -243,7 +247,7 @@ namespace BiliBili3.Pages
                             tag.Children.Add(hy);
                         }
                     }
-                    if (m.data.staff!=null&& m.data.staff.Count!=0)
+                    if (m.data.staff != null && m.data.staff.Count != 0)
                     {
                         staff.Visibility = Visibility.Visible;
 
@@ -296,7 +300,7 @@ namespace BiliBili3.Pages
 
         private void Hy_Click(object sender, RoutedEventArgs e)
         {
-            
+
             this.Frame.Navigate(typeof(DynamicTopicPage), new object[] { (sender as HyperlinkButton).Content.ToString() });
         }
 
@@ -714,7 +718,11 @@ namespace BiliBili3.Pages
 
         private void btn_Download_Click(object sender, RoutedEventArgs e)
         {
-
+            if ((this.DataContext as VideoInfoModels).interaction != null)
+            {
+                Utils.ShowMessageToast("互动视频不支持下载");
+                return;
+            }
             if (gv_Play.Items.Count != 0)
             {
                 if (gv_Play.Items.Count == 1)
@@ -817,7 +825,6 @@ namespace BiliBili3.Pages
                     com_bar.Visibility = Visibility.Collapsed;
                 }
 
-
                 //players.LoadPlayer(ls, gv_Play.SelectedIndex);
             }
 
@@ -837,6 +844,11 @@ namespace BiliBili3.Pages
 
         private void btn_Ok_Click(object sender, RoutedEventArgs e)
         {
+            if ((this.DataContext as VideoInfoModels).interaction != null)
+            {
+                Utils.ShowMessageToast("互动视频不支持下载");
+                return;
+            }
             if (gv_Play.SelectedItems.Count == 0)
             {
                 return;
@@ -959,11 +971,21 @@ namespace BiliBili3.Pages
             int i = 1;
             foreach (pagesModel item in gv_Play.Items)
             {
+                var data = (this.DataContext as VideoInfoModels);
                 if (item.IsDowned == Visibility.Collapsed)
                 {
                     if (isMovie)
                     {
-                        ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Movie, No = "", VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title });
+                        ls.Add(new PlayerModel()
+                        {
+                            Aid = _aid,
+                            Mid = item.cid.ToString(),
+                            ImageSrc = data.pic,
+                            Mode = PlayMode.Movie,
+                            No = "",
+                            VideoTitle = item.View,
+                            Title = data.title
+                        });
                     }
                     else
                     {
@@ -975,11 +997,32 @@ namespace BiliBili3.Pages
                             default:
                                 if (ISBAN)
                                 {
-                                    ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Bangumi, No = i.ToString(), VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title, episode_id = (this.DataContext as VideoInfoModels).season.newest_ep_id });
+                                    ls.Add(new PlayerModel()
+                                    {
+                                        Aid = _aid,
+                                        Mid = item.cid.ToString(),
+                                        ImageSrc = data.pic,
+                                        Mode = PlayMode.Bangumi,
+                                        No = i.ToString(),
+                                        VideoTitle = item.View,
+                                        Title = data.title,
+                                        episode_id = data.season.newest_ep_id
+                                    });
                                 }
                                 else
                                 {
-                                    ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Video, No = i.ToString(), VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title });
+                                    ls.Add(new PlayerModel()
+                                    {
+                                        Aid = _aid,
+                                        Mid = item.cid.ToString(),
+                                        isInteraction = data.interaction != null,
+                                        graph_version = data.interaction?.graph_version,
+                                        ImageSrc = data.pic,
+                                        Mode = PlayMode.Video,
+                                        No = i.ToString(),
+                                        VideoTitle = item.View,
+                                        Title = data.title
+                                    });
                                 }
                                 break;
                         }
@@ -990,10 +1033,6 @@ namespace BiliBili3.Pages
                 {
 
                     ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Local, No = "", VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title, Path = DownloadHelper2.downloadeds[item.cid.ToString()] });
-
-
-
-
                 }
             }
 
@@ -1002,7 +1041,7 @@ namespace BiliBili3.Pages
 
         }
 
-        private async void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pivot.SelectedIndex == 0)
             {
@@ -1015,7 +1054,7 @@ namespace BiliBili3.Pages
 
             //if (pivot.SelectedIndex == 1 && comment.CommentCount == 0)
             //{
-                
+
             //    await Task.Delay(100);
             //    comment.LoadComment();
             //}
@@ -1242,7 +1281,8 @@ namespace BiliBili3.Pages
             {
                 Utils.ShowMessageToast("已添加");
             }
-            else{
+            else
+            {
                 Utils.ShowMessageToast(data.message);
             }
         }
@@ -1255,7 +1295,7 @@ namespace BiliBili3.Pages
                 if (availableSize.Width > 500)
                 {
                     i = 3;
-                  
+
                     bor_Width.Width = availableSize.Width / i - 39;
                 }
                 else
@@ -1293,6 +1333,41 @@ namespace BiliBili3.Pages
         {
             var data = e.ClickedItem as staffModel;
             this.Frame.Navigate(typeof(UserInfoPage), new object[] { data.mid });
+        }
+
+        private void Txt_desc_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            txt_desc.IsTextSelectionEnabled = !txt_desc.IsTextSelectionEnabled;
+        }
+
+        private async void Btn_Triple_Click(object sender, RoutedEventArgs e)
+        {
+            if (!ApiHelper.IsLogin() && !await Utils.ShowLoginDialog())
+            {
+                Utils.ShowMessageToast("请登录后再执行操作");
+                return;
+            }
+            try
+            {
+                var body = $"access_key={ApiHelper.access_key}&aid={_aid}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&platform=android&ts={ApiHelper.GetTimeSpan}";
+                body += "&sign=" + ApiHelper.GetSign(body);
+                var results = await WebClientClass.PostResults(new Uri("https://app.bilibili.com/x/v2/view/like/triple"), body);
+                var obj = JObject.Parse(results);
+                if (obj["code"].ToInt32()==0)
+                {
+                    Utils.ShowMessageToast("三连完成");
+                }
+                else
+                {
+                    Utils.ShowMessageToast(obj["message"].ToString());
+                }
+            }
+            catch (Exception)
+            {
+                Utils.ShowMessageToast("三连失败了啊");
+            }
+
+
         }
     }
 }

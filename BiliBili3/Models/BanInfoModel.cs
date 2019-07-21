@@ -170,6 +170,7 @@ namespace BiliBili3.Models
     }
     public class episodesModel
     {
+        public int id { get; set; }
         public int aid { get; set; }
         public int cid { get; set; }
         public int ep_id { get; set; }
@@ -238,11 +239,12 @@ namespace BiliBili3.Models
         }
 
 
-
+        public string long_title { get; set; }
         public string index_title { get; set; }
         public bool inLocal { get; set; }
         public string index { get; set; }
         public int orderindex { get; set; }
+        public string title { get; set; }
         public int episode_status { get; set; }
         public int section_type { get; set; }
 

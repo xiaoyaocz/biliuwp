@@ -35,7 +35,7 @@ namespace BiliBili3.Pages
         {
             this.InitializeComponent();
             //webView = new WebView(WebViewExecutionMode.SameThread);
-            this.NavigationCacheMode = NavigationCacheMode.Required;
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
         }
         BiliBiliJS.biliapp _biliapp = new BiliBiliJS.biliapp();
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -51,7 +51,15 @@ namespace BiliBili3.Pages
             }
             
         }
-
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                webView.NavigateToString("");
+                this.NavigationCacheMode = NavigationCacheMode.Disabled;
+            }
+            base.OnNavigatedFrom(e);
+        }
         private void _biliapp_CloseBrowserEvent(object sender, string e)
         {
             this.Frame.GoBack();
@@ -110,7 +118,10 @@ namespace BiliBili3.Pages
 
         private async void webview_WebView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
         {
-            
+            if (args.Uri==null)
+            {
+                return;
+            }
             if (await MessageCenter.HandelUrl(args.Uri.AbsoluteUri))
             {
                 args.Cancel = true;

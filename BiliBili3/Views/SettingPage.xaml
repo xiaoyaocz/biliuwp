@@ -613,7 +613,7 @@
                             </Grid>
                         </StackPanel>
                         <TextBlock FontSize="16">其他选项</TextBlock>
-                        <HyperlinkButton x:Name="brnAuthBiliPlus" Click="BrnAuthBiliPlus_Click" Foreground="{ThemeResource Bili-Color}">
+                        <HyperlinkButton x:Name="brnAuthBiliPlus" Click="BrnAuthBiliPlus_Click" Foreground="{ThemeResource Bili-ForeColor}">
                             <TextBlock>
                                   <Run x:Name="txtBPState"/> 授权BiliPlus(可以解除部分地区限制视频)
                             </TextBlock>

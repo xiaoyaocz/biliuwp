@@ -276,7 +276,15 @@ namespace BiliBili3.Modules
 
         }
 
-
+        public async Task SetLoginSuccess(string access_token,string mid)
+        {
+            SettingHelper.Set_Access_key(access_token);
+            SettingHelper.Set_Refresh_Token(access_token);
+            SettingHelper.Set_LoginExpires(DateTime.Now.AddSeconds(7200));
+            SettingHelper.Set_UserID(long.Parse( mid));
+            await SSO(access_token);
+            MessageCenter.SendLogined();
+        }
 
         /// <summary>
         /// SSO，将accesskey转为cookie
@@ -482,47 +490,6 @@ namespace BiliBili3.Modules
             {
 
                 return HandelError<MyInfoModel>(ex);
-            }
-        }
-
-        public ReturnModel HandelError(Exception ex)
-        {
-            if (LogHelper.IsNetworkError(ex))
-            {
-                return new ReturnModel()
-                {
-                    success = false,
-                    message = "无法连接服务器，请检查网络连接"
-                };
-            }
-            else
-            {
-                LogHelper.WriteLog(ex);
-                return new ReturnModel()
-                {
-                    success = false,
-                    message = "出现了一个未处理错误，已记录"
-                };
-            }
-        }
-        public ReturnModel<T> HandelError<T>(Exception ex)
-        {
-            if (LogHelper.IsNetworkError(ex))
-            {
-                return new ReturnModel<T>()
-                {
-                    success = false,
-                    message = "无法连接服务器，请检查网络连接"
-                };
-            }
-            else
-            {
-                LogHelper.WriteLog(ex);
-                return new ReturnModel<T>()
-                {
-                    success = false,
-                    message = "出现了一个未处理错误，已记录"
-                };
             }
         }
 

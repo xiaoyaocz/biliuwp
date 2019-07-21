@@ -342,9 +342,11 @@
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\VideoInfoModels.cs" />
     <Compile Include="Modules\Account.cs" />
+    <Compile Include="Modules\SeasonFollow.cs" />
     <Compile Include="Modules\Channel.cs" />
     <Compile Include="Modules\Home.cs" />
     <Compile Include="Modules\IModules.cs" />
+    <Compile Include="Modules\InteractionVideo.cs" />
     <Compile Include="Modules\LiveCenter.cs" />
     <Compile Include="Modules\LiveRoom.cs" />
     <Compile Include="Modules\ToView.cs" />
@@ -471,9 +473,6 @@
     <Compile Include="Pages\User\DynamicPage.xaml.cs">
       <DependentUpon>DynamicPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\User\MovieCollectPage.xaml.cs">
-      <DependentUpon>MovieCollectPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\User\MyQrPage.xaml.cs">
       <DependentUpon>MyQrPage.xaml</DependentUpon>
     </Compile>
@@ -511,8 +510,8 @@
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Bangumi\MyFollowsBangumiPage.xaml.cs">
-      <DependentUpon>MyFollowsBangumiPage.xaml</DependentUpon>
+    <Compile Include="Pages\User\FollowSeasonPage.xaml.cs">
+      <DependentUpon>FollowSeasonPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\User\MyMessagePage.xaml.cs">
       <DependentUpon>MyMessagePage.xaml</DependentUpon>
@@ -959,10 +958,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\User\MovieCollectPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\User\MyQrPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1015,7 +1010,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Bangumi\MyFollowsBangumiPage.xaml">
+    <Page Include="Pages\User\FollowSeasonPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1150,8 +1145,8 @@
     <SDKReference Include="ShanYe MediaPlayer Engine %28Windows 10 UWP%29, Version=1.0.7">
       <Name>ShanYe MediaPlayer Engine %28Windows 10 UWP%29</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.28.0">
-      <Name>SQLite for Universal Windows Platform</Name>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.29.0">
+      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.29.0%29</Name>
     </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
       <Name>Windows Mobile Extensions for the UWP</Name>

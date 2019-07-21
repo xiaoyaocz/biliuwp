@@ -245,17 +245,6 @@ namespace BiliBili3.Modules
                 }
             }
         }
-
-        public ReturnModel HandelError(Exception ex)
-        {
-            return null;
-        }
-
-        public ReturnModel<T> HandelError<T>(Exception ex)
-        {
-            return null;
-        }
-
         public class ToViewsModel
         {
             public int code { get; set; }

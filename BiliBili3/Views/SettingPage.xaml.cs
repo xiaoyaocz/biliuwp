@@ -738,7 +738,7 @@ namespace BiliBili3.Views
 
         private void btn_Help_Click(object sender, RoutedEventArgs e)
         {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), "http://iliili.cn/%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9uwp%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E5%B8%AE%E5%8A%A9");
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), "https://www.showdoc.cc/biliuwp");
         }
 
         private void sw_MouseBack_Toggled(object sender, RoutedEventArgs e)

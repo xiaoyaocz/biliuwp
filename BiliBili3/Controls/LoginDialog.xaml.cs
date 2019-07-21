@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Navigation;
 using Newtonsoft.Json.Linq;
 using Windows.UI.Xaml.Media.Imaging;
 using BiliBili3.Helper;
+using System.Text.RegularExpressions;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“内容对话框”项模板
 
@@ -48,9 +49,10 @@ namespace BiliBili3.Controls
         BiliBiliJS.secure _secure = new BiliBiliJS.secure();
         private void _biliapp_CloseBrowserEvent(object sender, string e)
         {
+            UserManage.Logout();
             this.Hide();
         }
-
+       
         private async void _biliapp_ValidateLoginEvent(object sender, string e)
         {
             try
@@ -191,8 +193,16 @@ namespace BiliBili3.Controls
 
         }
 
-        private void webView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
+        private async void webView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
         {
+            if (args.Uri.AbsoluteUri.Contains("access_key="))
+            {
+                var access = Regex.Match(args.Uri.AbsoluteUri, "access_key=(.*?)&").Groups[1].Value;
+                var mid = Regex.Match(args.Uri.AbsoluteUri, "mid=(.*?)&").Groups[1].Value;
+                await account.SetLoginSuccess(access, mid);
+                this.Hide();
+                return;
+            }
             try
             {
                 this.webView.AddWebAllowedObject("biliapp", _biliapp);
@@ -202,11 +212,43 @@ namespace BiliBili3.Controls
             {
                 LogHelper.WriteLog(ex);
             }
-
+          
         }
 
         private void webView_ScriptNotify(object sender, NotifyEventArgs e)
         {
+
+        }
+
+        private void BtnWebLogin_Click(object sender, RoutedEventArgs e)
+        {
+            Title = "网页登录";
+            webView.Visibility = Visibility.Visible;
+            webView.Source = new Uri("https://passport.bilibili.com/ajax/miniLogin/minilogin");
+            IsPrimaryButtonEnabled = false;
+            webView.Width = 440;
+            webView.Height = 480;
+            //
+        }
+
+        private async void WebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+        {
+            if (args.Uri.AbsoluteUri== "https://passport.bilibili.com/ajax/miniLogin/redirect")
+            {
+                var results= await WebClientClass.GetResults(new Uri("https://passport.bilibili.com/login/app/third?appkey=27eb53fc9058f8c3&api=http%3A%2F%2Flink.acg.tv%2Fforum.php&sign=67ec798004373253d60114caaad89a8c"));
+                var obj = JObject.Parse(results);
+                if (obj["code"].ToInt32()==0)
+                {
+                    webView.Navigate(new Uri(obj["data"]["confirm_uri"].ToString()));
+                }
+                else
+                {
+                    Utils.ShowMessageToast("登录失败，请重试");
+                }
+                return;
+            }
+            
+
 
         }
     }
