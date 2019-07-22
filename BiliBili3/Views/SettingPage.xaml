@@ -468,6 +468,11 @@
                             </StackPanel>
 
                             <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">默认弹幕状态</TextBlock>
+                                <ToggleSwitch x:Name="sw_StatusDanmu" Toggled="sw_StatusDanmu_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0" ></ToggleSwitch>
+                            </Grid>
+
+                            <Grid Margin="0 10 0 0">
                                 <TextBlock Foreground="Gray" VerticalAlignment="Center">弹幕加粗</TextBlock>
                                 <ToggleSwitch x:Name="sw_BoldDanmu" Toggled="sw_BoldDanmu_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
                             </Grid>

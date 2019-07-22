@@ -542,7 +542,17 @@ namespace BiliBili3.Pages
             menu_setting_top.IsChecked = !SettingHelper.Get_DMVisTop();
             menu_setting_gd.IsChecked = !SettingHelper.Get_DMVisRoll();
 
-
+            var danmuStatus = SettingHelper.Get_DMStatus();
+            if (danmuStatus)
+            {
+                danmu.Visibility = Visibility.Visible;
+                LoadDanmu = true;
+            }
+            else
+            {
+                danmu.Visibility = Visibility.Collapsed;
+                LoadDanmu = false;
+            }
         }
 
 
