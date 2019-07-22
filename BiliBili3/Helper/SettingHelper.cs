@@ -872,13 +872,31 @@ namespace BiliBili3
             }
         }
 
+        public static void Set_DMStatus(bool value)
+        {
+            container = ApplicationData.Current.LocalSettings;
+            container.Values["DMStatus"] = value;
+        }
+
+        public static bool Get_DMStatus()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            if (container.Values["DMStatus"] != null)
+            {
+                return Convert.ToBoolean(container.Values["DMStatus"]);
+            }
+            else
+            {
+                container.Values["DMStatus"] = true;
+                return true;
+            }
+        }
+
         public static void Set_NewDMTran(double value)
         {
             container = ApplicationData.Current.LocalSettings;
             container.Values["NewDMTran"] = value;
         }
-
-
 
 
         public static void Set_Guanjianzi(string value)

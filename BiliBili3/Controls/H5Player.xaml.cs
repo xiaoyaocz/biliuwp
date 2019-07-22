@@ -601,7 +601,20 @@ namespace BiliBili3.Controls
             menu_setting_top.IsChecked = !SettingHelper.Get_DMVisTop();
             menu_setting_gd.IsChecked = !SettingHelper.Get_DMVisRoll();
 
+            var danmuStatus = SettingHelper.Get_DMStatus();
+            if (danmuStatus)
+            {
+                danmu.Visibility = Visibility.Visible;
+                btn_Open_CloseDanmu.Foreground = new SolidColorBrush(Colors.White);
+                LoadDanmu = true;
 
+            }
+            else
+            {
+                danmu.Visibility = Visibility.Collapsed;
+                btn_Open_CloseDanmu.Foreground = new SolidColorBrush(Colors.Gray);
+                LoadDanmu = false;
+            }
 
 
         }

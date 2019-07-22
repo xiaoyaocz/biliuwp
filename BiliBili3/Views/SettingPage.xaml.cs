@@ -87,6 +87,7 @@ namespace BiliBili3.Views
 
                 sw_NotSubtitle.IsOn = SettingHelper.Get_DanmuNotSubtitle();
                 sw_BoldDanmu.IsOn = SettingHelper.Get_BoldDanmu();
+                sw_StatusDanmu.IsOn = SettingHelper.Get_DMStatus();
 
                 sw_DTCT.IsOn = SettingHelper.Get_DTCT();
                 sw_DT.IsOn = SettingHelper.Get_DT();
@@ -795,6 +796,11 @@ namespace BiliBili3.Views
             MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), "https://www.wjx.top/jq/23344273.aspx");
         }
 
+        private void sw_StatusDanmu_Toggled(object sender, RoutedEventArgs e)
+        {
+            SettingHelper.Set_DMStatus(sw_StatusDanmu.IsOn);
+        }
+
         private void sw_BoldDanmu_Toggled(object sender, RoutedEventArgs e)
         {
             SettingHelper.Set_BoldDanmu(sw_BoldDanmu.IsOn);
@@ -827,5 +833,6 @@ namespace BiliBili3.Views
                 Utils.ShowMessageToast("授权失败了");
             }
         }
+
     }
 }
