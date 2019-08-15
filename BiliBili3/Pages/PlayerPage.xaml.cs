@@ -256,10 +256,10 @@ namespace BiliBili3.Pages
         bool playLocal = false;
         bool LoadDanmu = true;
         int LastPost = 0;
-
+        bool settingFlag = true;
         public async void LoadPlayer(List<PlayerModel> par, int index)
         {
-
+            
 
             await Task.Delay(200);
             danmu = MTC.myDanmaku;
@@ -487,7 +487,7 @@ namespace BiliBili3.Pages
 
 
 
-        public void UpdateSetting()
+        public async void UpdateSetting()
         {
             //if (!SettingHelper.IsPc())
             //{
@@ -495,7 +495,7 @@ namespace BiliBili3.Pages
             //    btn_HideInfo.Visibility = Visibility.Collapsed;
             //    // danmu.fontSize = 16;
             //}
-
+            settingFlag = true;
 
             SYEngine.Core.ForceSoftwareDecode = SettingHelper.Get_ForceVideo();
 
@@ -515,6 +515,17 @@ namespace BiliBili3.Pages
             //danmu.notHideSubtitle = sw_DanmuNotSubtitle.IsOn;
 
             sw_BoldDanmu.IsOn = SettingHelper.Get_BoldDanmu();
+
+            sw_UseDASH.IsOn = SettingHelper.Get_UseDASH();
+            if (!await SystemHelper.CheckCodec())
+            {
+                btnOpenInstallHEVC.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                btnOpenInstallHEVC.Visibility = Visibility.Collapsed;
+            }
+            sw_DASHUseHEVC.IsOn = SettingHelper.Get_DASHUseHEVC();
 
             List<string> fonts = SystemHelper.GetSystemFontFamilies();
             cb_Font.ItemsSource = fonts;
@@ -553,6 +564,7 @@ namespace BiliBili3.Pages
                 danmu.Visibility = Visibility.Collapsed;
                 LoadDanmu = false;
             }
+            settingFlag = false;
         }
 
 
@@ -1093,6 +1105,7 @@ namespace BiliBili3.Pages
                 case PlayMode.VipBangumi:
 
                     var ban = await PlayurlHelper.GetBangumiUrl(playNow, (cb_Quity.SelectedItem as QualityModel).qn);
+                    txt_site.Text = ban.from;
                     if (ban!=null)
                     {
                         if (ban.usePlayMode == UsePlayMode.System)
@@ -1121,6 +1134,7 @@ namespace BiliBili3.Pages
 
 
                     var ss = await PlayurlHelper.GetVideoUrl(playNow.Aid, playNow.Mid, (cb_Quity.SelectedItem as QualityModel).qn);
+                    txt_site.Text = ss.from;
                     if (ss!=null)
                     {
                         if (ss.usePlayMode == UsePlayMode.System)
@@ -2608,6 +2622,41 @@ namespace BiliBili3.Pages
             var clickItem = gv_story_list.SelectedItem as StoryList;
             ChangeNode(clickItem.node_id, clickItem.cid.ToString());
            
+        }
+
+        private async void Sw_DASHUseHEVC_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (settingFlag)
+            {
+                return;
+            }
+            if (sw_DASHUseHEVC.IsOn && !await SystemHelper.CheckCodec())
+            {
+                sw_DASHUseHEVC.IsOn = false;
+                Utils.ShowMessageToast("请先安装HEVC扩展");
+            }
+            else
+            {
+                SettingHelper.Set_DASHUseHEVC(sw_DASHUseHEVC.IsOn);
+                Utils.ShowMessageToast("更改清晰度或重新加载生效");
+            }
+
+        }
+
+        private void Sw_UseDASH_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (settingFlag)
+            {
+                return;
+            }
+            if (sw_UseDASH.IsOn && SystemHelper.GetSystemBuild() < 17134)
+            {
+                Utils.ShowMessageToast("系统版本1803以上才可以开启");
+                sw_UseDASH.IsOn = false;
+                return;
+            }
+            SettingHelper.Set_UseDASH(sw_UseDASH.IsOn);
+            Utils.ShowMessageToast("更改清晰度或重新加载生效");
         }
     }
 

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Graphics.Display;
+using Windows.Media.Core;
 using Windows.Networking.Connectivity;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
@@ -179,8 +180,24 @@ namespace BiliBili3.Helper
 
         }
 
-
-
+        public static async Task<bool> CheckCodec()
+        {
+            try
+            {
+                var codecQuery = new CodecQuery();
+                IReadOnlyList<CodecInfo> result = await codecQuery.FindAllAsync(CodecKind.Video, CodecCategory.Decoder, "");
+                return result.Any(x => x.DisplayName == "HEVCVideoExtension");
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public static ulong GetSystemBuild()
+        {
+            var version = (ulong.Parse(Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamilyVersion) & 0x00000000FFFF0000L) >> 16;
+            return version;
+        }
         public static string SystemVersion()
         {
             ulong version = ulong.Parse(AnalyticsInfo.VersionInfo.DeviceFamilyVersion);

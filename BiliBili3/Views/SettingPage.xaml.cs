@@ -72,6 +72,15 @@ namespace BiliBili3.Views
                 sw_NewWidnows.IsOn = SettingHelper.Get_NewWindow();
                 sw_UseDASH.IsOn = SettingHelper.Get_UseDASH();
 
+                if (!await SystemHelper.CheckCodec())
+                {
+                    btnOpenInstallHEVC.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    btnOpenInstallHEVC.Visibility = Visibility.Collapsed;
+                }
+                sw_DASHUseHEVC.IsOn = SettingHelper.Get_DASHUseHEVC();
 
                 sw_LoadSe.IsOn = SettingHelper.Get_LoadSplash();
                 sw_CloseAD.IsOn = SettingHelper.Get_HideAD();
@@ -243,6 +252,10 @@ namespace BiliBili3.Views
 
                 txt_Ver.Text = AppHelper.verStr.Replace("/", "");
                 pr_Load.Visibility = Visibility.Collapsed;
+
+
+
+
                 loadsetting = false;
             }
             catch (Exception)
@@ -839,7 +852,30 @@ namespace BiliBili3.Views
 
         private void Sw_UseDASH_Toggled(object sender, RoutedEventArgs e)
         {
+            
+            if (sw_UseDASH.IsOn && SystemHelper.GetSystemBuild() < 17134)
+            {
+                Utils.ShowMessageToast("系统版本1803以上才可以开启");
+                sw_UseDASH.IsOn = false;
+                return;
+            }
             SettingHelper.Set_UseDASH(sw_UseDASH.IsOn);
         }
+
+        private async void Sw_DASHUseHEVC_Toggled(object sender, RoutedEventArgs e)
+        {
+
+            if (sw_DASHUseHEVC.IsOn&& !await SystemHelper.CheckCodec())
+            {
+                sw_DASHUseHEVC.IsOn = false;
+                Utils.ShowMessageToast("请先安装HEVC扩展");
+            }
+            else
+            {
+                SettingHelper.Set_DASHUseHEVC(sw_DASHUseHEVC.IsOn);
+            }
+        }
+
+
     }
 }

@@ -9,6 +9,8 @@ using Windows.ApplicationModel;
 using Microsoft.Toolkit.Uwp;
 using Windows.UI.StartScreen;
 using Microsoft.Toolkit.Uwp.Helpers;
+using Windows.Foundation.Metadata;
+using BiliBili3.Helper;
 
 namespace BiliBili3
 {
@@ -828,8 +830,11 @@ namespace BiliBili3
             }
             else
             {
-                Set_UseDASH(true);
-                return true;
+
+                //系统版本大于1803启用
+                var version = SystemHelper.GetSystemBuild();
+                Set_UseDASH(version >= 17134);
+                return version >= 17134;
             }
         }
 
@@ -841,6 +846,26 @@ namespace BiliBili3
         }
 
 
+        public static bool Get_DASHUseHEVC()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            if (container.Values["DASHUseHEVC"] != null)
+            {
+                return (bool)container.Values["DASHUseHEVC"];
+            }
+            else
+            {
+                Set_DASHUseHEVC(false);
+                return false;
+            }
+        }
+
+
+        public static void Set_DASHUseHEVC(bool value)
+        {
+            container = ApplicationData.Current.LocalSettings;
+            container.Values["DASHUseHEVC"] = value;
+        }
 
 
         #endregion

@@ -322,7 +322,12 @@
                                 <ToggleSwitch x:Name="sw_UseDASH"  Toggled="Sw_UseDASH_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
 
                             </Grid>
-                            
+                            <Grid Margin="0 10 0 0" Visibility="Visible">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Left">DASH使用HEVC(如果出现无画面请关闭)</TextBlock>
+                                <ToggleSwitch x:Name="sw_DASHUseHEVC"  Toggled="Sw_DASHUseHEVC_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <HyperlinkButton x:Name="btnOpenInstallHEVC" NavigateUri="ms-windows-store://pdp/?productid=9n4wgh0z6vhq">需要安装扩展才能开启HEVC</HyperlinkButton>
                             <Grid Margin="0 10 0 0" Visibility="Visible">
                                 <TextBlock Foreground="Gray" VerticalAlignment="Center">强制软解视频</TextBlock>
                                 <ToggleSwitch x:Name="sw_ForceVideo"  Toggled="sw_ForceVideo_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>

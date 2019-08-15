@@ -65,7 +65,7 @@ namespace BiliBili3.Helper
 
 
                 //官方API
-                var bili = await GetBilibiliBangumiUrl(model,qn);
+                var bili = await GetBilibiliBangumiUrl(model, qn);
                 if (bili != null)
                 {
                     return bili;
@@ -172,34 +172,26 @@ namespace BiliBili3.Helper
                 {
                     if (obj["dash"] != null)
                     {
-                        var video = obj["dash"]["video"].FirstOrDefault(x => x["id"].Value<int>() == qn && x["codecid"].Value<int>() == 7);
-                        var audio = obj["dash"]["audio"].Last();
+                        int codecid = 7;
+                        if (SettingHelper.Get_DASHUseHEVC())
+                        {
+                            codecid = 12;
+                        }
+                        var videos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(obj["dash"]["video"].ToString());
+                        var audios = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(obj["dash"]["audio"].ToString());
+                        var video = videos.FirstOrDefault(x => x.id== qn && x.codecid== codecid);
+                        if (video == null && codecid == 12)
+                        {
+                            codecid = 7;
+                            video = videos.FirstOrDefault(x => x.id == qn && x.codecid == codecid);
+                        }
+                        var audio = audios.FirstOrDefault();
 
                         return new ReturnPlayModel()
                         {
                             usePlayMode = UsePlayMode.Dash,
-                            mediaSource = await CreateAdaptiveMediaSource(new DashInfo()
-                            {
-                                bandwidth = video["bandwidth"].ToString(),
-                                codecs = video["codecs"].ToString(),
-                                height = video["height"].ToString(),
-                                width = video["width"].ToString(),
-                                id = video["id"].Value<int>(),
-                                indexRange = video["SegmentBase"]["indexRange"].ToString(),
-                                initialization = video["SegmentBase"]["Initialization"].ToString(),
-                                mimeType = video["mimeType"].ToString(),
-                                url = video["baseUrl"].ToString()
-                            }, new DashInfo()
-                            {
-                                bandwidth = audio["bandwidth"].ToString(),
-                                codecs = audio["codecs"].ToString(),
-                                id = audio["id"].Value<int>(),
-                                indexRange = audio["SegmentBase"]["indexRange"].ToString(),
-                                initialization = audio["SegmentBase"]["Initialization"].ToString(),
-                                mimeType = audio["mimeType"].ToString(),
-                                url = audio["baseUrl"].ToString()
-                            }),
-                            from = "bilibili_dash"
+                            mediaSource = await CreateAdaptiveMediaSource(video,audio),
+                            from = "bilibili_dash_" + codecid
                         };
                     }
                     else
@@ -229,9 +221,9 @@ namespace BiliBili3.Helper
                 //url2 += "&sign=" + ApiHelper.GetSign_VIDEO(url2);
                 var re = await WebClientClass.GetResultsUTF8Encode(new Uri(url2));
                 JObject obj = JObject.Parse(re);
-              
+
                 //是否遇到了地区限制
-                if (obj["code"].ToInt32()==0 && !re.Contains("8986943"))
+                if (obj["code"].ToInt32() == 0 && !re.Contains("8986943"))
                 {
                     foreach (var item in obj["result"]["durl"])
                     {
@@ -258,7 +250,7 @@ namespace BiliBili3.Helper
                 return null;
             }
         }
-       
+
 
         public static async Task<ReturnPlayModel> Get23MoeUrl(PlayerModel model, int qn)
         {
@@ -322,26 +314,26 @@ namespace BiliBili3.Helper
         /// <param name="model"></param>
         /// <param name="qn"></param>
         /// <returns></returns>
-        public static async Task<ReturnPlayModel> GetBiliPlusUrl(string cid, int qn,string referer,int season_type,string cookie="")
+        public static async Task<ReturnPlayModel> GetBiliPlusUrl(string cid, int qn, string referer, int season_type, string cookie = "")
         {
             try
             {
                 var season = "";
-                if (season_type!=0)
+                if (season_type != 0)
                 {
                     season = $"&module=bangumi&season_type={ season_type}";
                 }
                 string url = "https://www.biliplus.com/BPplayurl.php?cid=" + cid + $"&otype=json&type=&quality={qn}&qn={qn}{season}&access_key={ApiHelper.access_key}";
                 Dictionary<string, string> header = new Dictionary<string, string>();
-                if (SettingHelper.Get_BiliplusCookie()!="")
+                if (SettingHelper.Get_BiliplusCookie() != "")
                 {
-                    if (cookie=="")
+                    if (cookie == "")
                     {
                         cookie = SettingHelper.Get_BiliplusCookie();
                     }
                     header.Add("Cookie", cookie);
                 }
-                
+
                 string re = await WebClientClass.GetResults(new Uri(url));
                 FlvPlyaerUrlModel m = JsonConvert.DeserializeObject<FlvPlyaerUrlModel>(re);
                 if (m.code == 0)
@@ -368,11 +360,12 @@ namespace BiliBili3.Helper
                     {
                         ReturnPlayModel returnPlayModel = null;
                         MessageDialog messageDialog = new MessageDialog("读取视频地址失败了，是否授权Biliplus后再试一次?");
-                        messageDialog.Commands.Add(new UICommand("授权",async (e) => {
-                            var _cookie =await Account.AuthBiliPlus();
+                        messageDialog.Commands.Add(new UICommand("授权", async (e) =>
+                        {
+                            var _cookie = await Account.AuthBiliPlus();
                             if (_cookie != "")
                             {
-                                returnPlayModel =await GetBiliPlusUrl(cid, qn, referer, season_type, _cookie);
+                                returnPlayModel = await GetBiliPlusUrl(cid, qn, referer, season_type, _cookie);
                             }
                             else
                             {
@@ -387,7 +380,8 @@ namespace BiliBili3.Helper
                     {
                         return null;
                     }
-                }else
+                }
+                else
                 {
                     return null;
                 }
@@ -427,34 +421,26 @@ namespace BiliBili3.Helper
                 {
                     if (obj["dash"] != null)
                     {
-                        var video = obj["dash"]["video"].FirstOrDefault(x => x["id"].Value<int>() == qn && x["codecid"].Value<int>() == 7);
-                        var audio = obj["dash"]["audio"].Last();
+                        int codecid = 7;
+                        if (SettingHelper.Get_DASHUseHEVC())
+                        {
+                            codecid = 12;
+                        }
+                        var videos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(obj["dash"]["video"].ToString());
+                        var audios = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(obj["dash"]["audio"].ToString());
+                        var video = videos.FirstOrDefault(x => x.id == qn && x.codecid == codecid);
+                        if (video == null && codecid == 12)
+                        {
+                            codecid = 7;
+                            video = videos.FirstOrDefault(x => x.id == qn && x.codecid == codecid);
+                        }
+                        var audio = audios.FirstOrDefault();
 
                         return new ReturnPlayModel()
                         {
                             usePlayMode = UsePlayMode.Dash,
-                            mediaSource = await CreateAdaptiveMediaSource(new DashInfo()
-                            {
-                                bandwidth = video["bandwidth"].ToString(),
-                                codecs = video["codecs"].ToString(),
-                                height = video["height"].ToString(),
-                                width = video["width"].ToString(),
-                                id = video["id"].Value<int>(),
-                                indexRange = video["SegmentBase"]["indexRange"].ToString(),
-                                initialization = video["SegmentBase"]["Initialization"].ToString(),
-                                mimeType = video["mimeType"].ToString(),
-                                url = video["baseUrl"].ToString()
-                            }, new DashInfo()
-                            {
-                                bandwidth = audio["bandwidth"].ToString(),
-                                codecs = audio["codecs"].ToString(),
-                                id = audio["id"].Value<int>(),
-                                indexRange = audio["SegmentBase"]["indexRange"].ToString(),
-                                initialization = audio["SegmentBase"]["Initialization"].ToString(),
-                                mimeType = audio["mimeType"].ToString(),
-                                url = audio["baseUrl"].ToString()
-                            }),
-                            from = "bilibili_dash"
+                            mediaSource = await CreateAdaptiveMediaSource(video, audio),
+                            from = "bilibili_dash_" + codecid
                         };
                     }
                     else
@@ -468,7 +454,8 @@ namespace BiliBili3.Helper
                     {
                         ReturnPlayModel returnPlayModel = null;
                         MessageDialog messageDialog = new MessageDialog("读取视频地址失败了，是否授权Biliplus后再试一次?");
-                        messageDialog.Commands.Add(new UICommand("授权", async (e) => {
+                        messageDialog.Commands.Add(new UICommand("授权", async (e) =>
+                        {
                             var _cookie = await Account.AuthBiliPlus();
                             if (_cookie != "")
                             {
@@ -521,7 +508,8 @@ namespace BiliBili3.Helper
                     {
                         ReturnPlayModel returnPlayModel = null;
                         MessageDialog messageDialog = new MessageDialog("读取视频地址失败了，是否授权Biliplus后再试一次?");
-                        messageDialog.Commands.Add(new UICommand("授权", async (e) => {
+                        messageDialog.Commands.Add(new UICommand("授权", async (e) =>
+                        {
                             var _cookie = await Account.AuthBiliPlus();
                             if (_cookie != "")
                             {
@@ -604,28 +592,28 @@ namespace BiliBili3.Helper
                             break;
                     }
                 }
-               
+
                 if (SettingHelper.Get_UseDASH())
                 {
-                    var bilidash = await GetVideoUrlDASH(aid,cid,qn);
-                    if (bilidash!=null)
+                    var bilidash = await GetVideoUrlDASH(aid, cid, qn);
+                    if (bilidash != null)
                     {
                         return bilidash;
                     }
                 }
 
-                var biliv1 = await GetVideoUrlV1(aid,cid,qn);
-                if (biliv1!=null)
+                var biliv1 = await GetVideoUrlV1(aid, cid, qn);
+                if (biliv1 != null)
                 {
                     return biliv1;
                 }
-                var biliplus = await GetBiliPlusUrl(cid, qn, "https://www.bilibili.com/video/av" + aid + "/",0);
-                if (biliplus!=null)
+                var biliplus = await GetBiliPlusUrl(cid, qn, "https://www.bilibili.com/video/av" + aid + "/", 0);
+                if (biliplus != null)
                 {
                     return biliplus;
                 }
                 return null;
-              
+
             }
             catch (Exception)
             {
@@ -641,37 +629,30 @@ namespace BiliBili3.Helper
                 string url = $"https://api.bilibili.com/x/player/playurl?avid={ aid}&cid={cid}&qn=&type=&otype=json&fnver=0&fnval=16";
                 string re = await WebClientClass.GetResults(new Uri(url));
                 JObject obj = JObject.Parse(re);
-                if (obj["code"].ToInt32()==0)
+                if (obj["code"].ToInt32() == 0)
                 {
-                    if (obj["data"]["dash"]!=null)
+                    if (obj["data"]["dash"] != null)
                     {
-                        var video = obj["data"]["dash"]["video"].FirstOrDefault(x => x["id"].Value<int>() == qn&&x["codecid"].Value<int>()==7);
-                        var audio = obj["data"]["dash"]["audio"].Last();
+                        int codecid = 7;
+                        if (SettingHelper.Get_DASHUseHEVC())
+                        {
+                            codecid = 12;
+                        }
+                        var videos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(obj["data"]["dash"]["video"].ToString());
+                        var audios = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(obj["data"]["dash"]["audio"].ToString());
+                        var video = videos.FirstOrDefault(x => x.id == qn && x.codecid == codecid);
+                        if (video == null && codecid == 12)
+                        {
+                            codecid = 7;
+                            video = videos.FirstOrDefault(x => x.id == qn && x.codecid == codecid);
+                        }
+                        var audio = audios.FirstOrDefault();
 
                         return new ReturnPlayModel()
                         {
                             usePlayMode = UsePlayMode.Dash,
-                            mediaSource = await CreateAdaptiveMediaSource(new DashInfo() {
-                                bandwidth= video["bandwidth"].ToString(),
-                                codecs = video["codecs"].ToString(),
-                                height= video["height"].ToString(),
-                                width = video["width"].ToString(),
-                                id= video["id"].Value<int>(),
-                                indexRange= video["SegmentBase"]["indexRange"].ToString(),
-                                initialization = video["SegmentBase"]["Initialization"].ToString(),
-                                mimeType = video["mimeType"].ToString(),
-                                url = video["baseUrl"].ToString()
-                            },new DashInfo() {
-                                bandwidth = audio["bandwidth"].ToString(),
-                                codecs = audio["codecs"].ToString(),
-                                id = audio["id"].Value<int>(),
-                                indexRange = audio["SegmentBase"]["indexRange"].ToString(),
-                                initialization = audio["SegmentBase"]["Initialization"].ToString(),
-                                mimeType = audio["mimeType"].ToString(),
-                                url = audio["baseUrl"].ToString()
-                            }),
-                            urls = urls,
-                            from = "bilibili_dash"
+                            mediaSource = await CreateAdaptiveMediaSource(video, audio),
+                            from = "bilibili_dash_" + codecid
                         };
                     }
                     else
@@ -727,8 +708,8 @@ namespace BiliBili3.Helper
             {
                 return null;
             }
-            
-           
+
+
         }
 
 
@@ -811,7 +792,7 @@ namespace BiliBili3.Helper
 
                 if (m.downloadMode == DownloadMode.Video)
                 {
-                    var videos =await GetVideoUrl(m.avid, m.cid, qn);
+                    var videos = await GetVideoUrl(m.avid, m.cid, qn);
                     if (videos != null)
                     {
                         return videos.urls;
@@ -823,16 +804,18 @@ namespace BiliBili3.Helper
                 }
                 else
                 {
-                    var ban=await GetBangumiUrl(new PlayerModel() {
-                        Aid=m.avid,
-                        banId=m.sid,
-                        episode_id=m.epid,
-                        banInfo=new Models.episodesModel() {
+                    var ban = await GetBangumiUrl(new PlayerModel()
+                    {
+                        Aid = m.avid,
+                        banId = m.sid,
+                        episode_id = m.epid,
+                        banInfo = new Models.episodesModel()
+                        {
                             episode_id = m.epid
                         },
-                        index=m.epIndex,
-                        Mid=m.cid
-                    },qn);
+                        index = m.epIndex,
+                        Mid = m.cid
+                    }, qn);
                     if (ban != null)
                     {
                         return ban.urls;
@@ -1019,7 +1002,7 @@ namespace BiliBili3.Helper
             }
         }
 
-        private static async Task<IMediaSource> CreateAdaptiveMediaSource(DashInfo video, DashInfo audio)
+        private static async Task<IMediaSource> CreateAdaptiveMediaSource(DashItem video, DashItem audio)
         {
             try
             {
@@ -1032,8 +1015,8 @@ namespace BiliBili3.Helper
       <ContentComponent contentType=""video"" id=""1"" />
       <Representation bandwidth=""{video.bandwidth}"" codecs=""{video.codecs}"" height=""{video.height}"" id=""{video.id}"" mimeType=""{video.mimeType}"" width=""{video.width}"">
         <BaseURL></BaseURL>
-        <SegmentBase indexRange=""{video.indexRange}"">
-          <Initialization range=""{video.initialization}"" />
+        <SegmentBase indexRange=""{video.SegmentBase.indexRange}"">
+          <Initialization range=""{video.SegmentBase.Initialization}"" />
         </SegmentBase>
       </Representation>
     </AdaptationSet>
@@ -1041,8 +1024,8 @@ namespace BiliBili3.Helper
       <ContentComponent contentType=""audio"" id=""2"" />
       <Representation bandwidth=""{audio.bandwidth}"" codecs=""{audio.codecs}"" id=""{audio.id}"" mimeType=""{audio.mimeType}"" >
         <BaseURL></BaseURL>
-        <SegmentBase indexRange=""{audio.indexRange}"">
-          <Initialization range=""{audio.initialization}"" />
+        <SegmentBase indexRange=""{audio.SegmentBase.indexRange}"">
+          <Initialization range=""{audio.SegmentBase.Initialization}"" />
         </SegmentBase>
       </Representation>
     </AdaptationSet>
@@ -1051,12 +1034,13 @@ namespace BiliBili3.Helper
 ";
 
                 var stream = new MemoryStream(Encoding.UTF8.GetBytes(mpdStr)).AsInputStream();
-                var soure = await AdaptiveMediaSource.CreateFromStreamAsync(stream, new Uri(video.url), "application/dash+xml", httpClient);
+                var soure = await AdaptiveMediaSource.CreateFromStreamAsync(stream, new Uri(video.baseUrl), "application/dash+xml", httpClient);
                 var s = soure.Status;
-                soure.MediaSource.DownloadRequested += (sender, args) => {
+                soure.MediaSource.DownloadRequested += (sender, args) =>
+                {
                     if (args.ResourceContentType == "audio/mp4")
                     {
-                        args.Result.ResourceUri = new Uri(audio.url);
+                        args.Result.ResourceUri = new Uri(audio.baseUrl);
                     }
                 };
                 return soure.MediaSource;
@@ -1065,7 +1049,7 @@ namespace BiliBili3.Helper
             {
                 return null;
             }
-           
+
         }
         private static PlaylistNetworkConfigs CreatePlaylistNetworkConfigs(string referer)
         {
@@ -1078,17 +1062,23 @@ namespace BiliBili3.Helper
             return config;
         }
     }
-    public class DashInfo
+
+    public class DashItem
     {
-        public string url { get; set; }
+        public string baseUrl { get; set; }
         public string bandwidth { get; set; }
         public string codecs { get; set; }
+        public int codecid { get; set; }
         public string height { get; set; }
         public string width { get; set; }
         public int id { get; set; }
         public string mimeType { get; set; }
+        public SegmentBase SegmentBase { get; set; }
+    }
+    public class SegmentBase
+    {
+        public string Initialization { get; set; }
         public string indexRange { get; set; }
-        public string initialization { get; set; }
     }
     public class HasSubtitleModel
     {

@@ -63,7 +63,7 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                        <ScrollViewer x:Name="grid_Setting" Visibility="Collapsed"  ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerStyle1}">
+                        <ScrollViewer x:Name="grid_Setting" Visibility="Visible"  ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerStyle1}">
                             <StackPanel Margin="10 5">
                                 <Grid  Margin="0 10 0 0">
                                     <TextBlock FontSize="16" Foreground="White" >视频倍速</TextBlock>
@@ -71,7 +71,15 @@
                                 </Grid>
 
                                 <Slider x:Name="slider_Rate" ValueChanged="slider_Rate_ValueChanged"  StepFrequency="0.25" Value="1" Maximum="2" Minimum="0.5"></Slider>
-
+                                <Grid Margin="0 10 0 0">
+                                    <TextBlock Foreground="White" VerticalAlignment="Center">使用DASH</TextBlock>
+                                    <ToggleSwitch  Foreground="White" x:Name="sw_UseDASH" Toggled="Sw_UseDASH_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                                </Grid>
+                                <Grid Margin="0 10 0 0">
+                                    <TextBlock Foreground="White" VerticalAlignment="Center">DASH使用HEVC解码</TextBlock>
+                                    <ToggleSwitch  Foreground="White" x:Name="sw_DASHUseHEVC" Toggled="Sw_DASHUseHEVC_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                                </Grid>
+                                <HyperlinkButton x:Name="btnOpenInstallHEVC" NavigateUri="ms-windows-store://pdp/?productid=9n4wgh0z6vhq">需要安装扩展才能开启HEVC</HyperlinkButton>
                                 <TextBlock FontSize="16" Margin="0 10 0 0" Foreground="White" >播放模式</TextBlock>
                                 <RadioButton x:Name="cb_setting_0" GroupName="mode"  Foreground="White" IsChecked="True" Content="正常播放"/>
                                 <RadioButton x:Name="cb_setting_1" GroupName="mode"  Foreground="White" Content="单P循环"/>
@@ -85,7 +93,7 @@
 
                             </StackPanel>
                         </ScrollViewer>
-                        <ScrollViewer x:Name="grid_DM" Visibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerStyle1}">
+                        <ScrollViewer x:Name="grid_DM" Visibility="Collapsed" ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerStyle1}">
                             <StackPanel Margin="10 5">
                                 <TextBlock FontSize="16" Visibility="Collapsed" Margin="0 10 0 0" Foreground="White">弹幕设置</TextBlock>
                                 <Grid Margin="0 10 0 0" >
@@ -98,6 +106,7 @@
                                     <TextBlock Foreground="White" VerticalAlignment="Center">弹幕边框</TextBlock>
                                     <ToggleSwitch x:Name="sw_DanmuBorder" Foreground="White" Toggled="sw_DanmuBorder_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
                                 </Grid>
+                            
                                 <Grid Margin="0 10 0 0">
                                     <TextBlock Foreground="White" VerticalAlignment="Center">边框样式</TextBlock>
                                     <ComboBox x:Name="cb_Style" SelectionChanged="cb_Style_SelectionChanged"  Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center"   BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
