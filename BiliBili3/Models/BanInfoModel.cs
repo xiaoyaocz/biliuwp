@@ -137,7 +137,7 @@ namespace BiliBili3.Models
         //public string title { get; set; }
         public int total_bp_count { get; set; }
         public int week_bp_count { get; set; }
-     
+        public int type { get; set; } = 1;
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(string Name)
@@ -247,7 +247,8 @@ namespace BiliBili3.Models
         public string title { get; set; }
         public int episode_status { get; set; }
         public int section_type { get; set; }
-
+     
+        public int season_type { get; set; } = 1;
         public string badge { get; set; }
         public Visibility IsBadge
         {

@@ -1352,7 +1352,7 @@ namespace BiliBili3
         public List<FlvPlyaerUrlModel> durl { get; set; }
         public int order { get; set; }
         public int length { get; set; }
-        public int size { get; set; }
+        public long size { get; set; }
         public string url { get; set; }
         public string[] backup_url { get; set; }
 
@@ -1430,6 +1430,8 @@ namespace BiliBili3
         /// 互动视频分支ID
         /// </summary>
         public int node_id { get; set; } = 0;
+
+        public int season_type { get; set; } = 1;
 
         public int? graph_version { get; set; } = 467;
     }

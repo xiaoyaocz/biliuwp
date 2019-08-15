@@ -197,7 +197,16 @@ namespace BiliBili3.Controls
 
             if (item.desc.type == 512)
             {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), item.bangumi.apiSeasonInfo.season_id);
+                var seasonid = 0;
+                if (item.bangumi.apiSeasonInfo==null)
+                {
+                    seasonid = item.bangumi.season.season_id;
+                }
+                else
+                {
+                    seasonid = item.bangumi.apiSeasonInfo.season_id;
+                }
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), seasonid);
                 return;
             }
             if (item.desc.type == 2048)

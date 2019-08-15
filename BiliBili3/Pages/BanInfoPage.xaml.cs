@@ -133,7 +133,7 @@ namespace BiliBili3.Pages
                     }
                     else
                     {
-                        if (results.Contains("僅") && results.Contains("地區") && (model.result.episodes == null || model.result.episodes.Count == 0))
+                        if (model.result.rights.area_limit==1||( results.Contains("僅") && results.Contains("地區") && (model.result.episodes == null || model.result.episodes.Count == 0)))
                         {
                             //results = await WebClientClass.GetResultsUTF8Encode(new Uri("http://bangumi.bilibili.com/jsonp/seasoninfo/"+ _banId + ".ver?callback=seasonListCallback&jsonp=jsonp&_="));
 
@@ -173,6 +173,7 @@ namespace BiliBili3.Pages
                     if (model.result.episodes!=null)
                     {
                         model.result.episodes.ForEach(x => {
+                            x.season_type = (model.result.season_type==0)? model.result.type: model.result.season_type;
                             x.orderindex = i;
                             i++;
                             if (x.index == null)
@@ -1009,6 +1010,7 @@ namespace BiliBili3.Pages
 
                     ls.Add(new PlayerModel()
                     {
+                        season_type=item.season_type,
                         banId = _banId,
                         Aid = item.av_id,
                         Mid = item.danmaku.ToString(),
@@ -1025,6 +1027,7 @@ namespace BiliBili3.Pages
                 {
                     ls.Add(new PlayerModel()
                     {
+                        season_type = item.season_type,
                         banId = _banId,
                         banInfo = item,
                         Aid = item.av_id,
@@ -1303,6 +1306,7 @@ namespace BiliBili3.Pages
         public int mode { get; set; }
         public int season_status { get; set; }
         public int season_type { get; set; }
+        public int type { get; set; } = 1;
         public string season_title { get; set; }
         public string share_url { get; set; }
         public string square_cover { get; set; }
