@@ -116,8 +116,15 @@ namespace BiliBili3
 
         private async void MessageCenter_ShowError(object sender, Exception e)
         {
-            ErrorDialog errorDialog = new ErrorDialog(e);
-            await errorDialog.ShowAsync();
+            try
+            {
+                ErrorDialog errorDialog = new ErrorDialog(e);
+                await errorDialog.ShowAsync();
+            }
+            catch (Exception)
+            {
+            }
+            
         }
 
         private void MessageCenter_NetworkError(object sender, string e)

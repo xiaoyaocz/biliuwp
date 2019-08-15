@@ -153,7 +153,35 @@ namespace BiliBili3.Views
                 MessageCenter.SendNavigateTo(NavigateMode.Home, typeof(LivePage));
                 return;
             }
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(PartsPage), item);
+            if (item.name.Contains( "排行榜"))
+            {
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(RankPage));
+                return;
+            }
+            if (item.name== "话题中心")
+            {
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(TopicPage));
+                return;
+            }
+            if (item.name == "活动中心")
+            {
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(ActivityPage));
+                return;
+            }
+            if (item.name == "漫画")
+            {
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), "https://manga.bilibili.com");
+                return;
+            }
+            if (item.uri!=null&&item.uri.Contains("https://"))
+            {
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), item.uri);
+            }
+            else
+            {
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(PartsPage), item);
+            }
+            
         }
 
         private void btn_Back_Click(object sender, RoutedEventArgs e)

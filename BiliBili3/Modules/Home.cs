@@ -16,6 +16,8 @@ using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using System.ComponentModel;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
 
 namespace BiliBili3.Modules
 {
@@ -68,38 +70,41 @@ namespace BiliBili3.Modules
             }
         }
         /// <summary>
-        /// 读取首页信息
+        /// 读取热门信息
         /// </summary>
         /// <returns></returns>
-        public async Task<ReturnModel<ObservableCollection<HomeDataModel>>> GetHot(string last_param = "", string idx = "0")
+        public async Task<ReturnModel<object[]>> GetHot(string last_param = "", string idx = "0")
         {
             try
             {
-                string url = $"https://app.bilibili.com/x/v2/show/popular?access_key={ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&idx={idx}&last_param={last_param}&login_event=0&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
+                string url = $"https://app.bilibili.com/x/v2/show/popular/index?appkey={ApiHelper._appKey }&build={ApiHelper.build}&fnval=16&fnver=0&force_host=0&fourk=1&idx={idx}&last_param={last_param}&mobi_app=android&platform=android&qn=32&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
                 results = results.Replace("goto", "_goto");
-                var model = JsonConvert.DeserializeObject<HomeFeedModel>(results);
+                var model = JsonConvert.DeserializeObject<HotModel>(results);
                 if (model.code == 0)
                 {
-                    ObservableCollection<HomeDataModel> ls = new ObservableCollection<HomeDataModel>();
+                    ObservableCollection<HotItemModel> ls = new ObservableCollection<HotItemModel>();
                     foreach (var item in model.data)
                     {
-                        if (!item.is_ad)
+                        if (item._goto=="av")
                         {
                             ls.Add(item);
                         }
                     }
-                    return new ReturnModel<ObservableCollection<HomeDataModel>>()
+                    return new ReturnModel<object[]>()
                     {
                         success = true,
                         message = "",
-                        data = ls
+                        data = new object[] {
+                            ls,
+                            model.config.top_items
+                        }
                     };
                 }
                 else
                 {
-                    return new ReturnModel<ObservableCollection<HomeDataModel>>()
+                    return new ReturnModel<object[]>()
                     {
                         success = false,
                         message = model.message.ToString()
@@ -110,12 +115,12 @@ namespace BiliBili3.Modules
             catch (Exception ex)
             {
 
-                return HandelError<ObservableCollection<HomeDataModel>>(ex);
+                return HandelError<object[]>(ex);
             }
         }
 
         /// <summary>
-        /// 读取首页信息
+        /// 读取首页TAB信息
         /// </summary>
         /// <returns></returns>
         public async Task<ReturnModel<ObservableCollection<TabModel>>> GetTab()
@@ -372,6 +377,103 @@ namespace BiliBili3.Modules
             /// 英雄联盟
             /// </summary>
             public string tag_name { get; set; }
+        }
+        public class HotModel
+        {
+            public int code { get; set; }
+            public string message { get; set; }
+            public ObservableCollection<HotItemModel> data { get; set; }
+
+            public HotConfigModel config { get; set; }
+        }
+        public class HotConfigModel
+        {
+            public string item_title { get; set; }
+            public ObservableCollection<HotTopItemModel> top_items { get; set; }
+
+
+        }
+        public class HotTopItemModel
+        {
+            public string icon { get; set; }
+            public string title { get; set; }
+            public string module_id { get; set; }
+            public string uri { get; set; }
+        }
+        public class HotItemModel
+        {
+            public string _goto { get; set; }
+            public string param { get; set; }
+            public string idx { get; set; }
+            public string cover { get; set; }
+            public string Cover
+            {
+                get
+                {
+                    if (cover != null && cover.Length != 0)
+                    {
+                        return cover + "@120w_100h_1e_1c.jpg";
+                        //return cover + ((_goto == "av"||_goto== "bangumi_rcmd") ? "" : "@320w_200h_1e_1c.jpg");
+                    }
+                    return "";
+                }
+            }
+            public string title { get; set; }
+            public string right_desc_1 { get; set; }
+            public string right_desc_2 { get; set; }
+            public RcmdReasonStyle rcmd_reason_style { get; set; }
+        }
+        public class RcmdReasonStyle
+        {
+            public string text { get; set; }
+            public string text_color { get; set; }
+            public SolidColorBrush Text_color
+            {
+                get
+                {
+                    if (text_color!=null)
+                    {
+                        return new SolidColorBrush(text_color.ToColor2());
+                    }
+                    else
+                    {
+                        return new SolidColorBrush(Colors.Transparent);
+                    }
+                }
+            }
+            public string bg_color { get; set; }
+            public SolidColorBrush Bg_color
+            {
+                get
+                {
+                    if (bg_color != null)
+                    {
+                        return new SolidColorBrush(bg_color.ToColor2());
+                    }
+                    else
+                    {
+                        return new SolidColorBrush(Colors.Transparent);
+                    }
+                  
+                }
+            }
+            public string border_color { get; set; }
+            public SolidColorBrush Border_color
+            {
+                get
+                {
+                    if (border_color != null)
+                    {
+                        return new SolidColorBrush(border_color.ToColor2());
+                    }
+                    else
+                    {
+                        return new SolidColorBrush(Colors.Transparent);
+                    }
+                }
+            }
+
+            public int bg_style { get; set; }
         }
 
         public class HomeDataModel

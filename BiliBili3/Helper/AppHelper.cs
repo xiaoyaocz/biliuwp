@@ -81,7 +81,14 @@ namespace BiliBili3.Helper
         {
             return verStr.Split('/')[0];
         }
-        public static string verStr = string.Format(@"Ver {0} 2019-07-10
+        public static string verStr = string.Format(@"Ver {0} 2019-08-15
+01、修复番剧播放问题
+02、修复动态番剧点击问题
+03、首页-热门改版
+04、设置默认关闭或者开启弹幕(LiuChangFreeman/pull/4)
+05、支持DASH播放(测试阶段,默认开启,出现播放问题可在设置中关闭)
+
+/Ver 3.9.20.0&3.9.21.0  2019-07-10
 01、升级部分API
 02、支持互动视频！！！
 03、支持一键三连

@@ -408,10 +408,38 @@ namespace BiliBili3.Views
 
         }
 
-      
+        private void ls_Part_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var data = e.ClickedItem as HotTopItemModel;
+            if (data.module_id== "rank")
+            {
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(RankPage));
+                return;
+            }
+            if (data.uri.Contains("https://")|| data.uri.Contains("http://"))
+            {
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage),data.uri);
+                return;
+            }
+            else
+            {
+                Utils.ShowMessageToast("不支持跳转的类型");
+            }
+        }
 
-
-
+        private void Ls_hot_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var data = e.ClickedItem as HotItemModel;
+            if (data._goto=="av")
+            {
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage),data.param);
+                return;
+            }
+            else
+            {
+                Utils.ShowMessageToast("不支持跳转的类型");
+            }
+        }
     }
 
     public class NewFeedItemDataTemplateSelector : DataTemplateSelector
@@ -485,12 +513,16 @@ namespace BiliBili3.Views
             get { return _banner_items; }
             set { _banner_items = value; ThisPropertyChanged("banner_items"); }
         }
+
         private ObservableCollection<HomeDataModel> _home_datas=new ObservableCollection<HomeDataModel>();
         public ObservableCollection<HomeDataModel> home_datas
         {
             get { return _home_datas; }
             set { _home_datas = value; ThisPropertyChanged("home_datas"); }
         }
+
+      
+
         private int _ItemsCount;
         public int ItemsCount
         {
@@ -545,14 +577,23 @@ namespace BiliBili3.Views
         }
       
         //for hot
-        private ObservableCollection<HomeDataModel> _hot_datas = new ObservableCollection<HomeDataModel>();
-        public ObservableCollection<HomeDataModel> hot_datas
+        private ObservableCollection<HotItemModel> _hot_datas = new ObservableCollection<HotItemModel>();
+        public ObservableCollection<HotItemModel> hot_datas
         {
             get { return _hot_datas; }
             set { _hot_datas = value; ThisPropertyChanged("hot_datas"); }
         }
+
+        private ObservableCollection<HotTopItemModel> _hot_top_items = new ObservableCollection<HotTopItemModel>();
+        public ObservableCollection<HotTopItemModel> hot_top_items
+        {
+            get { return _hot_top_items; }
+            set { _hot_top_items = value; ThisPropertyChanged("hot_top_items"); }
+        }
+
+
         /// <summary>
-        /// 加载首页动态流
+        /// 加载首页热门
         /// </summary>
         public async void LoadHot()
         {
@@ -568,14 +609,20 @@ namespace BiliBili3.Views
             var data = await home.GetHot(par,idx);
             if (data.success)
             {
-                
+                var hots =data.data[0] as ObservableCollection<HotItemModel>;
+                var tops = data.data[1] as ObservableCollection<HotTopItemModel>;
+
+                if (hot_top_items==null||hot_top_items.Count==0)
+                {
+                    hot_top_items = tops;
+                }
                 if (hot_datas == null)
                 {
-                    hot_datas = data.data;
+                    hot_datas = hots;
                 }
                 else
                 {
-                    foreach (var item in data.data)
+                    foreach (var item in hots)
                     {
                         hot_datas.Add(item);
                     }

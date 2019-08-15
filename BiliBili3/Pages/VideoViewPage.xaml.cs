@@ -47,7 +47,7 @@ namespace BiliBili3.Pages
         public VideoViewPage()
         {
             this.InitializeComponent();
-            this.NavigationCacheMode = NavigationCacheMode.Required;
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
             //players.FullEvent += Players_FullEvent;
             //players.MaxWIndowsEvent += Players_MaxWIndowsEvent;
             //players.PlayerEvent += Players_PlayerEvent;
@@ -64,9 +64,10 @@ namespace BiliBili3.Pages
 
 
         string _aid;
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            await Task.Delay(200);
+            base.OnNavigatedTo(e);
+
             error.Visibility = Visibility.Collapsed;
             _aid = (e.Parameter as object[])[0].ToString();
             txt_Header.Text = "AV" + _aid;
@@ -74,13 +75,7 @@ namespace BiliBili3.Pages
             GetFavBox();
             pivot.SelectedIndex = 0;
             LoadVideo();
-            comment.LoadComment(new LoadCommentInfo()
-            {
-                commentMode = CommentMode.Video,
-                conmmentSortMode = ConmmentSortMode.All,
-                oid = _aid
-            });
-
+            
             if (SecondaryTile.Exists(_aid))
             {
                 btn_unPin.Visibility = Visibility.Visible;
@@ -93,15 +88,14 @@ namespace BiliBili3.Pages
             }
         }
 
-
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             pivot.SelectedIndex = 0;
             comment.ClearComment();
             this.DataContext = null;
-
         }
+
+       
         bool isMovie = false;
         bool ISBAN = false;
         private async void LoadVideo()
@@ -1041,7 +1035,7 @@ namespace BiliBili3.Pages
 
         }
 
-        private void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pivot.SelectedIndex == 0)
             {
@@ -1052,12 +1046,16 @@ namespace BiliBili3.Pages
                 com_bar.Visibility = Visibility.Collapsed;
             }
 
-            //if (pivot.SelectedIndex == 1 && comment.CommentCount == 0)
-            //{
-
-            //    await Task.Delay(100);
-            //    comment.LoadComment();
-            //}
+            if (pivot.SelectedIndex == 1 && comment.CommentCount == 0)
+            {
+                await Task.Delay(200);
+                comment.LoadComment(new LoadCommentInfo()
+                {
+                    commentMode = CommentMode.Video,
+                    conmmentSortMode = ConmmentSortMode.All,
+                    oid = _aid
+                });
+            }
 
 
         }

@@ -29,7 +29,7 @@
                             <DataTemplate>
                                 <StackPanel Height="72" Width="72"  >
                                     <Image Source="{Binding logo}" Width="48" Height="48"/>
-                                    <TextBlock Text="{Binding name}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding name}" FontSize="14" HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridView.ItemTemplate>

@@ -283,14 +283,14 @@ namespace BiliBili3
         {
             try
             {
-                string url = string.Format("https://app.bilibili.com/x/v2/region/list?appkey={0}&build={2}&entrance=region&mobi_app=android&platform=android&ts={1}",ApiHelper._appKey,GetTimeSpan,ApiHelper.build);
+                string url = string.Format("https://app.bilibili.com/x/v2/region/index?appkey={0}&build={2}&mobi_app=android&platform=android&ts={1}", ApiHelper._appKey,GetTimeSpan,ApiHelper.build);
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 string results = await WebClientClass.GetResults(new Uri(url));
                 RegionModel model = JsonConvert.DeserializeObject<RegionModel>(results);
                 if (model.code==0)
                 {
-                    model.data.RemoveAll(x => x.children == null && (x.name == "会员购" || x.name == "游戏中心"));
+                    model.data.RemoveAll(x =>(x.name == "会员购" || x.name == "游戏中心")|| x.logo=="");
                 
                     regions = model.data;
 

@@ -108,10 +108,26 @@
 
                 <ScrollViewer   x:Name="sv" ViewChanged="sv_ViewChanged">
                     <StackPanel>
-                        <ListView ItemsSource="{Binding hot_datas}" ScrollViewer.VerticalScrollMode="Disabled" ItemClick="ls_feed_ItemClick" HorizontalContentAlignment="Center" SelectionMode="None" IsItemClickEnabled="True">
+                        <GridView ItemsSource="{Binding hot_top_items}" SelectionMode="None" ItemClick="ls_Part_ItemClick" IsItemClickEnabled="True" HorizontalAlignment="Center" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                            <GridView.ItemContainerStyle>
+                                <Style TargetType="GridViewItem">
+                                    <Setter Property="Margin" Value="12 4"></Setter>
+                                </Style>
+                            </GridView.ItemContainerStyle>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Height="72" Width="120"  >
+                                        <Image Source="{Binding icon}" Width="48" Height="48"/>
+                                        <TextBlock Text="{Binding title}" FontSize="14" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                        
+                        <ListView ItemsSource="{Binding hot_datas}" ScrollViewer.VerticalScrollMode="Disabled"  ItemClick="Ls_hot_ItemClick" HorizontalContentAlignment="Center" SelectionMode="None" IsItemClickEnabled="True">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
-                                    <Setter Property="Margin" Value="8"></Setter>
+                                    <Setter Property="Margin" Value="8 4"></Setter>
                                     <Setter Property="Padding" Value="0"></Setter>
                                     <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"></Setter>
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
@@ -121,18 +137,19 @@
                                 <DataTemplate>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition MaxWidth="100"/>
+                                            <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Image Margin="0 0 4 0"  Source="{Binding Cover}" Grid.RowSpan="3"></Image>
-                                        <TextBlock Grid.Column="1" TextWrapping="Wrap" MaxLines="2" Margin="4 0" Text="{Binding title}"></TextBlock>
-                                        <TextBlock Grid.Column="1" Grid.Row="1" TextTrimming="CharacterEllipsis" FontSize="14" Foreground="Gray" Margin="4 2" Text="{Binding text}"></TextBlock>
-                                        <TextBlock Grid.Column="1" Grid.Row="2" TextTrimming="CharacterEllipsis" FontSize="14" Foreground="Gray" Margin="4 2" Text="{Binding hot_bottom}"></TextBlock>
+                                        <Image Margin="0 0 4 0"  Source="{Binding Cover}" ></Image>
+                                        <StackPanel Grid.Column="1" >
+                                            <TextBlock TextWrapping="Wrap" MaxLines="2" Margin="4 0" Text="{Binding title}"></TextBlock>
+                                            <Border Margin="4 2"  BorderThickness="1" CornerRadius="4" Padding="2" HorizontalAlignment="Left"  Background="{Binding Path=rcmd_reason_style.Bg_color}" BorderBrush="{Binding Path=rcmd_reason_style.Border_color}">
+                                                <TextBlock TextTrimming="CharacterEllipsis" FontSize="12" Foreground="{Binding Path=rcmd_reason_style.Text_color}" Text="{Binding Path=rcmd_reason_style.text}"></TextBlock>
+                                            </Border>
+                                            <TextBlock TextTrimming="CharacterEllipsis" FontSize="14" Foreground="Gray" Margin="4 2" Text="{Binding right_desc_1}"></TextBlock>
+                                            <TextBlock TextTrimming="CharacterEllipsis" FontSize="14" Foreground="Gray" Margin="4 2" Text="{Binding right_desc_2}"></TextBlock>
+                                        </StackPanel>
+                                        
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
