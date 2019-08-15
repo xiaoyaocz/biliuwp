@@ -819,6 +819,26 @@ namespace BiliBili3
             container.Values["NewQuality"] = value;
         }
 
+        public static bool Get_UseDASH()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            if (container.Values["UseDASH"] != null)
+            {
+                return (bool)container.Values["UseDASH"];
+            }
+            else
+            {
+                Set_UseDASH(true);
+                return true;
+            }
+        }
+
+
+        public static void Set_UseDASH(bool value)
+        {
+            container = ApplicationData.Current.LocalSettings;
+            container.Values["UseDASH"] = value;
+        }
 
 
 

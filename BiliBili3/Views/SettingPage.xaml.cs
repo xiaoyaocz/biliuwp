@@ -70,6 +70,9 @@ namespace BiliBili3.Views
 
 
                 sw_NewWidnows.IsOn = SettingHelper.Get_NewWindow();
+                sw_UseDASH.IsOn = SettingHelper.Get_UseDASH();
+
+
                 sw_LoadSe.IsOn = SettingHelper.Get_LoadSplash();
                 sw_CloseAD.IsOn = SettingHelper.Get_HideAD();
                 sw_ForceAudio.IsOn = SettingHelper.Get_ForceAudio();
@@ -834,5 +837,9 @@ namespace BiliBili3.Views
             }
         }
 
+        private void Sw_UseDASH_Toggled(object sender, RoutedEventArgs e)
+        {
+            SettingHelper.Set_UseDASH(sw_UseDASH.IsOn);
+        }
     }
 }

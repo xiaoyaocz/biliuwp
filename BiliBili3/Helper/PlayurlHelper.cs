@@ -4,11 +4,15 @@ using Newtonsoft.Json.Linq;
 using SYEngine;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.Media.Core;
+using Windows.Media.Streaming.Adaptive;
 using Windows.UI.Popups;
+using Windows.Web.Http;
 
 namespace BiliBili3.Helper
 {
@@ -49,6 +53,17 @@ namespace BiliBili3.Helper
                             break;
                     }
                 }
+
+                if (SettingHelper.Get_UseDASH())
+                {
+                    var bilidash = await GetBilibiliBangumiUrlDash(model, qn);
+                    if (bilidash != null)
+                    {
+                        return bilidash;
+                    }
+                }
+
+
                 //官方API
                 var bili = await GetBilibiliBangumiUrl(model,qn);
                 if (bili != null)
@@ -70,6 +85,15 @@ namespace BiliBili3.Helper
                 }
 
                 //biliplus API
+                if (SettingHelper.Get_UseDASH())
+                {
+                    var biliplusdash = await GetBiliPlusDashUrl(model.Mid, qn, "https://www.bilibili.com/bangumi/play/ep" + model.episode_id, model.season_type);
+                    if (biliplusdash != null)
+                    {
+                        return biliplusdash;
+                    }
+                }
+
                 var biliplus = await GetBiliPlusUrl(model.Mid, qn, "https://www.bilibili.com/bangumi/play/ep" + model.episode_id, model.season_type);
                 if (biliplus != null)
                 {
@@ -133,7 +157,67 @@ namespace BiliBili3.Helper
                 return null;
             }
         }
+        public static async Task<ReturnPlayModel> GetBilibiliBangumiUrlDash(PlayerModel model, int qn)
+        {
+            try
+            {
+                List<string> urls = new List<string>();
+                var playList = new SYEngine.Playlist(SYEngine.PlaylistTypes.NetworkHttp);
+                string url2 = string.Format(
+                    "https://bangumi.bilibili.com/player/web_api/v2/playurl?cid={1}&appkey={0}&otype=json&type=&quality={2}&module=bangumi&season_type={4}&qn={2}&ts={3}&fourk=1&fnver=0&fnval=16", ApiHelper._appKey_VIDEO, model.Mid, qn, ApiHelper.GetTimeSpan_2, model.season_type);
+                url2 += "&sign=" + ApiHelper.GetSign_VIDEO(url2);
+                var re = await WebClientClass.GetResultsUTF8Encode(new Uri(url2));
+                var obj = JObject.Parse(re);
+                if (obj["code"].ToInt32() == 0)
+                {
+                    if (obj["dash"] != null)
+                    {
+                        var video = obj["dash"]["video"].FirstOrDefault(x => x["id"].Value<int>() == qn && x["codecid"].Value<int>() == 7);
+                        var audio = obj["dash"]["audio"].Last();
 
+                        return new ReturnPlayModel()
+                        {
+                            usePlayMode = UsePlayMode.Dash,
+                            mediaSource = await CreateAdaptiveMediaSource(new DashInfo()
+                            {
+                                bandwidth = video["bandwidth"].ToString(),
+                                codecs = video["codecs"].ToString(),
+                                height = video["height"].ToString(),
+                                width = video["width"].ToString(),
+                                id = video["id"].Value<int>(),
+                                indexRange = video["SegmentBase"]["indexRange"].ToString(),
+                                initialization = video["SegmentBase"]["Initialization"].ToString(),
+                                mimeType = video["mimeType"].ToString(),
+                                url = video["baseUrl"].ToString()
+                            }, new DashInfo()
+                            {
+                                bandwidth = audio["bandwidth"].ToString(),
+                                codecs = audio["codecs"].ToString(),
+                                id = audio["id"].Value<int>(),
+                                indexRange = audio["SegmentBase"]["indexRange"].ToString(),
+                                initialization = audio["SegmentBase"]["Initialization"].ToString(),
+                                mimeType = audio["mimeType"].ToString(),
+                                url = audio["baseUrl"].ToString()
+                            }),
+                            from = "bilibili_dash"
+                        };
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+        }
         public static async Task<ReturnPlayModel> GetBilibiliBangumiWebUrl(PlayerModel model, int qn)
         {
             try
@@ -317,6 +401,107 @@ namespace BiliBili3.Helper
 
 
         }
+        public static async Task<ReturnPlayModel> GetBiliPlusDashUrl(string cid, int qn, string referer, int season_type, string cookie = "")
+        {
+            try
+            {
+                var season = "";
+                if (season_type != 0)
+                {
+                    season = $"&module=bangumi&season_type={ season_type}";
+                }
+                string url = "https://www.biliplus.com/BPplayurl.php?cid=" + cid + $"&otype=json&type=&quality={qn}&qn={qn}{season}&access_key={ApiHelper.access_key}&fourk=1&fnver=0&fnval=16";
+                Dictionary<string, string> header = new Dictionary<string, string>();
+                if (SettingHelper.Get_BiliplusCookie() != "")
+                {
+                    if (cookie == "")
+                    {
+                        cookie = SettingHelper.Get_BiliplusCookie();
+                    }
+                    header.Add("Cookie", cookie);
+                }
+
+                string re = await WebClientClass.GetResults(new Uri(url));
+                var obj = JObject.Parse(re);
+                if (obj["code"].ToInt32() == 0)
+                {
+                    if (obj["dash"] != null)
+                    {
+                        var video = obj["dash"]["video"].FirstOrDefault(x => x["id"].Value<int>() == qn && x["codecid"].Value<int>() == 7);
+                        var audio = obj["dash"]["audio"].Last();
+
+                        return new ReturnPlayModel()
+                        {
+                            usePlayMode = UsePlayMode.Dash,
+                            mediaSource = await CreateAdaptiveMediaSource(new DashInfo()
+                            {
+                                bandwidth = video["bandwidth"].ToString(),
+                                codecs = video["codecs"].ToString(),
+                                height = video["height"].ToString(),
+                                width = video["width"].ToString(),
+                                id = video["id"].Value<int>(),
+                                indexRange = video["SegmentBase"]["indexRange"].ToString(),
+                                initialization = video["SegmentBase"]["Initialization"].ToString(),
+                                mimeType = video["mimeType"].ToString(),
+                                url = video["baseUrl"].ToString()
+                            }, new DashInfo()
+                            {
+                                bandwidth = audio["bandwidth"].ToString(),
+                                codecs = audio["codecs"].ToString(),
+                                id = audio["id"].Value<int>(),
+                                indexRange = audio["SegmentBase"]["indexRange"].ToString(),
+                                initialization = audio["SegmentBase"]["Initialization"].ToString(),
+                                mimeType = audio["mimeType"].ToString(),
+                                url = audio["baseUrl"].ToString()
+                            }),
+                            from = "bilibili_dash"
+                        };
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else if (obj["code"].ToInt32() == -403)
+                {
+                    if (ApiHelper.IsLogin())
+                    {
+                        ReturnPlayModel returnPlayModel = null;
+                        MessageDialog messageDialog = new MessageDialog("读取视频地址失败了，是否授权Biliplus后再试一次?");
+                        messageDialog.Commands.Add(new UICommand("授权", async (e) => {
+                            var _cookie = await Account.AuthBiliPlus();
+                            if (_cookie != "")
+                            {
+                                returnPlayModel = await GetBiliPlusDashUrl(cid, qn, referer, season_type, _cookie);
+                            }
+                            else
+                            {
+                                Utils.ShowMessageToast("授权失败了");
+                            }
+                        }));
+                        messageDialog.Commands.Add(new UICommand("取消"));
+                        await messageDialog.ShowAsync();
+                        return returnPlayModel;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+
+
+
+        }
 
         public static async Task<ReturnPlayModel> GetBiliPlusUrl2(PlayerModel model)
         {
@@ -419,6 +604,97 @@ namespace BiliBili3.Helper
                             break;
                     }
                 }
+               
+                if (SettingHelper.Get_UseDASH())
+                {
+                    var bilidash = await GetVideoUrlDASH(aid,cid,qn);
+                    if (bilidash!=null)
+                    {
+                        return bilidash;
+                    }
+                }
+
+                var biliv1 = await GetVideoUrlV1(aid,cid,qn);
+                if (biliv1!=null)
+                {
+                    return biliv1;
+                }
+                var biliplus = await GetBiliPlusUrl(cid, qn, "https://www.bilibili.com/video/av" + aid + "/",0);
+                if (biliplus!=null)
+                {
+                    return biliplus;
+                }
+                return null;
+              
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+        public static async Task<ReturnPlayModel> GetVideoUrlDASH(string aid, string cid, int qn)
+        {
+            try
+            {
+                List<string> urls = new List<string>();
+                string url = $"https://api.bilibili.com/x/player/playurl?avid={ aid}&cid={cid}&qn=&type=&otype=json&fnver=0&fnval=16";
+                string re = await WebClientClass.GetResults(new Uri(url));
+                JObject obj = JObject.Parse(re);
+                if (obj["code"].ToInt32()==0)
+                {
+                    if (obj["data"]["dash"]!=null)
+                    {
+                        var video = obj["data"]["dash"]["video"].FirstOrDefault(x => x["id"].Value<int>() == qn&&x["codecid"].Value<int>()==7);
+                        var audio = obj["data"]["dash"]["audio"].Last();
+
+                        return new ReturnPlayModel()
+                        {
+                            usePlayMode = UsePlayMode.Dash,
+                            mediaSource = await CreateAdaptiveMediaSource(new DashInfo() {
+                                bandwidth= video["bandwidth"].ToString(),
+                                codecs = video["codecs"].ToString(),
+                                height= video["height"].ToString(),
+                                width = video["width"].ToString(),
+                                id= video["id"].Value<int>(),
+                                indexRange= video["SegmentBase"]["indexRange"].ToString(),
+                                initialization = video["SegmentBase"]["Initialization"].ToString(),
+                                mimeType = video["mimeType"].ToString(),
+                                url = video["baseUrl"].ToString()
+                            },new DashInfo() {
+                                bandwidth = audio["bandwidth"].ToString(),
+                                codecs = audio["codecs"].ToString(),
+                                id = audio["id"].Value<int>(),
+                                indexRange = audio["SegmentBase"]["indexRange"].ToString(),
+                                initialization = audio["SegmentBase"]["Initialization"].ToString(),
+                                mimeType = audio["mimeType"].ToString(),
+                                url = audio["baseUrl"].ToString()
+                            }),
+                            urls = urls,
+                            from = "bilibili_dash"
+                        };
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+
+        public static async Task<ReturnPlayModel> GetVideoUrlV1(string aid, string cid, int qn)
+        {
+            try
+            {
                 List<string> urls = new List<string>();
                 string url = $"https://api.bilibili.com/x/player/playurl?avid={aid}&cid={cid}&qn={qn}&type=&otype=json&appkey={ApiHelper._appKey_VIDEO}";
                 url += "&sign=" + ApiHelper.GetSign_VIDEO(url);
@@ -442,20 +718,19 @@ namespace BiliBili3.Helper
                         from = "bilibili"
                     };
                 }
-                var biliplus = await GetBiliPlusUrl(cid, qn, "https://www.bilibili.com/video/av" + aid + "/",0);
-                if (biliplus!=null)
+                else
                 {
-                    return biliplus;
+                    return null;
                 }
-                return null;
-              
             }
             catch (Exception)
             {
                 return null;
             }
-
+            
+           
         }
+
 
         /// <summary>
         /// 读取搜狐源的播放地址
@@ -744,7 +1019,54 @@ namespace BiliBili3.Helper
             }
         }
 
+        private static async Task<IMediaSource> CreateAdaptiveMediaSource(DashInfo video, DashInfo audio)
+        {
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Referer = new Uri("https://www.bilibili.com");
+                httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
+                var mpdStr = $@"<MPD xmlns=""urn:mpeg:DASH:schema:MPD:2011""  profiles=""urn:mpeg:dash:profile:isoff-on-demand:2011"" type=""static"">
+  <Period  start=""PT0S"">
+    <AdaptationSet>
+      <ContentComponent contentType=""video"" id=""1"" />
+      <Representation bandwidth=""{video.bandwidth}"" codecs=""{video.codecs}"" height=""{video.height}"" id=""{video.id}"" mimeType=""{video.mimeType}"" width=""{video.width}"">
+        <BaseURL></BaseURL>
+        <SegmentBase indexRange=""{video.indexRange}"">
+          <Initialization range=""{video.initialization}"" />
+        </SegmentBase>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet>
+      <ContentComponent contentType=""audio"" id=""2"" />
+      <Representation bandwidth=""{audio.bandwidth}"" codecs=""{audio.codecs}"" id=""{audio.id}"" mimeType=""{audio.mimeType}"" >
+        <BaseURL></BaseURL>
+        <SegmentBase indexRange=""{audio.indexRange}"">
+          <Initialization range=""{audio.initialization}"" />
+        </SegmentBase>
+      </Representation>
+    </AdaptationSet>
+  </Period>
+</MPD>
+";
 
+                var stream = new MemoryStream(Encoding.UTF8.GetBytes(mpdStr)).AsInputStream();
+                var soure = await AdaptiveMediaSource.CreateFromStreamAsync(stream, new Uri(video.url), "application/dash+xml", httpClient);
+                var s = soure.Status;
+                soure.MediaSource.DownloadRequested += (sender, args) => {
+                    if (args.ResourceContentType == "audio/mp4")
+                    {
+                        args.Result.ResourceUri = new Uri(audio.url);
+                    }
+                };
+                return soure.MediaSource;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+           
+        }
         private static PlaylistNetworkConfigs CreatePlaylistNetworkConfigs(string referer)
         {
             SYEngine.PlaylistNetworkConfigs config = new SYEngine.PlaylistNetworkConfigs();
@@ -756,7 +1078,18 @@ namespace BiliBili3.Helper
             return config;
         }
     }
-
+    public class DashInfo
+    {
+        public string url { get; set; }
+        public string bandwidth { get; set; }
+        public string codecs { get; set; }
+        public string height { get; set; }
+        public string width { get; set; }
+        public int id { get; set; }
+        public string mimeType { get; set; }
+        public string indexRange { get; set; }
+        public string initialization { get; set; }
+    }
     public class HasSubtitleModel
     {
         public bool allow_submit { get; set; }
@@ -811,10 +1144,12 @@ namespace BiliBili3.Helper
         /// <summary>
         /// 使用VLC播放
         /// </summary>
-        VLC
+        VLC,
+        Dash
     }
     public class ReturnPlayModel
     {
+        public IMediaSource mediaSource { get; set; }
         public UsePlayMode usePlayMode { get; set; }
         public SYEngine.Playlist playlist { get; set; }
         public string url { get; set; }

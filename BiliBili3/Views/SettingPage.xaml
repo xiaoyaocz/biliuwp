@@ -318,6 +318,12 @@
 
                             </Grid>
                             <Grid Margin="0 10 0 0" Visibility="Visible">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">启用DASH播放(测试中,播放有问题请关闭)</TextBlock>
+                                <ToggleSwitch x:Name="sw_UseDASH"  Toggled="Sw_UseDASH_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            
+                            <Grid Margin="0 10 0 0" Visibility="Visible">
                                 <TextBlock Foreground="Gray" VerticalAlignment="Center">强制软解视频</TextBlock>
                                 <ToggleSwitch x:Name="sw_ForceVideo"  Toggled="sw_ForceVideo_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
 

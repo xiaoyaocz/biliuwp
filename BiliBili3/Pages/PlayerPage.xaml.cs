@@ -824,6 +824,9 @@ namespace BiliBili3.Pages
                             {
 
                                 mediaElement.Source = new Uri(ban.url);
+                            }else if(ban.usePlayMode== UsePlayMode.Dash)
+                            {
+                                mediaElement.SetMediaStreamSource(ban.mediaSource);
                             }
                             else
                             {
@@ -842,11 +845,15 @@ namespace BiliBili3.Pages
                             AddLog(string.Format("开始读取视频{0}-{1}-{2}...", "video", playNow.Aid, playNow.Mid));
                             var ss = await PlayurlHelper.GetVideoUrl(playNow.Aid, playNow.Mid, (cb_Quity.SelectedItem as QualityModel).qn);
                             txt_site.Text = ss.from;
+
                             if (ss.usePlayMode == UsePlayMode.System)
                             {
                                 mediaElement.Source = new Uri(ss.url);
                             }
-                            else
+                            else if (ss.usePlayMode== UsePlayMode.Dash)
+                            {
+                                mediaElement.SetMediaStreamSource(ss.mediaSource);
+                            }else
                             {
                                 mediaElement.Source = await ss.playlist.SaveAndGetFileUriAsync();
                             }
@@ -1093,6 +1100,10 @@ namespace BiliBili3.Pages
 
                             mediaElement.Source = new Uri(ban.url);
                         }
+                        else if (ban.usePlayMode == UsePlayMode.Dash)
+                        {
+                            mediaElement.SetMediaStreamSource(ban.mediaSource);
+                        }
                         else
                         {
                             mediaElement.Source = await ban.playlist.SaveAndGetFileUriAsync();
@@ -1115,6 +1126,10 @@ namespace BiliBili3.Pages
                         if (ss.usePlayMode == UsePlayMode.System)
                         {
                             mediaElement.Source = new Uri(ss.url);
+                        }
+                        else if (ss.usePlayMode == UsePlayMode.Dash)
+                        {
+                            mediaElement.SetMediaStreamSource(ss.mediaSource);
                         }
                         else
                         {
