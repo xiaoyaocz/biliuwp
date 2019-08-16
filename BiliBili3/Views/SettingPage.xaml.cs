@@ -853,9 +853,9 @@ namespace BiliBili3.Views
         private void Sw_UseDASH_Toggled(object sender, RoutedEventArgs e)
         {
             
-            if (sw_UseDASH.IsOn && SystemHelper.GetSystemBuild() < 17134)
+            if (sw_UseDASH.IsOn && SystemHelper.GetSystemBuild() < 17763)
             {
-                Utils.ShowMessageToast("系统版本1803以上才可以开启");
+                Utils.ShowMessageToast("系统版本1809以上才可以开启");
                 sw_UseDASH.IsOn = false;
                 return;
             }

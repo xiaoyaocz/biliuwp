@@ -831,10 +831,10 @@ namespace BiliBili3
             else
             {
 
-                //系统版本大于1803启用
+                //系统版本大于1809启用
                 var version = SystemHelper.GetSystemBuild();
-                Set_UseDASH(version >= 17134);
-                return version >= 17134;
+                Set_UseDASH(version >= 17763);
+                return version >= 17763;
             }
         }
 

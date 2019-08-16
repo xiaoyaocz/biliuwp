@@ -492,6 +492,10 @@ namespace BiliBili3
 
             //await  new Account().SSO();
 
+            if (SettingHelper.Get_UseDASH()&&SystemHelper.GetSystemBuild()< 17763)
+            {
+                SettingHelper.Set_UseDASH(false);
+            }
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {

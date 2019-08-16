@@ -183,10 +183,18 @@ namespace BiliBili3.Helper
         public static async Task<bool> CheckCodec()
         {
             try
-            {
-                var codecQuery = new CodecQuery();
-                IReadOnlyList<CodecInfo> result = await codecQuery.FindAllAsync(CodecKind.Video, CodecCategory.Decoder, "");
-                return result.Any(x => x.DisplayName == "HEVCVideoExtension");
+            {             
+                if (GetSystemBuild()>= 17763)
+                {   
+                    //系统版本太低会出现Win32错误，FUCK
+                    var codecQuery = new CodecQuery();
+                    IReadOnlyList<CodecInfo> result = await codecQuery.FindAllAsync(CodecKind.Video, CodecCategory.Decoder, "");
+                    return result.Any(x => x.DisplayName == "HEVCVideoExtension");
+                }
+                else
+                {
+                    return false;
+                }  
             }
             catch (Exception)
             {
