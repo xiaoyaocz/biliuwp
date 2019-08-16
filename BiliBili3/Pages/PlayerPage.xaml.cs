@@ -517,14 +517,15 @@ namespace BiliBili3.Pages
             sw_BoldDanmu.IsOn = SettingHelper.Get_BoldDanmu();
 
             sw_UseDASH.IsOn = SettingHelper.Get_UseDASH();
-            if (!await SystemHelper.CheckCodec())
-            {
-                btnOpenInstallHEVC.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                btnOpenInstallHEVC.Visibility = Visibility.Collapsed;
-            }
+            btnOpenInstallHEVC.Visibility = Visibility.Visible;
+            //if (!await SystemHelper.CheckCodec())
+            //{
+              
+            //}
+            //else
+            //{
+            //    btnOpenInstallHEVC.Visibility = Visibility.Collapsed;
+            //}
             sw_DASHUseHEVC.IsOn = SettingHelper.Get_DASHUseHEVC();
 
             List<string> fonts = SystemHelper.GetSystemFontFamilies();
@@ -2624,22 +2625,22 @@ namespace BiliBili3.Pages
            
         }
 
-        private async void Sw_DASHUseHEVC_Toggled(object sender, RoutedEventArgs e)
+        private void Sw_DASHUseHEVC_Toggled(object sender, RoutedEventArgs e)
         {
             if (settingFlag)
             {
                 return;
             }
-            if (sw_DASHUseHEVC.IsOn && !await SystemHelper.CheckCodec())
-            {
-                sw_DASHUseHEVC.IsOn = false;
-                Utils.ShowMessageToast("请先安装HEVC扩展");
-            }
-            else
-            {
+            //if (sw_DASHUseHEVC.IsOn && !await SystemHelper.CheckCodec())
+            //{
+            //    sw_DASHUseHEVC.IsOn = false;
+            //    Utils.ShowMessageToast("请先安装HEVC扩展");
+            //}
+            //else
+            //{
                 SettingHelper.Set_DASHUseHEVC(sw_DASHUseHEVC.IsOn);
                 Utils.ShowMessageToast("更改清晰度或重新加载生效");
-            }
+            //}
 
         }
 

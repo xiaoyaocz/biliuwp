@@ -72,14 +72,15 @@ namespace BiliBili3.Views
                 sw_NewWidnows.IsOn = SettingHelper.Get_NewWindow();
                 sw_UseDASH.IsOn = SettingHelper.Get_UseDASH();
 
-                if (!await SystemHelper.CheckCodec())
-                {
-                    btnOpenInstallHEVC.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    btnOpenInstallHEVC.Visibility = Visibility.Collapsed;
-                }
+                //if (!await SystemHelper.CheckCodec())
+                //{
+
+                //}
+                //else
+                //{
+                //    btnOpenInstallHEVC.Visibility = Visibility.Collapsed;
+                //}
+                btnOpenInstallHEVC.Visibility = Visibility.Visible;
                 sw_DASHUseHEVC.IsOn = SettingHelper.Get_DASHUseHEVC();
 
                 sw_LoadSe.IsOn = SettingHelper.Get_LoadSplash();
@@ -862,18 +863,19 @@ namespace BiliBili3.Views
             SettingHelper.Set_UseDASH(sw_UseDASH.IsOn);
         }
 
-        private async void Sw_DASHUseHEVC_Toggled(object sender, RoutedEventArgs e)
+        private void Sw_DASHUseHEVC_Toggled(object sender, RoutedEventArgs e)
         {
 
-            if (sw_DASHUseHEVC.IsOn&& !await SystemHelper.CheckCodec())
-            {
-                sw_DASHUseHEVC.IsOn = false;
-                Utils.ShowMessageToast("请先安装HEVC扩展");
-            }
-            else
-            {
-                SettingHelper.Set_DASHUseHEVC(sw_DASHUseHEVC.IsOn);
-            }
+            //if (sw_DASHUseHEVC.IsOn&& !await SystemHelper.CheckCodec())
+            //{
+            //    sw_DASHUseHEVC.IsOn = false;
+            //    Utils.ShowMessageToast("请先安装HEVC扩展");
+            //}
+            //else
+            //{
+
+            //}
+            SettingHelper.Set_DASHUseHEVC(sw_DASHUseHEVC.IsOn);
         }
 
 

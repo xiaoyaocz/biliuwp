@@ -179,28 +179,27 @@ namespace BiliBili3.Helper
             }
 
         }
-
-        public static async Task<bool> CheckCodec()
-        {
-            try
-            {             
-                if (GetSystemBuild()>= 17763)
-                {   
-                    //系统版本太低会出现Win32错误，FUCK
-                    var codecQuery = new CodecQuery();
-                    IReadOnlyList<CodecInfo> result = await codecQuery.FindAllAsync(CodecKind.Video, CodecCategory.Decoder, "");
-                    return result.Any(x => x.DisplayName == "HEVCVideoExtension");
-                }
-                else
-                {
-                    return false;
-                }  
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+        ////此代码非常不稳定，会出现Win32错误引起闪退
+        //public static async Task<bool> CheckCodec()
+        //{
+        //    try
+        //    {             
+        //        if (GetSystemBuild()>= 17763)
+        //        {   
+        //            var codecQuery = new CodecQuery();
+        //            IReadOnlyList<CodecInfo> result = await codecQuery.FindAllAsync(CodecKind.Video, CodecCategory.Decoder, "");
+        //            return result.Any(x => x.DisplayName == "HEVCVideoExtension");
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }  
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return false;
+        //    }
+        //}
         public static ulong GetSystemBuild()
         {
             var version = (ulong.Parse(Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamilyVersion) & 0x00000000FFFF0000L) >> 16;
