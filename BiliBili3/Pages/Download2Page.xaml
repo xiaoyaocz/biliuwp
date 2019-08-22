@@ -8,7 +8,7 @@
     mc:Ignorable="d">
     <Page.Resources>
         <MenuFlyout x:Name="menu">
-            
+
             <MenuFlyoutItem x:Name="btn_Delete" Click="btn_Delete_Click">删除</MenuFlyoutItem>
         </MenuFlyout>
     </Page.Resources>
@@ -34,14 +34,75 @@
         <Pivot Grid.Row="1">
             <PivotItem Margin="0">
                 <PivotItem.Header>
-                    <TextBlock FontSize="16">正在下载</TextBlock>
+                    <TextBlock FontSize="16">正在下载(<Run x:Name="downCount"></Run>)</TextBlock>
                 </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <ListView x:Name="list_Downing" SelectionMode="None" IsItemClickEnabled="False">
+                    <ListView x:Name="listDown" SelectionMode="None" IsItemClickEnabled="False">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="BorderBrush" Value="#FFCBCBCB"/>
+                                <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"/>
+                                <Setter Property="Margin" Value="8 4"/>
+                                <Setter Property="Padding" Value="8 4"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock VerticalAlignment="Center" FontSize="16" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" Text="{Binding title}"></TextBlock>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                            <Button x:Name="btn_Pause_Items" Click="Btn_Pause_Items_Click" Visibility="Collapsed" FontSize="14" Margin="0" VerticalAlignment="Stretch" Padding="0" Background="Transparent" Width="36">暂停</Button>
+                                            <Button x:Name="btn_Resume_Items" Click="Btn_Resume_Items_Click" Visibility="Collapsed" FontSize="14" Margin="0" VerticalAlignment="Stretch" Padding="0" Background="Transparent" Width="36">继续</Button>
+                                            <Button x:Name="btn_Cancel_Items" Click="Btn_Cancel_Items_Click" Grid.Column="1" Margin="0" FontSize="14" Padding="0" VerticalAlignment="Stretch" Background="Transparent" Width="36">取消</Button>
+                                        </StackPanel>
+
+                                    </Grid>
+
+                                    <ItemsControl Margin="0 4 0 0" ItemsSource="{Binding items}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid BorderThickness="0 1 0 0" BorderBrush="#33808080">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel>
+                                                        <TextBlock Foreground="Gray" FontSize="12" Grid.Row="1">分段<Run Text="{Binding index}"></Run></TextBlock>
+                                                        <ProgressBar Grid.ColumnSpan="3" Maximum="100" Value="{Binding Path=progress}" Foreground="{ThemeResource Bili-ForeColor}"></ProgressBar>
+                                                        <Grid>
+                                                            <TextBlock FontSize="12"  Foreground="Gray" Text="{Binding Status}"></TextBlock>
+                                                            <TextBlock FontSize="12"  Foreground="Gray" HorizontalAlignment="Right" Text="{Binding size}"></TextBlock>
+                                                        </Grid>
+                                                    </StackPanel>
+                                                    <Button Grid.Column="1" Padding="0" Visibility="{Binding btnPause}" x:Name="btn_SubItem_Pause" Click="Btn_SubItem_Pause_Click" VerticalAlignment="Stretch" Background="Transparent" Width="36">
+                                                        <FontIcon FontSize="14" FontFamily="Segoe MDL2 Assets" Glyph="&#xE103;" />
+                                                    </Button>
+                                                    <Button Grid.Column="1" Padding="0"  Visibility="{Binding btnDownload}" x:Name="btn_SubItem_Resume" Click="Btn_SubItem_Resume_Click" VerticalAlignment="Stretch" Background="Transparent" Width="36">
+                                                        <FontIcon FontSize="14" FontFamily="Segoe MDL2 Assets" Glyph="&#xE118;" />
+                                                    </Button>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+
+
+
+                                    </ItemsControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                    </ListView>
+                    <ListView x:Name="list_Downing2" Visibility="Collapsed" SelectionMode="None" IsItemClickEnabled="False">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
 
@@ -98,15 +159,16 @@
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
-                        
-                       
+
+
                     </ListView>
                     <CommandBar Grid.Row="1"  Foreground="White" Background="{ThemeResource Bili-ForeColor}" >
                         <AppBarButton Icon="Download" x:Name="btn_StartAll" Click="btn_StartAll_Click" Foreground="White" Label="全部开始"></AppBarButton>
                         <AppBarButton Icon="Pause" x:Name="btn_PauseAll" Click="btn_PauseAll_Click" Foreground="White" Label="全部暂停"></AppBarButton>
                     </CommandBar>
+                    <ProgressRing x:Name="pr_loading" Width="56" IsActive="True" Height="56"></ProgressRing>
                 </Grid>
-               
+
             </PivotItem>
             <PivotItem Margin="0">
                 <PivotItem.Header>
@@ -161,7 +223,7 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                      
+
                     </ScrollViewer>
                     <StackPanel  x:Name="loading" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <ProgressBar IsIndeterminate="True" Width="120"></ProgressBar>
@@ -173,9 +235,9 @@
                         <AppBarButton Icon="OpenFile" x:Name="btn_ToMp4" Click="btn_ToMp4_Click" Foreground="White" Label="转换MP4"></AppBarButton>
                     </CommandBar>
                 </Grid>
-            
-                
-                
+
+
+
             </PivotItem>
         </Pivot>
     </Grid>

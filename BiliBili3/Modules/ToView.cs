@@ -33,7 +33,7 @@ namespace BiliBili3.Modules
                         success = false
                     };
                 }
-                string url = string.Format("https://api.bilibili.com/x/v2/history/toview/web?access_key={0}&appkey={1}&ts={2}", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                string url = string.Format("https://api.bilibili.com/x/v2/history/toview/web?access_key={0}&appkey={1}&ts={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 var results = await WebClientClass.GetResults(new Uri(url));
@@ -102,7 +102,7 @@ namespace BiliBili3.Modules
             {
 
                 string url = "https://api.bilibili.com/x/v2/history/toview/add";
-                string par = string.Format("aid={3}&access_key={0}&appkey={1}&ts={2}", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan, aid);
+                string par = string.Format("aid={3}&access_key={0}&appkey={1}&ts={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan, aid);
                 par += "&sign=" + ApiHelper.GetSign(par);
 
                 var str = await WebClientClass.PostResults(new Uri(url), par);
@@ -141,7 +141,7 @@ namespace BiliBili3.Modules
             {
 
                 string url = "https://api.bilibili.com/x/v2/history/toview/del";
-                string par = string.Format("aid={3}&access_key={0}&appkey={1}&ts={2}", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan, aid);
+                string par = string.Format("aid={3}&access_key={0}&appkey={1}&ts={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan, aid);
                 par += "&sign=" + ApiHelper.GetSign(par);
 
                 var str = await WebClientClass.PostResults(new Uri(url), par);
@@ -179,7 +179,7 @@ namespace BiliBili3.Modules
             {
 
                 string url = "https://api.bilibili.com/x/v2/history/toview/clear";
-                string par = string.Format("access_key={0}&appkey={1}&ts={2}", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                string par = string.Format("access_key={0}&appkey={1}&ts={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                 par += "&sign=" + ApiHelper.GetSign(par);
 
                 var str = await WebClientClass.PostResults(new Uri(url), par);
@@ -217,7 +217,7 @@ namespace BiliBili3.Modules
             {
 
                 string url = "https://api.bilibili.com/x/v2/history/toview/del";
-                string par = string.Format("access_key={0}&appkey={1}&ts={2}&viewed=true", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                string par = string.Format("access_key={0}&appkey={1}&ts={2}&viewed=true", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                 par += "&sign=" + ApiHelper.GetSign(par);
 
                 var str = await WebClientClass.PostResults(new Uri(url), par);

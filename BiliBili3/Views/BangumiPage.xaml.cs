@@ -73,7 +73,7 @@ namespace BiliBili3.Views
             try
             {
                 pr_Load.Visibility = Visibility.Visible;
-                string url = string.Format("http://bangumi.bilibili.com/api/get_concerned_season?build=520001&platform=android&appkey={0}&access_key={1}&page={2}&pagesize=9&ts={3}", ApiHelper._appKey, ApiHelper.access_key, 1, ApiHelper.GetTimeSpan_2);
+                string url = string.Format("http://bangumi.bilibili.com/api/get_concerned_season?build=520001&platform=android&appkey={0}&access_key={1}&page={2}&pagesize=9&ts={3}", ApiHelper.AndroidKey.Appkey, ApiHelper.access_key, 1, ApiHelper.GetTimeSpan_2);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
                 MyBangumiModel m = JsonConvert.DeserializeObject<MyBangumiModel>(results);
@@ -108,7 +108,7 @@ namespace BiliBili3.Views
             try
             {
                 pr_Load.Visibility = Visibility.Visible;
-                string url = string.Format("https://bangumi.bilibili.com/appindex/follow_index_page?appkey={0}&build=5250000&mobi_app=android&platform=wp&ts={1}000",ApiHelper._appKey,ApiHelper.GetTimeSpan);
+                string url = string.Format("https://bangumi.bilibili.com/appindex/follow_index_page?appkey={0}&build=5250000&mobi_app=android&platform=wp&ts={1}000",ApiHelper.AndroidKey.Appkey,ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
                 BangumiHomeModel m = JsonConvert.DeserializeObject<BangumiHomeModel>(results);

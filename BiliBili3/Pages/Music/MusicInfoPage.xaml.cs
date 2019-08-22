@@ -62,7 +62,7 @@ namespace BiliBili3.Pages
             try
             {
                 string url = string.Format("https://api.bilibili.com/audio/music-service-c/songs/playing?access_key={0}&appkey={1}&build=5250000&mid={2}&mobi_app=android&platform=android&song_id={3}&ts={4}",
-               ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetUserId(), id, ApiHelper.GetTimeSpan);
+               ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetUserId(), id, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 string re = await WebClientClass.GetResults(new Uri(url));
@@ -165,7 +165,7 @@ namespace BiliBili3.Pages
             {
                 pr_loadCollect.Visibility = Visibility.Visible;
                 string url = "https://api.bilibili.com/audio/music-service-c/collections?access_key={0}&appkey={1}&build=5250000&mid={2}&mobi_app=android&page_index=1&page_size=1000&platform=android&sort=1&ts={3}";
-                url = string.Format(url,ApiHelper.access_key,ApiHelper._appKey,ApiHelper.GetUserId(),ApiHelper.GetTimeSpan);
+                url = string.Format(url,ApiHelper.access_key,ApiHelper.AndroidKey.Appkey,ApiHelper.GetUserId(),ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
 
@@ -274,9 +274,9 @@ namespace BiliBili3.Pages
 
                     string content = string.Format(
                         "access_key={0}&act=1&appkey={1}&build=45000&fid={2}&mobi_app=android&platform=android&re_src=90&ts={3}",
-                        ApiHelper.access_key, ApiHelper._appKey_Android, (this.DataContext as SongInfoModel).up_mid, ApiHelper.GetTimeSpan_2
+                        ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, (this.DataContext as SongInfoModel).up_mid, ApiHelper.GetTimeSpan_2
                         );
-                    content += "&sign=" + ApiHelper.GetSign_Android(content);
+                    content += "&sign=" + ApiHelper.GetSign(content);
                     string result = await WebClientClass.PostResults(ReUri,
                         content
                      );
@@ -317,9 +317,9 @@ namespace BiliBili3.Pages
 
                     string content = string.Format(
                         "access_key={0}&act=2&appkey={1}&build=45000&fid={2}&mobi_app=android&platform=android&re_src=90&ts={3}",
-                        ApiHelper.access_key, ApiHelper._appKey_Android, (this.DataContext as SongInfoModel).up_mid, ApiHelper.GetTimeSpan_2
+                        ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, (this.DataContext as SongInfoModel).up_mid, ApiHelper.GetTimeSpan_2
                         );
-                    content += "&sign=" + ApiHelper.GetSign_Android(content);
+                    content += "&sign=" + ApiHelper.GetSign(content);
                     string result = await WebClientClass.PostResults(ReUri,
                         content
                      );
@@ -382,7 +382,7 @@ namespace BiliBili3.Pages
                     isOpen = 1;
                 }
                 string url = "https://api.bilibili.com/audio/music-service-c/collections";
-                string content = string.Format("access_key={0}&appkey={1}&build=5250000&is_open={5}&mid={2}&mobi_app=android&platform=android&title={3}&ts={4}",ApiHelper.access_key,ApiHelper._appKey,ApiHelper.GetUserId(),txt_title.Text,ApiHelper.GetTimeSpan, isOpen);
+                string content = string.Format("access_key={0}&appkey={1}&build=5250000&is_open={5}&mid={2}&mobi_app=android&platform=android&title={3}&ts={4}",ApiHelper.access_key,ApiHelper.AndroidKey.Appkey,ApiHelper.GetUserId(),txt_title.Text,ApiHelper.GetTimeSpan, isOpen);
                 content += "&sign=" + ApiHelper.GetSign(url);
                 var re = await WebClientClass.PostResults(new Uri(url), content);
                 JObject obj = JObject.Parse(re);
@@ -411,7 +411,7 @@ namespace BiliBili3.Pages
                
                 string url = "https://api.bilibili.com/audio/music-service-c/collections/songs/"+_songId;
                 string content = string.Format("access_key={0}&appkey={1}&build=5250000&collection_id_list={2}&mid={3}&mobi_app=android&platform=android&song_id={4}&ts={5}",
-                    ApiHelper.access_key, ApiHelper._appKey,item.collection_id, ApiHelper.GetUserId(), _songId, ApiHelper.GetTimeSpan);
+                    ApiHelper.access_key, ApiHelper.AndroidKey.Appkey,item.collection_id, ApiHelper.GetUserId(), _songId, ApiHelper.GetTimeSpan);
                 content += "&sign=" + ApiHelper.GetSign(url);
                 var re = await WebClientClass.PostResults(new Uri(url), content);
                 JObject obj = JObject.Parse(re);
@@ -453,7 +453,7 @@ namespace BiliBili3.Pages
 
                     string url = "https://api.bilibili.com/audio/music-service-c/collections/"+item.collection_id+"/del" ;
                     string content = string.Format("access_key={0}&appkey={1}&build=5250000&collection={2}&mid={3}&mobi_app=android&platform=android&ts={4}",
-                    ApiHelper.access_key, ApiHelper._appKey, item.collection_id, ApiHelper.GetUserId(), ApiHelper.GetTimeSpan);
+                    ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, item.collection_id, ApiHelper.GetUserId(), ApiHelper.GetTimeSpan);
                     content += "&sign=" + ApiHelper.GetSign(url);
                     var re = await WebClientClass.PostResults(new Uri(url), content);
                     JObject obj = JObject.Parse(re);

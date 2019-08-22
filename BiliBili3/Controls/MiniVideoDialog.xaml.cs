@@ -38,8 +38,8 @@ namespace BiliBili3.Controls
             {
 
                 pr_load.Visibility = Visibility.Visible;
-                string url = string.Format("http://api.vc.bilibili.com/clip/v1/video/detail?access_key={0}&appkey={1}&build=434000&mobi_app=android&need_playurl=1&platform=android&src=master&trace_id=20170204152000022&version=4.34.0.434000&video_id={2}", ApiHelper.access_key, ApiHelper._appKey_Android, vid);
-                url += "&sign=" + ApiHelper.GetSign_Android(url);
+                string url = string.Format("http://api.vc.bilibili.com/clip/v1/video/detail?access_key={0}&appkey={1}&build=434000&mobi_app=android&need_playurl=1&platform=android&src=master&trace_id=20170204152000022&version=4.34.0.434000&video_id={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, vid);
+                url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 LiveVideoModel m = JsonConvert.DeserializeObject<LiveVideoModel>(results.Replace("default", "_default"));
                 if (m.code == 0)

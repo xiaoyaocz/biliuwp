@@ -31,7 +31,7 @@ namespace BiliBili3.Modules
         {
             try
             {
-                string url = $"https://app.bilibili.com/x/feed/index?access_key={ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&flush=0&idx={idx}&login_event=2&mobi_app=android&network=wifi&open_event=&platform=android&pull={(idx == "0").ToString().ToLower()}&qn=32&style=2&ts={ApiHelper.GetTimeSpan}";
+                string url = $"https://app.bilibili.com/x/feed/index?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&flush=0&idx={idx}&login_event=2&mobi_app=android&network=wifi&open_event=&platform=android&pull={(idx == "0").ToString().ToLower()}&qn=32&style=2&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
                 results = results.Replace("goto", "_goto");
@@ -77,7 +77,7 @@ namespace BiliBili3.Modules
         {
             try
             {
-                string url = $"https://app.bilibili.com/x/v2/show/popular/index?appkey={ApiHelper._appKey }&build={ApiHelper.build}&fnval=16&fnver=0&force_host=0&fourk=1&idx={idx}&last_param={last_param}&mobi_app=android&platform=android&qn=32&ts={ApiHelper.GetTimeSpan}";
+                string url = $"https://app.bilibili.com/x/v2/show/popular/index?appkey={ApiHelper.AndroidKey.Appkey }&build={ApiHelper.build}&fnval=16&fnver=0&force_host=0&fourk=1&idx={idx}&last_param={last_param}&mobi_app=android&platform=android&qn=32&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
                 results = results.Replace("goto", "_goto");
@@ -127,7 +127,7 @@ namespace BiliBili3.Modules
         {
             try
             {
-                string url = $"https://app.bilibili.com/x/feed/index/tab?access_key={ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
+                string url = $"https://app.bilibili.com/x/feed/index/tab?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
                 var model = results.ToDynamicJObject();
@@ -164,7 +164,7 @@ namespace BiliBili3.Modules
         {
             try
             {
-                string url = $"https://app.bilibili.com/x/feed/index/tab?access_key={ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&id={tab_id}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
+                string url = $"https://app.bilibili.com/x/feed/index/tab?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&id={tab_id}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
                 results = results.Replace("goto", "_goto");
@@ -203,7 +203,7 @@ namespace BiliBili3.Modules
         {
             try
             {
-                string url = $"https://app.bilibili.com/x/feed/dislike?access_key={ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&goto={_goto}&id={id}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
+                string url = $"https://app.bilibili.com/x/feed/dislike?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&goto={_goto}&id={id}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
                 var model = JsonConvert.DeserializeObject<HomeFeedModel>(results);
@@ -245,7 +245,7 @@ namespace BiliBili3.Modules
         {
             try
             {
-                string url = $"https://app.bilibili.com/x/feed/dislike?access_key={ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&goto={_goto}&id={id}&mid={mid}&mobi_app=android&platform=android&reason_id={reason_id}&rid={rid}&tag_id={tag_id}&ts={ApiHelper.GetTimeSpan}";
+                string url = $"https://app.bilibili.com/x/feed/dislike?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&goto={_goto}&id={id}&mid={mid}&mobi_app=android&platform=android&reason_id={reason_id}&rid={rid}&tag_id={tag_id}&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
                 var model = JsonConvert.DeserializeObject<HomeFeedModel>(results);

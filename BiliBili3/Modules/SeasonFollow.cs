@@ -74,7 +74,7 @@ namespace BiliBili3.Modules
             Loading = true;
 
 
-            var url = $"https://api.bilibili.com/pgc/app/follow/v2/{ SeasonType.ToString() }?access_key={ ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&platform=android&pn={Page}&ps=20&status={Status}&ts={ApiHelper.GetTimeSpan}";
+            var url = $"https://api.bilibili.com/pgc/app/follow/v2/{ SeasonType.ToString() }?access_key={ ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&platform=android&pn={Page}&ps=20&status={Status}&ts={ApiHelper.GetTimeSpan}";
             url += "&sign=" + ApiHelper.GetSign(url);
             var result = await WebClientClass.GetResults(new Uri(url));
             var obj = JObject.Parse(result);
@@ -116,7 +116,7 @@ namespace BiliBili3.Modules
         {
             try
             {
-                var url = string.Format($"https://bangumi.bilibili.com/follow/api/season/unfollow?access_key={ ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&platform=android&season_id={seasonId}&season_type={seasonType}&ts={ApiHelper.GetTimeSpan}");
+                var url = string.Format($"https://bangumi.bilibili.com/follow/api/season/unfollow?access_key={ ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&platform=android&season_id={seasonId}&season_type={seasonType}&ts={ApiHelper.GetTimeSpan}");
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 JObject json = JObject.Parse(results);
@@ -155,7 +155,7 @@ namespace BiliBili3.Modules
             try
             {
                 var url = "https://api.bilibili.com/pgc/app/follow/status/update";
-                var body = $"access_key={ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&platform=android&season_id={seasonId}&status={status}&ts={ApiHelper.GetTimeSpan}";
+                var body = $"access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&platform=android&season_id={seasonId}&status={status}&ts={ApiHelper.GetTimeSpan}";
                 body += "&sign=" + ApiHelper.GetSign(body);
                 string results = await WebClientClass.PostResults(new Uri(url), body);
                 JObject json = JObject.Parse(results);

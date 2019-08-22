@@ -81,16 +81,16 @@ namespace BiliBili3.Pages
                 switch (cb_OrderBy.SelectedIndex)
                 {
                     case 0:
-                        url = string.Format("https://bangumi.bilibili.com/api/timeline_v4?access_key={0}&appkey={1}&area_id=1%2C2%2C-1&build=5250000&date_after=6&date_before=6&mobi_app=android&platform=wp&see_mine=0&ts={2}000", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                        url = string.Format("https://bangumi.bilibili.com/api/timeline_v4?access_key={0}&appkey={1}&area_id=1%2C2%2C-1&build=5250000&date_after=6&date_before=6&mobi_app=android&platform=wp&see_mine=0&ts={2}000", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                         break;
                     case 1:
-                        url = string.Format("https://bangumi.bilibili.com/api/timeline_v4?access_key={0}&appkey={1}&area_id=1%2C2%2C-1&build=5250000&date_after=6&date_before=6&mobi_app=android&platform=wp&see_mine=1&ts={2}000", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                        url = string.Format("https://bangumi.bilibili.com/api/timeline_v4?access_key={0}&appkey={1}&area_id=1%2C2%2C-1&build=5250000&date_after=6&date_before=6&mobi_app=android&platform=wp&see_mine=1&ts={2}000", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                         break;
                     case 2:
-                        url = string.Format("https://bangumi.bilibili.com/api/timeline_v4?access_key={0}&appkey={1}&area_id=2%2C-1&build=5250000&date_after=6&date_before=6&mobi_app=android&platform=wp&see_mine=0&ts={2}000", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                        url = string.Format("https://bangumi.bilibili.com/api/timeline_v4?access_key={0}&appkey={1}&area_id=2%2C-1&build=5250000&date_after=6&date_before=6&mobi_app=android&platform=wp&see_mine=0&ts={2}000", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                         break;
                     case 3:
-                        url = string.Format("https://bangumi.bilibili.com/api/timeline_v4?access_key={0}&appkey={1}&area_id=1%2C-1&build=5250000&date_after=6&date_before=6&mobi_app=android&platform=wp&see_mine=0&ts={2}000", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                        url = string.Format("https://bangumi.bilibili.com/api/timeline_v4?access_key={0}&appkey={1}&area_id=1%2C-1&build=5250000&date_after=6&date_before=6&mobi_app=android&platform=wp&see_mine=0&ts={2}000", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                         break;
                     default:
                         break;

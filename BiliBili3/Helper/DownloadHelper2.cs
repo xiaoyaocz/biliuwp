@@ -14,6 +14,7 @@ using Windows.UI.Popups;
 using System.Diagnostics;
 using BiliBili3.Pages;
 using NSDanmaku;
+using BiliBili3.Modules;
 
 namespace BiliBili3.Helper
 {
@@ -47,10 +48,10 @@ namespace BiliBili3.Helper
         public static Dictionary<string, string> downloadeds = new Dictionary<string, string>();
         public static BackgroundTransferGroup group = BackgroundTransferGroup.CreateGroup("BILIBILIUWP");//下载组，方便管理
         public List<string> downedList;
-        public static async void CreateDownload(DownloadTaskModel m)
+        public static async Task CreateDownload(DownloadTaskModel m, List<DownloadUrlInfo> downloadUrls)
         {
-            var urls = await PlayurlHelper.GetVideoUrl_Download(m);
-            if (urls == null || urls.Count == 0)
+            //var urls = await PlayurlHelper.GetVideoUrl_Download(m);
+            if (downloadUrls == null || downloadUrls.Count == 0)
             {
                 await new MessageDialog(m.epTitle + " 无法读取到下载地址").ShowAsync();
                 return;
@@ -66,9 +67,9 @@ namespace BiliBili3.Helper
                     await DownloadDanmu(m.cid, folder);
                     await DownThumb(m.thumb, await folder.GetParentAsync());
                 });
-                for (int i = 0; i < urls.Count; i++)
+                for (int i = 0; i < downloadUrls.Count; i++)
                 {
-                    CreateDown(m, i, urls[i], folder);
+                    CreateDown(m, i, downloadUrls[i], folder);
                 }
             }
             catch (Exception ex)
@@ -78,16 +79,20 @@ namespace BiliBili3.Helper
 
         }
 
-        private static async void CreateDown(DownloadTaskModel m, int index, string url, StorageFolder folder)
+        private static async void CreateDown(DownloadTaskModel m, int index, DownloadUrlInfo url, StorageFolder folder)
         {
 
             BackgroundDownloader downloader = new BackgroundDownloader();
-            downloader.SetRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0");
-            if (!url.Contains("360.cn"))
+            foreach (var item in url.Headers)
             {
-                downloader.SetRequestHeader("Origin", "https://www.bilibili.com/");
-                downloader.SetRequestHeader("Referer", "https://www.bilibili.com/");
+                downloader.SetRequestHeader(item.Key, item.Value);
             }
+            //downloader.SetRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0");
+            //if (!url.Contains("360.cn"))
+            //{
+            //    downloader.SetRequestHeader("Origin", "https://www.bilibili.com/");
+            //    downloader.SetRequestHeader("Referer", "https://www.bilibili.com/");
+            //}
             //设置下载模式
             if (SettingHelper.Get_DownMode() == 0)
             {
@@ -100,13 +105,13 @@ namespace BiliBili3.Helper
             downloader.TransferGroup = group;
             //创建视频文件
             var filetype = ".flv";
-            if (url.Contains(".mp4"))
+            if (url.Url.Contains(".mp4"))
             {
                 filetype = ".mp4";
             }
             StorageFile file = await folder.CreateFileAsync(index.ToString("000") + filetype, CreationCollisionOption.OpenIfExists);
 
-            DownloadOperation downloadOp = downloader.CreateDownload(new Uri(url), file);
+            DownloadOperation downloadOp = downloader.CreateDownload(new Uri(url.Url), file);
             //设置下载策略
             if (SettingHelper.Get_Use4GDown())
             {
@@ -158,19 +163,19 @@ namespace BiliBili3.Helper
             }
         }
 
-        public static async Task UpdateDanmu(string path,string cid)
+        public static async Task UpdateDanmu(string path, string cid)
         {
             try
             {
                 string results = await new NSDanmaku.Helper.DanmakuParse().GetBiliBili(Convert.ToInt64(cid));
-               
+
                 StorageFile fileWrite = await StorageFile.GetFileFromPathAsync(path);
                 await FileIO.WriteTextAsync(fileWrite, results);
 
             }
             catch (Exception ex)
             {
-               await new MessageDialog(cid+"更新失败").ShowAsync();
+                await new MessageDialog(cid + "更新失败").ShowAsync();
                 //return null;
             }
         }
@@ -208,7 +213,7 @@ namespace BiliBili3.Helper
                 if (SettingHelper.Get_CustomDownPath() && setting != "系统视频库")
                 {
 
-                    string mruFirstToken = StorageApplicationPermissions.MostRecentlyUsedList.Entries.First(x => x.Metadata == setting).Token;
+                    string mruFirstToken = StorageApplicationPermissions.MostRecentlyUsedList.Entries.FirstOrDefault(x => x.Metadata == setting).Token;
                     var settingFolder = await StorageApplicationPermissions.MostRecentlyUsedList.GetFolderAsync(mruFirstToken);
                     DownFolder = await settingFolder.CreateFolderAsync("BiliBiliDownload", CreationCollisionOption.OpenIfExists);
                 }
@@ -304,8 +309,6 @@ namespace BiliBili3.Helper
             }
             catch (Exception)
             {
-
-                throw;
             }
 
         }
@@ -337,8 +340,6 @@ namespace BiliBili3.Helper
             }
             catch (Exception)
             {
-
-                throw;
             }
 
         }
@@ -402,7 +403,7 @@ namespace BiliBili3.Helper
             });
             return re;
         }
-
+       
 
         public static async Task DeleteFolder(string id, string cid, string mode)
         {
@@ -415,19 +416,12 @@ namespace BiliBili3.Helper
                 var folder = await DownloadHelper2.GetDownloadFolder();
                 var avFolder = await folder.GetFolderAsync(id);
                 var videoFolder = await avFolder.GetFolderAsync(cid);
-                await videoFolder.DeleteAsync(StorageDeleteOption.Default);
-                if ((await avFolder.GetFoldersAsync()).Count == 0)
-                {
-                    await avFolder.DeleteAsync(StorageDeleteOption.Default);
-                }
-
-
+                await videoFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+
             }
-
-
         }
 
         public static async Task DeleteFolder(string id, string mode)
@@ -440,7 +434,7 @@ namespace BiliBili3.Helper
                 }
                 var folder = await DownloadHelper2.GetDownloadFolder();
                 var avFolder = await folder.GetFolderAsync(id);
-                await avFolder.DeleteAsync(StorageDeleteOption.Default);
+                await avFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
             }
             catch (Exception)
             {
@@ -451,6 +445,7 @@ namespace BiliBili3.Helper
 
         public static async Task LoadDowned()
         {
+            Dictionary<string, string> valuePairs = new Dictionary<string, string>();
             var folder = await DownloadHelper2.GetDownloadFolder();
             try
             {
@@ -484,25 +479,23 @@ namespace BiliBili3.Helper
                             if (await DownloadHelper2.ExistsFile(item1.Path + @"\info.json"))
                             {
 
-                                List<bool> check = new List<bool>();
-                                var files = await item1.GetFilesAsync();
-                                foreach (var item2 in files)
+                                var flag = false;
+                                var files = (await item1.GetFilesAsync()).Where(x => x.FileType == ".mp4" || x.FileType == ".flv");
+                                if (files.Count() != 0)
                                 {
-                                    if (item2.FileType == ".mp4" || item2.FileType == ".flv")
+                                    //DownloadHelper2.GetFileSize(x.Path).Result
+                                    foreach (var subfile in files)
                                     {
-                                        if (await DownloadHelper2.GetFileSize(item2.Path) == 0)
+                                        if (await DownloadHelper2.GetFileSize(subfile.Path) == 0)
                                         {
-                                            check.Add(false);
+                                            flag = true;
+                                            break;
                                         }
-                                        else
-                                        {
-                                            check.Add(true);
-                                        }
-
                                     }
-                                }
-                                if (!check.Contains(false))
-                                {
+                                    if (flag)
+                                    {
+                                        break;
+                                    }
                                     var file1 = await item1.GetFileAsync("info.json");
                                     var data1 = await FileIO.ReadTextAsync(file1);
                                     DownloadPartnInfoModel downloadPartnInfoModel = Newtonsoft.Json.JsonConvert.DeserializeObject<DownloadPartnInfoModel>(data1);
@@ -514,17 +507,14 @@ namespace BiliBili3.Helper
                                         index = downloadPartnInfoModel.index,
                                         id = video.id,
                                         mode = video.mode,
-                                        title = video.title,
-                                        epid = downloadPartnInfoModel.epid
+                                        title = video.title
                                     };
-                                    if (!downloadeds.ContainsKey(downloadPartnInfoModel.cid))
+                                    if (!valuePairs.ContainsKey(downloadPartnInfoModel.cid))
                                     {
-                                        downloadeds.Add(downloadPartnInfoModel.cid, item1.Path);
+                                        valuePairs.Add(downloadPartnInfoModel.cid, item1.Path);
                                     }
-
                                     video.videolist.Add(part);
                                 }
-
                             }
                         }
 
@@ -535,7 +525,7 @@ namespace BiliBili3.Helper
                         }
                     }
                 }
-
+                downloadeds = valuePairs;
             }
             catch (Exception ex)
             {

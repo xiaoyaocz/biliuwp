@@ -97,8 +97,8 @@ namespace BiliBili3.Pages
             ls.Add(new LivePartTagModel() { tag_name = "全部" });
             try
             {
-                string url = string.Format("http://live.bilibili.com/AppIndex/tags?access_key={0}&appkey={1}&build=434000&mobi_app=android&platform=android",ApiHelper.access_key,ApiHelper._appKey_Android);
-                url += "&sign=" + ApiHelper.GetSign_Android(url);
+                string url = string.Format("http://live.bilibili.com/AppIndex/tags?access_key={0}&appkey={1}&build=434000&mobi_app=android&platform=android",ApiHelper.access_key,ApiHelper.AndroidKey.Appkey);
+                url += "&sign=" + ApiHelper.GetSign(url);
                 string results =await WebClientClass.GetResults(new Uri(url));
                
                 JObject obj = JObject.Parse(results);
@@ -137,12 +137,12 @@ namespace BiliBili3.Pages
                 pr_Load.Visibility = Visibility.Visible;
                
 
-                string url = string.Format("http://live.bilibili.com/mobile/rooms?access_key={0}&appkey={1}&area_id={2}&build=434000&mobi_app=android&page={3}&platform=android&sort={4}", ApiHelper.access_key, ApiHelper._appKey_Android,_pid, _TJPage, _sort);
+                string url = string.Format("http://live.bilibili.com/mobile/rooms?access_key={0}&appkey={1}&area_id={2}&build=434000&mobi_app=android&page={3}&platform=android&sort={4}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey,_pid, _TJPage, _sort);
                 if (grid_tag.SelectedIndex!=0&& grid_tag.SelectedIndex!=-1)
                 {
                     url += "&tag="+Uri.EscapeDataString((grid_tag.SelectedItem as LivePartTagModel).tag_name);
                 }
-                url += "&sign=" + ApiHelper.GetSign_Android(url);
+                url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 AllLiveModel m = JsonConvert.DeserializeObject<AllLiveModel>(results);
                 if (m.code == 0)

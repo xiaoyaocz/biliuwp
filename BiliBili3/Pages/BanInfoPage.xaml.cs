@@ -46,11 +46,13 @@ namespace BiliBili3.Pages
     /// </summary>
     public sealed partial class BanInfoPage : Page
     {
+        Download download;
+
         public BanInfoPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
-
+            download = new Download();
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += DataTransferManager_DataRequested;
         }
@@ -81,16 +83,23 @@ namespace BiliBili3.Pages
 
             _banId = (e.Parameter as object[])[0].ToString();
             GetInfo();
-            if (SecondaryTile.Exists(_banId))
+            try
             {
-                btn_unPin.Visibility = Visibility.Visible;
-                btn_Pin.Visibility = Visibility.Collapsed;
+                if (SecondaryTile.Exists(_banId))
+                {
+                    btn_unPin.Visibility = Visibility.Visible;
+                    btn_Pin.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    btn_unPin.Visibility = Visibility.Collapsed;
+                    btn_Pin.Visibility = Visibility.Visible;
+                }
             }
-            else
+            catch (Exception)
             {
-                btn_unPin.Visibility = Visibility.Collapsed;
-                btn_Pin.Visibility = Visibility.Visible;
             }
+            
             pivot.SelectedIndex = 0;
             sv.ChangeView(null, 0, null);
             //}
@@ -106,7 +115,7 @@ namespace BiliBili3.Pages
             {
 
                 pr_Load.Visibility = Visibility.Visible;
-                string uri = string.Format("https://api.bilibili.com/pgc/view/app/season?access_key={0}&appkey={1}&build=5341000&platform=android&season_id={2}&ts={3}", ApiHelper.access_key, ApiHelper._appKey, _banId, ApiHelper.GetTimeSpan);
+                string uri = string.Format("https://api.bilibili.com/pgc/view/app/season?access_key={0}&appkey={1}&build=5341000&platform=android&season_id={2}&ts={3}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _banId, ApiHelper.GetTimeSpan);
                 uri += "&sign=" + ApiHelper.GetSign(uri);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(uri));
 
@@ -169,7 +178,7 @@ namespace BiliBili3.Pages
                     //        x.index_title = x.long_title;
                     //    }
                     //});
-
+                   
                     if (model.result.episodes != null)
                     {
                         model.result.episodes.ForEach(x =>
@@ -191,6 +200,10 @@ namespace BiliBili3.Pages
                             }
                         });
                         model.result.episodes = model.result.episodes.OrderByDescending(x => x.orderindex).ToList();
+                        //设置下载清晰度
+                        var q = await download.GetSeasonQualitys(model.result.episodes[0].av_id.ToString(), model.result.episodes[0].danmaku.ToString(), model.result.episodes[0].season_type, ApiHelper.access_key, ApiHelper.GetUserId());
+                        cb_Qu.ItemsSource = q.data;
+                        cb_Qu.SelectedIndex = 0;
                     }
 
 
@@ -379,7 +392,7 @@ namespace BiliBili3.Pages
         {
             try
             {
-                string url = string.Format("https://bangumi.bilibili.com/media/api/detail?appkey={0}&build=5250000&media_id={1}&platform=android&ts={2}", ApiHelper._appKey, mediaId, ApiHelper.GetTimeSpan);
+                string url = string.Format("https://bangumi.bilibili.com/media/api/detail?appkey={0}&build=5250000&media_id={1}&platform=android&ts={2}", ApiHelper.AndroidKey.Appkey, mediaId, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
                 BangumiDetailModel bangumiDetailModel = JsonConvert.DeserializeObject<BangumiDetailModel>(results);
@@ -447,13 +460,13 @@ namespace BiliBili3.Pages
                 string url = string.Empty;
                 if (cb_Cb.SelectedIndex == 0)
                 {
-                    url = string.Format("http://bangumi.bilibili.com/sponsor/rank/get_sponsor_week_list?access_key={0}&appkey={1}&build=418000&mobi_app=android&page=1&pagesize=25&platform=android&season_id={2}&ts={3}", ApiHelper.access_key, ApiHelper._appKey_Android, _banId, ApiHelper.GetTimeSpan);
+                    url = string.Format("http://bangumi.bilibili.com/sponsor/rank/get_sponsor_week_list?access_key={0}&appkey={1}&build=418000&mobi_app=android&page=1&pagesize=25&platform=android&season_id={2}&ts={3}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _banId, ApiHelper.GetTimeSpan);
                 }
                 else
                 {
-                    url = string.Format("http://bangumi.bilibili.com/sponsor/rank/get_sponsor_total?access_key={0}&appkey={1}&build=418000&mobi_app=android&page=1&pagesize=25&platform=android&season_id={2}&ts={3}", ApiHelper.access_key, ApiHelper._appKey_Android, _banId, ApiHelper.GetTimeSpan);
+                    url = string.Format("http://bangumi.bilibili.com/sponsor/rank/get_sponsor_total?access_key={0}&appkey={1}&build=418000&mobi_app=android&page=1&pagesize=25&platform=android&season_id={2}&ts={3}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _banId, ApiHelper.GetTimeSpan);
                 }
-                url += "&sign=" + ApiHelper.GetSign_Android(url);
+                url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
                 CBRankModel model = JsonConvert.DeserializeObject<CBRankModel>(results);
                 if (model.code == 0)
@@ -668,7 +681,7 @@ namespace BiliBili3.Pages
             try
             {
                 int stype = (this.DataContext as BangumiDataModel).season_type;
-                var url = string.Format("https://bangumi.bilibili.com/follow/api/season/follow?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=android&season_id={2}&season_type={3}&ts={4}", ApiHelper.access_key, ApiHelper._appKey, _banId, stype, ApiHelper.GetTimeSpan);
+                var url = string.Format("https://bangumi.bilibili.com/follow/api/season/follow?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=android&season_id={2}&season_type={3}&ts={4}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _banId, stype, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
 
@@ -708,7 +721,7 @@ namespace BiliBili3.Pages
             try
             {
                 int stype = (this.DataContext as BangumiDataModel).season_type;
-                var url = string.Format("https://bangumi.bilibili.com/follow/api/season/unfollow?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=android&season_id={2}&season_type={3}&ts={4}", ApiHelper.access_key, ApiHelper._appKey, _banId, stype, ApiHelper.GetTimeSpan);
+                var url = string.Format("https://bangumi.bilibili.com/follow/api/season/unfollow?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=android&season_id={2}&season_type={3}&ts={4}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _banId, stype, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 JObject json = JObject.Parse(results);
@@ -751,13 +764,19 @@ namespace BiliBili3.Pages
             var info = gv_Play.SelectedItem as episodesModel;
 
             int i = 1;
+            pr_Load.Visibility = Visibility.Visible;
             foreach (episodesModel item in gv_Play.SelectedItems)
             {
                 if (item.IsDowned == Visibility.Collapsed)
                 {
+                    var downloadUrl = await download.GetSeasonDownloadUrl(item.av_id.ToString(), item.danmaku.ToString(),_banId.ToInt32(), item.season_type, cb_Qu.SelectedItem as QualityInfo,ApiHelper.access_key, ApiHelper.GetUserId());
+                    if (!downloadUrl.success)
+                    {
+                        await new MessageDialog($"{item.index} {item.index_title}读取下载地址失败,已跳过").ShowAsync();
+                        break;
+                    }
 
-
-                    DownloadHelper2.CreateDownload(new DownloadTaskModel()
+                   await DownloadHelper2.CreateDownload(new DownloadTaskModel()
                     {
                         downloadMode = DownloadMode.Anime,
                         sid = _banId,
@@ -766,9 +785,9 @@ namespace BiliBili3.Pages
                         epid = item.episode_id,
                         epTitle = item.index + " " + item.index_title,
                         thumb = (this.DataContext as BangumiDataModel).cover,
-                        quality = cb_Qu.SelectedIndex + 1,
+                        quality = cb_Qu.SelectedIndex,
                         title = (this.DataContext as BangumiDataModel).title
-                    });
+                    }, downloadUrl.data);
 
 
 
@@ -806,7 +825,7 @@ namespace BiliBili3.Pages
             gv_Play.IsItemClickEnabled = true;
             Down_ComBar.Visibility = Visibility.Collapsed;
             com_bar.Visibility = Visibility.Visible;
-
+            pr_Load.Visibility = Visibility.Collapsed;
         }
 
         private void btn_Cancel_Click(object sender, RoutedEventArgs e)
@@ -821,69 +840,69 @@ namespace BiliBili3.Pages
         {
             if (gv_Play.Items != null)
             {
-                if (gv_Play.Items.Count == 1)
-                {
-                    var item = gv_Play.Items[0] as episodesModel;
+                //if (gv_Play.Items.Count == 1)
+                //{
+                //    var item = gv_Play.Items[0] as episodesModel;
 
-                    if (item.IsDowned == Visibility.Collapsed)
-                    {
-
-
-                        DownloadHelper2.CreateDownload(new DownloadTaskModel()
-                        {
-                            downloadMode = DownloadMode.Anime,
-                            sid = _banId,
-                            cid = item.danmaku.ToString(),
-                            epIndex = item.orderindex,
-                            epid = item.episode_id,
-                            epTitle = item.index + " " + item.index_title,
-                            thumb = (this.DataContext as BangumiDataModel).cover,
-                            quality = cb_Qu.SelectedIndex + 1,
-                            title = (this.DataContext as BangumiDataModel).title
-                        });
+                //    if (item.IsDowned == Visibility.Collapsed)
+                //    {
 
 
+                //        DownloadHelper2.CreateDownload(new DownloadTaskModel()
+                //        {
+                //            downloadMode = DownloadMode.Anime,
+                //            sid = _banId,
+                //            cid = item.danmaku.ToString(),
+                //            epIndex = item.orderindex,
+                //            epid = item.episode_id,
+                //            epTitle = item.index + " " + item.index_title,
+                //            thumb = (this.DataContext as BangumiDataModel).cover,
+                //            quality = cb_Qu.SelectedIndex + 1,
+                //            title = (this.DataContext as BangumiDataModel).title
+                //        });
 
 
-                        //var vitem = new PlayerModel() { Aid = _banId, Mid = item.danmaku.ToString(), Mode = PlayMode.Video, No = item.index, VideoTitle = item.index_title, Title = (this.DataContext as BangumiInfoModel).title };
 
-                        //DownloadModel m = new DownloadModel();
-                        //m.folderinfo = new FolderListModel()
-                        //{
-                        //    id = _banId,
-                        //    desc = txt_desc.Text,
-                        //    title = txt_Name.Text,
-                        //    isbangumi = true,
-                        //    thumb = (this.DataContext as BangumiInfoModel).cover
 
-                        //};
-                        //m.videoinfo = new VideoListModel()
-                        //{
-                        //    id = _banId,
-                        //    mid = vitem.Mid,
-                        //    part = 1,
-                        //    partTitle = vitem.No + " " + vitem.VideoTitle,
-                        //    videoUrl = await ApiHelper.GetBiliUrl_Ban(vitem, cb_Qu.SelectedIndex + 1),
-                        //    title = txt_Name.Text
-                        //};
+                //        //var vitem = new PlayerModel() { Aid = _banId, Mid = item.danmaku.ToString(), Mode = PlayMode.Video, No = item.index, VideoTitle = item.index_title, Title = (this.DataContext as BangumiInfoModel).title };
 
-                        //DownloadHelper.StartDownload(m);
-                        Utils.ShowMessageToast("任务已加入下载", 3000);
-                    }
-                    else
-                    {
-                        Utils.ShowMessageToast("此视频已下载", 3000);
-                    }
+                //        //DownloadModel m = new DownloadModel();
+                //        //m.folderinfo = new FolderListModel()
+                //        //{
+                //        //    id = _banId,
+                //        //    desc = txt_desc.Text,
+                //        //    title = txt_Name.Text,
+                //        //    isbangumi = true,
+                //        //    thumb = (this.DataContext as BangumiInfoModel).cover
 
-                }
-                else
-                {
+                //        //};
+                //        //m.videoinfo = new VideoListModel()
+                //        //{
+                //        //    id = _banId,
+                //        //    mid = vitem.Mid,
+                //        //    part = 1,
+                //        //    partTitle = vitem.No + " " + vitem.VideoTitle,
+                //        //    videoUrl = await ApiHelper.GetBiliUrl_Ban(vitem, cb_Qu.SelectedIndex + 1),
+                //        //    title = txt_Name.Text
+                //        //};
+
+                //        //DownloadHelper.StartDownload(m);
+                //        Utils.ShowMessageToast("任务已加入下载", 3000);
+                //    }
+                //    else
+                //    {
+                //        Utils.ShowMessageToast("此视频已下载", 3000);
+                //    }
+
+                //}
+                //else
+                //{
                     gv_Play.SelectionMode = ListViewSelectionMode.Multiple;
                     gv_Play.IsItemClickEnabled = false;
                     Utils.ShowMessageToast("请选中要下载的分P视频，点击确定", 3000);
                     Down_ComBar.Visibility = Visibility.Visible;
                     com_bar.Visibility = Visibility.Collapsed;
-                }
+                //}
 
 
                 //players.LoadPlayer(ls, gv_Play.SelectedIndex);

@@ -470,11 +470,8 @@
         </CommandBar>
         <CommandBar x:Name="Down_ComBar" Visibility="Collapsed" HorizontalAlignment="Right" Background="{ThemeResource Bili-ForeColor}" Foreground="White" >
             <CommandBar.Content>
-                <ComboBox x:Name="cb_Qu" SelectedIndex="3" Margin="10,10" BorderThickness="1">
-                    <ComboBoxItem Content="流畅"/>
-                    <ComboBoxItem Content="清晰"/>
-                    <ComboBoxItem Content="高清"/>
-                    <ComboBoxItem Content="超清"/>
+                <ComboBox x:Name="cb_Qu" DisplayMemberPath="Description"  Margin="10,10" BorderThickness="1">
+                  
                 </ComboBox>
             </CommandBar.Content>
             <AppBarButton x:Name="btn_ALL" Icon="Bullets"  Label="全选"  Foreground="White" Click="btn_ALL_Click"/>

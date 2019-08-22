@@ -116,7 +116,7 @@ namespace BiliBili3.Pages
             try
             {
                 pr_Load.Visibility = Visibility.Visible;
-                string url = string.Format("https://bangumi.bilibili.com/api/bangumi_index_cond?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=wp&ts={2}000&type=0", ApiHelper.access_key,ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                string url = string.Format("https://bangumi.bilibili.com/api/bangumi_index_cond?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=wp&ts={2}000&type=0", ApiHelper.access_key,ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
                 BantagModel m = JsonConvert.DeserializeObject<BantagModel>(results);

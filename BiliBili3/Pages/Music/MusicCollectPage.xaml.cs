@@ -53,7 +53,7 @@ namespace BiliBili3.Pages.Music
             {
                 pr_Load.Visibility = Visibility.Visible;
                 string url = "https://api.bilibili.com/audio/music-service-c/collections?access_key={0}&appkey={1}&build=5250000&mid={2}&mobi_app=android&page_index=1&page_size=1000&platform=android&sort=1&ts={3}";
-                url = string.Format(url, ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetUserId(), ApiHelper.GetTimeSpan);
+                url = string.Format(url, ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetUserId(), ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
 
@@ -86,7 +86,7 @@ namespace BiliBili3.Pages.Music
             {
                 pr_Load.Visibility = Visibility.Visible;
                 string url = "https://api.bilibili.com/audio/music-service-c/collections/{0}/songs?access_key={1}&appkey={2}&build=5250000&collection_id={0}&mid={3}&mobi_app=android&page_index=1&page_size=500&platform=android&sort=1&ts={4}";
-                url = string.Format(url, collectId, ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetUserId(), ApiHelper.GetTimeSpan);
+                url = string.Format(url, collectId, ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetUserId(), ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
 
@@ -234,7 +234,7 @@ namespace BiliBili3.Pages.Music
                     songs += item.id + ",";
                 }
                 string url = "https://api.bilibili.com/audio/music-service-c/collections/collectionfresh";
-                string content = string.Format("access_key={0}&appkey={1}&build=5250000&collectionId={2}&mid={3}&mobi_app=android&platform=android&songIds={4}&ts={5}", ApiHelper.access_key, ApiHelper._appKey, cid, ApiHelper.GetUserId(),Uri.EscapeDataString(songs), ApiHelper.GetTimeSpan);
+                string content = string.Format("access_key={0}&appkey={1}&build=5250000&collectionId={2}&mid={3}&mobi_app=android&platform=android&songIds={4}&ts={5}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, cid, ApiHelper.GetUserId(),Uri.EscapeDataString(songs), ApiHelper.GetTimeSpan);
                 content += "&sign=" + ApiHelper.GetSign(url);
                 var re = await WebClientClass.PostResults(new Uri(url), content);
                 JObject obj = JObject.Parse(re);

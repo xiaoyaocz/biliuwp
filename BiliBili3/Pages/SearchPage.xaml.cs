@@ -115,11 +115,11 @@ namespace BiliBili3.Pages
                 string uri = "";
                 if (a == null)
                 {
-                    uri = "http://api.bilibili.com/search?_device=android&appkey="+ApiHelper._appKey+"&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum + "&pagesize=20&platform=android&search_type=video&source_type=0" + ((cb_OrderBy.SelectedItem as ComboBoxItem).Tag == null ? "" : "&order=" + (cb_OrderBy.SelectedItem as ComboBoxItem).Tag);
+                    uri = "http://api.bilibili.com/search?_device=android&appkey="+ApiHelper.AndroidKey.Appkey+"&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum + "&pagesize=20&platform=android&search_type=video&source_type=0" + ((cb_OrderBy.SelectedItem as ComboBoxItem).Tag == null ? "" : "&order=" + (cb_OrderBy.SelectedItem as ComboBoxItem).Tag);
                 }
                 else
                 {
-                    uri = "http://api.bilibili.com/search?_device=android&appkey=" + ApiHelper._appKey+"&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum + "&pagesize=20&platform=android&search_type=video&source_type=0&tids=" + a.ToString() + ((cb_OrderBy.SelectedItem as ComboBoxItem).Tag == null ? "" : "&order=" + (cb_OrderBy.SelectedItem as ComboBoxItem).Tag);
+                    uri = "http://api.bilibili.com/search?_device=android&appkey=" + ApiHelper.AndroidKey.Appkey+"&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum + "&pagesize=20&platform=android&search_type=video&source_type=0&tids=" + a.ToString() + ((cb_OrderBy.SelectedItem as ComboBoxItem).Tag == null ? "" : "&order=" + (cb_OrderBy.SelectedItem as ComboBoxItem).Tag);
                 }
                 string sign = ApiHelper.GetSign(uri);
                 uri += "&sign=" + sign;
@@ -175,7 +175,7 @@ namespace BiliBili3.Pages
                 object a = (cb_part.SelectedItem as ComboBoxItem).Tag;
                 pr_Loading.Visibility = Visibility.Visible;
               
-                string uri = "http://api.bilibili.com/search?_device=android&appkey="+ApiHelper._appKey+"&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum_Ban + "&pagesize=20&platform=android&search_type=bangumi&source_type=0";
+                string uri = "http://api.bilibili.com/search?_device=android&appkey="+ApiHelper.AndroidKey.Appkey+"&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum_Ban + "&pagesize=20&platform=android&search_type=bangumi&source_type=0";
                 string sign = ApiHelper.GetSign(uri);
                 uri += "&sign=" + sign;
                 string results = await WebClientClass.GetResults(new Uri(uri));
@@ -229,7 +229,7 @@ namespace BiliBili3.Pages
                 object a = (cb_part.SelectedItem as ComboBoxItem).Tag;
                 pr_Loading.Visibility = Visibility.Visible;
                 string uri = string.Format("https://app.bilibili.com/x/v2/search/type?appkey={0}&build=5250000&highlight=0&keyword={1}&mobi_app=android&order=totalrank&platform=android&pn={2}&ps=20&ts={3}&type=2&user_type=0"
-                  ,ApiHelper._appKey, keyword, pageNum_Up,ApiHelper.GetTimeSpan);
+                  ,ApiHelper.AndroidKey.Appkey, keyword, pageNum_Up,ApiHelper.GetTimeSpan);
                 string sign = ApiHelper.GetSign(uri);
                 uri += "&sign=" + sign;
 
@@ -282,7 +282,7 @@ namespace BiliBili3.Pages
                 btn_More_SP.Visibility = Visibility.Visible;
                 SeasonLoading = true;
                 pr_Loading.Visibility = Visibility.Visible;
-                string uri = "http://api.bilibili.com/search?_device=wp&appkey="+ApiHelper._appKey+"&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum_Sp + "&pagesize=20&platform=android&search_type=special&source_type=0";//
+                string uri = "http://api.bilibili.com/search?_device=wp&appkey="+ApiHelper.AndroidKey.Appkey+"&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum_Sp + "&pagesize=20&platform=android&search_type=special&source_type=0";//
                 string sign = ApiHelper.GetSign(uri);
                 uri += "&sign=" + sign;
                 string results = await WebClientClass.GetResults(new Uri(uri));
@@ -334,7 +334,7 @@ namespace BiliBili3.Pages
                 MovieLoading = true;
                 object a = (cb_part.SelectedItem as ComboBoxItem).Tag;
                 pr_Loading.Visibility = Visibility.Visible;
-                string uri = "http://app.bilibili.com/x/v2/search/type?keyword=" + keyword + "&pn=" + pageNum_Movie + "&ps=20&type=8&access_key=" + ApiHelper.access_key + "&appkey=" + ApiHelper._appKey + "&build=433000&mobi_app=android&platform=android";
+                string uri = "http://app.bilibili.com/x/v2/search/type?keyword=" + keyword + "&pn=" + pageNum_Movie + "&ps=20&type=8&access_key=" + ApiHelper.access_key + "&appkey=" + ApiHelper.AndroidKey.Appkey + "&build=433000&mobi_app=android&platform=android";
                 //string sign = ApiHelper.GetSign(uri);
                 uri += "&sign=" + ApiHelper.GetSign(uri);
                 string results = await WebClientClass.GetResults(new Uri(uri));
@@ -396,7 +396,7 @@ namespace BiliBili3.Pages
                 ArticleLoading = true;
                 object a = (cb_part.SelectedItem as ComboBoxItem).Tag;
                 pr_Loading.Visibility = Visibility.Visible;
-                string uri = "http://app.bilibili.com/x/v2/search/type?keyword=" + keyword + "&pn=" + pageNum_Article + "&ps=20&type=6&access_key=" + ApiHelper.access_key + "&appkey=" + ApiHelper._appKey + "&build=433000&mobi_app=android&platform=android";
+                string uri = "http://app.bilibili.com/x/v2/search/type?keyword=" + keyword + "&pn=" + pageNum_Article + "&ps=20&type=6&access_key=" + ApiHelper.access_key + "&appkey=" + ApiHelper.AndroidKey.Appkey + "&build=433000&mobi_app=android&platform=android";
                 //string sign = ApiHelper.GetSign(uri);
                 uri += "&sign=" + ApiHelper.GetSign(uri);
                 string results = await WebClientClass.GetResults(new Uri(uri));

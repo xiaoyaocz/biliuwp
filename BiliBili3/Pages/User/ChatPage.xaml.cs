@@ -97,8 +97,8 @@ namespace BiliBili3.Pages
         {
             try
             {
-                string url = string.Format("http://message.bilibili.com/api/msg/query.double.room.do?access_key={0}&actionKey=appkey&appkey={1}&build=422000&data_type=1&mobi_app=android&platform=android&mid={2}&ts={3}000", ApiHelper.access_key, ApiHelper._appKey_Android, mid, ApiHelper.GetTimeSpan);
-                url += "&sign=" + ApiHelper.GetSign_Android(url);
+                string url = string.Format("http://message.bilibili.com/api/msg/query.double.room.do?access_key={0}&actionKey=appkey&appkey={1}&build=422000&data_type=1&mobi_app=android&platform=android&mid={2}&ts={3}000", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, mid, ApiHelper.GetTimeSpan);
+                url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 CreateRoomModel m = JsonConvert.DeserializeObject<CreateRoomModel>(results);
                 if (m.code == 0)
@@ -135,8 +135,8 @@ namespace BiliBili3.Pages
         {
             try
             {
-                string url = string.Format("http://message.bilibili.com/api/msg/query.msg.list.do?access_key={0}&actionKey=appkey&appkey={1}&build=422000&data_type=1&mobi_app=android&platform=android&rid={2}&ts={3}000", ApiHelper.access_key, ApiHelper._appKey_Android, rid, ApiHelper.GetTimeSpan);
-                url += "&sign=" + ApiHelper.GetSign_Android(url);
+                string url = string.Format("http://message.bilibili.com/api/msg/query.msg.list.do?access_key={0}&actionKey=appkey&appkey={1}&build=422000&data_type=1&mobi_app=android&platform=android&rid={2}&ts={3}000", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, rid, ApiHelper.GetTimeSpan);
+                url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 ChatModel m = JsonConvert.DeserializeObject<ChatModel>(results);
                 m.data = m.data.OrderBy(x => x.send_time).ToList();
@@ -197,7 +197,7 @@ namespace BiliBili3.Pages
             try
             {
                 string url = "https://api.vc.bilibili.com/web_im/v1/web_im/send_msg";
-                // url += "&sign=" + ApiHelper.GetSign_Android(url);
+                // url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.PostResults(new Uri(url), 
                     string.Format("platform=pc&msg%5Bsender_uid%5D={0}&msg%5Breceiver_id%5D={1}&msg%5Breceiver_type%5D=1&msg%5Bmsg_type%5D=1&msg%5Bcontent%5D=%7B%22content%22%3A%22{2}%22%7D&msg%5Btimestamp%5D={3}&captcha={4}", 
                     ApiHelper.GetUserId(),

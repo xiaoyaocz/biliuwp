@@ -56,7 +56,7 @@ namespace BiliBili3.Pages.Music
                 missevan = 1;
                 HitSongs = 1;
                 pr_load.Visibility = Visibility.Visible;
-                string url = string.Format("https://api.bilibili.com/audio/music-service-c/firstpage?appkey={0}&build=5250000&mobi_app=android&platform=android&ts={1}", ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                string url = string.Format("https://api.bilibili.com/audio/music-service-c/firstpage?appkey={0}&build=5250000&mobi_app=android&platform=android&ts={1}", ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 var re = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
@@ -172,7 +172,7 @@ namespace BiliBili3.Pages.Music
             try
             {
                 pr_load.Visibility = Visibility.Visible;
-                string url = string.Format("https://api.bilibili.com/audio/music-service-c/firstpage/{2}?appkey={0}&build=5250000&mobi_app=android&platform=android&size={3}&time={4}&ts={1}", ApiHelper._appKey, ApiHelper.GetTimeSpan, data, pageSize, time);
+                string url = string.Format("https://api.bilibili.com/audio/music-service-c/firstpage/{2}?appkey={0}&build=5250000&mobi_app=android&platform=android&size={3}&time={4}&ts={1}", ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan, data, pageSize, time);
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 var re = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
@@ -213,11 +213,11 @@ namespace BiliBili3.Pages.Music
                 var url = "";
                 if (data== "sharkHitSongs")
                 {
-                    url = string.Format("https://api.bilibili.com/audio/music-service-c/firstpage/{2}?appkey={0}&build=5250000&mobi_app=android&platform=android&size={3}&time={4}&ts={1}", ApiHelper._appKey, ApiHelper.GetTimeSpan, data, pageSize, time);
+                    url = string.Format("https://api.bilibili.com/audio/music-service-c/firstpage/{2}?appkey={0}&build=5250000&mobi_app=android&platform=android&size={3}&time={4}&ts={1}", ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan, data, pageSize, time);
                 }
                 else
                 {
-                    url = string.Format("https://api.bilibili.com/audio/music-service-c/firstpage/sharkSongs?appkey={0}&build=5250000&cateType={2}&mobi_app=android&platform=android&size={3}&time={4}&ts={1}", ApiHelper._appKey, ApiHelper.GetTimeSpan, data, pageSize, time);
+                    url = string.Format("https://api.bilibili.com/audio/music-service-c/firstpage/sharkSongs?appkey={0}&build=5250000&cateType={2}&mobi_app=android&platform=android&size={3}&time={4}&ts={1}", ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan, data, pageSize, time);
                 }
                 url += "&sign=" + ApiHelper.GetSign(url);
 

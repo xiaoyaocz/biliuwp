@@ -70,7 +70,7 @@ namespace BiliBili3.Controls
                 GetEmojis();
                 _Loading = true;
                 pr_load.Visibility = Visibility.Visible;
-                string url = "http://api.bilibili.com/x/reply?type=1&sort=2&oid=" + _aid + "&pn=" + pageNum + "&ps=5&platform=wp&appkey=" + ApiHelper._appKey + "&access_key=" + ApiHelper.access_key + "&rnd" + new Random().Next(1, 9999);
+                string url = "http://api.bilibili.com/x/reply?type=1&sort=2&oid=" + _aid + "&pn=" + pageNum + "&ps=5&platform=wp&appkey=" + ApiHelper.AndroidKey.Appkey + "&access_key=" + ApiHelper.access_key + "&rnd" + new Random().Next(1, 9999);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 NewCommentModel model = JsonConvert.DeserializeObject<NewCommentModel>(results);
@@ -108,7 +108,7 @@ namespace BiliBili3.Controls
                 GetEmojis();
                 _Loading = true;
                 pr_load.Visibility = Visibility.Visible;
-                string url = "http://api.bilibili.com/x/reply?type=1&sort=0&oid=" + _aid + "&pn=" + pageNum + "&ps=20&platform=wp&appkey=" + ApiHelper._appKey + "&access_key=" + ApiHelper.access_key + "&rnd" + new Random().Next(1, 9999);
+                string url = "http://api.bilibili.com/x/reply?type=1&sort=0&oid=" + _aid + "&pn=" + pageNum + "&ps=20&platform=wp&appkey=" + ApiHelper.AndroidKey.Appkey + "&access_key=" + ApiHelper.access_key + "&rnd" + new Random().Next(1, 9999);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 NewCommentModel model = JsonConvert.DeserializeObject<NewCommentModel>(results);
@@ -162,7 +162,7 @@ namespace BiliBili3.Controls
                 pr_load.Visibility = Visibility.Visible;
 
             
-                string url = "http://api.bilibili.com/x/reply/reply?oid=" + aid + "&pn=" + pageNum_Reply + "&ps=20&root=" + rpid + "&type=1&access_key=" + ApiHelper.access_key + "&appkey=" + ApiHelper._appKey + "&rnd" + new Random().Next(1, 9999); ;
+                string url = "http://api.bilibili.com/x/reply/reply?oid=" + aid + "&pn=" + pageNum_Reply + "&ps=20&root=" + rpid + "&type=1&access_key=" + ApiHelper.access_key + "&appkey=" + ApiHelper.AndroidKey.Appkey + "&rnd" + new Random().Next(1, 9999); ;
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 NewCommentModel model = JsonConvert.DeserializeObject<NewCommentModel>(results);
@@ -211,7 +211,7 @@ namespace BiliBili3.Controls
             {
                 pr_load.Visibility = Visibility.Visible;
 
-                string url = "http://api.bilibili.com/x/reply?type=1&sort=1&oid=" + aid + "&pn=1&ps=20&platform=wp&appkey=" + ApiHelper._appKey + "&access_key=" + ApiHelper.access_key + "&rnd" + new Random().Next(1, 9999); ;
+                string url = "http://api.bilibili.com/x/reply?type=1&sort=1&oid=" + aid + "&pn=1&ps=20&platform=wp&appkey=" + ApiHelper.AndroidKey.Appkey + "&access_key=" + ApiHelper.access_key + "&rnd" + new Random().Next(1, 9999); ;
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 NewCommentModel model = JsonConvert.DeserializeObject<NewCommentModel>(results);
@@ -321,7 +321,7 @@ namespace BiliBili3.Controls
             {
                 try
                 {
-                    string uri = string.Format("http://api.bilibili.com/x/reply/add?_device=wp&build={2}&platform=wp&appkey={0}&access_key={1}", ApiHelper._appKey, ApiHelper.access_key,ApiHelper.build);
+                    string uri = string.Format("http://api.bilibili.com/x/reply/add?_device=wp&build={2}&platform=wp&appkey={0}&access_key={1}", ApiHelper.AndroidKey.Appkey, ApiHelper.access_key,ApiHelper.build);
                     uri += "&sign=" + ApiHelper.GetSign(uri);
                     Uri ReUri = new Uri(uri);
                     HttpClient hc = new HttpClient();
@@ -546,7 +546,7 @@ namespace BiliBili3.Controls
             {
                 try
                 {
-                    string uri = string.Format("http://api.bilibili.com/x/reply/add?_device=wp&build={2}&platform=wp&appkey={0}&access_key={1}", ApiHelper._appKey, ApiHelper.access_key,ApiHelper.build);
+                    string uri = string.Format("http://api.bilibili.com/x/reply/add?_device=wp&build={2}&platform=wp&appkey={0}&access_key={1}", ApiHelper.AndroidKey.Appkey, ApiHelper.access_key,ApiHelper.build);
                     uri += "&sign=" + ApiHelper.GetSign(uri);
                     Uri ReUri = new Uri(uri);
                     HttpClient hc = new HttpClient();

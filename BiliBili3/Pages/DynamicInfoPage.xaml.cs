@@ -103,7 +103,7 @@ namespace BiliBili3.Pages
             //{
             //    DynamicCardsModel dynamicCardsModel = new DynamicCardsModel();
 
-            //    string url = string.Format("http://api.vc.bilibili.com/link_draw/v1/doc/detail?access_key={0}&appkey={1}&build=5250000&doc_id={2}&mobi_app=android&platform=android&src=bilih5&trace_id=20180225170000026&ts={3}", ApiHelper.access_key, ApiHelper._appKey, id, ApiHelper.GetTimeSpan);
+            //    string url = string.Format("http://api.vc.bilibili.com/link_draw/v1/doc/detail?access_key={0}&appkey={1}&build=5250000&doc_id={2}&mobi_app=android&platform=android&src=bilih5&trace_id=20180225170000026&ts={3}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, id, ApiHelper.GetTimeSpan);
             //    url += "&sign=" + ApiHelper.GetSign(url);
 
             //    string re = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
@@ -180,7 +180,7 @@ namespace BiliBili3.Pages
             
             try
             {
-                string url = string.Format("https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/get_dynamic_detail?access_key={0}&appkey={1}&dynamic_id={2}&build=5250000&mobi_app=android&platform=android&src=bilih5&ts={3}", ApiHelper.access_key, ApiHelper._appKey, dynamic_id, ApiHelper.GetTimeSpan);
+                string url = string.Format("https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/get_dynamic_detail?access_key={0}&appkey={1}&dynamic_id={2}&build=5250000&mobi_app=android&platform=android&src=bilih5&ts={3}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, dynamic_id, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 string re = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
@@ -258,7 +258,7 @@ namespace BiliBili3.Pages
         {
             try
             {
-                string url = string.Format("http://api.vc.bilibili.com/link_draw/v2/doc/dynamic_id?_device=android&appkey={0}&build=5250000&doc_id={1}&platform=android&src=bilih5", ApiHelper._appKey, doc_id);
+                string url = string.Format("http://api.vc.bilibili.com/link_draw/v2/doc/dynamic_id?_device=android&appkey={0}&build=5250000&doc_id={1}&platform=android&src=bilih5", ApiHelper.AndroidKey.Appkey, doc_id);
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 string re = await WebClientClass.GetResults(new Uri(url));
@@ -346,7 +346,7 @@ namespace BiliBili3.Pages
                 string url = "https://api.vc.bilibili.com/dynamic_repost/v1/dynamic_repost/view_repost";
 
                 string content = string.Format("_device=android&access_key={0}&appkey={1}&build=5250000&dynamic_id={2}&mobi_app=android&offset={5}&platform=android&src=bilih5&ts={3}&uid={4}",
-                    ApiHelper.access_key, ApiHelper._appKey, _data.desc.dynamic_id, ApiHelper.GetTimeSpan_2, ApiHelper.GetUserId(), offset);
+                    ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _data.desc.dynamic_id, ApiHelper.GetTimeSpan_2, ApiHelper.GetUserId(), offset);
                 content += "&sign=" + ApiHelper.GetSign(content);
                 var re = await WebClientClass.PostResultsUtf8(new Uri(url), content);
 
@@ -441,11 +441,11 @@ namespace BiliBili3.Pages
             try
             {
                 string url = "https://api.vc.bilibili.com/dynamic_repost/v1/dynamic_repost/rm_rp_dyn?access_key={0}&appkey={1}&build=5250000&platform=android&ts={2}";
-                url = string.Format(url,ApiHelper.access_key,ApiHelper._appKey,ApiHelper.GetTimeSpan_2);
+                url = string.Format(url,ApiHelper.access_key,ApiHelper.AndroidKey.Appkey,ApiHelper.GetTimeSpan_2);
                 url += "&sign" + ApiHelper.GetSign(url);
 
                 string content = "uid={0}&dynamic_id={1}";
-                content = string.Format(content, ApiHelper.GetUserId(), _data.desc.dynamic_id,  ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan_2);
+                content = string.Format(content, ApiHelper.GetUserId(), _data.desc.dynamic_id,  ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan_2);
                 
 
                 var re = await WebClientClass.PostResultsUtf8(new Uri(url), content);

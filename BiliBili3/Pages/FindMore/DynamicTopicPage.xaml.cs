@@ -88,12 +88,12 @@ namespace BiliBili3.Pages.FindMore
                 _loadDynamic = true;
              
                 string url = string.Format("https://api.vc.bilibili.com/topic_svr/v1/topic_svr/topic_new?topic_name={0}&_device=android&access_key={1}&appkey={2}&build=5250000&mobi_app=android&platform=android&qn=32&src=bilih5&ts={3}",
-                tag,ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan_2);
+                tag,ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan_2);
 
                 if (ls_dynamic.Count() != 0)
                 {
                     url = string.Format("https://api.vc.bilibili.com/topic_svr/v1/topic_svr/topic_history?topic_name={0}&offset_dynamic_id={4}&_device=android&access_key={1}&appkey={2}&build=5250000&mobi_app=android&platform=android&qn=32&src=bilih5&ts={3}",
-               tag, ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan_2,ls_dynamic.GetLastDynamicId());
+               tag, ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan_2,ls_dynamic.GetLastDynamicId());
                 }
 
                 url += "&sign=" + ApiHelper.GetSign(url);

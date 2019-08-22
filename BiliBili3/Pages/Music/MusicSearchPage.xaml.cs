@@ -89,7 +89,7 @@ namespace BiliBili3.Pages.Music
                 _SongLoading = true;
 
                 string url = "https://api.bilibili.com/audio/music-service-c/s?appkey={0}&build=5250000&keyword={1}&mobi_app=android&page={2}&pagesize=20&platform=android&search_type=music&ts={3}&";
-                url = string.Format(url, ApiHelper._appKey, Uri.EscapeDataString(_keyword), _pageSongs, ApiHelper.GetTimeSpan);
+                url = string.Format(url, ApiHelper.AndroidKey.Appkey, Uri.EscapeDataString(_keyword), _pageSongs, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 var results = await WebClientClass.GetResults(new Uri(url));
@@ -175,7 +175,7 @@ namespace BiliBili3.Pages.Music
                 _MenusLoading = true;
 
                 string url = "https://api.bilibili.com/audio/music-service-c/s?appkey={0}&build=5250000&keyword={1}&mobi_app=android&page={2}&pagesize=20&platform=android&search_type=menus&ts={3}&";
-                url = string.Format(url, ApiHelper._appKey, Uri.EscapeDataString(_keyword), _pageMenus, ApiHelper.GetTimeSpan);
+                url = string.Format(url, ApiHelper.AndroidKey.Appkey, Uri.EscapeDataString(_keyword), _pageMenus, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 var results = await WebClientClass.GetResults(new Uri(url));
@@ -263,7 +263,7 @@ namespace BiliBili3.Pages.Music
                 _UsersLoading = true;
 
                 string url = "https://api.bilibili.com/audio/music-service-c/s?appkey={0}&build=5250000&keyword={1}&mobi_app=android&page={2}&pagesize=20&platform=android&search_type=musician&ts={3}&";
-                url = string.Format(url, ApiHelper._appKey, Uri.EscapeDataString(_keyword), _pageUsers, ApiHelper.GetTimeSpan);
+                url = string.Format(url, ApiHelper.AndroidKey.Appkey, Uri.EscapeDataString(_keyword), _pageUsers, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 var results = await WebClientClass.GetResults(new Uri(url));

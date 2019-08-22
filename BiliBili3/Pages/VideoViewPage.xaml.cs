@@ -44,6 +44,7 @@ namespace BiliBili3.Pages
     /// </summary>
     public sealed partial class VideoViewPage : Page
     {
+        Download download;
         public VideoViewPage()
         {
             this.InitializeComponent();
@@ -51,6 +52,7 @@ namespace BiliBili3.Pages
             //players.FullEvent += Players_FullEvent;
             //players.MaxWIndowsEvent += Players_MaxWIndowsEvent;
             //players.PlayerEvent += Players_PlayerEvent;
+            download = new Download();
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += DataTransferManager_DataRequested;
         }
@@ -75,7 +77,7 @@ namespace BiliBili3.Pages
             GetFavBox();
             pivot.SelectedIndex = 0;
             LoadVideo();
-            
+
             if (SecondaryTile.Exists(_aid))
             {
                 btn_unPin.Visibility = Visibility.Visible;
@@ -95,7 +97,7 @@ namespace BiliBili3.Pages
             this.DataContext = null;
         }
 
-       
+
         bool isMovie = false;
         bool ISBAN = false;
         private async void LoadVideo()
@@ -106,7 +108,7 @@ namespace BiliBili3.Pages
                 isMovie = false;
                 tag.Children.Clear();
                 pr_Load.Visibility = Visibility.Visible;
-                string uri = $"https://app.bilibili.com/x/v2/view?access_key={ ApiHelper.access_key }&aid={ _aid }&appkey={ApiHelper._appKey}&build={ApiHelper.build}&mobi_app=android&plat=0&platform=android&ts={ApiHelper.GetTimeSpan}";
+                string uri = $"https://app.bilibili.com/x/v2/view?access_key={ ApiHelper.access_key }&aid={ _aid }&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&plat=0&platform=android&ts={ApiHelper.GetTimeSpan}";
                 uri += "&sign=" + ApiHelper.GetSign(uri);
                 string results = await WebClientClass.GetResults(new Uri(uri));
 
@@ -250,6 +252,15 @@ namespace BiliBili3.Pages
                     {
                         staff.Visibility = Visibility.Collapsed;
                     }
+                    if (m.data.pages != null && m.data.pages.Count != 0)
+                    {
+                        var qualitys = await download.GetVideoQualitys(_aid, m.data.pages[0].cid.ToString(), ApiHelper.access_key, ApiHelper.GetUserId());
+                        cb_Qu.ItemsSource = qualitys.data;
+                        if (qualitys.data.Count != 0)
+                        {
+                            cb_Qu.SelectedIndex = 0;
+                        }
+                    }
 
                 }
                 else
@@ -341,7 +352,7 @@ namespace BiliBili3.Pages
 
         //private async void GetPlayUrl(string cid)
         //{
-        //    string url = "http://interface.bilibili.com/playurl?_device=uwp&cid=" + cid + "&otype=xml&quality=" + 2 + "&appkey=" + ApiHelper._appKey + "&access_key=" + ApiHelper.access_key + "&type=mp4&mid=" + "" + "&_buvid="+ApiHelper._buvid+"&_hwid=" + ApiHelper._hwid+"&platform=uwp_desktop" + "&ts=" + ApiHelper.GetTimeSpan;
+        //    string url = "http://interface.bilibili.com/playurl?_device=uwp&cid=" + cid + "&otype=xml&quality=" + 2 + "&appkey=" + ApiHelper.AndroidKey.Appkey + "&access_key=" + ApiHelper.access_key + "&type=mp4&mid=" + "" + "&_buvid="+ApiHelper._buvid+"&_hwid=" + ApiHelper._hwid+"&platform=uwp_desktop" + "&ts=" + ApiHelper.GetTimeSpan;
         //    url += "&sign=" + ApiHelper.GetSign(url);
         //    string re =await WebClientClass.GetResults_Phone(new Uri(url));
         //    re = await WebClientClass.GetResults_Phone(new Uri(url));
@@ -438,9 +449,9 @@ namespace BiliBili3.Pages
 
                     string content = string.Format(
                         "access_key={0}&act=1&appkey={1}&build=45000&fid={2}&mobi_app=android&platform=android&re_src=90&ts={3}",
-                        ApiHelper.access_key, ApiHelper._appKey_Android, (Video_UP.DataContext as VideoInfoModels).owner.mid, ApiHelper.GetTimeSpan_2
+                        ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, (Video_UP.DataContext as VideoInfoModels).owner.mid, ApiHelper.GetTimeSpan_2
                         );
-                    content += "&sign=" + ApiHelper.GetSign_Android(content);
+                    content += "&sign=" + ApiHelper.GetSign(content);
                     string result = await WebClientClass.PostResults(ReUri,
                         content
                      );
@@ -481,9 +492,9 @@ namespace BiliBili3.Pages
 
                     string content = string.Format(
                         "access_key={0}&act=2&appkey={1}&build=45000&fid={2}&mobi_app=android&platform=android&re_src=90&ts={3}",
-                        ApiHelper.access_key, ApiHelper._appKey_Android, (Video_UP.DataContext as VideoInfoModels).owner.mid, ApiHelper.GetTimeSpan_2
+                        ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, (Video_UP.DataContext as VideoInfoModels).owner.mid, ApiHelper.GetTimeSpan_2
                         );
-                    content += "&sign=" + ApiHelper.GetSign_Android(content);
+                    content += "&sign=" + ApiHelper.GetSign(content);
                     string result = await WebClientClass.PostResults(ReUri,
                         content
                      );
@@ -538,7 +549,7 @@ namespace BiliBili3.Pages
                 {
                     WebClientClass wc = new WebClientClass();
                     Uri ReUri = new Uri("https://app.bilibili.com/x/v2/view/coin/add");
-                    string QuStr = string.Format("access_key={0}&aid={1}&appkey={2}&build=540000&from=7&mid={3}&platform=android&&multiply={4}&ts={5}", ApiHelper.access_key, _aid, ApiHelper._appKey, ApiHelper.GetUserId(), num, ApiHelper.GetTimeSpan);
+                    string QuStr = string.Format("access_key={0}&aid={1}&appkey={2}&build=540000&from=7&mid={3}&platform=android&&multiply={4}&ts={5}", ApiHelper.access_key, _aid, ApiHelper.AndroidKey.Appkey, ApiHelper.GetUserId(), num, ApiHelper.GetTimeSpan);
                     QuStr += "&sign=" + ApiHelper.GetSign(QuStr);
                     string result = await WebClientClass.PostResults(ReUri, QuStr);
                     JObject jObject = JObject.Parse(result);
@@ -663,9 +674,9 @@ namespace BiliBili3.Pages
 
                     string content = string.Format(
                         "access_key={0}&aid={2}&appkey={1}&build=520001&fid={3}&mobi_app=android&platform=android&re_src=90&ts={4}",
-                        ApiHelper.access_key, ApiHelper._appKey_Android, _aid, ((FavboxModel)e.ClickedItem).fid, ApiHelper.GetTimeSpan_2
+                        ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _aid, ((FavboxModel)e.ClickedItem).fid, ApiHelper.GetTimeSpan_2
                         );
-                    content += "&sign=" + ApiHelper.GetSign_Android(content);
+                    content += "&sign=" + ApiHelper.GetSign(content);
                     string result = await WebClientClass.PostResults(ReUri,
                         content
                      );
@@ -712,114 +723,24 @@ namespace BiliBili3.Pages
 
         private void btn_Download_Click(object sender, RoutedEventArgs e)
         {
+
             if ((this.DataContext as VideoInfoModels).interaction != null)
             {
                 Utils.ShowMessageToast("互动视频不支持下载");
                 return;
             }
+            if (cb_Qu.Items.Count == 0)
+            {
+                Utils.ShowMessageToast("视频无法下载");
+                return;
+            }
             if (gv_Play.Items.Count != 0)
             {
-                if (gv_Play.Items.Count == 1)
-                {
-                    try
-                    {
-                        var m = (gv_Play.Items[0] as pagesModel);
-
-                        DownloadHelper2.CreateDownload(new DownloadTaskModel()
-                        {
-                            downloadMode = DownloadMode.Video,
-                            avid = _aid,
-                            cid = m.cid.ToString(),
-                            epIndex = 0,
-                            epTitle = m.page + " " + m.part,
-                            thumb = (this.DataContext as VideoInfoModels).pic,
-                            quality = cb_Qu.SelectedIndex + 1,
-                            title = (this.DataContext as VideoInfoModels).title
-
-                        });
-
-                        Utils.ShowMessageToast("已经将任务添加到下载列表", 3000);
-                    }
-                    catch (Exception ex)
-                    {
-                        Utils.ShowMessageToast(ex.Message, 3000);
-                    }
-
-
-                    //List<PlayerModel> ls = new List<PlayerModel>();
-                    //int i = 1;
-                    //foreach (pagesModel item in gv_Play.Items)
-                    //{
-                    //    if (item.IsDowned == Visibility.Collapsed)
-                    //    {
-
-                    //        switch (item.from)
-                    //        {
-                    //            case "sohu":
-                    //                ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), rich_vid = item.rich_vid, ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Sohu, No = i.ToString(), VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title });
-                    //                break;
-                    //            default:
-                    //                if (ISBAN)
-                    //                {
-                    //                    ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Bangumi, No = i.ToString(), VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title, episode_id = (this.DataContext as VideoInfoModels).season.newest_ep_id });
-                    //                }
-                    //                else
-                    //                {
-                    //                    ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Video, No = i.ToString(), VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title });
-                    //                }
-
-                    //                break;
-                    //        }
-
-
-
-                    //    }
-                    //    i++;
-                    //}
-                    //var us = await ApiHelper.GetVideoUrl_Download(ls[0], cb_Qu.SelectedIndex + 1);
-                    //if (us==null)
-                    //{
-                    //    Utils.ShowMessageToast("无法读取到下载地址，下载失败", 3000);
-                    //    return;
-                    //}
-                    //foreach (var item in us)
-                    //{
-                    //    DownloadModel m = new DownloadModel();
-                    //    m.folderinfo = new FolderListModel()
-                    //    {
-                    //        id = _aid,
-                    //        desc = txt_desc.Text,
-                    //        title = txt_title.Text,
-                    //        isbangumi = false,
-                    //        thumb = (this.DataContext as VideoInfoModels).pic
-
-                    //    };
-                    //    m.videoinfo = new VideoListModel()
-                    //    {
-                    //        id = _aid,
-                    //        mid = ls[0].Mid,
-                    //        part = Convert.ToInt32(ls[0].No),
-                    //        partTitle = ls[0].VideoTitle,
-                    //        videoUrl = item,
-                    //        title = txt_title.Text
-                    //    };
-
-                    //    DownloadHelper.StartDownload(m, us.IndexOf(item));
-                    //}
-
-
-                    //Utils.ShowMessageToast("任务已加入下载", 3000);
-                }
-                else
-                {
-                    gv_Play.SelectionMode = ListViewSelectionMode.Multiple;
-                    gv_Play.IsItemClickEnabled = false;
-                    Utils.ShowMessageToast("请选中要下载的分P视频，点击确定", 3000);
-                    Down_ComBar.Visibility = Visibility.Visible;
-                    com_bar.Visibility = Visibility.Collapsed;
-                }
-
-                //players.LoadPlayer(ls, gv_Play.SelectedIndex);
+                gv_Play.SelectionMode = ListViewSelectionMode.Multiple;
+                gv_Play.IsItemClickEnabled = false;
+                Utils.ShowMessageToast("请选中要下载的分P视频，点击确定", 3000);
+                Down_ComBar.Visibility = Visibility.Visible;
+                com_bar.Visibility = Visibility.Collapsed;
             }
 
 
@@ -836,7 +757,7 @@ namespace BiliBili3.Pages
 
         }
 
-        private void btn_Ok_Click(object sender, RoutedEventArgs e)
+        private async void btn_Ok_Click(object sender, RoutedEventArgs e)
         {
             if ((this.DataContext as VideoInfoModels).interaction != null)
             {
@@ -850,13 +771,19 @@ namespace BiliBili3.Pages
             var info = gv_Play.SelectedItem as pagesModel;
 
             int i = 1;
+            pr_Load.Visibility = Visibility.Visible;
             foreach (pagesModel item in gv_Play.SelectedItems)
             {
                 if (item.IsDowned == Visibility.Collapsed)
                 {
                     var m = item;
-
-                    DownloadHelper2.CreateDownload(new DownloadTaskModel()
+                    var downloadUrl = await download.GetVideoDownloadUrl(_aid, item.cid.ToString(), cb_Qu.SelectedItem as QualityInfo, ApiHelper.access_key, ApiHelper.GetUserId());
+                    if (!downloadUrl.success)
+                    {
+                        await new MessageDialog($"{m.page} {m.part}读取下载地址失败,已跳过").ShowAsync();
+                        break;
+                    }
+                    await DownloadHelper2.CreateDownload(new DownloadTaskModel()
                     {
                         downloadMode = DownloadMode.Video,
                         avid = _aid,
@@ -866,50 +793,7 @@ namespace BiliBili3.Pages
                         thumb = (this.DataContext as VideoInfoModels).pic,
                         quality = cb_Qu.SelectedIndex + 1,
                         title = (this.DataContext as VideoInfoModels).title
-                    });
-                    //PlayerModel vitem = null;
-                    //switch (item.from)
-                    //{
-                    //    case "sohu":
-
-                    //        vitem = new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), rich_vid = item.rich_vid, ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Sohu, No = i.ToString(), VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title };
-                    //        break;
-                    //    default:
-                    //        if (ISBAN)
-                    //        {
-                    //            vitem = new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Bangumi, No = i.ToString(), VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title, episode_id= (this.DataContext as VideoInfoModels).season.newest_ep_id };
-                    //        }
-                    //        else
-                    //        {
-                    //            vitem = new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Video, No = i.ToString(), VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title };
-                    //        }
-
-
-                    //        break;
-                    //}
-
-
-                    //DownloadModel m = new DownloadModel();
-                    //m.folderinfo = new FolderListModel()
-                    //{
-                    //    id = _aid,
-                    //    desc = txt_desc.Text,
-                    //    title = txt_title.Text,
-                    //    isbangumi = false,
-                    //    thumb = (this.DataContext as VideoInfoModels).pic
-
-                    //};
-                    //m.videoinfo = new VideoListModel()
-                    //{
-                    //    id = _aid,
-                    //    mid = vitem.Mid,
-                    //    part = Convert.ToInt32(vitem.No),
-                    //    partTitle = vitem.VideoTitle,
-                    //    videoUrl = await ApiHelper.GetVideoUrl(vitem, cb_Qu.SelectedIndex + 1),
-                    //    title = txt_title.Text
-                    //};
-
-                    //DownloadHelper.StartDownload(m);
+                    }, downloadUrl.data);
                 }
                 i++;
 
@@ -920,7 +804,7 @@ namespace BiliBili3.Pages
             gv_Play.IsItemClickEnabled = true;
             Down_ComBar.Visibility = Visibility.Collapsed;
             com_bar.Visibility = Visibility.Visible;
-
+            pr_Load.Visibility = Visibility.Collapsed;
 
         }
 
@@ -1347,11 +1231,11 @@ namespace BiliBili3.Pages
             }
             try
             {
-                var body = $"access_key={ApiHelper.access_key}&aid={_aid}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&platform=android&ts={ApiHelper.GetTimeSpan}";
+                var body = $"access_key={ApiHelper.access_key}&aid={_aid}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&platform=android&ts={ApiHelper.GetTimeSpan}";
                 body += "&sign=" + ApiHelper.GetSign(body);
                 var results = await WebClientClass.PostResults(new Uri("https://app.bilibili.com/x/v2/view/like/triple"), body);
                 var obj = JObject.Parse(results);
-                if (obj["code"].ToInt32()==0)
+                if (obj["code"].ToInt32() == 0)
                 {
                     Utils.ShowMessageToast("三连完成");
                 }

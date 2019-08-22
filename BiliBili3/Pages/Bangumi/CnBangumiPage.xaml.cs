@@ -74,7 +74,7 @@ namespace BiliBili3.Pages
             try
             {
                 pr_Load.Visibility = Visibility.Visible;
-                string url = string.Format("https://bangumi.bilibili.com/appindex/followcn_index_page?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=wp&ts={2}000", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                string url = string.Format("https://bangumi.bilibili.com/appindex/followcn_index_page?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=wp&ts={2}000", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
                 JpHomeModel m = JsonConvert.DeserializeObject<JpHomeModel>(results);
@@ -116,7 +116,7 @@ namespace BiliBili3.Pages
                 {
                     list_ban_jp_foot.Items.Clear();
                 }
-                string url = string.Format("https://bangumi.bilibili.com/api/bangumi_recommend?access_key={0}&appkey={1}&build=5250000&cursor={2}&mobi_app=android&pagesize=10&platform=wp&ts={3}000&type=1", ApiHelper.access_key, ApiHelper._appKey, cursor, ApiHelper.GetTimeSpan);
+                string url = string.Format("https://bangumi.bilibili.com/api/bangumi_recommend?access_key={0}&appkey={1}&build=5250000&cursor={2}&mobi_app=android&pagesize=10&platform=wp&ts={3}000&type=1", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, cursor, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
                 BanTJModel m = JsonConvert.DeserializeObject<BanTJModel>(results);

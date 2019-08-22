@@ -57,8 +57,8 @@ namespace BiliBili3.Pages
             {
                 pr_Load.Visibility = Visibility.Visible;
                
-                string url = string.Format("http://api.bilibili.com/sp?spid={0}&type=json&appkey={1}", SPID, ApiHelper._appKey_Android);
-                url += "&sign=" + ApiHelper.GetSign_Android(url);
+                string url = string.Format("http://api.bilibili.com/sp?spid={0}&type=json&appkey={1}", SPID, ApiHelper.AndroidKey.Appkey);
+                url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 SpInfoModel model = JsonConvert.DeserializeObject<SpInfoModel>(results);
                 grid_Info.DataContext = model;
@@ -106,13 +106,13 @@ namespace BiliBili3.Pages
                 string url = string.Empty;
                 if (seasonId.Length == 0)
                 {
-                    url = string.Format("http://api.bilibili.com/spview?_device=android&appkey={0}&build=418000&mobi_app=android&platform=android&spid={1}", ApiHelper._appKey_Android, sid);
-                    url += "&sign=" + ApiHelper.GetSign_Android(url);
+                    url = string.Format("http://api.bilibili.com/spview?_device=android&appkey={0}&build=418000&mobi_app=android&platform=android&spid={1}", ApiHelper.AndroidKey.Appkey, sid);
+                    url += "&sign=" + ApiHelper.GetSign(url);
                 }
                 else
                 {
-                    url = string.Format(" http://api.bilibili.com/spview?_device=android&appkey={0}&bangumi=2&build=418000&mobi_app=android&platform=android&season_id={1}&spid={2}", ApiHelper._appKey_Android, seasonId, sid);
-                    url += "&sign=" + ApiHelper.GetSign_Android(url);
+                    url = string.Format(" http://api.bilibili.com/spview?_device=android&appkey={0}&bangumi=2&build=418000&mobi_app=android&platform=android&season_id={1}&spid={2}", ApiHelper.AndroidKey.Appkey, seasonId, sid);
+                    url += "&sign=" + ApiHelper.GetSign(url);
                 }
                 string results = await WebClientClass.GetResults(new Uri(url));
                 SpVideoModel model = JsonConvert.DeserializeObject<SpVideoModel>(results);

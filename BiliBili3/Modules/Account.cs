@@ -26,7 +26,7 @@ namespace BiliBili3.Modules
             try
             {
                 string url = "https://api.bilibili.com/x/relation/modify";
-                string data = $"access_key={ApiHelper.access_key}&act=1&appkey={ApiHelper._appKey}&build={ApiHelper.build}&fid={uid}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}&re_src=31";
+                string data = $"access_key={ApiHelper.access_key}&act=1&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&fid={uid}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}&re_src=31";
                 data += "&sign=" + ApiHelper.GetSign(data);
                 string result = await WebClientClass.PostResults(new Uri(url), data);
                 JObject jb = JObject.Parse(result);
@@ -59,7 +59,7 @@ namespace BiliBili3.Modules
             try
             {
                 string url = "https://api.bilibili.com/x/relation/modify";
-                string data = $"access_key={ApiHelper.access_key}&act=2&appkey={ApiHelper._appKey}&build={ApiHelper.build}&fid={uid}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}&re_src=31";
+                string data = $"access_key={ApiHelper.access_key}&act=2&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&fid={uid}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}&re_src=31";
                 data += "&sign=" + ApiHelper.GetSign(data);
                 string result = await WebClientClass.PostResults(new Uri(url), data);
                 JObject jb = JObject.Parse(result);
@@ -98,7 +98,7 @@ namespace BiliBili3.Modules
                 httpBaseProtocolFilter.IgnorableServerCertificateErrors.Add(Windows.Security.Cryptography.Certificates.ChainValidationResult.Untrusted);
                 Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient(httpBaseProtocolFilter);
                 string url = "https://passport.bilibili.com/api/oauth2/getKey";
-                string content = $"appkey={ApiHelper._appKey}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
+                string content = $"appkey={ApiHelper.AndroidKey.Appkey}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
                 content += "&sign=" + ApiHelper.GetSign(content);
                 string stringAsync = await WebClientClass.PostResults(new Uri(url), content);
                 JObject jObjects = JObject.Parse(stringAsync);
@@ -132,7 +132,7 @@ namespace BiliBili3.Modules
                 string url = "https://passport.bilibili.com/api/v3/oauth2/login";
                 var pwd = Uri.EscapeDataString(await EncryptedPassword(password));
 
-                string data = $"username={username}&password={pwd}&gee_type=10&appkey={ApiHelper._appKey}&mobi_app=android_comic&platform=android&ts={ApiHelper.GetTimeSpan}";
+                string data = $"username={username}&password={pwd}&gee_type=10&appkey={ApiHelper.AndroidKey.Appkey}&mobi_app=android_comic&platform=android&ts={ApiHelper.GetTimeSpan}";
                 data += "&sign=" + ApiHelper.GetSign(data);
                 var results = await WebClientClass.PostResults(new Uri(url), data);
                 var m = JsonConvert.DeserializeObject<AccountLoginModel>(results);
@@ -213,7 +213,7 @@ namespace BiliBili3.Modules
             try
             {
                 string url = "https://passport.bilibili.com/api/oauth2/login";
-                string data = $"appkey={ApiHelper._appKey}&build={ApiHelper.build}&mobi_app=android&password={Uri.EscapeDataString(await EncryptedPassword(password))}&platform=android&ts={ApiHelper.GetTimeSpan}&username={Uri.EscapeDataString(username)}";
+                string data = $"appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&password={Uri.EscapeDataString(await EncryptedPassword(password))}&platform=android&ts={ApiHelper.GetTimeSpan}&username={Uri.EscapeDataString(username)}";
                 if (data != "")
                 {
                     data += "&captcha=" + captcha;
@@ -296,10 +296,10 @@ namespace BiliBili3.Modules
         {
             try
             {
-                //var url = $"{domain}?access_key={access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
+                //var url = $"{domain}?access_key={access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
                 //url += "&sign=" + ApiHelper.GetSign(url);
 
-                var url = $"https://passport.bilibili.com/api/login/sso?access_key={access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&gourl=https%3A%2F%2Faccount.bilibili.com%2Faccount%2Fhome&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
+                var url = $"https://passport.bilibili.com/api/login/sso?access_key={access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&gourl=https%3A%2F%2Faccount.bilibili.com%2Faccount%2Fhome&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 var content = await WebClientClass.GetResults(new Uri(url));
@@ -320,7 +320,7 @@ namespace BiliBili3.Modules
             try
             {
                 var url = "https://passport.bilibili.com/api/oauth2/refreshToken";
-                var data = $"access_token={access_key}&refresh_token={refresh_token}&appkey={ApiHelper._appKey}&ts={ApiHelper.GetTimeSpan}";
+                var data = $"access_token={access_key}&refresh_token={refresh_token}&appkey={ApiHelper.AndroidKey.Appkey}&ts={ApiHelper.GetTimeSpan}";
                 data += "&sign=" + ApiHelper.GetSign(data);
                 var content = await WebClientClass.PostResults(new Uri(url), data);
                 var obj = JObject.Parse(content);
@@ -378,7 +378,7 @@ namespace BiliBili3.Modules
         {
             try
             {
-                var url = $"https://passport.bilibili.com/api/oauth2/info?access_token={access_key}&appkey={ApiHelper._appKey}&ts={ApiHelper.GetTimeSpan}";
+                var url = $"https://passport.bilibili.com/api/oauth2/info?access_token={access_key}&appkey={ApiHelper.AndroidKey.Appkey}&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var content = await WebClientClass.GetResults(new Uri(url));
                 var obj = JObject.Parse(content);
@@ -461,7 +461,7 @@ namespace BiliBili3.Modules
         {
             try
             {
-                var url = $"https://app.bilibili.com/x/v2/account/myinfo?access_key={ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
+                var url = $"https://app.bilibili.com/x/v2/account/myinfo?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var str = await WebClientClass.GetResults(new Uri(url));
                 var m = str.ToDynamicJObject();

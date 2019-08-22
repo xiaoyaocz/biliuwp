@@ -236,8 +236,8 @@ namespace BiliBili3.Helper
             try
             {
                 //
-                string url = string.Format("http://app.bilibili.com/x/v2/space?access_key={0}&appkey={1}&platform=wp&ps=10&ts={2}000&vmid={3}&build=5250000&mobi_app=android", ApiHelper.access_key, ApiHelper._appKey_Android, ApiHelper.GetTimeSpan, Uid);
-                //string url = string.Format("http://api.bilibili.com/userinfo?access_key={0}&appkey={1}&mid={2}", ApiHelper.access_key, ApiHelper._appKey, uid);
+                string url = string.Format("http://app.bilibili.com/x/v2/space?access_key={0}&appkey={1}&platform=wp&ps=10&ts={2}000&vmid={3}&build=5250000&mobi_app=android", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan, Uid);
+                //string url = string.Format("http://api.bilibili.com/userinfo?access_key={0}&appkey={1}&mid={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, uid);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
 

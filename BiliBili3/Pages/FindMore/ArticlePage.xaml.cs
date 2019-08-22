@@ -67,7 +67,7 @@ namespace BiliBili3.Pages.FindMore
                 pr_Load.Visibility = Visibility.Visible;
                 IsLoading = true;
                 _page = 1;
-                var url = string.Format("https://api.bilibili.com/x/article/home?appkey={0}&build=515000&cid=0&mobi_app=android&platform=android&pn=1&ps=20&ts={1}", ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                var url = string.Format("https://api.bilibili.com/x/article/home?appkey={0}&build=515000&cid=0&mobi_app=android&platform=android&pn=1&ps=20&ts={1}", ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
                 ArticleModel m = Newtonsoft.Json.JsonConvert.DeserializeObject<ArticleModel>(results);
@@ -101,7 +101,7 @@ namespace BiliBili3.Pages.FindMore
             try
             {
                 pr_Load.Visibility = Visibility.Visible;
-                var url = string.Format("https://api.bilibili.com/x/article/home?appkey={0}&build=515000&cid=0&mobi_app=android&platform=android&pn={2}&ps=20&ts={1}", ApiHelper._appKey, ApiHelper.GetTimeSpan, _page);
+                var url = string.Format("https://api.bilibili.com/x/article/home?appkey={0}&build=515000&cid=0&mobi_app=android&platform=android&pn={2}&ps=20&ts={1}", ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan, _page);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
                 ArticleModel m = Newtonsoft.Json.JsonConvert.DeserializeObject<ArticleModel>(results);

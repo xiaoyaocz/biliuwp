@@ -54,7 +54,7 @@ namespace BiliBili3.Controls
             }
             try
             {
-                var url = $"https://api.bilibili.com/x/v2/dm/post?access_key={ApiHelper.access_key}&aid={aid}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&mobi_app=android&oid={cid}&platform=android&ts={ApiHelper.GetTimeSpan}";
+                var url = $"https://api.bilibili.com/x/v2/dm/post?access_key={ApiHelper.access_key}&aid={aid}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&oid={cid}&platform=android&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 Uri ReUri = new Uri(url);

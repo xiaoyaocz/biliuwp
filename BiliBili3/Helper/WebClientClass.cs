@@ -253,7 +253,6 @@ namespace BiliBili3
             using (HttpClient hc = new HttpClient(fiter))
             {
 
-                hc.DefaultRequestHeaders.Add("Buvid", ApiHelper._buvid);
                 HttpResponseMessage hr = await hc.GetAsync(url);
                 hr.EnsureSuccessStatusCode();
                 string results = await hr.Content.ReadAsStringAsync();

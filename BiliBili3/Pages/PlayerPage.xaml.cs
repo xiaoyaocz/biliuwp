@@ -387,7 +387,7 @@ namespace BiliBili3.Pages
         {
             try
             {
-                string url = string.Format("http://api.bilibili.com/x/history/add?_device=wp&_ulv=10000&access_key={0}&appkey={1}&build=5250000&platform=android", ApiHelper.access_key, ApiHelper._appKey);
+                string url = string.Format("http://api.bilibili.com/x/history/add?_device=wp&_ulv=10000&access_key={0}&appkey={1}&build=5250000&platform=android", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string result = await WebClientClass.PostResults(new Uri(url), "aid=" + playNow.Aid);
             }
@@ -406,10 +406,10 @@ namespace BiliBili3.Pages
                     return;
                 }
                 string url = "http://api.bilibili.com/x/v2/history/report";
-                string content = string.Format("access_key={0}&aid={1}&appkey={2}&build=5250000&cid={3}&epid={6}&platform=android&progress=1&realtime=1&sid={4}&ts={5}&type=4", ApiHelper.access_key, playNow.Aid, ApiHelper._appKey, playNow.Mid, playNow.banId, ApiHelper.GetTimeSpan_2, playNow.episode_id);
+                string content = string.Format("access_key={0}&aid={1}&appkey={2}&build=5250000&cid={3}&epid={6}&platform=android&progress=1&realtime=1&sid={4}&ts={5}&type=4", ApiHelper.access_key, playNow.Aid, ApiHelper.AndroidKey.Appkey, playNow.Mid, playNow.banId, ApiHelper.GetTimeSpan_2, playNow.episode_id);
                 content += "&sign=" + ApiHelper.GetSign(content);
 
-                //string url = string.Format("http://bangumi.bilibili.com/api/report_watch?access_key={0}&appkey={1}&build=5250000&cid={2}&mobi_app=win&platform=android&scale=xhdpi&ts={3}&episode_id={4}", ApiHelper.access_key, ApiHelper._appKey, playNow.Mid, ApiHelper.GetTimeSpan_2, playNow.episode_id);
+                //string url = string.Format("http://bangumi.bilibili.com/api/report_watch?access_key={0}&appkey={1}&build=5250000&cid={2}&mobi_app=win&platform=android&scale=xhdpi&ts={3}&episode_id={4}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, playNow.Mid, ApiHelper.GetTimeSpan_2, playNow.episode_id);
                 //url += "&sign=" + ApiHelper.GetSign(url);
                 string result = await WebClientClass.PostResults(new Uri(url), content);
             }
@@ -450,7 +450,7 @@ namespace BiliBili3.Pages
 
                 string url = "http://api.bilibili.com/x/v2/history/report";
 
-                string content = $"access_key={ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&mobi_app=android&platform=android&";
+                string content = $"access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&platform=android&";
                 switch (playNow.Mode)
                 {
                     case PlayMode.Bangumi:
@@ -470,12 +470,12 @@ namespace BiliBili3.Pages
 
 
                 // content = string.Format("access_key={0}&aid={1}&appkey={2}&build=5250000&cid={3}&epid={4}&from=0&mid={5}&mobi_app=android&platform=android&played_time={8}&playtype=2&sid={6}&start_ts={7}&sub_type=1&ts={7}&type=4",
-                //ApiHelper.access_key, playNow.Aid, ApiHelper._appKey, playNow.Mid, playNow.episode_id, ApiHelper.GetUserId(), playNow.banId, ApiHelper.GetTimeSpan, mediaElement.Position.TotalSeconds);
+                //ApiHelper.access_key, playNow.Aid, ApiHelper.AndroidKey.Appkey, playNow.Mid, playNow.episode_id, ApiHelper.GetUserId(), playNow.banId, ApiHelper.GetTimeSpan, mediaElement.Position.TotalSeconds);
 
 
                 content += "&sign=" + ApiHelper.GetSign(content);
 
-                //string url = string.Format("http://bangumi.bilibili.com/api/report_watch?access_key={0}&appkey={1}&build=5250000&cid={2}&mobi_app=win&platform=android&scale=xhdpi&ts={3}&episode_id={4}", ApiHelper.access_key, ApiHelper._appKey, playNow.Mid, ApiHelper.GetTimeSpan_2, playNow.episode_id);
+                //string url = string.Format("http://bangumi.bilibili.com/api/report_watch?access_key={0}&appkey={1}&build=5250000&cid={2}&mobi_app=win&platform=android&scale=xhdpi&ts={3}&episode_id={4}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, playNow.Mid, ApiHelper.GetTimeSpan_2, playNow.episode_id);
                 //url += "&sign=" + ApiHelper.GetSign(url);
                 string result = await WebClientClass.PostResults(new Uri(url), content);
             }
@@ -487,7 +487,7 @@ namespace BiliBili3.Pages
 
 
 
-        public async void UpdateSetting()
+        public  void UpdateSetting()
         {
             //if (!SettingHelper.IsPc())
             //{
@@ -755,7 +755,7 @@ namespace BiliBili3.Pages
 
         //private async void GetPlayUrl(string cid)
         //{
-        //    string url = "http://interface.bilibili.com/playurl?_device=uwp&cid=" + cid + "&otype=xml&quality=" + 2 + "&appkey=" + ApiHelper._appKey + "&access_key=" + ApiHelper.access_key + "&type=mp4&mid=" + "" + "&_buvid=" + ApiHelper._buvid + "&_hwid=" + ApiHelper._hwid + "&platform=uwp_desktop" + "&ts=" + ApiHelper.GetTimeSpan;
+        //    string url = "http://interface.bilibili.com/playurl?_device=uwp&cid=" + cid + "&otype=xml&quality=" + 2 + "&appkey=" + ApiHelper.AndroidKey.Appkey + "&access_key=" + ApiHelper.access_key + "&type=mp4&mid=" + "" + "&_buvid=" + ApiHelper._buvid + "&_hwid=" + ApiHelper._hwid + "&platform=uwp_desktop" + "&ts=" + ApiHelper.GetTimeSpan;
         //    url += "&sign=" + ApiHelper.GetSign(url);
         //    string re = await WebClientClass.GetResults_Phone(new Uri(url));
         //    re = await WebClientClass.GetResults_Phone(new Uri(url));
@@ -910,9 +910,10 @@ namespace BiliBili3.Pages
                     }
 
                     AddLog("读取是否包含字幕");
+                    MTC.HideLog();
                     var hasSub= await PlayurlHelper.GetHasSubTitle(playNow.Aid,playNow.Mid);
-                   
                     LaodSubTitleMenu(hasSub);
+                   
                 }
                 else
                 {
@@ -924,6 +925,7 @@ namespace BiliBili3.Pages
                     IRandomAccessStream readStream = await file.OpenAsync(FileAccessMode.Read);
                     // var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
                     mediaElement.SetSource(readStream, file.ContentType);
+                    
                 }
 
 
@@ -1258,6 +1260,7 @@ namespace BiliBili3.Pages
             }
             var s = await PlayLocalVideo(paths);
             mediaElement.SetMediaStreamSource(s);
+            MTC.HideLog();
             //playNow.Path
         }
 
@@ -2088,7 +2091,7 @@ namespace BiliBili3.Pages
         //    }
         //    try
         //    {
-        //        var url = string.Format("https://api.bilibili.com/comment/post?access_key={0}&aid={1}&appkey={2}&build=5250000&cid={3}&mobi_app=android&pid={4}&platform=android&ts={5}", ApiHelper.access_key, playNow.Aid, ApiHelper._appKey, playNow.Mid, ApiHelper.GetUserId(), ApiHelper.GetTimeSpan);
+        //        var url = string.Format("https://api.bilibili.com/comment/post?access_key={0}&aid={1}&appkey={2}&build=5250000&cid={3}&mobi_app=android&pid={4}&platform=android&ts={5}", ApiHelper.access_key, playNow.Aid, ApiHelper.AndroidKey.Appkey, playNow.Mid, ApiHelper.GetUserId(), ApiHelper.GetTimeSpan);
         //        url += "&sign=" + ApiHelper.GetSign(url);
 
         //        Uri ReUri = new Uri(url);
@@ -2410,7 +2413,7 @@ namespace BiliBili3.Pages
             {
                 WebClientClass wc = new WebClientClass();
                 Uri ReUri = new Uri("https://app.bilibili.com/x/v2/view/coin/add");
-                string QuStr = string.Format("access_key={0}&aid={1}&appkey={2}&build=540000&from=7&mid={3}&platform=android&&multiply={4}&ts={5}", ApiHelper.access_key, playNow.Aid, ApiHelper._appKey, ApiHelper.GetUserId(), num, ApiHelper.GetTimeSpan);
+                string QuStr = string.Format("access_key={0}&aid={1}&appkey={2}&build=540000&from=7&mid={3}&platform=android&&multiply={4}&ts={5}", ApiHelper.access_key, playNow.Aid, ApiHelper.AndroidKey.Appkey, ApiHelper.GetUserId(), num, ApiHelper.GetTimeSpan);
                 QuStr += "&sign=" + ApiHelper.GetSign(QuStr);
                 string result = await WebClientClass.PostResults(ReUri, QuStr);
                 JObject jObject = JObject.Parse(result);

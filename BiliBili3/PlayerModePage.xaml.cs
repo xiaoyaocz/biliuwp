@@ -1,4 +1,5 @@
 ﻿using BiliBili3.Controls;
+using BiliBili3.Helper;
 using BiliBili3.Pages;
 using BiliBili3.Views;
 using Microsoft.Graphics.Canvas.Effects;

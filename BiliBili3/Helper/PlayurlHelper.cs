@@ -1,4 +1,6 @@
-﻿using BiliBili3.Modules;
+﻿using BiliBili3.Controls;
+using BiliBili3.Models;
+using BiliBili3.Modules;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SYEngine;
@@ -125,8 +127,8 @@ namespace BiliBili3.Helper
                 List<string> urls = new List<string>();
                 var playList = new SYEngine.Playlist(SYEngine.PlaylistTypes.NetworkHttp);
                 string url2 = string.Format(
-                    "https://bangumi.bilibili.com/player/web_api/v2/playurl?cid={1}&appkey={0}&otype=json&type=&quality={2}&module=bangumi&season_type={4}&qn={2}&ts={3}", ApiHelper._appKey_VIDEO, model.Mid, qn, ApiHelper.GetTimeSpan_2, model.season_type);
-                url2 += "&sign=" + ApiHelper.GetSign_VIDEO(url2);
+                    "https://bangumi.bilibili.com/player/web_api/v2/playurl?cid={1}&appkey={0}&otype=json&type=&quality={2}&module=bangumi&season_type={4}&qn={2}&ts={3}", ApiHelper.WebVideoKey.Appkey, model.Mid, qn, ApiHelper.GetTimeSpan_2, model.season_type);
+                url2 += "&sign=" + ApiHelper.GetSign(url2, ApiHelper.WebVideoKey);
                 var re = await WebClientClass.GetResultsUTF8Encode(new Uri(url2));
                 FlvPlyaerUrlModel m = JsonConvert.DeserializeObject<FlvPlyaerUrlModel>(re);
                 //是否遇到了地区限制
@@ -164,8 +166,8 @@ namespace BiliBili3.Helper
                 List<string> urls = new List<string>();
                 var playList = new SYEngine.Playlist(SYEngine.PlaylistTypes.NetworkHttp);
                 string url2 = string.Format(
-                    "https://bangumi.bilibili.com/player/web_api/v2/playurl?cid={1}&appkey={0}&otype=json&type=&quality={2}&module=bangumi&season_type={4}&qn={2}&ts={3}&fourk=1&fnver=0&fnval=16", ApiHelper._appKey_VIDEO, model.Mid, qn, ApiHelper.GetTimeSpan_2, model.season_type);
-                url2 += "&sign=" + ApiHelper.GetSign_VIDEO(url2);
+                    "https://bangumi.bilibili.com/player/web_api/v2/playurl?cid={1}&appkey={0}&otype=json&type=&quality={2}&module=bangumi&season_type={4}&qn={2}&ts={3}&fourk=1&fnver=0&fnval=16", ApiHelper.WebVideoKey.Appkey, model.Mid, qn, ApiHelper.GetTimeSpan_2, model.season_type);
+                url2 += "&sign=" + ApiHelper.GetSign(url2, ApiHelper.WebVideoKey);
                 var re = await WebClientClass.GetResultsUTF8Encode(new Uri(url2));
                 var obj = JObject.Parse(re);
                 if (obj["code"].ToInt32() == 0)
@@ -671,14 +673,13 @@ namespace BiliBili3.Helper
             }
         }
 
-
         public static async Task<ReturnPlayModel> GetVideoUrlV1(string aid, string cid, int qn)
         {
             try
             {
                 List<string> urls = new List<string>();
-                string url = $"https://api.bilibili.com/x/player/playurl?avid={aid}&cid={cid}&qn={qn}&type=&otype=json&appkey={ApiHelper._appKey_VIDEO}";
-                url += "&sign=" + ApiHelper.GetSign_VIDEO(url);
+                string url = $"https://api.bilibili.com/x/player/playurl?avid={aid}&cid={cid}&qn={qn}&type=&otype=json&appkey={ApiHelper.WebVideoKey.Appkey}";
+                url += "&sign=" + ApiHelper.GetSign(url, ApiHelper.WebVideoKey);
                 string re = await WebClientClass.GetResults(new Uri(url));
                 FlvPlyaerUrlModel m = JsonConvert.DeserializeObject<FlvPlyaerUrlModel>(re);
                 if (m.code == 0)
@@ -711,7 +712,7 @@ namespace BiliBili3.Helper
 
 
         }
-
+    
 
         /// <summary>
         /// 读取搜狐源的播放地址
@@ -846,8 +847,8 @@ namespace BiliBili3.Helper
             {
                 var qn = 64;
 
-                string url = $"https://api.bilibili.com/x/player/playurl?avid={model.Aid}&cid={model.Mid}&qn={qn}&type=&otype=json&appkey={ApiHelper._appKey_VIDEO}";
-                url += "&sign=" + ApiHelper.GetSign_VIDEO(url);
+                string url = $"https://api.bilibili.com/x/player/playurl?avid={model.Aid}&cid={model.Mid}&qn={qn}&type=&otype=json&appkey={ ApiHelper.WebVideoKey.Appkey}";
+                url += "&sign=" + ApiHelper.GetSign(url, ApiHelper.WebVideoKey);
                 string re = await WebClientClass.GetResults(new Uri(url));
 
                 //var mc = Regex.FlvPlyaerUrlModel(re, @"<length>(.*?)</length>.*?<size>(.*?)</size>.*?<url><!\[CDATA\[(.*?)\]\]></url>", RegexOptions.Singleline);
@@ -888,8 +889,8 @@ namespace BiliBili3.Helper
                 List<string> urls = new List<string>();
 
                 string url2 = string.Format(
-                    "https://bangumi.bilibili.com/player/web_api/v2/playurl?cid={1}&appkey={0}&otype=json&type=&quality={2}&module=bangumi&season_type={4}&qn={2}&ts={3}", ApiHelper._appKey_VIDEO, model.Mid, qn, ApiHelper.GetTimeSpan_2, model.season_type);
-                url2 += "&sign=" + ApiHelper.GetSign_VIDEO(url2);
+                    "https://bangumi.bilibili.com/player/web_api/v2/playurl?cid={1}&appkey={0}&otype=json&type=&quality={2}&module=bangumi&season_type={4}&qn={2}&ts={3}", ApiHelper.WebVideoKey.Appkey, model.Mid, qn, ApiHelper.GetTimeSpan_2, model.season_type);
+                url2 += "&sign=" + ApiHelper.GetSign(url2, ApiHelper.WebVideoKey);
                 var re = await WebClientClass.GetResultsUTF8Encode(new Uri(url2));
                 FlvPlyaerUrlModel m = JsonConvert.DeserializeObject<FlvPlyaerUrlModel>(re);
                 if (m.code == 0 && !re.Contains("8986943"))
@@ -1061,6 +1062,121 @@ namespace BiliBili3.Helper
             config.HttpReferer = referer;
             return config;
         }
+    }
+    class RUModel
+    {
+        public string url { get; set; }
+        public long length { get; set; }
+        public long size { get; set; }
+    }
+
+
+    public class H5PlyaerUrlModel
+    {
+        public string from { get; set; }
+
+        public List<H5PlyaerUrlModel> durl { get; set; }
+        public int order { get; set; }
+        public string url { get; set; }
+
+
+
+
+    }
+    public class FlvPlyaerUrlModel
+    {
+        public string format { get; set; }
+        public int code { get; set; }
+        public int status { get; set; }
+        public int vip_status { get; set; }
+        public List<string> accept_description { get; set; }
+        public List<int> accept_quality { get; set; }
+        public FlvPlyaerUrlModel data { get; set; }
+        public List<FlvPlyaerUrlModel> durl { get; set; }
+        public int order { get; set; }
+        public int length { get; set; }
+        public long size { get; set; }
+        public string url { get; set; }
+        public string[] backup_url { get; set; }
+
+    }
+
+    public class SetPlayMp4Model
+    {
+        public string type { get; set; }
+        public int duration { get; set; }
+        public string url { get; set; }
+    }
+    public class SetPlayModel
+    {
+        public string type { get; set; }
+        public int duration { get; set; }
+        public List<SetPlayUrlModel> segments { get; set; }
+    }
+    public class SetPlayUrlModel
+    {
+        public int duration { get; set; }
+        public int filesize { get; set; }
+        public string url { get; set; }
+    }
+
+    public class PlayParModel
+    {
+        public List<PlayerModel> viedeolist { get; set; }
+        public int play { get; set; }
+        public bool laod { get; set; }
+
+    }
+    public class SohuModel
+    {
+        public int status { get; set; }
+        public string statusText { get; set; }
+        public SohuModel data { get; set; }
+        public string url_blue { get; set; }
+
+        public string download_url { get; set; }
+        public string url_high { get; set; }
+        public string url_nor { get; set; }
+        public string url_original { get; set; }
+        public string url_super { get; set; }
+
+        public string url_high_mp4 { get; set; }
+        public string url_nor_mp4 { get; set; }
+        public string url_original_mp4 { get; set; }
+        public string url_super_mp4 { get; set; }
+    }
+    public class PlayerModel
+    {
+        public PlayMode Mode { get; set; }
+        public string No { get; set; }
+        public int index { get; set; }
+        public string ImageSrc { get; set; }
+        public string rich_vid { get; set; }
+        public string Aid { get; set; }
+        public string Mid { get; set; }
+        public string Title { get; set; }
+        public string VideoTitle { get; set; }
+        public string episode_id { get; set; }
+        public string Path { get; set; }
+        public object Parameter { get; set; }
+
+        public PlayMode playMode { get; set; }
+        public List<string> videoList { get; set; }
+
+        public string banId { get; set; }
+        public episodesModel banInfo { get; set; }
+        /// <summary>
+        /// 是否互动视频
+        /// </summary>
+        public bool isInteraction { get; set; } = false;
+        /// <summary>
+        /// 互动视频分支ID
+        /// </summary>
+        public int node_id { get; set; } = 0;
+
+        public int season_type { get; set; } = 1;
+
+        public int? graph_version { get; set; } = 467;
     }
 
     public class DashItem

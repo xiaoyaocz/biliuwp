@@ -132,8 +132,8 @@ namespace BiliBili3.Pages
             //http://api.bilibili.com/x/v2/history/clear?_device=android&_hwid=bd2e7034b953cffe&_ulv=10000&access_key=1a8cd71c9830c73819989dade872ff55&appkey=1d8b6e7d45233436&build=421000&mobi_app=android&platform=android&sign=69e2689cd0b82f9b67aef4624360ae1b
             try
             {
-                string url = string.Format("http://api.bilibili.com/x/v2/history/clear?_device=android&access_key={0}&appkey={1}&build=421000&mobi_app=android&platform=android", ApiHelper.access_key, ApiHelper._appKey_Android);
-                url += "&sign=" + ApiHelper.GetSign_Android(url);
+                string url = string.Format("http://api.bilibili.com/x/v2/history/clear?_device=android&access_key={0}&appkey={1}&build=421000&mobi_app=android&platform=android", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey);
+                url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.PostResults(new Uri(url), "");
                 User_ListView_History.Items.Clear();
                 pageNum_His = 1;

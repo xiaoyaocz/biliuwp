@@ -53,7 +53,7 @@ namespace BiliBili3.Pages
             {
                 pr_Load.Visibility = Visibility.Visible;
 
-                string url = $"https://api.live.bilibili.com/appUser/myTitleList?access_key={ApiHelper.access_key}&actionKey=appkey&appkey={ApiHelper._appKey}&build={ApiHelper.build}&device=android&mobi_app=android&platform=android&scale=hdpi&ts={ApiHelper.GetTimeSpan}";
+                string url = $"https://api.live.bilibili.com/appUser/myTitleList?access_key={ApiHelper.access_key}&actionKey=appkey&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&device=android&mobi_app=android&platform=android&scale=hdpi&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 LiveTitleModel m = JsonConvert.DeserializeObject<LiveTitleModel>(results);
@@ -110,7 +110,7 @@ namespace BiliBili3.Pages
             {
                 pr_Load.Visibility = Visibility.Visible;
 
-                string url = $"http://live.bilibili.com/AppUser/cancelTitle?access_key={ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&mobi_app=android&platform=android";
+                string url = $"http://live.bilibili.com/AppUser/cancelTitle?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&platform=android";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 JObject m = JObject.Parse(results);
@@ -147,7 +147,7 @@ namespace BiliBili3.Pages
             {
                 pr_Load.Visibility = Visibility.Visible;
 
-                string url = $"http://live.bilibili.com/AppUser/wearTitle?access_key={ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&platform=android";
+                string url = $"http://live.bilibili.com/AppUser/wearTitle?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&platform=android";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.PostResults(new Uri(url), "title=" + title + "&");
                 JObject m = JObject.Parse(results);

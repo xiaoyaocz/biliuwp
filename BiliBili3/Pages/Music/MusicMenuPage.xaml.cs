@@ -57,7 +57,7 @@ namespace BiliBili3.Pages.Music
             try
             {
                 pr_Load.Visibility = Visibility.Visible;
-                string url =string.Format( "https://api.bilibili.com/audio/music-service-c/menus/{3}?appkey={0}&build=5250000&mid={1}&mobi_app=android&platform=android&ts={2}",ApiHelper._appKey,ApiHelper.GetUserId(),ApiHelper.GetTimeSpan, _menuId);
+                string url =string.Format( "https://api.bilibili.com/audio/music-service-c/menus/{3}?appkey={0}&build=5250000&mid={1}&mobi_app=android&platform=android&ts={2}",ApiHelper.AndroidKey.Appkey,ApiHelper.GetUserId(),ApiHelper.GetTimeSpan, _menuId);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var re = await WebClientClass.GetResults(new Uri(url));
                 MusicMenuModel m = Newtonsoft.Json.JsonConvert.DeserializeObject<MusicMenuModel>(re);
@@ -131,7 +131,7 @@ namespace BiliBili3.Pages.Music
             {
                 pr_Load.Visibility = Visibility.Visible;
                 string url = string.Format("https://api.bilibili.com/audio/music-service-c/menucollect/{0}?access_key={1}&appkey={2}&build=5250000&menuId={3}&mid={4}&platform=android&ts={5}",
-                    mode,ApiHelper.access_key,ApiHelper._appKey, _menuId, ApiHelper.GetUserId(), ApiHelper.GetTimeSpan);
+                    mode,ApiHelper.access_key,ApiHelper.AndroidKey.Appkey, _menuId, ApiHelper.GetUserId(), ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var re = await WebClientClass.GetResults(new Uri(url));
                 JObject obj = JObject.Parse(re);

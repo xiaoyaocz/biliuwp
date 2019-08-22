@@ -307,26 +307,7 @@ namespace BiliBili3
                 }
             }
         }
-        private async void LoadPlayApiInfo()
-        {
-            try
-            {
-                string _buid = await WebClientClass.GetResults(new Uri("http://data.bilibili.com/gv/"));
-                string results = "";
-                results = results.Replace("\"", "");
-                if (results.Length != 0)
-                {
-                    string[] str = results.Split(',');
-                    ApiHelper._buvid = _buid;
-                    ApiHelper._hwid = str[1];
-                }
-            }
-            catch (Exception)
-            {
-                //Utils.ShowMessageToast("读取设置失败了", 3000);
-                //throw;
-            }
-        }
+       
         DispatcherTimer timer;
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -869,7 +850,7 @@ namespace BiliBili3
                     return false;
                 }
                 // http://message.bilibili.com/api/msg/query.room.list.do?access_key=a36a84cc8ef4ea2f92c416951c859a25&actionKey=appkey&appkey=c1b107428d337928&build=414000&page_size=100&platform=android&ts=1461404884000&sign=5e212e424761aa497a75b0fb7fbde775
-                string url = string.Format("http://message.bilibili.com/api/notify/query.notify.count.do?_device=wp&_ulv=10000&access_key={0}&actionKey=appkey&appkey={1}&build=5250000&platform=android&ts={2}", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                string url = string.Format("http://message.bilibili.com/api/notify/query.notify.count.do?_device=wp&_ulv=10000&access_key={0}&actionKey=appkey&appkey={1}&build=5250000&platform=android&ts={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 MessageModel model = JsonConvert.DeserializeObject<MessageModel>(results);
@@ -1614,9 +1595,9 @@ namespace BiliBili3
             network_error.Visibility = Visibility.Collapsed;
         }
 
-        private async void btn_Test_Click(object sender, RoutedEventArgs e)
+        private void btn_Test_Click(object sender, RoutedEventArgs e)
         {
-            var playurl = await _5DMHelper.GetUrl("24629", 4);
+
         }
     }
 }

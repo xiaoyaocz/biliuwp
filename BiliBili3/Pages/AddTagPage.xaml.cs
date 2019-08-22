@@ -188,7 +188,7 @@ namespace BiliBili3.Pages
             {
                 gv_like.Items.Clear();
                 pr_Load.Visibility = Visibility.Visible;
-                string url = string.Format("http://app.bilibili.com/x/feed/subscribe/tags?access_key={0}&appkey={1}&build=434300&mobi_app=android&platform=wp&pn=1&ps=60&ts={2}000",ApiHelper.access_key,ApiHelper._appKey,ApiHelper.GetTimeSpan);
+                string url = string.Format("http://app.bilibili.com/x/feed/subscribe/tags?access_key={0}&appkey={1}&build=434300&mobi_app=android&platform=wp&pn=1&ps=60&ts={2}000",ApiHelper.access_key,ApiHelper.AndroidKey.Appkey,ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 LikeTagsModel my = JsonConvert.DeserializeObject<LikeTagsModel>(results);

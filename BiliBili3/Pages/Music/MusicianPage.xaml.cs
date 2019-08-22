@@ -58,7 +58,7 @@ namespace BiliBili3.Pages.Music
             {
                 pr_Load.Visibility = Visibility.Visible;
                 string url = "https://api.bilibili.com/audio/music-service-c/users/upinfo?access_key={0}&appkey={1}&build=5250000&mid={2}&mobi_app=android&platform=android&ts={3}&upmid={4}";
-                url = string.Format(url, ApiHelper.access_key, ApiHelper._appKey,ApiHelper.GetUserId(),ApiHelper.GetTimeSpan,_mid);
+                url = string.Format(url, ApiHelper.access_key, ApiHelper.AndroidKey.Appkey,ApiHelper.GetUserId(),ApiHelper.GetTimeSpan,_mid);
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 var results=await WebClientClass.GetResults(new Uri(url));
@@ -101,7 +101,7 @@ namespace BiliBili3.Pages.Music
             try
             {
                 string url = "https://api.bilibili.com/audio/music-service-c/songs/getupsongslist?appkey={0}&build=5250000&isAll=true&mid={1}&mobi_app=android&pageIndex=1&pageSize=20&platform=android&sortBy=0&sortType=0&ts={2}";
-                url = string.Format(url, ApiHelper._appKey, _mid,ApiHelper.GetTimeSpan);
+                url = string.Format(url, ApiHelper.AndroidKey.Appkey, _mid,ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 var results = await WebClientClass.GetResults(new Uri(url));
@@ -148,9 +148,9 @@ namespace BiliBili3.Pages.Music
 
                     string content = string.Format(
                         "access_key={0}&act=1&appkey={1}&build=45000&fid={2}&mobi_app=android&platform=android&re_src=90&ts={3}",
-                        ApiHelper.access_key, ApiHelper._appKey_Android, _mid, ApiHelper.GetTimeSpan_2
+                        ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _mid, ApiHelper.GetTimeSpan_2
                         );
-                    content += "&sign=" + ApiHelper.GetSign_Android(content);
+                    content += "&sign=" + ApiHelper.GetSign(content);
                     string result = await WebClientClass.PostResults(ReUri,
                         content
                      );
@@ -191,9 +191,9 @@ namespace BiliBili3.Pages.Music
 
                     string content = string.Format(
                         "access_key={0}&act=2&appkey={1}&build=45000&fid={2}&mobi_app=android&platform=android&re_src=90&ts={3}",
-                        ApiHelper.access_key, ApiHelper._appKey_Android, _mid, ApiHelper.GetTimeSpan_2
+                        ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _mid, ApiHelper.GetTimeSpan_2
                         );
-                    content += "&sign=" + ApiHelper.GetSign_Android(content);
+                    content += "&sign=" + ApiHelper.GetSign(content);
                     string result = await WebClientClass.PostResults(ReUri,
                         content
                      );

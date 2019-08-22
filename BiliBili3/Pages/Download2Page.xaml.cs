@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
 using BiliBili3.Controls;
 using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Documents;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -42,40 +43,127 @@ namespace BiliBili3.Pages
             this.Frame.GoBack();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             GetDowned();
-            LoadDowning();
-
+            await LoadDowning();
+            
+            //await Task.Delay(200);
         }
-        List<Task> handelList = new List<Task>();
-        private async void LoadDowning()
+        private IDictionary<string, CancellationTokenSource> cts;
+        List<DownloadOperation> downloadOperations;
+        List<Task> handelList;
+        ObservableCollection<DownloadDisplayInfo> downloadDisplayInfos;
+        private async Task LoadDowning()
         {
-            handelList.Clear();
-            ObservableCollection<DisplayModel> list = new ObservableCollection<DisplayModel>();
+            pr_loading.Visibility = Visibility.Visible;
+
+            cts = new Dictionary<string, CancellationTokenSource>();
+            if (handelList == null)
+            {
+                handelList = new List<Task>();
+            }
+            if (downloadOperations == null)
+            {
+                downloadOperations = new List<DownloadOperation>();
+            }
+            downloadDisplayInfos = new ObservableCollection<DownloadDisplayInfo>();
+            List<DisplayModel> list = new List<DisplayModel>();
             var ls = await BackgroundDownloader.GetCurrentDownloadsForTransferGroupAsync(DownloadHelper2.group);
             foreach (var item in ls)
             {
+              
+                CancellationTokenSource cancellationTokenSource = null;
+
                 var data = SqlHelper.GetDownload(item.Guid.ToString());
-                handelList.Add(Handel(item));
+                if (cts.ContainsKey(data.cid))
+                {
+                    cancellationTokenSource = cts[data.cid];
+                }
+                else
+                {
+                    cancellationTokenSource = new CancellationTokenSource();
+                    cts.Add(data.cid, cancellationTokenSource);
+                }
+
+                //cancellationTokenSource.Token.Register(Handel(item, cancellationTokenSource));
+
+                if (!downloadOperations.Contains(item))
+                {
+                    downloadOperations.Add(item);
+                    handelList.Add(Handel(item, cancellationTokenSource));
+                }
+                
                 list.Add(new DisplayModel()
                 {
+                    cid = data.cid,
                     title = data.title + " " + data.eptitle,
                     backgroundTransferStatus = item.Progress.Status,
-                    index = (data.index + 1).ToString(),
-                    progress = GetProgress(item.Progress.BytesReceived, item.Progress.TotalBytesToReceive),
+                    index = (data.index + 1).ToString("00"),
+                    progress = GetProgress(item.Progress.BytesReceived, GetTotalBytesToReceive(item)),
                     guid = item.Guid.ToString(),
-                    size = GetSize(item.Progress.BytesReceived, item.Progress.TotalBytesToReceive),
+                    size = GetSize(item.Progress.BytesReceived, GetTotalBytesToReceive(item)),
+                    id = data.aid,
+                    mode = data.mode
                 });
             }
-            list_Downing.ItemsSource = list;
+            foreach (var item in list.GroupBy(x => x.cid))
+            {
+                ObservableCollection<DisplayModel> displays = new ObservableCollection<DisplayModel>();
+                foreach (var item2 in item.OrderBy(x => x.index))
+                {
+                    displays.Add(item2);
+                }
+                downloadDisplayInfos.Add(new DownloadDisplayInfo()
+                {
+                    title = displays[0].title + " " + displays[0].eptitle,
+                    cid = item.Key,
+                    id = displays[0].id,
+                    mode = displays[0].mode,
+                    items = displays
+                });
+            }
+            listDown.ItemsSource = downloadDisplayInfos;
+            downCount.Text = downloadDisplayInfos.Count.ToString();
+            //list_Downing.ItemsSource = list;
+            pr_loading.Visibility = Visibility.Collapsed;
+           
             await Task.WhenAll(handelList);
+
         }
 
+        private ulong GetTotalBytesToReceive(DownloadOperation downloadOperation)
+        {
+            try
+            {
+                //TotalBytesToReceive有时会抽风返回0
+                if (downloadOperation.Progress.TotalBytesToReceive != 0)
+                {
+                    return downloadOperation.Progress.TotalBytesToReceive;
+                }
+                else
+                {
+                    var response = downloadOperation.GetResponseInformation();
+
+                    if (response != null && response.Headers.ContainsKey("Content-Length") && ulong.TryParse(response.Headers["Content-Length"], out var total))
+                    {
+                        return total;
+                    }
+                    return 0;
+                }
+            }
+            catch (Exception)
+            {
+
+                return 0;
+            }
+
+        }
         private async void GetDowned()
         {
             loading.Visibility = Visibility.Visible;
+            Dictionary<string, string> valuePairs = new Dictionary<string, string>();
             var folder = await DownloadHelper2.GetDownloadFolder();
             List<VideoDiaplayModel> list = new List<VideoDiaplayModel>();
             try
@@ -109,26 +197,23 @@ namespace BiliBili3.Pages
                         {
                             if (await DownloadHelper2.ExistsFile(item1.Path + @"\info.json"))
                             {
-
-                                List<bool> check = new List<bool>();
-                                var files = await item1.GetFilesAsync();
-                                foreach (var item2 in files)
+                                var flag = false;
+                                var files = (await item1.GetFilesAsync()).Where(x => x.FileType == ".mp4" || x.FileType == ".flv");
+                                if (files.Count()!=0)
                                 {
-                                    if (item2.FileType == ".mp4" || item2.FileType == ".flv")
+                                    //DownloadHelper2.GetFileSize(x.Path).Result
+                                    foreach (var subfile in files)
                                     {
-                                        if (await DownloadHelper2.GetFileSize(item2.Path) == 0)
+                                        if (await DownloadHelper2.GetFileSize(subfile.Path)==0)
                                         {
-                                            check.Add(false);
+                                            flag = true;
+                                            break;
                                         }
-                                        else
-                                        {
-                                            check.Add(true);
-                                        }
-
                                     }
-                                }
-                                if (!check.Contains(false))
-                                {
+                                    if (flag)
+                                    {
+                                        break;
+                                    }
                                     var file1 = await item1.GetFileAsync("info.json");
                                     var data1 = await FileIO.ReadTextAsync(file1);
                                     DownloadPartnInfoModel downloadPartnInfoModel = Newtonsoft.Json.JsonConvert.DeserializeObject<DownloadPartnInfoModel>(data1);
@@ -142,24 +227,37 @@ namespace BiliBili3.Pages
                                         mode = video.mode,
                                         title = video.title
                                     };
-                                    if (!DownloadHelper2.downloadeds.ContainsKey(downloadPartnInfoModel.cid))
+                                    if (!valuePairs.ContainsKey(downloadPartnInfoModel.cid))
                                     {
-                                        DownloadHelper2.downloadeds.Add(downloadPartnInfoModel.cid, item1.Path);
+
+                                        valuePairs.Add(downloadPartnInfoModel.cid, item1.Path);
                                     }
                                     video.videolist.Add(part);
                                 }
+                                //foreach (var item2 in files)
+                                //{
+                                //    if (item2.FileType == ".mp4" || item2.FileType == ".flv")
+
+                                //        check.Add(await DownloadHelper2.GetFileSize(item2.Path) == 0);
+  
+                                //    }
+                                //}
+                                //if (!check.Contains(false))
+                                //{
+                                    
+                               // }
 
                             }
                         }
 
                         if (video.videolist.Count != 0)
                         {
-                            video.videolist = video.videolist.OrderBy(x => x.eptitle).ToList();
+                            video.videolist = video.videolist.OrderBy(x => x.index).ToList();
                             list.Add(video);
                         }
                     }
                 }
-
+                DownloadHelper2.downloadeds = valuePairs;
             }
             catch (Exception ex)
             {
@@ -189,50 +287,111 @@ namespace BiliBili3.Pages
             }
             else
             {
-                return "0/0";
+                return $"{(Convert.ToDouble(s) / 1024 / 1024).ToString("0.0")}M/未知";
             }
         }
-        private async Task Handel(DownloadOperation downloadOperation)
+        private async Task Handel(DownloadOperation downloadOperation, CancellationTokenSource cancellationTokenSource)
         {
             try
             {
+
                 Progress<DownloadOperation> progressCallback = new Progress<DownloadOperation>(DownloadProgress);
-                await downloadOperation.AttachAsync().AsTask(progressCallback);
+                if (cancellationTokenSource != null)
+                {
+                    await downloadOperation.AttachAsync().AsTask(cancellationTokenSource.Token, progressCallback);
+                }
+                else
+                {
+                    await downloadOperation.AttachAsync().AsTask(progressCallback);
+                }
 
-                var ls = list_Downing.ItemsSource as ObservableCollection<DisplayModel>;
-                var item = ls.First(x => x.guid == downloadOperation.Guid.ToString());
-                ls.Remove(item);
-                //LoadDowning();
+                //var ls = list_Downing.ItemsSource as ObservableCollection<DisplayModel>;
                 GetDowned();
-
             }
             catch (TaskCanceledException)
             {
-                //SqlHelper.GetDownload(downloadOperation.Guid.ToString());
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("0x80072EF1") || ex.Message.Contains("0x80070002"))
+
+                if (ex.Message.Contains("0x80072EF1") || ex.Message.Contains("0x80070002")||ex.Message.Contains("0x80004004"))
                 {
                     return;
                 }
                 await new MessageDialog(ex.Message).ShowAsync();
             }
+            finally
+            {
+                RemoveItem(downloadOperation.Guid.ToString());
+            }
+        }
 
+        private void RemoveItem(string guid)
+        {
+            try
+            {
+                if (downloadDisplayInfos == null)
+                {
+                    return;
+                }
+                var item = downloadDisplayInfos.FirstOrDefault(x => x.items.Count(y => y.guid == guid) != 0);
+                if (item != null)
+                {
+                    if (item.items.Count > 1)
+                    {
+                        var subItem = item.items.FirstOrDefault(x => x.guid == guid);
+                        if (subItem != null)
+                        {
+                            item.items.Remove(subItem);
+
+                        }
+                    }
+                    else
+                    {
+                        downloadDisplayInfos.Remove(item);
+                        //await DownloadHelper2.DeleteFolder(item.id, item.cid, item.mode);
+                        //GetDowned();
+                    }
+                }
+                downCount.Text = downloadDisplayInfos.Count.ToString();
+            }
+            catch (Exception ex)
+            {
+            }
 
         }
+
 
         private void DownloadProgress(DownloadOperation op)
         {
             try
             {
-                var ls = list_Downing.ItemsSource as ObservableCollection<DisplayModel>;
-                var item = ls.First(x => x.guid == op.Guid.ToString());
-                // var d = (list_Downing.Items[list_Downing.Items.IndexOf(item)] as DisplayModel);
-                item.progress = GetProgress(op.Progress.BytesReceived, op.Progress.TotalBytesToReceive);
-                item.backgroundTransferStatus = op.Progress.Status;
-                item.size = GetSize(op.Progress.BytesReceived, op.Progress.TotalBytesToReceive);
+                if (downloadDisplayInfos == null)
+                {
+                    return;
+                }
+                var guid = op.Guid.ToString();
 
+                var item = downloadDisplayInfos.FirstOrDefault(x => x.items.Count(y => y.guid == guid) != 0);
+                if (item != null)
+                {
+                    var subItem = item.items.FirstOrDefault(x => x.guid == guid);
+                    if (subItem != null)
+                    {
+                        subItem.progress = GetProgress(op.Progress.BytesReceived, GetTotalBytesToReceive(op));
+                        subItem.backgroundTransferStatus = op.Progress.Status;
+                        subItem.size = GetSize(op.Progress.BytesReceived, GetTotalBytesToReceive(op));
+                    }
+                }
+
+                //var ls = list_Downing.ItemsSource as ObservableCollection<DisplayModel>;
+                //var item = ls.FirstOrDefault(x => x.guid == op.Guid.ToString());
+                //if (item != null)
+                //{
+                //    item.progress = GetProgress(op.Progress.BytesReceived, GetTotalBytesToReceive(op));
+                //    item.backgroundTransferStatus = op.Progress.Status;
+                //    item.size = GetSize(op.Progress.BytesReceived, GetTotalBytesToReceive(op));
+                //}
             }
             catch (Exception)
             {
@@ -247,8 +406,12 @@ namespace BiliBili3.Pages
             {
                 var ls = await BackgroundDownloader.GetCurrentDownloadsForTransferGroupAsync(DownloadHelper2.group);
                 var data = (sender as Button).DataContext as DisplayModel;
-                var item = ls.First(x => x.Guid.ToString() == data.guid);
-                item.Resume();
+                var item = ls.FirstOrDefault(x => x.Guid.ToString() == data.guid);
+                if (item != null)
+                {
+                    item.Resume();
+                }
+
                 data.backgroundTransferStatus = item.Progress.Status;
             }
             catch (Exception)
@@ -276,15 +439,38 @@ namespace BiliBili3.Pages
                 {
                     var ls = await BackgroundDownloader.GetCurrentDownloadsForTransferGroupAsync(DownloadHelper2.group);
                     var data = (sender as Button).DataContext as DisplayModel;
-                    var item = ls.First(x => x.Guid.ToString() == data.guid);
-                    item.AttachAsync().Cancel();
+                    //var down_tasks = (list_Downing.ItemsSource as ObservableCollection<DisplayModel>).Where(x => x.cid == data.cid).ToList();
+                    cts[data.cid].Cancel();
+
+                    //foreach (var item in down_tasks)
+                    //{
+                    //    var task_item = ls.FirstOrDefault(x => x.Guid.ToString() == item.guid);
+                    //    if (task_item.Progress.Status == BackgroundTransferStatus.Running)
+                    //    {
+                    //        task_item.Pause();
+                    //    }
+                    //}
+                    //await Task.Delay(1000);
+                    //for (int i = 0; i < down_tasks.Count; i++)
+                    //{
+                    //    var task_item = ls.FirstOrDefault(x => x.Guid.ToString() == down_tasks[0].guid);
+                    //    if (task_item != null)
+                    //    {
+                    //        cts[task_item.Guid].Cancel();
+                    //    }
+                    //    await Task.Delay(1000);
+                    //}
+
                     var d = SqlHelper.GetDownload(data.guid);
                     await DownloadHelper2.DeleteFolder(d.aid, d.cid, d.mode);
+
+                    LoadDowning();
                 }
-                LoadDowning();
+
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+
             }
 
         }
@@ -295,9 +481,12 @@ namespace BiliBili3.Pages
             {
                 var ls = await BackgroundDownloader.GetCurrentDownloadsForTransferGroupAsync(DownloadHelper2.group);
                 var data = (sender as Button).DataContext as DisplayModel;
-                var item = ls.First(x => x.Guid.ToString() == data.guid);
+                var item = ls.FirstOrDefault(x => x.Guid.ToString() == data.guid);
+                if (item != null)
+                {
+                    item.Pause();
+                }
 
-                item.Pause();
                 data.backgroundTransferStatus = item.Progress.Status;
             }
             catch (Exception)
@@ -319,7 +508,7 @@ namespace BiliBili3.Pages
                 {
                 }
             }
-            LoadDowning();
+            //LoadDowning();
         }
 
         private async void btn_PauseAll_Click(object sender, RoutedEventArgs e)
@@ -335,7 +524,7 @@ namespace BiliBili3.Pages
                 {
                 }
             }
-            LoadDowning();
+            // LoadDowning();
         }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -411,6 +600,7 @@ namespace BiliBili3.Pages
             {
                 await DownloadHelper2.DeleteFolder(m.id, m.mode);
             }
+            GetDowned();
         }
 
         private async void btn_SendToPhone_Click(object sender, RoutedEventArgs e)
@@ -434,14 +624,139 @@ namespace BiliBili3.Pages
             foreach (var item in m.videolist)
             {
                 var path = item.path + @"\" + item.cid + ".xml";
-                await DownloadHelper2.UpdateDanmu(path,item.cid);
+                await DownloadHelper2.UpdateDanmu(path, item.cid);
             }
             await new MessageDialog("更新完成").ShowAsync();
         }
+
+        private async void Btn_SubItem_Pause_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var ls = await BackgroundDownloader.GetCurrentDownloadsForTransferGroupAsync(DownloadHelper2.group);
+                var data = (sender as Button).DataContext as DisplayModel;
+                var item = ls.FirstOrDefault(x => x.Guid.ToString() == data.guid);
+                if (item != null)
+                {
+                    item.Pause();
+                }
+
+                data.backgroundTransferStatus = item.Progress.Status;
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private async void Btn_SubItem_Resume_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var ls = await BackgroundDownloader.GetCurrentDownloadsForTransferGroupAsync(DownloadHelper2.group);
+                var data = (sender as Button).DataContext as DisplayModel;
+                var item = ls.FirstOrDefault(x => x.Guid.ToString() == data.guid);
+                if (item != null)
+                {
+                    item.Resume();
+                }
+
+                data.backgroundTransferStatus = item.Progress.Status;
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private async void Btn_Cancel_Items_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageDialog md = new MessageDialog("确定要取消任务吗?");
+                md.Commands.Add(new UICommand("确定")
+                {
+                    Id = 0
+                });
+                md.Commands.Add(new UICommand("取消") { Id = 1 });
+                if (Convert.ToInt32((await md.ShowAsync()).Id) == 0)
+                {
+                    var data = (sender as Button).DataContext as DownloadDisplayInfo;
+                    var guid = data.items.FirstOrDefault().guid;
+                    var id = data.id;
+                    var cid = data.cid;
+                    var mode = data.mode;
+                    cts[data.cid].Cancel();
+
+                    RemoveItem(guid);
+                    await DownloadHelper2.DeleteFolder(id, cid, mode);
+
+                    //LoadDowning();
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
+        private async void Btn_Resume_Items_Click(object sender, RoutedEventArgs e)
+        {
+            var data = (sender as Button).DataContext as DownloadDisplayInfo;
+            var ls = await BackgroundDownloader.GetCurrentDownloadsForTransferGroupAsync(DownloadHelper2.group);
+            foreach (var item in ls.Where(x => data.items.Count(y => y.guid == x.Guid.ToString()) != 0))
+            {
+                try
+                {
+
+                    item.Resume();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            //LoadDowning();
+        }
+
+        private async void Btn_Pause_Items_Click(object sender, RoutedEventArgs e)
+        {
+            var data = (sender as Button).DataContext as DownloadDisplayInfo;
+            var ls = await BackgroundDownloader.GetCurrentDownloadsForTransferGroupAsync(DownloadHelper2.group);
+            foreach (var item in ls.Where(x => data.items.Count(y => y.guid == x.Guid.ToString()) != 0))
+            {
+                try
+                {
+                    if (item.Progress.Status == BackgroundTransferStatus.Running)
+                    {
+                        item.Pause();
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+            //LoadDowning();
+
+
+        }
     }
+    public class DownloadDisplayInfo
+    {
+        public string id { get; set; }
+        public string mode { get; set; }
+        public string cid { get; set; }
+        public ObservableCollection<DisplayModel> items { get; set; }
+        public string title { get; set; }
+
+
+    }
+
+
     public class DisplayModel : INotifyPropertyChanged
     {
-
+        public string id { get; set; }
+        public string mode { get; set; }
+        public string cid { get; set; }
         public string guid { get; set; }
         public string title { get; set; }
         public string eptitle { get; set; }

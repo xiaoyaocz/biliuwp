@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BiliBili3.Helper;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;

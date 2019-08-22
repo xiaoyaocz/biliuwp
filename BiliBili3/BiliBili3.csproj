@@ -277,9 +277,6 @@
       <DependentUpon>ErrorDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\FlipSpotControl.cs" />
-    <Compile Include="Controls\H5Player.xaml.cs">
-      <DependentUpon>H5Player.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ImagePreview.xaml.cs">
       <DependentUpon>ImagePreview.xaml</DependentUpon>
     </Compile>
@@ -307,11 +304,9 @@
       <DependentUpon>SendDanmakuDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WrapPanel.cs" />
-    <Compile Include="Helper\5DMHelper.cs" />
     <Compile Include="Helper\ApiHelper.cs" />
     <Compile Include="Helper\AppHelper.cs" />
     <Compile Include="Helper\BiliLiveDanmu.cs" />
-    <Compile Include="Helper\CameraRotationHelper.cs" />
     <Compile Include="Helper\DownloadHelper.cs" />
     <Compile Include="Helper\DownloadHelper2.cs" />
     <Compile Include="Helper\DynamicJObject.cs" />
@@ -326,7 +321,6 @@
     <Compile Include="Helper\SystemHelper.cs" />
     <Compile Include="Helper\UserManage.cs" />
     <Compile Include="Helper\Utils.cs" />
-    <Compile Include="Helper\VLC.cs" />
     <Compile Include="Helper\WebClientClass.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -342,6 +336,7 @@
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\VideoInfoModels.cs" />
     <Compile Include="Modules\Account.cs" />
+    <Compile Include="Modules\Download.cs" />
     <Compile Include="Modules\SeasonFollow.cs" />
     <Compile Include="Modules\Channel.cs" />
     <Compile Include="Modules\Home.cs" />
@@ -506,9 +501,6 @@
     </Compile>
     <Compile Include="Pages\Bangumi\JpBangumiPage.xaml.cs">
       <DependentUpon>JpBangumiPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\LoginPage.xaml.cs">
-      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\User\FollowSeasonPage.xaml.cs">
       <DependentUpon>FollowSeasonPage.xaml</DependentUpon>
@@ -747,10 +739,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ErrorDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\H5Player.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1003,10 +991,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Bangumi\JpBangumiPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

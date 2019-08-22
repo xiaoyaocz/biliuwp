@@ -69,7 +69,7 @@ namespace BiliBili3.Controls
 
                 string content =
                     string.Format("access_key={0}&appkey={1}&platform=android&type={2}&oid={3}&ts={4}&message={5}",
-                    ApiHelper.access_key, ApiHelper._appKey, _type, _oid, ApiHelper.GetTimeSpan_2, Uri.EscapeDataString(text));
+                    ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _type, _oid, ApiHelper.GetTimeSpan_2, Uri.EscapeDataString(text));
                 content += "&sign=" + ApiHelper.GetSign(content);
                 var re = await WebClientClass.PostResults(new Uri(url), content);
                 JObject obj = JObject.Parse(re);

@@ -85,8 +85,8 @@ namespace BiliBili3.Pages
                 _TJLoading = true;
                 pr_Load.Visibility = Visibility.Visible;
 
-                string url = string.Format("http://live.bilibili.com/mobile/rooms?access_key={0}&appkey={1}&area_id=0&build=434000&mobi_app=android&page={2}&platform=android&sort=suggestion", ApiHelper.access_key, ApiHelper._appKey_Android, _TJPage);
-                url += "&sign=" + ApiHelper.GetSign_Android(url);
+                string url = string.Format("http://live.bilibili.com/mobile/rooms?access_key={0}&appkey={1}&area_id=0&build=434000&mobi_app=android&page={2}&platform=android&sort=suggestion", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _TJPage);
+                url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 AllLiveModel m = JsonConvert.DeserializeObject<AllLiveModel>(results);
                 if (m.code == 0)
@@ -136,8 +136,8 @@ namespace BiliBili3.Pages
                 _HotLoading = true;
                 pr_Load.Visibility = Visibility.Visible;
 
-                string url = string.Format("http://live.bilibili.com/mobile/rooms?access_key={0}&appkey={1}&area_id=0&build=434000&mobi_app=android&page={2}&platform=android&sort=hottest", ApiHelper.access_key, ApiHelper._appKey_Android, _HotPage);
-                url += "&sign=" + ApiHelper.GetSign_Android(url);
+                string url = string.Format("http://live.bilibili.com/mobile/rooms?access_key={0}&appkey={1}&area_id=0&build=434000&mobi_app=android&page={2}&platform=android&sort=hottest", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _HotPage);
+                url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 AllLiveModel m = JsonConvert.DeserializeObject<AllLiveModel>(results);
                 if (m.code == 0)
@@ -188,8 +188,8 @@ namespace BiliBili3.Pages
                 _NewLoading = true;
                 pr_Load.Visibility = Visibility.Visible;
 
-                string url = string.Format("http://live.bilibili.com/mobile/rooms?access_key={0}&appkey={1}&area_id=0&build=434000&mobi_app=android&page={2}&platform=android&sort=latest", ApiHelper.access_key, ApiHelper._appKey_Android, _NewPage);
-                url += "&sign=" + ApiHelper.GetSign_Android(url);
+                string url = string.Format("http://live.bilibili.com/mobile/rooms?access_key={0}&appkey={1}&area_id=0&build=434000&mobi_app=android&page={2}&platform=android&sort=latest", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _NewPage);
+                url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 AllLiveModel m = JsonConvert.DeserializeObject<AllLiveModel>(results);
                 if (m.code == 0)
@@ -239,8 +239,8 @@ namespace BiliBili3.Pages
                 _LBLoading = true;
                 pr_Load.Visibility = Visibility.Visible;
 
-                string url = string.Format("http://live.bilibili.com/mobile/rooms?access_key={0}&appkey={1}&area_id=0&build=434000&mobi_app=android&page={2}&platform=android&sort=roundroom", ApiHelper.access_key, ApiHelper._appKey_Android, _LBPage);
-                url += "&sign=" + ApiHelper.GetSign_Android(url);
+                string url = string.Format("http://live.bilibili.com/mobile/rooms?access_key={0}&appkey={1}&area_id=0&build=434000&mobi_app=android&page={2}&platform=android&sort=roundroom", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _LBPage);
+                url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 AllLiveModel m = JsonConvert.DeserializeObject<AllLiveModel>(results);
                 if (m.code == 0)

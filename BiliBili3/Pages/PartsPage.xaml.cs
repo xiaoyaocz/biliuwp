@@ -1731,12 +1731,12 @@ namespace BiliBili3.Pages
                 #region
                 string uri = "";
                 uri = string.Format("https://app.bilibili.com/x/v2/region/show/child/list?appkey={0}&build={1}&channel=bili&order={4}&platform=android&pn={2}&ps=20&rid={3}",
-                    ApiHelper._appKey_Android,ApiHelper.build, Num, id, orderBy);
+                    ApiHelper.AndroidKey.Appkey,ApiHelper.build, Num, id, orderBy);
                 if (tag.Length != 0 && tag != "全部")
                 {
                     uri += "&tag_name=" + Uri.EscapeDataString(tag);
                 }
-                uri += "&sign=" + ApiHelper.GetSign_Android(uri);
+                uri += "&sign=" + ApiHelper.GetSign(uri);
                 #endregion
                 string results = await WebClientClass.GetResults(new Uri(uri));
                 JObject jObject = JObject.Parse(results);

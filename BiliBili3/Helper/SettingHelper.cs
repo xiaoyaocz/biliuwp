@@ -1360,8 +1360,8 @@ namespace BiliBili3
             }
             else
             {
-                container.Values["DownMode"] = 0;
-                return 0;
+                container.Values["DownMode"] = 1;
+                return 1;
             }
         }
 

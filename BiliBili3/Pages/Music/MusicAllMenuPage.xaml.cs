@@ -92,13 +92,13 @@ namespace BiliBili3.Pages.Music
                 switch (_opentype)
                 {
                     case OpenMenuType.Menu:
-                        url = string.Format("https://api.bilibili.com/audio/music-service-c/categroies/menucate?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=android&ts={2}", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                        url = string.Format("https://api.bilibili.com/audio/music-service-c/categroies/menucate?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=android&ts={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                         break;
                     case OpenMenuType.Album:
-                        url = string.Format("https://api.bilibili.com/audio/music-service-c/categroies/pmenucate?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=android&ts={2}", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                        url = string.Format("https://api.bilibili.com/audio/music-service-c/categroies/pmenucate?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=android&ts={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                         break;
                     case OpenMenuType.MissEvan:
-                        url = string.Format("https://api.bilibili.com/audio/music-service-c/categroies/missevan?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=android&ts={2}", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                        url = string.Format("https://api.bilibili.com/audio/music-service-c/categroies/missevan?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=android&ts={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                         break;
                     default:
                         break;
@@ -176,13 +176,13 @@ namespace BiliBili3.Pages.Music
                 switch (_opentype)
                 {
                     case OpenMenuType.Menu:
-                        url = string.Format("https://api.bilibili.com/audio/music-service-c/menus/filteMenu?appkey={0}&build=5250000&cateId={1}&itemId={2}&mobi_app=android&orderBy={3}&pageNum={4}&pageSize=24&platform=android&ts={5}",  ApiHelper._appKey, catId,itemId,_sort,_page, ApiHelper.GetTimeSpan);
+                        url = string.Format("https://api.bilibili.com/audio/music-service-c/menus/filteMenu?appkey={0}&build=5250000&cateId={1}&itemId={2}&mobi_app=android&orderBy={3}&pageNum={4}&pageSize=24&platform=android&ts={5}",  ApiHelper.AndroidKey.Appkey, catId,itemId,_sort,_page, ApiHelper.GetTimeSpan);
                         break;
                     case OpenMenuType.Album:
-                        url = string.Format("https://api.bilibili.com/audio/music-service-c/menus/filte-pmenu?appkey={0}&build=5250000&cateId={1}&itemId={2}&mobi_app=android&orderBy={3}&pageNum={4}&pageSize=24&platform=android&ts={5}", ApiHelper._appKey, catId, itemId, _sort, _page, ApiHelper.GetTimeSpan);
+                        url = string.Format("https://api.bilibili.com/audio/music-service-c/menus/filte-pmenu?appkey={0}&build=5250000&cateId={1}&itemId={2}&mobi_app=android&orderBy={3}&pageNum={4}&pageSize=24&platform=android&ts={5}", ApiHelper.AndroidKey.Appkey, catId, itemId, _sort, _page, ApiHelper.GetTimeSpan);
                         break;
                     case OpenMenuType.MissEvan:
-                        url = string.Format("https://api.bilibili.com/audio/music-service-c/menus/missevan?appkey={0}&build=5250000&cateId={1}&itemId={2}&mobi_app=android&orderBy={3}&pageNum={4}&pageSize=24&platform=android&ts={5}", ApiHelper._appKey, catId, itemId, _sort, _page, ApiHelper.GetTimeSpan);
+                        url = string.Format("https://api.bilibili.com/audio/music-service-c/menus/missevan?appkey={0}&build=5250000&cateId={1}&itemId={2}&mobi_app=android&orderBy={3}&pageNum={4}&pageSize=24&platform=android&ts={5}", ApiHelper.AndroidKey.Appkey, catId, itemId, _sort, _page, ApiHelper.GetTimeSpan);
                         break;
                     default:
                         break;

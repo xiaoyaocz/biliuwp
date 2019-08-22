@@ -102,10 +102,10 @@ namespace BiliBili3.Views
             {
                 _Loading = true;
                 pr_Load.Visibility = Visibility.Visible;
-                string url = $"https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?access_key={ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&mobi_app=android&platform=android&qn=32&rsp_type=2&src=bili&ts={ApiHelper.GetTimeSpan_2}&type_list=8%2C512%2C4099&uid={ApiHelper.GetUserId()}&update_num_dy_id=0";
+                string url = $"https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&platform=android&qn=32&rsp_type=2&src=bili&ts={ApiHelper.GetTimeSpan_2}&type_list=8%2C512%2C4099&uid={ApiHelper.GetUserId()}&update_num_dy_id=0";
                 if (ls_video.Count()!=0)
                 {
-                    url = $"https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?access_key={ApiHelper.access_key}&appkey={ApiHelper._appKey}&build={ApiHelper.build}&mobi_app=android&offset_dynamic_id={ls_video.GetLastDynamicId()}&page={_page}&platform=android&qn=32&rsp_type=2&src=bili&ts={ApiHelper.GetTimeSpan_2}&type_list=8%2C512%2C4099&uid={ApiHelper.GetUserId()}";
+                    url = $"https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&offset_dynamic_id={ls_video.GetLastDynamicId()}&page={_page}&platform=android&qn=32&rsp_type=2&src=bili&ts={ApiHelper.GetTimeSpan_2}&type_list=8%2C512%2C4099&uid={ApiHelper.GetUserId()}";
                 }
                 else
                 {
@@ -217,7 +217,7 @@ namespace BiliBili3.Views
                 }
 
                 string url = string.Format("https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/{5}?access_key={0}&appkey={1}&build=5250000&mobi_app=android&platform=android&qn=32&rsp_type=2&src=bilih5&ts={2}&type=268435455&uid={3}{4}",
-                ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan_2, ApiHelper.GetUserId(), next, u);
+                ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan_2, ApiHelper.GetUserId(), next, u);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
                 results = results.Replace("default", "_default");
@@ -261,7 +261,7 @@ namespace BiliBili3.Views
                 _loadHot = true;
 
                 string url = string.Format("https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/recommend?_device=android&access_key={0}&appkey={1}&build=5250000&mobi_app=android&page={2}&platform=android&qn=32&src=bilih5&ts={3}&uid={4}",
-                ApiHelper.access_key, ApiHelper._appKey, _pageHot, ApiHelper.GetTimeSpan_2, ApiHelper.GetUserId());
+                ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _pageHot, ApiHelper.GetTimeSpan_2, ApiHelper.GetUserId());
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
 

@@ -233,7 +233,7 @@ namespace BiliBili3.Controls
                 pr_LoadUserAt.Visibility = Visibility.Visible;
                 _loadingAt = true;
                 string url = "http://api.live.bilibili.com/feed_svr/v1/feed_svr/get_user_info?access_key={0}&appkey={1}&build=5250000&page={2}&pagesize=20&platform=android&src=bilih5&ts={3}";
-                url = string.Format(url, ApiHelper.access_key, ApiHelper._appKey, _userAtPage, ApiHelper.GetTimeSpan_2);
+                url = string.Format(url, ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _userAtPage, ApiHelper.GetTimeSpan_2);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
 
@@ -295,7 +295,7 @@ namespace BiliBili3.Controls
             {
                 pr_LoadSearchAt.Visibility = Visibility.Visible;
                 string url = "https://app.bilibili.com/x/v2/search/user?_device=android&access_key={0}&appkey={1}&build=5250000&from_source=dynamic_uname&highlight=0&keyword={2}&order=totalrank&order_sort=0&platform=android&pn=0&ps=20&src=bilih5&ts={3}&user_type=0";
-                url = string.Format(url, ApiHelper.access_key, ApiHelper._appKey, Uri.EscapeDataString(keyword), ApiHelper.GetTimeSpan_2);
+                url = string.Format(url, ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, Uri.EscapeDataString(keyword), ApiHelper.GetTimeSpan_2);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var re = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
                 SearchAtListModel m = JsonConvert.DeserializeObject<SearchAtListModel>(re);
@@ -408,7 +408,7 @@ namespace BiliBili3.Controls
             try
             {
                 string url = "https://api.live.bilibili.com/dynamic_repost/v1/dynamic_repost/repost?access_key={0}&appkey={1}&build=5250000&platform=android&ts={2}";
-                url = string.Format(url, ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan_2);
+                url = string.Format(url, ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan_2);
                 url += "&sign" + ApiHelper.GetSign(url);
                 string content = "uid={0}&dynamic_id={1}&content={2}&at_uids={3}&ctrl={4}";
                 content = string.Format(content,ApiHelper.GetUserId(),_dynamicCardsModel.desc.dynamic_id,Uri.EscapeDataString(txt),at_uids, Uri.EscapeDataString( ctrl));
@@ -482,7 +482,7 @@ namespace BiliBili3.Controls
 
             try
             {
-                string url =string.Format( "http://api.vc.bilibili.com/link_draw/v1/doc/create?access_key={0}&appkey={1}&build=5250000&platform=android&src=bilih5&ts={2}",ApiHelper.access_key,ApiHelper._appKey,ApiHelper.GetTimeSpan_2);
+                string url =string.Format( "http://api.vc.bilibili.com/link_draw/v1/doc/create?access_key={0}&appkey={1}&build=5250000&platform=android&src=bilih5&ts={2}",ApiHelper.access_key,ApiHelper.AndroidKey.Appkey,ApiHelper.GetTimeSpan_2);
                 url += "&sign" + ApiHelper.GetSign(url);
                 string content = "category=3&pictures={0}&description={1}&setting={2}&at_uids={3}&at_control={4}&jumpfrom=110";
 
@@ -553,7 +553,7 @@ namespace BiliBili3.Controls
 
                 pr_Upload.Visibility = Visibility.Visible;
                    var url = "http://api.vc.bilibili.com/api/v1/image/upload?access_key={0}&appkey={1}&build=5250000&platform=android&src=bilih5&ts={2}";
-                url = string.Format(url, ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan_2);
+                url = string.Format(url, ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan_2);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 IRandomAccessStream fileStream = await file.OpenAsync(FileAccessMode.Read);
                 var bytes = new byte[fileStream.Size];

@@ -100,7 +100,7 @@ namespace BiliBili3.Pages
             {
                 pr_Load.Visibility = Visibility.Visible;
              
-                string url = string.Format("http://message.bilibili.com/api/notify/query.replyme.list.do?_device=wp&&_ulv=10000&access_key={0}&actionKey=appkey&appkey={1}&build=410005&data_type=1&page_size=40&platform=android&ts={2}", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                string url = string.Format("http://message.bilibili.com/api/notify/query.replyme.list.do?_device=wp&&_ulv=10000&access_key={0}&actionKey=appkey&appkey={1}&build=410005&data_type=1&page_size=40&platform=android&ts={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
                 MessageReplyModel model = JsonConvert.DeserializeObject<MessageReplyModel>(results);
@@ -136,7 +136,7 @@ namespace BiliBili3.Pages
             {
                 pr_Load.Visibility = Visibility.Visible;
                
-                string url = string.Format("http://message.bilibili.com/api/notify/query.atme.list.do?_device=android&&_ulv=10000&access_key={0}&actionKey=appkey&appkey={1}&build=518000&data_type=1&page_size=40&platform=android&ts={2}", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                string url = string.Format("http://message.bilibili.com/api/notify/query.atme.list.do?_device=android&&_ulv=10000&access_key={0}&actionKey=appkey&appkey={1}&build=518000&data_type=1&page_size=40&platform=android&ts={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
                 MessageReplyModel model = JsonConvert.DeserializeObject<MessageReplyModel>(results);
@@ -172,7 +172,7 @@ namespace BiliBili3.Pages
             {
                 pr_Load.Visibility = Visibility.Visible;
                
-                string url = string.Format("http://message.bilibili.com/api/notify/query.praiseme.list.do?_device=android&&_ulv=10000&access_key={0}&actionKey=appkey&appkey={1}&build=518000&data_type=1&page_size=40&platform=android&ts={2}", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                string url = string.Format("http://message.bilibili.com/api/notify/query.praiseme.list.do?_device=android&&_ulv=10000&access_key={0}&actionKey=appkey&appkey={1}&build=518000&data_type=1&page_size=40&platform=android&ts={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
                 MessageReplyModel model = JsonConvert.DeserializeObject<MessageReplyModel>(results);
@@ -209,7 +209,7 @@ namespace BiliBili3.Pages
                 pr_Load.Visibility = Visibility.Visible;
                
                 //http://message.bilibili.com/api/notify/query.sysnotify.list.do?_device=android&_hwid=68fc5d795c256cd1&_ulv=10000&access_key=a36a84cc8ef4ea2f92c416951c859a25&actionKey=appkey&appkey=c1b107428d337928&build=414000&data_type=1&page_size=40&platform=android&ts=1461404973000&sign=fc3b4e26348a1204e2064e7712d10179
-                string url = string.Format("https://message.bilibili.com/api/notify/query.sysnotify.list.do?_device=android&&_ulv=10000&access_key={0}&actionKey=appkey&appkey={1}&build=518000&data_type=1&page_size=40&platform=android&ts={2}", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                string url = string.Format("https://message.bilibili.com/api/notify/query.sysnotify.list.do?_device=android&&_ulv=10000&access_key={0}&actionKey=appkey&appkey={1}&build=518000&data_type=1&page_size=40&platform=android&ts={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
                 MessageReplyModel model = JsonConvert.DeserializeObject<MessageReplyModel>(results);
@@ -240,7 +240,7 @@ namespace BiliBili3.Pages
                 pr_Load.Visibility = Visibility.Collapsed;
                
                 // http://message.bilibili.com/api/msg/query.room.list.do?access_key=a36a84cc8ef4ea2f92c416951c859a25&actionKey=appkey&appkey=c1b107428d337928&build=414000&page_size=100&platform=android&ts=1461404884000&sign=5e212e424761aa497a75b0fb7fbde775
-                string url = string.Format("http://message.bilibili.com/api/msg/query.room.list.do?access_key={0}&actionKey=appkey&appkey={1}&build=518000&page_size=100&platform=android&ts={2}", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                string url = string.Format("http://message.bilibili.com/api/msg/query.room.list.do?access_key={0}&actionKey=appkey&appkey={1}&build=518000&page_size=100&platform=android&ts={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 MessageChatModel model = JsonConvert.DeserializeObject<MessageChatModel>(results);
@@ -272,7 +272,7 @@ namespace BiliBili3.Pages
                 pr_Load.Visibility = Visibility.Visible;
                
                 // http://message.bilibili.com/api/msg/query.room.list.do?access_key=a36a84cc8ef4ea2f92c416951c859a25&actionKey=appkey&appkey=c1b107428d337928&build=414000&page_size=100&platform=android&ts=1461404884000&sign=5e212e424761aa497a75b0fb7fbde775
-                string url = string.Format("https://message.bilibili.com/api/notify/query.notify.count.do?_device=android&_ulv=10000&access_key={0}&actionKey=appkey&appkey={1}&build=518000&platform=android&ts={2}", ApiHelper.access_key, ApiHelper._appKey, ApiHelper.GetTimeSpan);
+                string url = string.Format("https://message.bilibili.com/api/notify/query.notify.count.do?_device=android&_ulv=10000&access_key={0}&actionKey=appkey&appkey={1}&build=518000&platform=android&ts={2}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, ApiHelper.GetTimeSpan);
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string results = await WebClientClass.GetResults(new Uri(url));
                 MessageModel model = JsonConvert.DeserializeObject<MessageModel>(results);
