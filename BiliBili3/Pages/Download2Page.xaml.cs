@@ -527,11 +527,32 @@ namespace BiliBili3.Pages
             // LoadDowning();
         }
 
-        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        private async void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var l = (sender as ListView).ItemsSource as List<PartDiaplayModel>;
 
             var data = e.ClickedItem as PartDiaplayModel;
+
+            StorageFolder storageFolder = await StorageFolder.GetFolderFromPathAsync(data.path);
+            if ((await storageFolder.GetFilesAsync()).Count(x => x.FileType == ".flv")>1)
+            {
+
+                MessageDialog md = new MessageDialog("该视频由多段FLV文件组成，建议合并后观看\r\n是否要合并文件？");
+                md.Commands.Add(new UICommand("合并"){Id = 0});
+                md.Commands.Add(new UICommand("取消") { Id = 1 });
+                if (Convert.ToInt32((await md.ShowAsync()).Id) == 0)
+                {
+                    var dialog = DownloadHelper2.videoProcessingDialogs.FirstOrDefault(x => x.ID == data.cid);
+                    if (dialog == null)
+                    {
+                        dialog = new VideoProcessingDialog(data.cid, data.title + " " + data.eptitle, storageFolder);
+                        DownloadHelper2.videoProcessingDialogs.Add(dialog);
+                    }
+                    await dialog.ShowAsync();
+                    return;
+                }
+            }
+
 
             List<PlayerModel> ls = new List<PlayerModel>();
             int i = 0;
@@ -608,10 +629,7 @@ namespace BiliBili3.Pages
             await new MessageDialog("该功能还未完成").ShowAsync();
         }
 
-        private async void btn_ToMp4_Click(object sender, RoutedEventArgs e)
-        {
-            await new MessageDialog("该功能还未完成").ShowAsync();
-        }
+       
 
         private void btn_old_Click(object sender, RoutedEventArgs e)
         {
@@ -738,6 +756,40 @@ namespace BiliBili3.Pages
             //LoadDowning();
 
 
+        }
+
+        private async void Btn_UpdateDanmuSubItem_Click(object sender, RoutedEventArgs e)
+        {
+            var x = (sender as MenuFlyoutItem).DataContext as PartDiaplayModel;
+            var path = x.path + @"\" + x.cid + ".xml";
+            await DownloadHelper2.UpdateDanmu(path, x.cid);
+            Utils.ShowMessageToast("更新弹幕完成");
+        }
+        private async void btn_ToMp4_Click(object sender, RoutedEventArgs e)
+        {
+            var model = (sender as MenuFlyoutItem).DataContext as PartDiaplayModel;
+            StorageFolder storageFolder =await StorageFolder.GetFolderFromPathAsync(model.path);
+
+            if ((await storageFolder.GetFilesAsync()).Any(x=>x.FileType==".flv"))
+            {
+                var dialog = DownloadHelper2.videoProcessingDialogs.FirstOrDefault(x => x.ID == model.cid);
+                if (dialog==null)
+                {
+                    dialog = new VideoProcessingDialog(model.cid, model.title + " " + model.eptitle, storageFolder);
+                    DownloadHelper2.videoProcessingDialogs.Add(dialog);
+                }
+                await dialog.ShowAsync();
+            }
+            else
+            {
+                Utils.ShowMessageToast("该视频已经是MP4格式了");
+            }
+        }
+
+        private async void Btn_OpenFolder_Click(object sender, RoutedEventArgs e)
+        {
+            var model = (sender as MenuFlyoutItem).DataContext as PartDiaplayModel;
+            await Windows.System.Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(model.path));
         }
     }
     public class DownloadDisplayInfo

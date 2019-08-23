@@ -58,10 +58,8 @@ namespace BiliBili3.Pages
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Disabled;
-            SYEngine.Core.Initialize();
             danmakuParse = new DanmakuParse();
             MTC.DanmuLoaded += MTC_DanmuLoaded;
-            CoreWindow.GetForCurrentThread().KeyDown += PlayerPage_KeyDown;
             if (SettingHelper.Get_BackPlay())
             {
                 _systemMediaTransportControls = SystemMediaTransportControls.GetForCurrentView();
@@ -103,6 +101,10 @@ namespace BiliBili3.Pages
         {
 
             args.Handled = true;
+            if (sp_View.IsPaneOpen)
+            {
+                return;
+            }
             switch (args.VirtualKey)
             {
                 case Windows.System.VirtualKey.Space:
@@ -116,8 +118,6 @@ namespace BiliBili3.Pages
                     }
                     break;
                 case Windows.System.VirtualKey.Left:
-
-
                     TimeSpan ts = new TimeSpan(0, 0, Convert.ToInt32(mediaElement.Position.TotalSeconds - 3));
                     mediaElement.Position = ts;
                     Utils.ShowMessageToast(mediaElement.Position.Hours.ToString("00") + ":" + mediaElement.Position.Minutes.ToString("00") + ":" + mediaElement.Position.Seconds.ToString("00"), 3000);
@@ -164,11 +164,15 @@ namespace BiliBili3.Pages
                     break;
             }
         }
+
+     
+
         SystemMediaTransportControls _systemMediaTransportControls;
         private DisplayRequest dispRequest = null;//保持屏幕常亮
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            CoreWindow.GetForCurrentThread().KeyDown += PlayerPage_KeyDown;
             this.Frame.Visibility = Visibility.Visible;
             int flag = 1;
             while (true)
@@ -208,6 +212,7 @@ namespace BiliBili3.Pages
             {
                 ClosePLayer();
                 //Debug.WriteLine("开始返回");
+                CoreWindow.GetForCurrentThread().KeyDown -= PlayerPage_KeyDown;
                 this.Frame.Visibility = Visibility.Collapsed;
                 mediaElement.Pause();
                 int i = 0;
@@ -1247,6 +1252,7 @@ namespace BiliBili3.Pages
                     AddLog("填充弹幕中...");
                     DanMuPool = await danmakuParse.ParseBiliBili(item);
                 }
+                
                 if (item.FileType == ".mp4" || item.FileType == ".flv")
                 {
                     paths.Add(item.Path);
@@ -1258,25 +1264,33 @@ namespace BiliBili3.Pages
                 }
 
             }
-            var s = await PlayLocalVideo(paths);
-            mediaElement.SetMediaStreamSource(s);
+            if (paths.Count==1)
+            {
+                var file = await StorageFile.GetFileFromPathAsync(paths[0]);
+                mediaElement.SetSource(await file.OpenReadAsync(), file.ContentType);
+            }
+            else
+            {
+                var s = await PlayLocalVideo(paths);
+                mediaElement.SetMediaStreamSource(s);
+            }
             MTC.HideLog();
             //playNow.Path
         }
 
         private async Task<MediaStreamSource> PlayLocalVideo(List<string> paths)
         {
+            var playList = new SYEngine.Playlist(SYEngine.PlaylistTypes.LocalFile);
+           
             MediaComposition composition = new MediaComposition();
             foreach (var item in paths)
             {
-
+                playList.Append(item,0,0);
                 var file = await StorageFile.GetFileFromPathAsync(item);
                 var clip = await MediaClip.CreateFromFileAsync(file);
                 composition.Clips.Add(clip);
-
             }
-            return composition.GenerateMediaStreamSource();
-
+             return composition.GenerateMediaStreamSource();
         }
 
 
@@ -2347,6 +2361,7 @@ namespace BiliBili3.Pages
             {
                 Utils.ShowMessageToast("请先登录!", 3000);
             }
+            CoreWindow.GetForCurrentThread().KeyDown -= PlayerPage_KeyDown;
             hidePointerFlag = true;
             mediaElement.Pause();
             SendDanmakuDialog dialog = new SendDanmakuDialog(playNow.Aid, playNow.Mid, mediaElement.Position.TotalSeconds);
@@ -2368,6 +2383,7 @@ namespace BiliBili3.Pages
                 mediaElement.Play();
             });
             await dialog.ShowAsync();
+            CoreWindow.GetForCurrentThread().KeyDown += PlayerPage_KeyDown;
             hidePointerFlag = false;
             mediaElement.Play();
         }
@@ -2661,6 +2677,12 @@ namespace BiliBili3.Pages
             }
             SettingHelper.Set_UseDASH(sw_UseDASH.IsOn);
             Utils.ShowMessageToast("更改清晰度或重新加载生效");
+        }
+
+
+        private void Sp_View_PaneClosed(SplitView sender, object args)
+        {
+           
         }
     }
 

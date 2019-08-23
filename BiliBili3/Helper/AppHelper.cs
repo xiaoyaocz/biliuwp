@@ -83,7 +83,10 @@ namespace BiliBili3.Helper
         }
         public static string verStr = string.Format(@"Ver {0} 2019-08-21
 01、修复直播分区显示问题
-02、修复下载问题
+02、优化下载
+03、支持离线视频处理
+04、支持播放器快捷键自定义
+05、修复其他一些小问题
 
 /Ver 3.9.26.0&3.9.27.0 2019-08-15
 01、修复番剧播放问题

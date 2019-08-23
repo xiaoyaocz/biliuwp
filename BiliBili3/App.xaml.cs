@@ -98,8 +98,7 @@ namespace BiliBili3
         /// <param name="e">有关启动请求和过程的详细信息。</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
-
+            SYEngine.Core.Initialize();
             RegisterExceptionHandlingSynchronizationContext();
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
@@ -279,6 +278,7 @@ namespace BiliBili3
                 }
                 else
                 {
+                    SYEngine.Core.Initialize();
                     // 创建要充当导航上下文的框架，并导航到第一页
                     rootFrame = new Frame();
                     rootFrame.NavigationFailed += OnNavigationFailed;
@@ -412,12 +412,13 @@ namespace BiliBili3
 
         protected override void OnFileActivated(FileActivatedEventArgs args)
         {
-
+            
             RegisterExceptionHandlingSynchronizationContext();
             StartModel par = new StartModel() { StartType = StartTypes.File, Par3 = args.Files };
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame == null)
             {
+                SYEngine.Core.Initialize();
                 rootFrame = new Frame();
                 Window.Current.Content = rootFrame;
             }

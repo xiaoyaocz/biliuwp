@@ -73,7 +73,7 @@ namespace BiliBili3.Pages
             error.Visibility = Visibility.Collapsed;
             _aid = (e.Parameter as object[])[0].ToString();
             txt_Header.Text = "AV" + _aid;
-            cb_Qu.SelectedIndex = SettingHelper.Get_DownQualit() - 1;
+
             GetFavBox();
             pivot.SelectedIndex = 0;
             LoadVideo();
@@ -1250,6 +1250,40 @@ namespace BiliBili3.Pages
             }
 
 
+        }
+
+        private async void Btn_Like_Click(object sender, RoutedEventArgs e)
+        {
+            if (!ApiHelper.IsLogin() && !await Utils.ShowLoginDialog())
+            {
+                Utils.ShowMessageToast("请登录后再执行操作");
+                return;
+            }
+            try
+            {
+                var body = $"access_key={ApiHelper.access_key}&aid={_aid}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&platform=android&dislike=0&like=0&ts={ApiHelper.GetTimeSpan}";
+                body += "&sign=" + ApiHelper.GetSign(body);
+                var results = await WebClientClass.PostResults(new Uri("https://app.bilibili.com/x/v2/view/like"), body);
+                var obj = JObject.Parse(results);
+                if (obj["code"].ToInt32() == 0)
+                {
+                    Utils.ShowMessageToast("点赞完成");
+                }
+                else
+                {
+                    Utils.ShowMessageToast(obj["message"].ToString());
+                }
+            }
+            catch (Exception)
+            {
+                Utils.ShowMessageToast("点赞失败了啊");
+            }
+        }
+
+
+        private void Btn_Like_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            Btn_Triple_Click(sender, null);
         }
     }
 }

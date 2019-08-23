@@ -8,7 +8,9 @@
     mc:Ignorable="d">
     <Page.Resources>
         <MenuFlyout x:Name="menu">
-
+            <MenuFlyoutItem x:Name="btn_ToMp4" Click="btn_ToMp4_Click">转为Mp4</MenuFlyoutItem>
+            <MenuFlyoutItem x:Name="btn_UpdateDanmuSubItem" Click="Btn_UpdateDanmuSubItem_Click">更新弹幕</MenuFlyoutItem>
+            <MenuFlyoutItem x:Name="btn_OpenFolder" Click="Btn_OpenFolder_Click">打开文件夹</MenuFlyoutItem>
             <MenuFlyoutItem x:Name="btn_Delete" Click="btn_Delete_Click">删除</MenuFlyoutItem>
         </MenuFlyout>
     </Page.Resources>
@@ -206,15 +208,19 @@
                                                 <Setter Property="BorderBrush" Value="#FFCBCBCB"/>
                                                 <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"/>
                                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-
+                                                <Setter Property="Padding" Value="0"/>
                                                 <Setter Property="Margin" Value="8 4"/>
-                                                <Setter Property="Padding" Value="8 0"/>
                                             </Style>
                                         </ListView.ItemContainerStyle>
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Holding="Grid_Holding" RightTapped="Grid_RightTapped">
-                                                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding eptitle}"></TextBlock>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Padding="8 0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="{Binding eptitle}"></TextBlock>
+                                                    <AppBarButton Grid.Column="1"  Width="48" Height="48" Icon="More" Flyout="{StaticResource menu}"></AppBarButton>
                                                 </Grid>
 
                                             </DataTemplate>
@@ -231,8 +237,8 @@
                     </StackPanel>
                     <CommandBar Grid.Row="1"  Foreground="White" Background="{ThemeResource Bili-ForeColor}" >
                         <AppBarButton Icon="Refresh" x:Name="btn_Refresh" Click="btn_Refresh_Click" Foreground="White" Label="刷新"></AppBarButton>
-                        <AppBarButton Icon="CellPhone" x:Name="btn_SendToPhone" Click="btn_SendToPhone_Click" Foreground="White" Label="发送到手机"></AppBarButton>
-                        <AppBarButton Icon="OpenFile" x:Name="btn_ToMp4" Click="btn_ToMp4_Click" Foreground="White" Label="转换MP4"></AppBarButton>
+                        <AppBarButton Icon="CellPhone" x:Name="btn_SendToPhone" Visibility="Collapsed" Click="btn_SendToPhone_Click" Foreground="White" Label="发送到手机"></AppBarButton>
+                      
                     </CommandBar>
                 </Grid>
 

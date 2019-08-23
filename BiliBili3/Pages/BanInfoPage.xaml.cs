@@ -201,9 +201,14 @@ namespace BiliBili3.Pages
                         });
                         model.result.episodes = model.result.episodes.OrderByDescending(x => x.orderindex).ToList();
                         //设置下载清晰度
-                        var q = await download.GetSeasonQualitys(model.result.episodes[0].av_id.ToString(), model.result.episodes[0].danmaku.ToString(), model.result.episodes[0].season_type, ApiHelper.access_key, ApiHelper.GetUserId());
-                        cb_Qu.ItemsSource = q.data;
-                        cb_Qu.SelectedIndex = 0;
+                        if (model.result.episodes.Count!=0)
+                        {
+                            
+                            var q = await download.GetSeasonQualitys(model.result.episodes[0].av_id.ToString(), model.result.episodes[0].danmaku.ToString(), model.result.episodes[0].season_type, ApiHelper.access_key, ApiHelper.GetUserId());
+                            cb_Qu.ItemsSource = q.data;
+                            cb_Qu.SelectedIndex = 0;
+                        }
+                      
                     }
 
 
@@ -603,12 +608,15 @@ namespace BiliBili3.Pages
                     if (comment.CommentCount == 0)
                     {
                         await Task.Delay(200);
-                        comment.LoadComment(new LoadCommentInfo()
+                        if (cb_H.SelectedItem!=null)
                         {
-                            commentMode = CommentMode.Video,
-                            conmmentSortMode = ConmmentSortMode.All,
-                            oid = (cb_H.SelectedItem as episodesModel).av_id
-                        });
+                            comment.LoadComment(new LoadCommentInfo()
+                            {
+                                commentMode = CommentMode.Video,
+                                conmmentSortMode = ConmmentSortMode.All,
+                                oid = (cb_H.SelectedItem as episodesModel).av_id
+                            });
+                        }
                     }
 
                     break;
@@ -772,8 +780,8 @@ namespace BiliBili3.Pages
                     var downloadUrl = await download.GetSeasonDownloadUrl(item.av_id.ToString(), item.danmaku.ToString(),_banId.ToInt32(), item.season_type, cb_Qu.SelectedItem as QualityInfo,ApiHelper.access_key, ApiHelper.GetUserId());
                     if (!downloadUrl.success)
                     {
-                        await new MessageDialog($"{item.index} {item.index_title}读取下载地址失败,已跳过").ShowAsync();
-                        break;
+                        await new MessageDialog($"{item.index} {item.index_title}下载失败:{downloadUrl.message}").ShowAsync();
+                        continue;
                     }
 
                    await DownloadHelper2.CreateDownload(new DownloadTaskModel()

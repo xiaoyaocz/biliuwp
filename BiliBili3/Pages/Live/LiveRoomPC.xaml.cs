@@ -121,10 +121,12 @@ namespace BiliBili3.Pages.Live
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            this.Loaded += delegate { this.Focus(FocusState.Programmatic); };
             this.Frame.Visibility = Visibility.Visible;
             base.OnNavigatedTo(e);
             if (e.NavigationMode == NavigationMode.New)
             {
+               
                 roomId = Convert.ToInt32((e.Parameter as object[])[0]);
                 _biliLiveDanmu = new BiliLiveDanmu();
                 _biliLiveDanmu.HasDanmu += _biliLiveDanmu_HasDanmu;
@@ -139,9 +141,10 @@ namespace BiliBili3.Pages.Live
                 dispRequest.RequestActive(); // 激活显示请求
             }
         }
+
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            base.OnNavigatedFrom(e);
             Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().ExitFullScreenMode();
             if (freeSilverTimer != null && freeSilverTimer.IsEnabled)
             {
@@ -152,6 +155,7 @@ namespace BiliBili3.Pages.Live
             {
                 dispRequest = null;
             }
+            base.OnNavigatedFrom(e);
         }
 
         /// <summary>

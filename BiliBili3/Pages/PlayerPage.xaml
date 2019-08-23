@@ -29,10 +29,10 @@
 
 
     </Page.Resources>
-    <Grid Background="Black">
+    <Grid Background="Black" >
         <Grid PointerEntered="mediaElement_PointerEntered" PointerMoved="Grid_PointerMoved">
 
-            <SplitView  x:Name="sp_View" PanePlacement="Right" PaneBackground="#B2000000" >
+            <SplitView  x:Name="sp_View"  PaneClosed="Sp_View_PaneClosed" PanePlacement="Right" PaneBackground="#B2000000" >
                 <SplitView.Pane>
                     <Grid RequestedTheme="Dark">
                         <ListView  SelectionChanged="gv_play_SelectionChanged" Margin="10" IsItemClickEnabled="True" Name="gv_play">

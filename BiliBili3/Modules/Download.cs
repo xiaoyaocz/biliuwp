@@ -51,6 +51,21 @@ namespace BiliBili3.Modules
                         data = list
                     };
                 }
+                else if (model.code == -10403 && model.message == "大会员专享限制")
+                {
+                    return new ReturnModel<List<QualityInfo>>()
+                    {
+                        success = true,
+                        message = "",
+                        data = new List<QualityInfo>() {
+                            new QualityInfo() { Description = "高清 1080P", Qn = 80 },
+                            new QualityInfo() { Description = "高清 720P", Qn = 64 },
+                            new QualityInfo() { Description = "清晰 480P", Qn = 32 },
+                            new QualityInfo() { Description = "流畅 360P", Qn = 16 }
+                        }
+                    };
+
+                }
                 else
                 {
                     return new ReturnModel<List<QualityInfo>>()
@@ -85,28 +100,19 @@ namespace BiliBili3.Modules
         /// <returns></returns>
         public async Task<ReturnModel<List<DownloadUrlInfo>>> GetSeasonDownloadUrl(string aid, string cid, int season_id, int season_type, QualityInfo quality, string access_key = "", string mid = "")
         {
+
             if (quality.Qn != 0)
             {
                 var andorid_api = await GetSeasonDownloadUrlAndroidApi(aid, cid, season_type, quality, access_key, mid);
-                if (andorid_api != null)
+                if (andorid_api.success || andorid_api.message == "大会员专享限制")
                 {
-                    return new ReturnModel<List<DownloadUrlInfo>>()
-                    {
-                        success = true,
-                        message = "",
-                        data = andorid_api
-                    };
+                    return andorid_api;
                 }
             }
             var moe_api = await GetSeasonDownloadUrlMoeApi(season_id, cid, aid, quality, "");
-            if (moe_api != null)
+            if (moe_api.success)
             {
-                return new ReturnModel<List<DownloadUrlInfo>>()
-                {
-                    success = true,
-                    message = "",
-                    data = moe_api
-                };
+                return moe_api;
             }
 
             return new ReturnModel<List<DownloadUrlInfo>>()
@@ -115,7 +121,7 @@ namespace BiliBili3.Modules
                 message = "无法读取下载地址"
             };
         }
-        private async Task<List<DownloadUrlInfo>> GetSeasonDownloadUrlAndroidApi(string aid, string cid, int season_type, QualityInfo quality, string access_key = "", string mid = "")
+        private async Task<ReturnModel<List<DownloadUrlInfo>>> GetSeasonDownloadUrlAndroidApi(string aid, string cid, int season_type, QualityInfo quality, string access_key = "", string mid = "")
         {
             try
             {
@@ -145,20 +151,33 @@ namespace BiliBili3.Modules
                             Url = item.url
                         });
                     }
-                    return downloadUrls;
+                    return new ReturnModel<List<DownloadUrlInfo>>()
+                    {
+                        success = true,
+                        message = "",
+                        data = downloadUrls
+                    };
                 }
                 else
                 {
-                    return null;
+                    return new ReturnModel<List<DownloadUrlInfo>>()
+                    {
+                        success = false,
+                        message = model.message
+                    };
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return null;
+                return new ReturnModel<List<DownloadUrlInfo>>()
+                {
+                    success = false,
+                    message = "读取下载地址错误"
+                };
             }
         }
-        private async Task<List<DownloadUrlInfo>> GetSeasonDownloadUrlMoeApi(int season_id, string cid, string aid, QualityInfo quality, string epid = "")
+        private async Task<ReturnModel<List<DownloadUrlInfo>>> GetSeasonDownloadUrlMoeApi(int season_id, string cid, string aid, QualityInfo quality, string epid = "")
         {
             try
             {
@@ -187,17 +206,31 @@ namespace BiliBili3.Modules
                             Url = item["url"].ToString()
                         });
                     }
-                    return downloadUrls;
+                    return new ReturnModel<List<DownloadUrlInfo>>()
+                    {
+                        success = true,
+                        message = "",
+                        data = downloadUrls
+                    };
+
                 }
                 else
                 {
-                    return null;
+                    return new ReturnModel<List<DownloadUrlInfo>>()
+                    {
+                        success = false,
+                        message = model.message
+                    };
                 }
 
             }
             catch (Exception ex)
             {
-                return null;
+                return new ReturnModel<List<DownloadUrlInfo>>()
+                {
+                    success = false,
+                    message = "读取下载地址错误"
+                };
             }
         }
 
@@ -212,6 +245,7 @@ namespace BiliBili3.Modules
         /// <returns></returns>
         public async Task<ReturnModel<List<QualityInfo>>> GetVideoQualitys(string aid, string cid, string access_key = "", string mid = "")
         {
+
             try
             {
                 string url = ApiHelper.GetSignWithUrl($"https://app.bilibili.com/x/playurl?npcybs=0&mobi_app=android&fnval=0&fnver=0&platform=android&fourk=1&build={ ApiHelper.build }&actionkey=appkey&appkey={ApiHelper.AndroidVideoKey.Appkey }&otype=json&qn=0&device=android&aid={aid}&cid={cid}&force_host=0&ts={ApiHelper.GetTimeSpan_2}{ ((access_key == "") ? "" : $"&access_key={access_key}&mid={mid}")}", ApiHelper.AndroidVideoKey);
@@ -219,6 +253,22 @@ namespace BiliBili3.Modules
                 var model = JsonConvert.DeserializeObject<VideoUrlInfo>(results);
                 if (model.code == 0)
                 {
+                    //未登录只能下载480P视频
+                    if (access_key == "")
+                    {
+                        return new ReturnModel<List<QualityInfo>>()
+                        {
+                            success = true,
+                            message = "",
+                            data = new List<QualityInfo>() {
+                                new QualityInfo(){
+                                    Description="清晰 480P(登录下载更多清晰度)",
+                                    Qn=32
+                                }
+                            }
+                        };
+                    }
+
                     List<QualityInfo> list = new List<QualityInfo>();
 
                     for (int i = 0; i < model.data.accept_quality.Count; i++)
@@ -229,11 +279,7 @@ namespace BiliBili3.Modules
                             Qn = model.data.accept_quality[i]
                         });
                     }
-                    //未登录不给下载1080+的视频
-                    if (access_key == "")
-                    {
-                        list.RemoveAll(x => x.Qn > 80);
-                    }
+                    
                     return new ReturnModel<List<QualityInfo>>()
                     {
                         success = true,

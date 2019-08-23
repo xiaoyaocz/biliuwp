@@ -303,6 +303,9 @@
     <Compile Include="Controls\SendDanmakuDialog.xaml.cs">
       <DependentUpon>SendDanmakuDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\VideoProcessingDialog.xaml.cs">
+      <DependentUpon>VideoProcessingDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WrapPanel.cs" />
     <Compile Include="Helper\ApiHelper.cs" />
     <Compile Include="Helper\AppHelper.cs" />
@@ -313,6 +316,7 @@
     <Compile Include="Helper\ExceptionHandler.cs" />
     <Compile Include="Helper\LogHelper.cs" />
     <Compile Include="Helper\MD5.cs" />
+    <Compile Include="Helper\MediaProcessing.cs" />
     <Compile Include="Helper\MessageCenter.cs" />
     <Compile Include="Helper\MusicHelper.cs" />
     <Compile Include="Helper\PlayurlHelper.cs" />
@@ -775,6 +779,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SendDanmakuDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\VideoProcessingDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

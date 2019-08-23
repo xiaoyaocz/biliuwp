@@ -15,6 +15,7 @@ using System.Diagnostics;
 using BiliBili3.Pages;
 using NSDanmaku;
 using BiliBili3.Modules;
+using BiliBili3.Controls;
 
 namespace BiliBili3.Helper
 {
@@ -48,6 +49,7 @@ namespace BiliBili3.Helper
         public static Dictionary<string, string> downloadeds = new Dictionary<string, string>();
         public static BackgroundTransferGroup group = BackgroundTransferGroup.CreateGroup("BILIBILIUWP");//下载组，方便管理
         public List<string> downedList;
+        public static List<VideoProcessingDialog> videoProcessingDialogs=new List<VideoProcessingDialog>();
         public static async Task CreateDownload(DownloadTaskModel m, List<DownloadUrlInfo> downloadUrls)
         {
             //var urls = await PlayurlHelper.GetVideoUrl_Download(m);

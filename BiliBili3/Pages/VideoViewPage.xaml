@@ -513,6 +513,7 @@
         <CommandBar x:Name="com_bar"   HorizontalAlignment="Right"   Foreground="White"  Background="{ThemeResource Bili-ForeColor}">
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Name="Video_Refresh" Icon="Refresh"  Label="刷新" Click="Video_Refresh_Click"/>
+                <AppBarButton Icon="Play" Label="播放" x:Name="btn_Play" Click="btn_Play_Click"></AppBarButton>
                 <AppBarButton x:Name="btn_Triple" Icon="Like"  Label="一键三连" Click="Btn_Triple_Click"/>
                 <AppBarButton x:Name="btn_AddToView"  Icon="Add"   Label="添加稍后再看" Click="btn_AddToView_Click"/>
                 <AppBarButton x:Name="btn_GoBrowser"  Icon="Go"   Label="浏览器打开" Click="btn_GoBrowser_Click"/>
@@ -528,7 +529,7 @@
                 </AppBarButton>
 
             </CommandBar.SecondaryCommands>
-            <AppBarButton Icon="Play" Foreground="White" Label="播放" x:Name="btn_Play" Click="btn_Play_Click"></AppBarButton>
+            <AppBarButton Icon="Like" Foreground="White" Label="点赞" x:Name="btn_Like" Click="Btn_Like_Click" Holding="Btn_Like_Holding"></AppBarButton>
             <AppBarButton Icon="Emoji2"  Label="投币" Foreground="White">
                 <AppBarButton.Flyout>
                     <Flyout x:Name="grid_Tb">
