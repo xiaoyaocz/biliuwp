@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -88,7 +89,7 @@ namespace BiliBili3.Models
         {
             get
             {
-                if (live_status == 1 )
+                if (live_status == 1)
                 {
                     return Visibility.Visible;
                 }
@@ -162,7 +163,7 @@ namespace BiliBili3.Models
         {
             get
             {
-                if (vip==1|| svip==1)
+                if (vip == 1 || svip == 1)
                 {
                     return true;
                 }
@@ -177,7 +178,7 @@ namespace BiliBili3.Models
         {
             get
             {
-                if (vip==1)
+                if (vip == 1)
                 {
                     return "老爷到期时间:" + vip_time;
                 }
@@ -193,7 +194,7 @@ namespace BiliBili3.Models
                     }
                 }
             }
-        } 
+        }
 
 
     }
@@ -270,16 +271,20 @@ namespace BiliBili3.Models
         public int code { get; set; }
         public string message { get; set; }
 
-    
-       public string type { get; set;}
+
+        public string type { get; set; }
         public int uid { get; set; }
         public int short_id { get; set; }
         public string tags { get; set; }
         public int online { get; set; }
         public string uname { get; set; }
-        public string Uname { get {
+        public string Uname
+        {
+            get
+            {
                 return uname.Replace("<em class=\"keyword\">", "").Replace("</em>", "");
-            } }
+            }
+        }
 
 
         public string uface { get; set; }
@@ -295,9 +300,13 @@ namespace BiliBili3.Models
         }
 
         public string title { get; set; }
-        public string Title { get {
+        public string Title
+        {
+            get
+            {
                 return title.Replace("<em class=\"keyword\">", "").Replace("</em>", "");
-            } }
+            }
+        }
 
         public string user_cover { get; set; }
         public int roomid { get; set; }
@@ -327,14 +336,15 @@ namespace BiliBili3.Models
         {
             get
             {
-                if (live_status==1)
+                if (live_status == 1)
                 {
                     return Visibility.Visible;
                 }
-                else{
+                else
+                {
                     return Visibility.Collapsed;
                 }
-               
+
             }
         }
 
@@ -356,24 +366,45 @@ namespace BiliBili3.Models
         }
     }
 
-    public class AllLiveModel
+    public class RoomListModel
+    {
+        public int count { get; set; }
+        public ObservableCollection<RoomListItem> list { get; set; }
+
+    }
+    public class RoomListItem
+    {
+        public int roomid { get; set; }
+        public string cover { get; set; }
+        public string face { get; set; }
+        public string title { get; set; }
+        public string uname { get; set; }
+        public string online { get; set; }
+        public string area_name { get; set; }
+        public int area_id { get; set; }
+        public string parent_name { get; set; }
+    }
+
+
+    public class SignModel
     {
         public int code { get; set; }
-        public string message { get; set; }
-        public List<AllLiveModel> data { get; set; }
+        public string msg { get; set; }
+        public object data { get; set; }
 
-        public AllLiveModel owner { get; set; }
+        public string text { get; set; }
+        public int status { get; set; }//1已签到，0未签到
+        public int taskStatus { get; set; }
+
+        //用于用户
+        public string uname { get; set; }
         public string face { get; set; }
-        public string mid { get; set; }
-        public string name { get; set; }
-        public AllLiveModel cover { get; set; }
-        public string src { get; set; }
-
-        public string title { get; set; }
-        public string room_id { get; set; }
-        public string online { get; set; }
-        public string area { get; set; }
-
+        public double silver { get; set; }
+        public double gold { get; set; }
+        public int vip { get; set; }//0为false,1为true
+        public int svip { get; set; }//0为false,1为true
+        public int user_level { get; set; }//现在等级
+        public int user_next_level { get; set; }//下一等级
     }
 
     public class LiveVideoModel
@@ -448,28 +479,6 @@ namespace BiliBili3.Models
         }
     }
 
-    public class SignModel
-    {
-        public int code { get; set; }
-        public string msg { get; set; }
-        public object data { get; set; }
-
-        public string text { get; set; }
-        public int status { get; set; }//1已签到，0未签到
-        public int taskStatus { get; set; }
-
-        //用于用户
-        public string uname { get; set; }
-        public string face { get; set; }
-        public double silver { get; set; }
-        public double gold { get; set; }
-        public int vip { get; set; }//0为false,1为true
-        public int svip { get; set; }//0为false,1为true
-        public int user_level { get; set; }//现在等级
-        public int user_next_level { get; set; }//下一等级
-    }
-
-
     public class LiveInfoModel
     {
         public int code { get; set; }
@@ -526,5 +535,5 @@ namespace BiliBili3.Models
             }
         }
     }
-  
+
 }

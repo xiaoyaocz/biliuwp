@@ -25,7 +25,7 @@
                         <RowDefinition Height="48"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Image   Source="{Binding Path=cover.src}" Stretch="UniformToFill"  ></Image>
+                    <Image   Source="{Binding Path=cover}" Stretch="UniformToFill"  ></Image>
                     <Grid  Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -33,7 +33,7 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Horizontal" Margin="10,0,10,5" >
 
-                            <TextBlock Text="{Binding Path=owner.name}" FontSize="13" TextTrimming="CharacterEllipsis" Foreground="Gray" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="{Binding Path=uname}" FontSize="13" TextTrimming="CharacterEllipsis" Foreground="Gray" VerticalAlignment="Center"></TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="10,0,10,5" HorizontalAlignment="Right">
                             <FontIcon Glyph="&#xE13D;" FontSize="12"  Foreground="Gray"  Margin="0,0,5,0"></FontIcon>
@@ -85,26 +85,18 @@
             </GridView.ItemsPanel>
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Margin="10 0" Text="{Binding tag_name}"></TextBlock>
+                    <TextBlock Margin="8 0" Text="{Binding name}"></TextBlock>
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
-                    <Setter Property="Margin" Value="5"></Setter>
+                    <Setter Property="Margin" Value="4"></Setter>
                 </Style>
             </GridView.ItemContainerStyle>
         </GridView>
         <CommandBar x:Name="com_bar" Grid.Row="2" VerticalAlignment="Bottom" Background="{ThemeResource Bili-ForeColor}" Foreground="White">
-            <AppBarToggleButton x:Name="btn_Type" Checked="btn_Type_Checked" Unchecked="btn_Type_Unchecked" Icon="Filter" Foreground="White" Label="标签" ></AppBarToggleButton>
-            <AppBarButton Icon="Sort" Label="排序" Foreground="White">
-                <AppBarButton.Flyout>
-                    <MenuFlyout x:Name="menu">
-                        <ToggleMenuFlyoutItem x:Name="btn_TJ" IsChecked="True" Text="推荐" Click="btn_TJ_Click" Tag="recommend"></ToggleMenuFlyoutItem>
-                        <ToggleMenuFlyoutItem x:Name="btn_Hot" Text="最热" Click="btn_TJ_Click"  Tag="hottest"></ToggleMenuFlyoutItem>
-                        <ToggleMenuFlyoutItem x:Name="btn_New" Text="最新" Click="btn_TJ_Click"  Tag="latest"></ToggleMenuFlyoutItem>
-                    </MenuFlyout>
-                </AppBarButton.Flyout>
-            </AppBarButton>
+            <AppBarToggleButton x:Name="btn_Type" Visibility="Visible" Checked="btn_Type_Checked" Unchecked="btn_Type_Unchecked" Icon="Sort" Foreground="White" Label="分类" ></AppBarToggleButton>
+          
             <AppBarButton x:Name="btn_Refresh" Icon="Refresh" Label="刷新" Foreground="White" Click="btn_Refresh_Click"></AppBarButton>
         </CommandBar>
         <ProgressRing Width="56" Height="56" x:Name="pr_Load" Grid.RowSpan="2"  IsActive="True" Visibility="Collapsed"></ProgressRing>

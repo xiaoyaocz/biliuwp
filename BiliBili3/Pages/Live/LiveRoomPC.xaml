@@ -146,7 +146,7 @@
 
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <ComboBox x:Name="cb_quality" SelectionChanged="cb_quality_SelectionChanged" VerticalAlignment="Center" Margin="4" BorderThickness="0" DisplayMemberPath="name"></ComboBox>
+                        <ComboBox x:Name="cb_quality" SelectionChanged="cb_quality_SelectionChanged" VerticalAlignment="Center" Margin="4" BorderThickness="0" DisplayMemberPath="desc"></ComboBox>
                         <ComboBox x:Name="cb_line" SelectionChanged="cb_line_SelectionChanged" VerticalAlignment="Center" Margin="4" BorderThickness="0" DisplayMemberPath="display"></ComboBox>
                         <AppBarButton x:Name="btn_Setting" Click="btn_Setting_Click" Icon="Setting" Width="48" Height="48" Foreground="White"></AppBarButton>
                         <AppBarButton x:Name="btn_Share" Click="btn_Share_Click"  Width="48" Height="48" Foreground="White">

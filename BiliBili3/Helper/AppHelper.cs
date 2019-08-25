@@ -81,12 +81,11 @@ namespace BiliBili3.Helper
         {
             return verStr.Split('/')[0];
         }
-        public static string verStr = string.Format(@"Ver {0} 2019-08-21
-01、修复直播分区显示问题
+        public static string verStr = string.Format(@"Ver {0} 2019-08-25
+01、升级直播
 02、优化下载
-03、支持离线视频处理
-04、支持播放器快捷键自定义
-05、修复其他一些小问题
+03、新增离线视频转MP4
+04、修复优化其他一些小问题
 
 /Ver 3.9.26.0&3.9.27.0 2019-08-15
 01、修复番剧播放问题

@@ -57,7 +57,7 @@
     </Page.Resources>
     <Grid >
         <pr:PullToRefreshBox RefreshInvoked="PullToRefreshBox_RefreshInvoked">
-            <ScrollViewer x:Name="sv" Style="{StaticResource ScrollViewerStyle1}"  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <ScrollViewer x:Name="sv"  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel>
                     <Border x:Name="ViewBox2_num" Background="Gray" Width="200"></Border>
                     <Viewbox MaxWidth="640"  Grid.Column="1" >

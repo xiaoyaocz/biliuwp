@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace BiliBili3.Modules
 {
     public class IModules
     {
+
         public virtual ReturnModel HandelError(Exception ex)
         {
             if (LogHelper.IsNetworkError(ex))

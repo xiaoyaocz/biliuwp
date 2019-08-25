@@ -1235,7 +1235,7 @@ namespace BiliBili3
                     txt_Header.Text = "频道";
                     break;
                 case 2:
-                    main_frame.Navigate(typeof(LivePage));
+                    main_frame.Navigate(typeof(LiveV2Page));
 
                     txt_Header.Text = "直播";
                     break;
@@ -1320,7 +1320,7 @@ namespace BiliBili3
                     txt_Header.Text = "频道";
                     break;
                 case 2:
-                    main_frame.Navigate(typeof(LivePage));
+                    main_frame.Navigate(typeof(LiveV2Page));
 
                     txt_Header.Text = "直播";
                     break;

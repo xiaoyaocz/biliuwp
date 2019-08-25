@@ -1,8 +1,10 @@
-﻿using System;
+﻿using BiliBili3.Modules;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -23,27 +25,57 @@ namespace BiliBili3.Pages
     /// </summary>
     public sealed partial class LivePartPage : Page
     {
+        LiveArea liveArea;
         public LivePartPage()
         {
             this.InitializeComponent();
-            this.NavigationCacheMode = NavigationCacheMode.Required;
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
+            liveArea =new LiveArea();
         }
-
-        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var info = (sender as HyperlinkButton).Tag.ToString();
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(LivePartInfoPage), info);
-           
+            base.OnNavigatedTo(e);
+            if (e.NavigationMode== NavigationMode.New && pivot.ItemsSource==null)
+            {
+                await LoadData();
+            }
         }
-
+        private async Task LoadData()
+        {
+            prLoad.Visibility = Visibility.Visible;
+               var data = await liveArea.GetAreaList();
+            if (data.success)
+            {
+                pivot.ItemsSource = data.data;
+            }
+            else
+            {
+                Utils.ShowMessageToast(data.message);
+            }
+            prLoad.Visibility = Visibility.Collapsed;
+        }
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            if (e.NavigationMode== NavigationMode.Back)
+            {
+                pivot.ItemsSource = null;
+                this.NavigationCacheMode = NavigationCacheMode.Disabled;
+            }
+            base.OnNavigatingFrom(e);
+        }
         private void btn_Back_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.GoBack();
         }
 
-        private void btn_Hot_Click(object sender, RoutedEventArgs e)
+        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            this.Frame.Navigate(typeof(LiveAllPage));
+            var item = e.ClickedItem as AreaListItem;
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(LivePartInfoPage), new object[] {
+                   item.parent_id,
+                   item.id,
+                   item.name
+            });
         }
     }
 }

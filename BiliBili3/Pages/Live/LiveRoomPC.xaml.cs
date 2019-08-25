@@ -287,7 +287,7 @@ namespace BiliBili3.Pages.Live
         {
             //加载播放地址
             loadPlayurling = true;
-            var playUrl = await liveRoom.GetRoomPlayurl(roomId, 0);
+            var playUrl = await liveRoom.GetRoomPlayurl(roomId, quality);
             if (playUrl.success)
             {
                 durls = playUrl.data.durl;
@@ -296,21 +296,11 @@ namespace BiliBili3.Pages.Live
                     media.Options.Add("http-user-agent", "Mozilla/5.0 BiliDroid/1.12.0 (bbcallen@gmail.com)");
                     media.Options.Add("http-referrer", "https://live.bilibili.com/" + roomId);
                 }
-           
                 media.Source = durls[0].url;
-
-                cb_quality.ItemsSource = playUrl.data.accept_Qualities;
+                cb_quality.ItemsSource = playUrl.data.quality_description;
                 cb_line.ItemsSource = playUrl.data.durl;
-
                 cb_line.SelectedIndex = 0;
-                if (quality != 0)
-                {
-                    cb_quality.SelectedIndex = playUrl.data.accept_Qualities.FindIndex(x => x.value == quality);
-                }
-                else
-                {
-                    cb_quality.SelectedIndex = playUrl.data.accept_Qualities.FindIndex(x => x.value == playUrl.data.current_quality);
-                }
+                cb_quality.SelectedIndex = playUrl.data.quality_description.FindIndex(x => x.qn == playUrl.data.current_qn);
             }
             else
             {
@@ -897,7 +887,7 @@ namespace BiliBili3.Pages.Live
             {
                 return;
             }
-            LoadPlayUrl((cb_quality.SelectedItem as accept_qualityModel).value);
+            LoadPlayUrl((cb_quality.SelectedItem as quality_description_item).qn);
         }
         /// <summary>
         /// 点击UP信息
@@ -1448,7 +1438,7 @@ namespace BiliBili3.Pages.Live
                     uint w, h = 0;
                     media.MediaPlayer.size(0, out w, out h);
                     Debug_Data.Visibility = Visibility.Visible;
-                    txt_VideoData.Text = $"地址:{media.Source}\r\n硬件加速:{media.HardwareAcceleration}\r\n分辨率:{ w}*{ h}\r\n当前清晰度:{(cb_quality.SelectedItem as accept_qualityModel).value}";
+                    txt_VideoData.Text = $"地址:{media.Source}\r\n硬件加速:{media.HardwareAcceleration}\r\n分辨率:{ w}*{ h}\r\n当前清晰度:{(cb_quality.SelectedItem as quality_description_item).desc}({(cb_quality.SelectedItem as quality_description_item).qn})";
                 }
                 else
                 {

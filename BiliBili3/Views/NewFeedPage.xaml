@@ -29,24 +29,16 @@
 
                 <ScrollViewer   x:Name="sv" ViewChanged="sv_ViewChanged">
                     <StackPanel>
+                        <controls:FlipViewControl Margin="8"  ItemsSource="{Binding banner_items}" IntervalSeconds="3"  FlipViewHeight="300" FlipViewWidth="1020">
 
-                        <Grid>
-                            <Viewbox Margin="8">
-                                <FlipView x:Name="flipView" SelectionChanged="flipView_SelectionChanged" ItemsSource="{Binding banner_items}" Height="300" Width="1020" >
-                                    <FlipView.ItemTemplate>
-                                        <DataTemplate>
-                                            <HyperlinkButton  Click="btn_banner_Click" ToolTipService.ToolTip="{Binding title}" Margin="0" Padding="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
-                                                <Image Stretch="UniformToFill" Source="{Binding image}"></Image>
-                                            </HyperlinkButton>
-
-                                        </DataTemplate>
-                                    </FlipView.ItemTemplate>
-
-                                </FlipView>
-                            </Viewbox>
-                            <controls:FlipSpotControl x:Name="flipSpotControl" Margin="16" HorizontalAlignment="Right" VerticalAlignment="Bottom" ItemsCount="{Binding ItemsCount}" SelectIndex="{Binding ElementName=flipView,Path=SelectedIndex,Mode=OneWay}" Color="{ThemeResource Bili-ForeColor}"></controls:FlipSpotControl>
-                        </Grid>
-
+                            <controls:FlipViewControl.ItemTemplate>
+                                <DataTemplate>
+                                    <HyperlinkButton  Click="btn_banner_Click" ToolTipService.ToolTip="{Binding title}" Margin="0" Padding="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <Image Stretch="UniformToFill" Source="{Binding image}"></Image>
+                                    </HyperlinkButton>
+                                </DataTemplate>
+                            </controls:FlipViewControl.ItemTemplate>
+                        </controls:FlipViewControl>
                         <GridView x:Name="ls_feed" ItemsSource="{Binding home_datas}" ScrollViewer.VerticalScrollMode="Disabled" ItemClick="ls_feed_ItemClick" HorizontalContentAlignment="Center" SelectionMode="None" IsItemClickEnabled="True">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
@@ -123,7 +115,7 @@
                                 </DataTemplate>
                             </GridView.ItemTemplate>
                         </GridView>
-                        
+
                         <ListView ItemsSource="{Binding hot_datas}" ScrollViewer.VerticalScrollMode="Disabled"  ItemClick="Ls_hot_ItemClick" HorizontalContentAlignment="Center" SelectionMode="None" IsItemClickEnabled="True">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
@@ -149,7 +141,7 @@
                                             <TextBlock TextTrimming="CharacterEllipsis" FontSize="14" Foreground="Gray" Margin="4 2" Text="{Binding right_desc_1}"></TextBlock>
                                             <TextBlock TextTrimming="CharacterEllipsis" FontSize="14" Foreground="Gray" Margin="4 2" Text="{Binding right_desc_2}"></TextBlock>
                                         </StackPanel>
-                                        
+
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
@@ -183,13 +175,13 @@
                         </StackPanel>
                     </Grid>
                 </ScrollViewer>
-              
+
                 <AppBarButton x:Name="b_btn_Refresh" Click="b_btn_Refresh_Click" Width="48" Grid.RowSpan="2" Visibility="{Binding showRefresh}" Height="48" Margin="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Icon="Refresh" Background="{ThemeResource Bili-ForeColor}" Opacity="0.6" Foreground="White"></AppBarButton>
                 <ProgressRing Width="56" Height="56" Grid.RowSpan="2" IsActive="True" x:Name="pr_Load" Visibility="{Binding showLoading}"></ProgressRing>
             </Grid>
-            
+
         </DataTemplate>
-        
+
         <!--player-->
         <DataTemplate x:Key="goto_player">
             <ListView ItemsSource="{Binding item}" ItemClick="ls_players_ItemClick" SelectionMode="None" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled">
@@ -214,7 +206,7 @@
                         </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-              
+
             </ListView>
         </DataTemplate>
         <DataTemplate x:Key="goto_special">
@@ -231,7 +223,18 @@
         </DataTemplate>
         <DataTemplate x:Key="goto_banner">
             <!--banner-->
-            <Grid>
+            <controls:FlipViewControl Margin="8"  ItemsSource="{Binding banner_item}" IntervalSeconds="3"  FlipViewHeight="300" FlipViewWidth="1020">
+                <controls:FlipViewControl.ItemTemplate>
+                    <DataTemplate>
+                        <HyperlinkButton  Click="btn_topic_banner_Click" ToolTipService.ToolTip="{Binding title}" Margin="0" Padding="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <Image Stretch="UniformToFill" Source="{Binding image}"></Image>
+                        </HyperlinkButton>
+
+                    </DataTemplate>
+                </controls:FlipViewControl.ItemTemplate>
+            </controls:FlipViewControl>
+            
+            <!--<Grid>
                 <Viewbox Margin="8">
                     <FlipView x:Name="flipView_banner" ItemsSource="{Binding banner_item}" Height="300" Width="1020" >
                         <FlipView.ItemTemplate>
@@ -246,7 +249,7 @@
                     </FlipView>
                 </Viewbox>
 
-            </Grid>
+            </Grid>-->
         </DataTemplate>
         <DataTemplate  x:Key="goto_rcmd">
             <!--goto_content_rcmd-->
@@ -343,7 +346,7 @@
                     <HyperlinkButton Padding="0" Click="HyperlinkButton_Click">
                         <Image Source="{Binding cover}"></Image>
                     </HyperlinkButton>
-                    
+
                     <ListView ItemClick="ls_rcmd_ItemClick" ItemsSource="{Binding item}" SelectionMode="None" IsItemClickEnabled="True" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled">
                         <ListView.ItemTemplate>
                             <DataTemplate>

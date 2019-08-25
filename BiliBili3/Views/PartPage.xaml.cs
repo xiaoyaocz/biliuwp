@@ -42,7 +42,7 @@ namespace BiliBili3.Views
                 case 0:
                     //pivot_Home.SelectedIndex = 0;
                     this.Frame.GoBack();
-                    MessageCenter.SendNavigateTo(NavigateMode.Home, typeof(LivePage));
+                    MessageCenter.SendNavigateTo(NavigateMode.Home, typeof(LiveV2Page));
                     break;
                 case 1:
                     MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(PartsPage), Parts.bangumi);

@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using BiliBili3.Models;
+using BiliBili3.Modules;
+using System.Collections.ObjectModel;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -26,205 +28,107 @@ namespace BiliBili3.Pages
     /// </summary>
     public sealed partial class LivePartInfoPage : Page
     {
+        LiveArea liveArea;
         public LivePartInfoPage()
         {
             this.InitializeComponent();
-            this.NavigationCacheMode = NavigationCacheMode.Required;
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
+            liveArea = new LiveArea();
         }
+        int parent_area_id, area_id;
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.NavigationMode== NavigationMode.New)
+            if (e.NavigationMode == NavigationMode.New && gv.ItemsSource == null)
             {
-                await Task.Delay(200);
-                _pid = (e.Parameter as object[])[0].ToString();
-              
-                switch (int.Parse(_pid))
-                {
-                    case 1:
-                        top_txt_Header.Text = "单机联机";
-                        break;
-                    case 2:
-                        top_txt_Header.Text = "御宅文化";
-                        break;
-                    case 3:
-                        top_txt_Header.Text = "网络游戏";
-                        break;
-                    case 4:
-                        top_txt_Header.Text = "电子竞技";
-                        break;
-                  
-                    case 6:
-                        top_txt_Header.Text = "生活娱乐";
-                        break;
-                    case 7:
-                        top_txt_Header.Text = "放映厅";
-                        break;
-                    case 8:
-                        top_txt_Header.Text = "萌宅推荐";
-                        break;
-                    case 9:
-                        top_txt_Header.Text = "绘画专区";
-                        break;
-                    case 10:
-                        top_txt_Header.Text = "唱见舞见";
-                        break;
-                    case 11:
-                        top_txt_Header.Text = "手机直播";
-                        break;
-                    case 12:
-                        top_txt_Header.Text = "手游直播";
-                        break;
-                    case 99:
-                        top_txt_Header.Text = "精彩轮播";
-                        break;
-                    default:
-                        break;
-                }
-                grid_tag.ItemsSource = null;
-                _TJPage = 1;
-                _sort = "recommend";
-                gv.Items.Clear();
-                await  LoadType(_pid);
-                GetTJ();
+                parent_area_id = (e.Parameter as object[])[0].ToInt32();
+                area_id = (e.Parameter as object[])[1].ToInt32();
+                top_txt_Header.Text = (e.Parameter as object[])[2].ToString();
+                _page = 1;
+                await GetData();
             }
         }
-        string _pid;
-        bool _loadingTag = false;
-        private async Task LoadType(string pid)
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
+            if (e.NavigationMode== NavigationMode.Back)
+            {
+                gv.ItemsSource = null;
+                this.NavigationCacheMode = NavigationCacheMode.Disabled;
+            }
+            base.OnNavigatingFrom(e);
+
+        }
+        int _page = 1;
+        bool _Loading = true;
+        private async Task GetData()
+        {
+            _Loading = true;
             pr_Load.Visibility = Visibility.Visible;
-            List<LivePartTagModel> ls = new List<LivePartTagModel>();
-            ls.Add(new LivePartTagModel() { tag_name = "全部" });
-            try
+            var sort = "online";
+            if (grid_tag.SelectedItem != null)
             {
-                string url = string.Format("http://live.bilibili.com/AppIndex/tags?access_key={0}&appkey={1}&build=434000&mobi_app=android&platform=android",ApiHelper.access_key,ApiHelper.AndroidKey.Appkey);
-                url += "&sign=" + ApiHelper.GetSign(url);
-                string results =await WebClientClass.GetResults(new Uri(url));
-               
-                JObject obj = JObject.Parse(results);
-                if ((int)obj["code"]==0)
-                {
-                    List<string> str = JsonConvert.DeserializeObject<List<string>>(obj["data"][pid].ToString());
-                    str.ForEach(x => ls.Add(new LivePartTagModel() { tag_name= x}));
-                    
-                }
-                else
-                {
-                    Utils.ShowMessageToast(obj["message"].ToString(),3000);
-                }
+                sort = (grid_tag.SelectedItem as new_tags).sort_type;
             }
-            catch (Exception)
+            var data = await liveArea.GetRoomList(area_id, parent_area_id, _page, sort);
+            if (data.success)
             {
-                Utils.ShowMessageToast("标签读取失败", 3000);
-            }
-            finally
-            {
-                grid_tag.ItemsSource = ls;
-                _loadingTag = true;
-                grid_tag.SelectedIndex = 0;
-                _loadingTag = false;
-            }
-
-        }
-        string _sort = "recommend";
-        int _TJPage = 1;
-        bool _TJLoading = false;
-        private async void GetTJ()
-        {
-            try
-            {
-                _TJLoading = true;
-                pr_Load.Visibility = Visibility.Visible;
-               
-
-                string url = string.Format("http://live.bilibili.com/mobile/rooms?access_key={0}&appkey={1}&area_id={2}&build=434000&mobi_app=android&page={3}&platform=android&sort={4}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey,_pid, _TJPage, _sort);
-                if (grid_tag.SelectedIndex!=0&& grid_tag.SelectedIndex!=-1)
+                if (_page==1)
                 {
-                    url += "&tag="+Uri.EscapeDataString((grid_tag.SelectedItem as LivePartTagModel).tag_name);
-                }
-                url += "&sign=" + ApiHelper.GetSign(url);
-                string results = await WebClientClass.GetResults(new Uri(url));
-                AllLiveModel m = JsonConvert.DeserializeObject<AllLiveModel>(results);
-                if (m.code == 0)
-                {
-                    if (m.data.Count != 0)
+                    gv.ItemsSource = data.data.list;
+                    if (grid_tag.ItemsSource==null)
                     {
-                        m.data.ForEach(x => gv.Items.Add(x));
-                        _TJPage++;
-                    }
-                    else
-                    {
-                        Utils.ShowMessageToast("加载完了...", 3000);
+                        grid_tag.ItemsSource = data.data.new_tags;
+                        grid_tag.SelectedIndex = 0;
                     }
                 }
                 else
                 {
-                    Utils.ShowMessageToast(m.message, 3000);
+                    var list = gv.ItemsSource as ObservableCollection<RoomListItem>;
+                    foreach (var item in data.data.list)
+                    {
+                        list.Add(item);
+                    }
                 }
-
             }
-            catch (Exception ex)
+            else
             {
-                if (ex.HResult == -2147012867)
-                {
-                    Utils.ShowMessageToast("检查你的网络连接！", 3000);
-                }
-                else
-                {
-                    Utils.ShowMessageToast("发生错误\r\n" + ex.Message, 3000);
-                }
+                Utils.ShowMessageToast(data.message);
             }
-            finally
-            {
-                _TJLoading = false;
-                pr_Load.Visibility = Visibility.Collapsed;
-
-            }
+            _Loading = false;
+            pr_Load.Visibility = Visibility.Collapsed;
         }
-        private void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        private async void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-            if (sv.VerticalOffset == sv.ScrollableHeight)
+            if (sv.VerticalOffset >= sv.ScrollableHeight - 200)
             {
-                if (!_TJLoading)
+                if (!_Loading)
                 {
-                    GetTJ();
+                    _page++;
+                    await GetData();
                 }
             }
         }
 
-        private void btn_LoadMore_Click(object sender, RoutedEventArgs e)
+        private async void btn_LoadMore_Click(object sender, RoutedEventArgs e)
         {
-            if (!_TJLoading)
+            if (!_Loading)
             {
-                GetTJ();
+                _page++;
+                await GetData();
             }
         }
 
         private void gv_ItemClick(object sender, ItemClickEventArgs e)
         {
-            MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(LiveRoomPage), (e.ClickedItem as AllLiveModel).room_id);
+            MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(LiveRoomPage), (e.ClickedItem as RoomListItem).roomid);
         }
 
-        private void btn_TJ_Click(object sender, RoutedEventArgs e)
+        private async void btn_Refresh_Click(object sender, RoutedEventArgs e)
         {
-
-          
-            foreach (ToggleMenuFlyoutItem item in menu.Items)
+            if (!_Loading)
             {
-                item.IsChecked = false;
+                _page = 1;
+                await GetData();
             }
-            _sort = (sender as ToggleMenuFlyoutItem).Tag.ToString();
-            (sender as ToggleMenuFlyoutItem).IsChecked = true;
-            _TJPage = 1;
-            gv.Items.Clear();
-            GetTJ();
-        }
-
-        private  void btn_Refresh_Click(object sender, RoutedEventArgs e)
-        {
-            _TJPage = 1;
-            gv.Items.Clear();
-            GetTJ();
         }
 
         private void btn_Type_Checked(object sender, RoutedEventArgs e)
@@ -237,15 +141,14 @@ namespace BiliBili3.Pages
             grid_tag.Visibility = Visibility.Collapsed;
         }
 
-        private  void grid_tag_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void grid_tag_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (_loadingTag|| grid_tag.ItemsSource==null)
+            if (_Loading || grid_tag.ItemsSource == null)
             {
                 return;
             }
-            _TJPage = 1;
-            gv.Items.Clear();
-            GetTJ();
+            _page = 1;
+            await GetData();
         }
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -275,7 +178,7 @@ namespace BiliBili3.Pages
             }
 
 
-           
+
         }
 
         private void btn_Back_Click(object sender, RoutedEventArgs e)

@@ -24,7 +24,7 @@
                         <RowDefinition Height="48"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Image   Source="{Binding Path=cover.src}" Stretch="UniformToFill"  ></Image>
+                    <Image   Source="{Binding Path=cover}" Stretch="UniformToFill"  ></Image>
                     <Grid  Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -32,7 +32,7 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Horizontal" Margin="10,0,10,5" >
 
-                            <TextBlock Text="{Binding Path=owner.name}" FontSize="13" TextTrimming="CharacterEllipsis" Foreground="Gray" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="{Binding Path=uname}" FontSize="13" TextTrimming="CharacterEllipsis" Foreground="Gray" VerticalAlignment="Center"></TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="10,0,10,5" HorizontalAlignment="Right">
                             <FontIcon Glyph="&#xE13D;" FontSize="12"  Foreground="Gray"  Margin="0,0,5,0"></FontIcon>
@@ -42,7 +42,7 @@
                     <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10 5 10 0" VerticalAlignment="Top">
                         <TextBlock  MaxWidth="320" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" FontSize="13" >
                                              <Run Foreground="{ThemeResource Bili-ForeColor}" >#</Run>
-                                             <Run Foreground="{ThemeResource Bili-ForeColor}" Text="{Binding area}"></Run>
+                                             <Run Foreground="{ThemeResource Bili-ForeColor}" Text="{Binding area_name}"></Run>
                                              <Run Foreground="{ThemeResource Bili-ForeColor}" >#</Run>
                                             <Run Text="{Binding title}"></Run>
                         </TextBlock>
@@ -51,35 +51,7 @@
 
 
             </DataTemplate>
-            <DataTemplate x:Key="LBItem">
-                <Grid Width="{Binding ElementName=bor_Width2,Path=Width}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition ></RowDefinition>
-                        <RowDefinition Height="48"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Image   Source="{Binding Path=cover.src}" Stretch="UniformToFill"  ></Image>
-                    <Grid  Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Orientation="Horizontal" Margin="10,0,10,5" >
-
-                            <TextBlock Text="{Binding Path=owner.name}" FontSize="13" TextTrimming="CharacterEllipsis" Foreground="Gray" VerticalAlignment="Center"></TextBlock>
-                        </StackPanel>
-                       
-                    </Grid>
-                    <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10 5 10 0" VerticalAlignment="Top">
-                        <TextBlock  MaxWidth="320" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" FontSize="13" >
-                                           
-                                            <Run Text="{Binding title}"></Run>
-                        </TextBlock>
-                    </StackPanel>
-                </Grid>
-
-
-            </DataTemplate>
+        
         </ResourceDictionary>
     </Page.Resources>
     <Grid Background="{ThemeResource Bili-Background}" x:Name="g">
@@ -101,25 +73,13 @@
         <Pivot Grid.Row="1" x:Name="pivot" SelectionChanged="pivot_SelectionChanged">
             <PivotItem Margin="0">
                 <PivotItem.Header>
-                    <TextBlock FontSize="16">推荐直播</TextBlock>
+                    <TextBlock FontSize="16">热门直播</TextBlock>
                 </PivotItem.Header>
                 <ScrollViewer Grid.Row="1" Style="{StaticResource  ScrollViewerStyle1}" x:Name="sv_TJ" ViewChanged="sv_TJ_ViewChanged">
                     <StackPanel>
                         <Border x:Name="bor_Width2" Background="Gray" Width="100" VerticalAlignment="Bottom"></Border>
                         <GridView x:Name="gv_TJ" ItemClick="gv_TJ_ItemClick" HorizontalAlignment="Center" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemTemplate="{StaticResource GridItem}" ItemContainerStyle="{StaticResource itemStyle}" SelectionMode="None" IsItemClickEnabled="True"></GridView>
                         <Button Margin="10" HorizontalAlignment="Center" x:Name="btn_LoadMore_TJ" Click="btn_LoadMore_TJ_Click" FontSize="14" Foreground="Gray" Background="#00000000">点我加载更多</Button>
-                    </StackPanel>
-                </ScrollViewer>
-            </PivotItem>
-            <PivotItem Margin="0">
-                <PivotItem.Header>
-                    <TextBlock FontSize="16">最热直播</TextBlock>
-                </PivotItem.Header>
-                <ScrollViewer Grid.Row="1" Style="{StaticResource  ScrollViewerStyle1}" x:Name="sv_Hot" ViewChanged="sv_Hot_ViewChanged">
-                    <StackPanel>
-                      
-                        <GridView x:Name="gv_Hot" ItemClick="gv_TJ_ItemClick" HorizontalAlignment="Center" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemTemplate="{StaticResource GridItem}" ItemContainerStyle="{StaticResource itemStyle}" SelectionMode="None" IsItemClickEnabled="True"></GridView>
-                        <Button Margin="10" HorizontalAlignment="Center" x:Name="btn_LoadMore_Hot" Click="btn_LoadMore_Hot_Click" FontSize="14" Foreground="Gray" Background="#00000000">点我加载更多</Button>
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
@@ -132,18 +92,6 @@
 
                         <GridView x:Name="gv_New" ItemClick="gv_TJ_ItemClick" HorizontalAlignment="Center" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemTemplate="{StaticResource GridItem}" ItemContainerStyle="{StaticResource itemStyle}" SelectionMode="None" IsItemClickEnabled="True"></GridView>
                         <Button Margin="10" HorizontalAlignment="Center" x:Name="btn_LoadMore_New" Click="btn_LoadMore_New_Click" FontSize="14" Foreground="Gray" Background="#00000000">点我加载更多</Button>
-                    </StackPanel>
-                </ScrollViewer>
-            </PivotItem>
-            <PivotItem Margin="0">
-                <PivotItem.Header>
-                    <TextBlock FontSize="16">视频轮播</TextBlock>
-                </PivotItem.Header>
-                <ScrollViewer Grid.Row="1" Style="{StaticResource  ScrollViewerStyle1}" x:Name="sv_LB" ViewChanged="sv_LB_ViewChanged">
-                    <StackPanel>
-
-                        <GridView x:Name="gv_LB" ItemClick="gv_TJ_ItemClick" HorizontalAlignment="Center" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemTemplate="{StaticResource LBItem}" ItemContainerStyle="{StaticResource itemStyle}" SelectionMode="None" IsItemClickEnabled="True"></GridView>
-                        <Button Margin="10" HorizontalAlignment="Center" x:Name="btn_LoadMore_LB" Click="btn_LoadMore_LB_Click" FontSize="14" Foreground="Gray" Background="#00000000">点我加载更多</Button>
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>

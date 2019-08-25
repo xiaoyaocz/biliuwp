@@ -150,7 +150,7 @@ namespace BiliBili3.Views
             }
             if (item.name == "直播")
             {
-                MessageCenter.SendNavigateTo(NavigateMode.Home, typeof(LivePage));
+                MessageCenter.SendNavigateTo(NavigateMode.Home, typeof(LiveV2Page));
                 return;
             }
             if (item.name.Contains( "排行榜"))

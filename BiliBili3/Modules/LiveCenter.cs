@@ -165,7 +165,7 @@ namespace BiliBili3.Modules
             /// </summary>
             public string medal_color { get; set; }
 
-            public SolidColorBrush m_color { get { return new SolidColorBrush(Utils.ToColor(medal_color)); } }
+            public SolidColorBrush m_color { get { return new SolidColorBrush(Utils.ToColor(color)); } }
         }
 
         public class UserInfoWearTitleModel

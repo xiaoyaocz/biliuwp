@@ -1802,42 +1802,19 @@ namespace BiliBili3.Modules
             /// <summary>
             /// Accept_quality
             /// </summary>
-            public List<string> accept_quality { get; set; }
-            public List<accept_qualityModel> accept_Qualities
-            {
-                get
-                {
-                    List<accept_qualityModel> ls = new List<accept_qualityModel>();
-                    foreach (var item in accept_quality)
-                    {
-                        switch (item.ToInt32())
-                        {
-                            case 3:
-                                ls.Add(new accept_qualityModel() { name = "高清", value = item.ToInt32() });
-                                break;
-                            case 4:
-                                ls.Add(new accept_qualityModel() { name = "原画", value = item.ToInt32() });
-                                break;
-                            default:
-                                ls.Add(new accept_qualityModel() { name = "其他", value = item.ToInt32() });
-                                break;
-                        }
-                    }
-
-                    return ls;
-                }
-            }
-
+            public List<quality_description_item> quality_description { get; set; }
+        
+            public int current_qn { get; set; }
             /// <summary>
             /// Current_quality
             /// </summary>
             public int current_quality { get; set; }
         }
 
-        public class accept_qualityModel
+        public class quality_description_item
         {
-            public string name { get; set; }
-            public int value { get; set; }
+            public string desc { get; set; }
+            public int qn { get; set; }
         }
 
 
