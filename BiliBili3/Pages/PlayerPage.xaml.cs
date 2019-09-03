@@ -1783,6 +1783,12 @@ namespace BiliBili3.Pages
             //string info = string.Format("视频高度：{0}\r\n视频宽度：{1}\r\n视频长度：{2}\r\n缓冲进度:{3}", mediaElement.NaturalVideoHeight, mediaElement.NaturalVideoWidth, mediaElement.NaturalDuration.TimeSpan.Hours.ToString("00") + ":" + mediaElement.NaturalDuration.TimeSpan.Minutes.ToString("00") + ":" + mediaElement.NaturalDuration.TimeSpan.Seconds.ToString("00"), mediaElement.DownloadProgress.ToString("P"));
             //await new MessageDialog(info, "视频信息").ShowAsync();
         }
+
+        private void btn_VideoPage_Navi(object sender, RoutedEventArgs e)
+        {
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), playNow.Aid);
+        }
+
         private void cb_setting_defu_Checked(object sender, RoutedEventArgs e)
         {
             if (mediaElement == null)
