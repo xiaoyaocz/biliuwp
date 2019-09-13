@@ -2183,7 +2183,25 @@ namespace BiliBili3
         //      await secondaryTile.RequestCreateAsync();
         //}
 
+            
+        public static bool Get_PriorityBiliPlus()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            if (container.Values["PriorityBiliPlus"] != null)
+            {
+                return (bool)container.Values["PriorityBiliPlus"];
+            }
+            else
+            {
+                Set_PriorityBiliPlus(false);
+                return false;
+            }
+        }
 
-
+        public static void Set_PriorityBiliPlus(bool value)
+        {
+            container = ApplicationData.Current.LocalSettings;
+            container.Values["PriorityBiliPlus"] = value;
+        }
     }
 }

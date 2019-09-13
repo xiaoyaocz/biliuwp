@@ -82,6 +82,7 @@ namespace BiliBili3.Views
                 //}
                 btnOpenInstallHEVC.Visibility = Visibility.Visible;
                 sw_DASHUseHEVC.IsOn = SettingHelper.Get_DASHUseHEVC();
+                sw_PriorityBiliPlus.IsOn = SettingHelper.Get_PriorityBiliPlus();
 
                 sw_LoadSe.IsOn = SettingHelper.Get_LoadSplash();
                 sw_CloseAD.IsOn = SettingHelper.Get_HideAD();
@@ -878,6 +879,9 @@ namespace BiliBili3.Views
             SettingHelper.Set_DASHUseHEVC(sw_DASHUseHEVC.IsOn);
         }
 
-
+        private void Sw_PriorityBiliPlus_Toggled(object sender, RoutedEventArgs e)
+        {
+            SettingHelper.Set_PriorityBiliPlus(sw_PriorityBiliPlus.IsOn);
+        }
     }
 }

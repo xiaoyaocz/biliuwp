@@ -634,6 +634,10 @@
                                   <Run x:Name="txtBPState"/> 授权BiliPlus(可以解除部分地区限制视频)
                             </TextBlock>
                           </HyperlinkButton>
+                        <Grid Margin="0 10 0 0">
+                            <TextBlock Foreground="Gray" VerticalAlignment="Center">优先使用BiliPlus</TextBlock>
+                            <ToggleSwitch  x:Name="sw_PriorityBiliPlus" Toggled="Sw_PriorityBiliPlus_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                        </Grid>
                         <Grid Margin="0 10 0 0" Visibility="Collapsed">
                             <TextBlock Foreground="Gray" VerticalAlignment="Center">本地播放器模式(重启生效)</TextBlock>
                             <ToggleSwitch  x:Name="tw_PlayerMode" Toggled="tw_PlayerMode_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>

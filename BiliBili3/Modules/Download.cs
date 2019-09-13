@@ -66,6 +66,63 @@ namespace BiliBili3.Modules
                     };
 
                 }
+                else if (SettingHelper.Get_PriorityBiliPlus())
+                {
+                    return await GetBiliPlusSeasonQualitys(aid,cid,season_type,access_key,mid);
+                }
+                else 
+                {
+                    return new ReturnModel<List<QualityInfo>>()
+                    {
+                        success = true,
+                        message = "",
+                        data = new List<QualityInfo>() { new QualityInfo() { Description = "默认", Qn = 0 } }
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ReturnModel<List<QualityInfo>>()
+                {
+                    success = true,
+                    message = "",
+                    data = new List<QualityInfo>() { new QualityInfo() { Description = "默认", Qn = 0 } }
+                };
+            }
+        }
+
+        public async Task<ReturnModel<List<QualityInfo>>> GetBiliPlusSeasonQualitys(string aid, string cid, int season_type, string access_key = "", string mid = "")
+        {
+            try
+            {
+                string url = $"https://www.biliplus.com/BPplayurl.php?avid={ aid}&cid={cid}&qn=0&type=&otype=json&module=bangumi{ ((access_key == "") ? "" : $"&access_key={access_key}&mid={mid}")}&season_type={season_type}&ts={ApiHelper.GetTimeSpan}";
+               
+                var results = await WebClientClass.GetResults(new Uri(url));
+                var model = JsonConvert.DeserializeObject<SeasonUrlInfo>(results);
+                if (model.code == 0)
+                {
+                    List<QualityInfo> list = new List<QualityInfo>();
+
+                    for (int i = 0; i < model.accept_quality.Count; i++)
+                    {
+                        list.Add(new QualityInfo()
+                        {
+                            Description = model.accept_description[i],
+                            Qn = model.accept_quality[i]
+                        });
+                    }
+                    //未登录不给下载1080+的视频
+                    if (access_key == "")
+                    {
+                        list.RemoveAll(x => x.Qn > 80);
+                    }
+                    return new ReturnModel<List<QualityInfo>>()
+                    {
+                        success = true,
+                        message = "",
+                        data = list
+                    };
+                }
                 else
                 {
                     return new ReturnModel<List<QualityInfo>>()
@@ -108,7 +165,16 @@ namespace BiliBili3.Modules
                 {
                     return andorid_api;
                 }
+                if (SettingHelper.Get_PriorityBiliPlus())
+                {
+                    var biliplus = await GetSeasonDownloadUrlBiliplusApi(cid, aid, quality, season_type, access_key, mid);
+                    if (biliplus.success)
+                    {
+                        return biliplus;
+                    }
+                }
             }
+           
             var moe_api = await GetSeasonDownloadUrlMoeApi(season_id, cid, aid, quality, "");
             if (moe_api.success)
             {
@@ -125,7 +191,8 @@ namespace BiliBili3.Modules
         {
             try
             {
-                string url = $"https://api.bilibili.com/pgc/player/api/playurl?aid={ aid}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&cid={cid}&fnval=0&fnver=0&fourk=1{ ((access_key == "") ? "" : $"&access_key={access_key}&mid={mid}")}&mobi_app=android&module=bangumi&npcybs=1&otype=json&platform=android&qn={quality.Qn}&season_type={season_type}&ts={ApiHelper.GetTimeSpan}";
+                var url = $"https://api.bilibili.com/pgc/player/api/playurl?access_key={ access_key}&aid={aid}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&cid={cid}&fnval=0&fnver=0&fourk=1&mid={mid}&mobi_app=android&module=bangumi&npcybs=0&otype=json&platform=android&qn={quality.Qn}&season_type={season_type}&ts={ApiHelper.GetTimeSpan}";
+                //string url = $"https://api.bilibili.com/pgc/player/api/playurl?aid={ aid}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&cid={cid}&fnval=0&fnver=0&fourk=1{ ((access_key == "") ? "" : $"&access_key={access_key}&mid={mid}")}&mobi_app=android&module=bangumi&npcybs=1&otype=json&platform=android&qn={quality.Qn}&season_type={season_type}&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
                 var model = JsonConvert.DeserializeObject<SeasonUrlInfo>(results);
@@ -213,6 +280,61 @@ namespace BiliBili3.Modules
                         data = downloadUrls
                     };
 
+                }
+                else
+                {
+                    return new ReturnModel<List<DownloadUrlInfo>>()
+                    {
+                        success = false,
+                        message = model.message
+                    };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new ReturnModel<List<DownloadUrlInfo>>()
+                {
+                    success = false,
+                    message = "读取下载地址错误"
+                };
+            }
+        }
+        private async Task<ReturnModel<List<DownloadUrlInfo>>> GetSeasonDownloadUrlBiliplusApi(string cid, string aid, QualityInfo quality, int season_type,string access_key = "", string mid = "")
+        {
+            try
+            {
+                string url = $"https://www.biliplus.com/BPplayurl.php?avid={ aid}&cid={cid}&qn={quality.Qn}&type=&otype=json&module=bangumi{ ((access_key == "") ? "" : $"&access_key={access_key}&mid={mid}")}&season_type={season_type}&ts={ApiHelper.GetTimeSpan}";
+                var results = await WebClientClass.GetResults(new Uri(url));
+                var model = JsonConvert.DeserializeObject<SeasonUrlInfo>(results);
+                if (model.code == 0)
+                {
+                    Dictionary<string, string> headers = new Dictionary<string, string>();
+                    headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3891.0 Safari/537.36 Edg/78.0.268.3");
+                    List<DownloadUrlInfo> downloadUrls = new List<DownloadUrlInfo>();
+                    foreach (var item in model.durl)
+                    {
+                        downloadUrls.Add(new DownloadUrlInfo()
+                        {
+                            Aid = aid,
+                            Cid = cid,
+                            Codecid = model.video_codecid,
+                            Format = model.format,
+                            From = "biliplus_season",
+                            Headers = headers,
+                            Length = item.length,
+                            Order = item.order,
+                            QualityInfo = quality,
+                            Size = item.size,
+                            Url = item.url
+                        });
+                    }
+                    return new ReturnModel<List<DownloadUrlInfo>>()
+                    {
+                        success = true,
+                        message = "",
+                        data = downloadUrls
+                    };
                 }
                 else
                 {

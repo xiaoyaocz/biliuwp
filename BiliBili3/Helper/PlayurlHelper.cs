@@ -78,6 +78,32 @@ namespace BiliBili3.Helper
                 //{
                 //    return biliweb;
                 //}
+                if (SettingHelper.Get_PriorityBiliPlus())
+                {
+                    //biliplus API
+                    if (SettingHelper.Get_UseDASH())
+                    {
+                        var biliplusdash = await GetBiliPlusDashUrl(model.Mid, qn, "https://www.bilibili.com/bangumi/play/ep" + model.episode_id, model.season_type);
+                        if (biliplusdash != null)
+                        {
+                            return biliplusdash;
+                        }
+                    }
+
+                    var biliplus = await GetBiliPlusUrl(model.Mid, qn, "https://www.bilibili.com/bangumi/play/ep" + model.episode_id, model.season_type);
+                    if (biliplus != null)
+                    {
+                        return biliplus;
+                    }
+
+                    //biliplus API
+                    var biliplus2 = await GetBiliPlusUrl2(model);
+                    if (biliplus2 != null)
+                    {
+                        return biliplus2;
+                    }
+                }
+
 
                 //23moe API
                 var moe = await Get23MoeUrl(model, qn);
@@ -86,28 +112,7 @@ namespace BiliBili3.Helper
                     return moe;
                 }
 
-                //biliplus API
-                if (SettingHelper.Get_UseDASH())
-                {
-                    var biliplusdash = await GetBiliPlusDashUrl(model.Mid, qn, "https://www.bilibili.com/bangumi/play/ep" + model.episode_id, model.season_type);
-                    if (biliplusdash != null)
-                    {
-                        return biliplusdash;
-                    }
-                }
-
-                var biliplus = await GetBiliPlusUrl(model.Mid, qn, "https://www.bilibili.com/bangumi/play/ep" + model.episode_id, model.season_type);
-                if (biliplus != null)
-                {
-                    return biliplus;
-                }
-
-                //biliplus API
-                var biliplus2 = await GetBiliPlusUrl2(model);
-                if (biliplus2 != null)
-                {
-                    return biliplus2;
-                }
+               
 
                 return null;
 
