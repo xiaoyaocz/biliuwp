@@ -1784,8 +1784,9 @@ namespace BiliBili3.Pages
             //await new MessageDialog(info, "视频信息").ShowAsync();
         }
 
-        private void btn_VideoPage_Navi(object sender, RoutedEventArgs e)
+        private void btn_VideoPage_Navi(object sender, ItemClickEventArgs e)
         {
+            this.Frame.GoBack();
             MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), playNow.Aid);
         }
 
