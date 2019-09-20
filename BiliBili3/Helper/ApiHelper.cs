@@ -178,7 +178,7 @@ namespace BiliBili3
             }
             else
             {
-                return "";
+                return "0";
             }
 
         }

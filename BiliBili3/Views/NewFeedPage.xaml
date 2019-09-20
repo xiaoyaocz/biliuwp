@@ -382,6 +382,9 @@
                 </StackPanel>
             </Border>
         </DataTemplate>
+        <DataTemplate x:Key="goto_null">
+            <Border></Border>
+        </DataTemplate>
     </Page.Resources>
     <Grid>
         <Border x:Name="bor_width3" Width="160"></Border>

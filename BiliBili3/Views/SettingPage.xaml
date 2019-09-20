@@ -264,8 +264,8 @@
 
                             </Grid>
                            
-                            <Grid Margin="0 10 0 0">
-                                <TextBlock Foreground="Gray" VerticalAlignment="Center">关闭应用全部推广</TextBlock>
+                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">关闭应用全部广告(重启生效)</TextBlock>
                                 <ToggleSwitch  x:Name="sw_CloseAD" Toggled="sw_CloseAD_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
 
                             </Grid>
@@ -693,8 +693,8 @@
                             </Grid>
 
                         </HyperlinkButton>
-                        <TextBlock FontSize="18" Margin="0 10 0 0">交流</TextBlock>
-                        <HyperlinkButton Click="HyperlinkButton_Click" Tag="530991215" HorizontalAlignment="Stretch"  Foreground="{ThemeResource Bili-FontColor}"  HorizontalContentAlignment="Stretch" Padding="0">
+                        <TextBlock Visibility="Collapsed" FontSize="18" Margin="0 10 0 0">交流</TextBlock>
+                        <HyperlinkButton Visibility="Collapsed" Click="HyperlinkButton_Click" Tag="530991215" HorizontalAlignment="Stretch"  Foreground="{ThemeResource Bili-FontColor}"  HorizontalContentAlignment="Stretch" Padding="0">
                             <Grid Margin="0 10 0 0">
                                 <TextBlock Foreground="Gray" VerticalAlignment="Center">QQ群 ①</TextBlock>
                                 <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center">530991215</TextBlock>

@@ -425,9 +425,7 @@ namespace BiliBili3
             {
                 TextBlock tx = new TextBlock()
                 {
-                    Text = string.Format(@"{0}
-遇到闪退请点击设置-反馈，告诉我详细信息
-觉得好用请赞助我喝杯咖啡吧，支付宝:2500655055@qq.com", AppHelper.GetLastVersionStr()),
+                    Text = string.Format(@"{0}", AppHelper.GetLastVersionStr()),
                     IsTextSelectionEnabled = true,
                     TextWrapping = TextWrapping.Wrap
                 };

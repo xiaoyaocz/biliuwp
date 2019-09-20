@@ -81,38 +81,31 @@ namespace BiliBili3.Helper
                 if (SettingHelper.Get_PriorityBiliPlus())
                 {
                     //biliplus API
-                    if (SettingHelper.Get_UseDASH())
-                    {
-                        var biliplusdash = await GetBiliPlusDashUrl(model.Mid, qn, "https://www.bilibili.com/bangumi/play/ep" + model.episode_id, model.season_type);
-                        if (biliplusdash != null)
-                        {
-                            return biliplusdash;
-                        }
-                    }
-
-                    var biliplus = await GetBiliPlusUrl(model.Mid, qn, "https://www.bilibili.com/bangumi/play/ep" + model.episode_id, model.season_type);
+                    var biliplus = await GetBiliPlus(model, qn);
                     if (biliplus != null)
                     {
                         return biliplus;
                     }
-
-                    //biliplus API
-                    var biliplus2 = await GetBiliPlusUrl2(model);
-                    if (biliplus2 != null)
+                    var moe = await Get23MoeUrl(model, qn);
+                    if (moe != null)
                     {
-                        return biliplus2;
+                        return moe;
                     }
                 }
-
-
-                //23moe API
-                var moe = await Get23MoeUrl(model, qn);
-                if (moe != null)
+                else
                 {
-                    return moe;
+                    //23moe API
+                    var moe = await Get23MoeUrl(model, qn);
+                    if (moe != null)
+                    {
+                        return moe;
+                    }
+                    var biliplus = await GetBiliPlus(model, qn);
+                    if (biliplus != null)
+                    {
+                        return biliplus;
+                    }
                 }
-
-               
 
                 return null;
 
@@ -124,7 +117,31 @@ namespace BiliBili3.Helper
             }
 
         }
+        public static async Task<ReturnPlayModel> GetBiliPlus(PlayerModel model, int qn)
+        {
+            if (SettingHelper.Get_UseDASH())
+            {
+                var biliplusdash = await GetBiliPlusDashUrl(model.Mid, qn, "https://www.bilibili.com/bangumi/play/ep" + model.episode_id, model.season_type);
+                if (biliplusdash != null)
+                {
+                    return biliplusdash;
+                }
+            }
 
+            var biliplus = await GetBiliPlusUrl(model.Mid, qn, "https://www.bilibili.com/bangumi/play/ep" + model.episode_id, model.season_type);
+            if (biliplus != null)
+            {
+                return biliplus;
+            }
+
+            //biliplus API
+            var biliplus2 = await GetBiliPlusUrl2(model);
+            if (biliplus2 != null)
+            {
+                return biliplus2;
+            }
+            return null;
+        }
         public static async Task<ReturnPlayModel> GetBilibiliBangumiUrl(PlayerModel model, int qn)
         {
             try
@@ -186,7 +203,7 @@ namespace BiliBili3.Helper
                         }
                         var videos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(obj["dash"]["video"].ToString());
                         var audios = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(obj["dash"]["audio"].ToString());
-                        var video = videos.FirstOrDefault(x => x.id== qn && x.codecid== codecid);
+                        var video = videos.FirstOrDefault(x => x.id == qn && x.codecid == codecid);
                         if (video == null && codecid == 12)
                         {
                             codecid = 7;
@@ -197,7 +214,7 @@ namespace BiliBili3.Helper
                         return new ReturnPlayModel()
                         {
                             usePlayMode = UsePlayMode.Dash,
-                            mediaSource = await CreateAdaptiveMediaSource(video,audio),
+                            mediaSource = await CreateAdaptiveMediaSource(video, audio),
                             from = "bilibili_dash_" + codecid
                         };
                     }
@@ -717,7 +734,7 @@ namespace BiliBili3.Helper
 
 
         }
-    
+
 
         /// <summary>
         /// 读取搜狐源的播放地址
@@ -913,33 +930,38 @@ namespace BiliBili3.Helper
                 }
                 else
                 {
-                    var re3 = await WebClientClass.GetResults(new Uri(string.Format("https://moe.nsapps.cn/api/v1/BiliAnimeUrl?animeid={0}&cid={1}&epid={2}&rnd={3}", model.banId, model.Mid, model.banInfo.episode_id, ApiHelper.GetTimeSpan)));
-                    JObject obj = JObject.Parse(re3);
-                    if (Convert.ToInt32(obj["code"].ToString()) == 0)
+                    if (SettingHelper.Get_PriorityBiliPlus())
                     {
-
-                        qualities.Add(new QualityModel()
-                        {
-                            description = "默认",
-                            qn = 80
-                        });
-
+                        return new List<QualityModel>() {
+                             new QualityModel(){description="流畅", qn=32},
+                             new QualityModel(){description="清晰",qn=64},
+                             new QualityModel(){description="高清",qn=80},
+                             new QualityModel(){description="超清",qn=112},
+                        };
                     }
                     else
                     {
-                        return new List<QualityModel>() {
-                     new QualityModel(){description="流畅", qn=32},
-                     new QualityModel(){description="清晰",qn=64},
-                     new QualityModel(){description="高清",qn=80},
-                     new QualityModel(){description="超清",qn=112},
-                };
+                        var re3 = await WebClientClass.GetResults(new Uri(string.Format("https://moe.nsapps.cn/api/v1/BiliAnimeUrl?animeid={0}&cid={1}&epid={2}&rnd={3}", model.banId, model.Mid, model.banInfo.episode_id, ApiHelper.GetTimeSpan)));
+                        JObject obj = JObject.Parse(re3);
+                        if (Convert.ToInt32(obj["code"].ToString()) == 0)
+                        {
+                            qualities.Add(new QualityModel()
+                            {
+                                description = "默认",
+                                qn = 80
+                            });
+                        }
+                        else
+                        {
+                            return new List<QualityModel>() {
+                                 new QualityModel(){description="流畅", qn=32},
+                                 new QualityModel(){description="清晰",qn=64},
+                                 new QualityModel(){description="高清",qn=80},
+                                 new QualityModel(){description="超清",qn=112},
+                            };
+                        }
                     }
-
-
-
                 }
-
-
                 qualities = qualities.OrderBy(x => x.qn).ToList();
                 return qualities;
             }

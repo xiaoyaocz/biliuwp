@@ -41,6 +41,7 @@ namespace BiliBili3.Pages.Live
         public LiveRoomPC()
         {
             this.InitializeComponent();
+            this.Loaded += delegate { this.Focus(FocusState.Programmatic); };
             this.NavigationCacheMode = NavigationCacheMode.Disabled;
             _systemMediaTransportControls = SystemMediaTransportControls.GetForCurrentView();
             _systemMediaTransportControls.IsPlayEnabled = true;
@@ -121,19 +122,17 @@ namespace BiliBili3.Pages.Live
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.Loaded += delegate { this.Focus(FocusState.Programmatic); };
             this.Frame.Visibility = Visibility.Visible;
             base.OnNavigatedTo(e);
-            if (e.NavigationMode == NavigationMode.New)
-            {
-               
+            //if (e.NavigationMode == NavigationMode.New)
+            //{
                 roomId = Convert.ToInt32((e.Parameter as object[])[0]);
                 _biliLiveDanmu = new BiliLiveDanmu();
                 _biliLiveDanmu.HasDanmu += _biliLiveDanmu_HasDanmu;
                 liveRoom = new LiveRoom();
                 await Task.Delay(200);
                 LoadRoomInfo();
-            }
+            //}
             if (dispRequest == null)
             {
                 // 用户观看视频，需要保持屏幕的点亮状态
@@ -145,15 +144,18 @@ namespace BiliBili3.Pages.Live
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().ExitFullScreenMode();
-            if (freeSilverTimer != null && freeSilverTimer.IsEnabled)
+            if (e.NavigationMode== NavigationMode.Back)
             {
-                freeSilverTimer.Stop();
-            }
-            _biliLiveDanmu.Dispose();
-            if (dispRequest != null)
-            {
-                dispRequest = null;
+                Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().ExitFullScreenMode();
+                if (freeSilverTimer != null && freeSilverTimer.IsEnabled)
+                {
+                    freeSilverTimer.Stop();
+                }
+                _biliLiveDanmu.Dispose();
+                if (dispRequest != null)
+                {
+                    dispRequest = null;
+                }
             }
             base.OnNavigatedFrom(e);
         }
@@ -309,6 +311,31 @@ namespace BiliBili3.Pages.Live
             }
             loadPlayurling = false;
         }
+       private async void ChangeQuality(int quality)
+        {
+            //加载播放地址
+            loadPlayurling = true;
+            var playUrl = await liveRoom.GetRoomPlayurl(roomId, quality);
+            if (playUrl.success)
+            {
+                durls = playUrl.data.durl;
+                if (!media.Options.ContainsKey("http-referrer"))
+                {
+                    media.Options.Add("http-user-agent", "Mozilla/5.0 BiliDroid/1.12.0 (bbcallen@gmail.com)");
+                    media.Options.Add("http-referrer", "https://live.bilibili.com/" + roomId);
+                }
+                media.Source = durls[0].url;
+                cb_line.ItemsSource = playUrl.data.durl;
+                cb_line.SelectedIndex = 0;
+                //cb_quality.SelectedIndex = (cb_quality.ItemsSource as List<quality_description_item>).FindIndex(x => x.qn == quality); ;
+            }
+            else
+            {
+                Utils.ShowMessageToast("清晰度切换失败");
+            }
+            loadPlayurling = false;
+        }
+
         /// <summary>
         /// 读取轮播地址
         /// </summary>
@@ -887,7 +914,8 @@ namespace BiliBili3.Pages.Live
             {
                 return;
             }
-            LoadPlayUrl((cb_quality.SelectedItem as quality_description_item).qn);
+            ChangeQuality((cb_quality.SelectedItem as quality_description_item).qn);
+            //LoadPlayUrl((cb_quality.SelectedItem as quality_description_item).qn);
         }
         /// <summary>
         /// 点击UP信息

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -35,6 +36,12 @@ namespace BiliBili3.Controls
             Brightness = 0;
             ShowDanmakuSettingBtn = Visibility.Visible;
             ShowPlayListBtn = false;
+
+            SubTitleBackground = new SolidColorBrush(Color.FromArgb(120, 0, 0, 0));
+            SubTitleColor = new SolidColorBrush(Colors.Red);
+            SubTitleFontFamily = new FontFamily("Segoe UI");
+            SubTitleFontSize = SettingHelper.IsPc()?25.0:18.0;
+
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
@@ -682,5 +689,54 @@ namespace BiliBili3.Controls
         
         public static readonly DependencyProperty CCSelectFlyoutProperty =
             DependencyProperty.Register("CCSelectFlyout", typeof(FlyoutBase), typeof(MediaTransportControls), new PropertyMetadata(0));
+
+        
+        /// <summary>
+        /// 字幕字体大小
+        /// </summary>
+        public double SubTitleFontSize
+        {
+            get { return (int)GetValue(SubTitleFontSizeProperty); }
+            set { SetValue(SubTitleFontSizeProperty, value); }
+        }
+        public static readonly DependencyProperty SubTitleFontSizeProperty =
+            DependencyProperty.Register("SubTitleFontSize", typeof(double), typeof(MediaTransportControls), new PropertyMetadata(25.0));
+
+
+        /// <summary>
+        /// 字幕字体
+        /// </summary>
+        public FontFamily SubTitleFontFamily
+        {
+            get { return (FontFamily)GetValue(SubTitleFontFamilyProperty); }
+            set { SetValue(SubTitleFontFamilyProperty, value); }
+        }
+
+        public static readonly DependencyProperty SubTitleFontFamilyProperty =
+            DependencyProperty.Register("SubTitleFontFamily", typeof(FontFamily), typeof(MediaTransportControls), new PropertyMetadata(new FontFamily("Segoe UI")));
+
+        /// <summary>
+        /// 字幕背景颜色
+        /// </summary>
+        public Brush SubTitleBackground
+        {
+            get { return (Brush)GetValue(SubTitleBackgroundProperty); }
+            set { SetValue(SubTitleBackgroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty SubTitleBackgroundProperty =
+            DependencyProperty.Register("SubTitleBackground", typeof(Brush), typeof(MediaTransportControls), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(120,0,0,0))));
+
+        /// <summary>
+        /// 字幕字体颜色
+        /// </summary>
+        public Brush SubTitleColor
+        {
+            get { return (Brush)GetValue(SubTitleColorProperty); }
+            set { SetValue(SubTitleColorProperty, value); }
+        }
+
+        public static readonly DependencyProperty SubTitleColorProperty =
+            DependencyProperty.Register("SubTitleColor", typeof(Brush), typeof(MediaTransportControls), new PropertyMetadata(new SolidColorBrush(Colors.White)));
     }
 }

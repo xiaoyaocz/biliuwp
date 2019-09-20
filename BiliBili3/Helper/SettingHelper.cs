@@ -2203,5 +2203,103 @@ namespace BiliBili3
             container = ApplicationData.Current.LocalSettings;
             container.Values["PriorityBiliPlus"] = value;
         }
+
+
+        #region 字幕设置
+        public static double Get_SubtitleSize()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            if (container.Values["SubtitleSize"] != null)
+            {
+                return Convert.ToDouble(container.Values["SubtitleSize"]);
+            }
+            else
+            {
+                if (SettingHelper.IsPc())
+                {
+                    container.Values["SubtitleSize"] = 25;
+                    return 25;
+                }
+                else
+                {
+                    container.Values["SubtitleSize"] = 18;
+                    return 18;
+                }
+
+
+            }
+        }
+
+        public static void Set_SubtitleSize(double value)
+        {
+            container = ApplicationData.Current.LocalSettings;
+            container.Values["SubtitleSize"] = value;
+        }
+
+        public static string Get_SubtitleFontFamily()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            if (container.Values["SubtitleFontFamily"] != null)
+            {
+                return container.Values["SubtitleFontFamily"].ToString();
+            }
+            else
+            {
+                container.Values["SubtitleFontFamily"] = "Segoe UI";
+                return "Segoe UI";
+
+            }
+        }
+
+        public static void Set_SubtitleFontFamily(string value)
+        {
+            container = ApplicationData.Current.LocalSettings;
+            container.Values["SubtitleFontFamily"] = value;
+        }
+
+        public static double Get_SubtitleBgTran()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            if (container.Values["SubtitleBgTran"] != null)
+            {
+                return Convert.ToDouble(container.Values["SubtitleBgTran"]);
+            }
+            else
+            {
+                container.Values["SubtitleBgTran"] = 0.5;
+                return 0.5;
+
+            }
+        }
+
+        public static void Set_SubtitleBgTran(double value)
+        {
+            container = ApplicationData.Current.LocalSettings;
+            container.Values["SubtitleBgTran"] = value;
+        }
+
+
+        public static string Get_SubtitleColor()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            if (container.Values["SubtitleColor"] != null)
+            {
+                return container.Values["SubtitleColor"].ToString();
+            }
+            else
+            {
+                container.Values["SubtitleColor"] = "#ffffffff";
+                return "#ffffffff";
+
+            }
+        }
+
+        public static void Set_SubtitleColor(string value)
+        {
+            container = ApplicationData.Current.LocalSettings;
+            container.Values["SubtitleColor"] = value;
+        }
+        #endregion
+
     }
 }
