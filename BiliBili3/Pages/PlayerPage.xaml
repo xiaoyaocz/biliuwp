@@ -159,6 +159,41 @@
                                 </StackPanel>
                             </StackPanel>
                         </ScrollViewer>
+                        <ScrollViewer x:Name="grid_Subtitle" Visibility="Collapsed" ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerStyle1}">
+                            <StackPanel Margin="12 4">
+                                <TextBlock FontSize="16" Visibility="Collapsed" Margin="0 12 0 0" Foreground="White">字幕设置</TextBlock>
+                                <Grid Margin="0 12 0 0" >
+                                    <TextBlock Foreground="White"  VerticalAlignment="Center">字幕字体</TextBlock>
+                                    <ComboBox x:Name="cb_SubtitleFont" SelectionChanged="Cb_SubtitleFont_SelectionChanged"  Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+
+                                    </ComboBox>
+                                </Grid>
+                                <Grid Margin="0 12 0 0" >
+                                    <TextBlock Foreground="White" VerticalAlignment="Center">字幕颜色</TextBlock>
+                                    <ComboBox x:Name="cb_SubtitleColor" SelectionChanged="Cb_SubtitleColor_SelectionChanged"  Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                        <ComboBoxItem Content="白色" Tag="#ffffffff"></ComboBoxItem>
+                                        <ComboBoxItem Content="灰色" Tag="#ff9b9b9b"></ComboBoxItem>
+                                        <ComboBoxItem Content="红色" Tag="#ffd0021b"></ComboBoxItem>
+                                        <ComboBoxItem Content="紫色" Tag="#ff9013fe"></ComboBoxItem>
+                                        <ComboBoxItem Content="蓝色" Tag="#ff4a90e2"></ComboBoxItem>
+                                    </ComboBox>
+                                </Grid>
+                                <StackPanel Margin="0 12 0 0">
+                                    <Grid >
+                                        <TextBlock Foreground="White" VerticalAlignment="Center">字幕背景透明度</TextBlock>
+                                        <TextBlock  VerticalAlignment="Center"  Foreground="White" HorizontalAlignment="Right" Margin="12 0" Text="{Binding Value, ElementName=slider_SubtitleTran}"></TextBlock>
+                                    </Grid>
+                                    <Slider x:Name="slider_SubtitleTran" ValueChanged="Slider_SubtitleTran_ValueChanged"  Width="300" HorizontalAlignment="Left"  Maximum="1" Minimum="0.1" StepFrequency="0.1" />
+                                </StackPanel>
+                                <StackPanel Margin="0 12 0 0">
+                                    <Grid >
+                                        <TextBlock Foreground="White" VerticalAlignment="Center">字幕文字大小</TextBlock>
+                                        <TextBlock  VerticalAlignment="Center" Foreground="White" HorizontalAlignment="Right" Margin="12 0" Text="{Binding Value, ElementName=slider_SubtitleSize}"></TextBlock>
+                                    </Grid>
+                                    <Slider x:Name="slider_SubtitleSize" ValueChanged="Slider_SubtitleSize_ValueChanged" Width="300" HorizontalAlignment="Left"  Maximum="64" Minimum="10" StepFrequency="1" />
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
                         <Grid  x:Name="grid_PB" Visibility="Collapsed">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -277,9 +312,9 @@
                                         <MenuFlyoutItem x:Name="menuitem_LocalDanmu" Click="menuitem_LocalDanmu_Click">加载本地弹幕</MenuFlyoutItem>
                                         <MenuFlyoutItem x:Name="menuitem_tantan" Click="menuitem_tantan_Click">加载弹弹Play弹幕</MenuFlyoutItem>
                                         <MenuFlyoutItem x:Name="menuitem_UpdateDanmu" Click="menuitem_UpdateDanmu_Click">更新弹幕</MenuFlyoutItem>
+                                        <MenuFlyoutItem x:Name="menuitem_SubtitleSetting" Click="Menuitem_SubtitleSetting_Click">字幕设置</MenuFlyoutItem>
                                         <!--<MenuFlyoutItem x:Name="menuitem_Capture" Click="menuitem_Capture_Click">视频截图</MenuFlyoutItem>-->
                                         <MenuFlyoutItem x:Name="menuitem_Info" Click="menuitem_Info_Click">视频信息</MenuFlyoutItem>
-                                        <MenuFlyoutItem Click="btn_VideoPage_Navi">视频页面</MenuFlyoutItem>
                                     </MenuFlyout>
                                 </c:DanmakuMTC.MoreMenuFlyout>
                                 <c:DanmakuMTC.CCSelectFlyout>

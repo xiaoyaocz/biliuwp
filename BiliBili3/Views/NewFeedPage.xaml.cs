@@ -719,6 +719,9 @@ namespace BiliBili3.Views
         {
             switch ((item as TabItemModel)._goto)
             {
+                case "":
+                case null:
+                    return resource["goto_null"] as DataTemplate;
                 case "player":
                     return resource["goto_player"] as DataTemplate;
                 case "special":

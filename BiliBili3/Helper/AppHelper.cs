@@ -81,7 +81,17 @@ namespace BiliBili3.Helper
         {
             return verStr.Split('/')[0];
         }
-        public static string verStr = string.Format(@"Ver {0} 2019-08-25
+        public static string verStr = string.Format(@"Ver {0} 
+01、支持设置外挂字幕
+02、修复其他一些小问题
+
+加了一条广告，就只有一条，在我觉得不影响使用的位置(手机端不会显示)，点击一次广告就可以永久关闭
+开发不易，希望大家理解下
+
+/Ver 3.9.32.0&3.9.33.0 2019-09-13
+01、更新API
+
+/Ver 3.9.28.0&3.9.29.0 2019-08-25
 01、升级直播
 02、优化下载
 03、新增离线视频转MP4

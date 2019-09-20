@@ -535,6 +535,7 @@ namespace BiliBili3.Pages
 
             List<string> fonts = SystemHelper.GetSystemFontFamilies();
             cb_Font.ItemsSource = fonts;
+            cb_SubtitleFont.ItemsSource = fonts;
             if (SettingHelper.Get_DanmuFont() != "")
             {
                 cb_Font.SelectedIndex = fonts.IndexOf(SettingHelper.Get_DanmuFont());
@@ -543,8 +544,26 @@ namespace BiliBili3.Pages
             {
                 cb_Font.SelectedIndex = fonts.IndexOf(cb_Font.FontFamily.Source);
             }
+            if (SettingHelper.Get_SubtitleFontFamily() != "")
+            {
+                cb_SubtitleFont.SelectedIndex = fonts.IndexOf(SettingHelper.Get_SubtitleFontFamily());
+            }
+            else
+            {
+                cb_Font.SelectedIndex = fonts.IndexOf(cb_Font.FontFamily.Source);
+            }
 
-
+            var subColor = SettingHelper.Get_SubtitleColor();
+            foreach (ComboBoxItem item in cb_SubtitleColor.Items)
+            {
+                if(item.Tag.ToString() == subColor)
+                {
+                    cb_SubtitleColor.SelectedItem = item;
+                    break;
+                }
+            }
+            slider_SubtitleTran.Value= SettingHelper.Get_SubtitleBgTran();
+            slider_SubtitleSize.Value = SettingHelper.Get_SubtitleSize();
 
             mediaElement.Volume = SettingHelper.Get_Volume();
 
@@ -933,11 +952,6 @@ namespace BiliBili3.Pages
                     
                 }
 
-
-            
-                
-
-
                 AddLog("准备开始播放...");
                 HeartBeat(HeartBeatType.Start);
                 MTC.HideLog();
@@ -1071,7 +1085,6 @@ namespace BiliBili3.Pages
         {
             if (mediaElement.CurrentState== MediaElementState.Playing)
             {
-             
                 var time = mediaElement.Position.TotalSeconds;
                 var first = subtitles.body.FirstOrDefault(x => x.from <= time && x.to >= time);
                 if (first!=null)
@@ -1113,9 +1126,10 @@ namespace BiliBili3.Pages
                 case PlayMode.VipBangumi:
 
                     var ban = await PlayurlHelper.GetBangumiUrl(playNow, (cb_Quity.SelectedItem as QualityModel).qn);
-                    txt_site.Text = ban.from;
                     if (ban!=null)
                     {
+                        txt_site.Text = ban.from;
+                        
                         if (ban.usePlayMode == UsePlayMode.System)
                         {
 
@@ -1142,9 +1156,9 @@ namespace BiliBili3.Pages
 
 
                     var ss = await PlayurlHelper.GetVideoUrl(playNow.Aid, playNow.Mid, (cb_Quity.SelectedItem as QualityModel).qn);
-                    txt_site.Text = ss.from;
                     if (ss!=null)
                     {
+                        txt_site.Text = ss.from;
                         if (ss.usePlayMode == UsePlayMode.System)
                         {
                             mediaElement.Source = new Uri(ss.url);
@@ -1170,6 +1184,7 @@ namespace BiliBili3.Pages
                 default:
                     break;
             }
+            MTC.HideLog();
         }
 
         /// <summary>
@@ -1671,7 +1686,7 @@ namespace BiliBili3.Pages
             grid_DM.Visibility = Visibility.Collapsed;
             grid_Info.Visibility = Visibility.Collapsed;
             grid_PB.Visibility = Visibility.Collapsed;
-
+            grid_Subtitle.Visibility = Visibility.Collapsed;
             sp_View.IsPaneOpen = true;
         }
 
@@ -1780,13 +1795,9 @@ namespace BiliBili3.Pages
             grid_DM.Visibility = Visibility.Collapsed;
             grid_Info.Visibility = Visibility.Collapsed;
             grid_PB.Visibility = Visibility.Collapsed;
+            grid_Subtitle.Visibility = Visibility.Collapsed;
             //string info = string.Format("视频高度：{0}\r\n视频宽度：{1}\r\n视频长度：{2}\r\n缓冲进度:{3}", mediaElement.NaturalVideoHeight, mediaElement.NaturalVideoWidth, mediaElement.NaturalDuration.TimeSpan.Hours.ToString("00") + ":" + mediaElement.NaturalDuration.TimeSpan.Minutes.ToString("00") + ":" + mediaElement.NaturalDuration.TimeSpan.Seconds.ToString("00"), mediaElement.DownloadProgress.ToString("P"));
             //await new MessageDialog(info, "视频信息").ShowAsync();
-        }
-
-        private void btn_VideoPage_Navi(object sender, RoutedEventArgs e)
-        {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), playNow.Aid);
         }
 
         private void cb_setting_defu_Checked(object sender, RoutedEventArgs e)
@@ -1899,6 +1910,7 @@ namespace BiliBili3.Pages
             gv_story_list.Visibility = Visibility.Collapsed;
             grid_DM.Visibility = Visibility.Visible;
             grid_Info.Visibility = Visibility.Collapsed;
+            grid_Subtitle.Visibility = Visibility.Collapsed;
             grid_PB.Visibility = Visibility.Collapsed;
 
         }
@@ -1913,6 +1925,7 @@ namespace BiliBili3.Pages
             grid_DM.Visibility = Visibility.Collapsed;
             gv_story_list.Visibility = Visibility.Collapsed;
             grid_Info.Visibility = Visibility.Collapsed;
+            grid_Subtitle.Visibility = Visibility.Collapsed;
             grid_PB.Visibility = Visibility.Visible;
             list_DisDanmu.Items.Clear();
             foreach (var item in danmu.GetDanmakus())
@@ -2093,83 +2106,6 @@ namespace BiliBili3.Pages
 
         #endregion
 
-
-        /// <summary>
-        /// 发送弹幕
-        /// </summary>
-        //public async void SenDanmuKa()
-        //{
-        //    if (Send_text_Comment.Text.Length == 0)
-        //    {
-        //        Utils.ShowMessageToast("弹幕内容不能为空!", 2000);
-        //        return;
-        //    }
-        //    if (!ApiHelper.IsLogin())
-        //    {
-        //        Utils.ShowMessageToast("请先登录!", 2000);
-        //        return;
-        //    }
-        //    try
-        //    {
-        //        var url = string.Format("https://api.bilibili.com/comment/post?access_key={0}&aid={1}&appkey={2}&build=5250000&cid={3}&mobi_app=android&pid={4}&platform=android&ts={5}", ApiHelper.access_key, playNow.Aid, ApiHelper.AndroidKey.Appkey, playNow.Mid, ApiHelper.GetUserId(), ApiHelper.GetTimeSpan);
-        //        url += "&sign=" + ApiHelper.GetSign(url);
-
-        //        Uri ReUri = new Uri(url);
-
-
-        //        int modeInt = 1;
-        //        if (Send_cb_Mode.SelectedIndex == 2)
-        //        {
-        //            modeInt = 4;
-        //        }
-        //        if (Send_cb_Mode.SelectedIndex == 1)
-        //        {
-        //            modeInt = 5;
-        //        }
-
-        //        string data = string.Format("playTime={0}&pool=0&color={1}&screen_state=1&rnd={2}&from=0&type=json&msg={3}&cid={4}&fontsize=25&mode={5}&mid={6}",
-        //            mediaElement.Position.TotalSeconds.ToString(),
-        //            ((ComboBoxItem)Send_cb_Color.SelectedItem).Tag,
-        //            new Random().Next(1, 99999999),
-        //            Uri.EscapeDataString(Send_text_Comment.Text),
-        //            playNow.Mid, modeInt, ApiHelper.GetUserId()
-        //            );
-
-        //        //string Canshu = "message=" + Send_text_Comment.Text + "&pool=0&playTime=" + mediaElement.Position.TotalSeconds.ToString() + "&cid=" + playNow.Mid + "&date=" + DateTime.Now.ToString() + "&fontsize=25&mode=" + modeInt + "&rnd=" + new Random().Next(100000000, 999999999) + "&color=" + ((ComboBoxItem)Send_cb_Color.SelectedItem).Tag;
-        //        string result = await WebClientClass.PostResults(ReUri, data);
-        //        var obj = JObject.Parse(result);
-
-        //        if (Convert.ToInt32(obj["code"].ToString()) != 0)
-        //        {
-        //            Utils.ShowMessageToast("弹幕发送失败" + obj["message"].ToString(), 3000);
-        //        }
-        //        else
-        //        {
-        //            Utils.ShowMessageToast("弹幕成功发射", 3000);
-        //            if (modeInt == 1)
-        //            {
-        //                //danmu.AddRollDanmu(new NSDanmaku.Model.DanmakuModel { text = Send_text_Comment.Text, color = ((ComboBoxItem)Send_cb_Color.SelectedItem).Tag.ToString(), DanSize = "25" }, true);
-        //            }
-        //            if (modeInt == 4)
-        //            {
-        //                //danmu.AddTopButtomDanmu(new MyDanmaku.DanMuModel { DanText = Send_text_Comment.Text, _DanColor = ((ComboBoxItem)Send_cb_Color.SelectedItem).Tag.ToString(), DanSize = "25" }, false, true);
-        //            }
-        //            if (modeInt == 5)
-        //            {
-        //                //danmu.AddTopButtomDanmu(new MyDanmaku.DanMuModel { DanText = Send_text_Comment.Text, _DanColor = ((ComboBoxItem)Send_cb_Color.SelectedItem).Tag.ToString(), DanSize = "25" }, true, true);
-        //            }
-        //            Send_text_Comment.Text = string.Empty;
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Utils.ShowMessageToast("发送弹幕发生错误！\r\n" + ex.HResult, 3000);
-        //    }
-        //}
-
-
-
         protected override Size MeasureOverride(Size availableSize)
         {
 
@@ -2283,6 +2219,7 @@ namespace BiliBili3.Pages
             gv_story_list.Visibility = Visibility.Collapsed;
             grid_DM.Visibility = Visibility.Visible;
             grid_Info.Visibility = Visibility.Collapsed;
+            grid_Subtitle.Visibility = Visibility.Collapsed;
             grid_PB.Visibility = Visibility.Collapsed;
         }
 
@@ -2303,6 +2240,7 @@ namespace BiliBili3.Pages
             grid_Setting.Visibility = Visibility.Collapsed;
             grid_DM.Visibility = Visibility.Collapsed;
             grid_Info.Visibility = Visibility.Collapsed;
+            grid_Subtitle.Visibility = Visibility.Collapsed;
             grid_PB.Visibility = Visibility.Collapsed;
 
             sp_View.IsPaneOpen = true;
@@ -2689,6 +2627,58 @@ namespace BiliBili3.Pages
         private void Sp_View_PaneClosed(SplitView sender, object args)
         {
            
+        }
+
+        private void Cb_SubtitleFont_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cb_SubtitleFont.SelectedItem == null)
+            {
+                return;
+            }
+            SettingHelper.Set_SubtitleFontFamily(cb_SubtitleFont.SelectedItem.ToString());
+            MTC.SubTitleFontFamily =new FontFamily(cb_SubtitleFont.SelectedItem.ToString());
+        }
+
+        private void Cb_SubtitleColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cb_SubtitleColor.SelectedItem == null)
+            {
+                return;
+            }
+            MTC.SubTitleColor = new SolidColorBrush(Utils.ToColor2((cb_SubtitleColor.SelectedItem as ComboBoxItem).Tag.ToString()));
+            SettingHelper.Set_SubtitleColor((cb_SubtitleColor.SelectedItem as ComboBoxItem).Tag.ToString());
+        }
+
+        private void Slider_SubtitleSize_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (MTC == null)
+            {
+                return;
+            }
+            MTC.SubTitleFontSize = e.NewValue;
+            SettingHelper.Set_SubtitleSize(e.NewValue);
+        }
+
+        private void Menuitem_SubtitleSetting_Click(object sender, RoutedEventArgs e)
+        {
+            sp_View.IsPaneOpen = true;
+            grid_Setting.Visibility = Visibility.Collapsed;
+            gv_play.Visibility = Visibility.Collapsed;
+            gv_story_list.Visibility = Visibility.Collapsed;
+            grid_DM.Visibility = Visibility.Collapsed;
+            grid_Info.Visibility = Visibility.Collapsed;
+            grid_Subtitle.Visibility = Visibility.Visible;
+            grid_PB.Visibility = Visibility.Collapsed;
+        }
+
+        private void Slider_SubtitleTran_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (MTC == null)
+            {
+                return;
+            }
+            MTC.SubTitleBackground = new SolidColorBrush(Color.FromArgb(Convert.ToByte(e.NewValue * 255),0,0,0));
+            SettingHelper.Set_SubtitleBgTran(e.NewValue);
         }
     }
 

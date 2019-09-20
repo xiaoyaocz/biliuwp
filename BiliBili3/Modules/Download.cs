@@ -66,19 +66,11 @@ namespace BiliBili3.Modules
                     };
 
                 }
-                else if (SettingHelper.Get_PriorityBiliPlus())
+                else
                 {
                     return await GetBiliPlusSeasonQualitys(aid,cid,season_type,access_key,mid);
                 }
-                else 
-                {
-                    return new ReturnModel<List<QualityInfo>>()
-                    {
-                        success = true,
-                        message = "",
-                        data = new List<QualityInfo>() { new QualityInfo() { Description = "默认", Qn = 0 } }
-                    };
-                }
+               
             }
             catch (Exception ex)
             {
