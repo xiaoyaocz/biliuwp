@@ -18,7 +18,10 @@ namespace BiliBili3.Helper
             {
                 var results = await WebClientClass.GetResultsUTF8Encode(new Uri("http://pic.iliili.cn/bilimessage.json?rnd=" + ApiHelper.GetTimeSpan_2));
                 DeveloperMessageModel messageModel = JsonConvert.DeserializeObject<DeveloperMessageModel>(results);
-
+                if (!messageModel.showAD)
+                {
+                    MessageCenter.SendHideAd();
+                }
                 if (Get_FirstShowMessage(messageModel.messageId) && messageModel.enddate > DateTime.Now)
                 {
                     var cd = new ContentDialog();
@@ -82,11 +85,14 @@ namespace BiliBili3.Helper
             return verStr.Split('/')[0];
         }
         public static string verStr = string.Format(@"Ver {0} 
+01、修复首页加载错误
+
+有什么建议或反馈直接发邮件给我，不要加群(群满)和加我QQ(很少在线)了
+邮箱:xiaoyaocz@52uwp.com
+
+/Ver 3.9.40.0&3.9.41.0 2019-09-25
 01、支持设置外挂字幕
 02、修复其他一些小问题
-
-加了一条广告，就只有一条，在我觉得不影响使用的位置(手机端不会显示)，点击一次广告就可以永久关闭
-开发不易，希望大家理解下
 
 /Ver 3.9.32.0&3.9.33.0 2019-09-13
 01、更新API
@@ -314,6 +320,7 @@ namespace BiliBili3.Helper
         public string message { get; set; }
         public DateTime startdate { get; set; }
         public DateTime enddate { get; set; }
+        public bool showAD { get; set; }
     }
 
 }

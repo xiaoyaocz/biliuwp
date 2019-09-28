@@ -321,15 +321,15 @@ namespace BiliBili3
         public static void Set_HideAD(bool value)
         {
             container = ApplicationData.Current.LocalSettings;
-            container.Values["HideAD"] = value;
+            container.Values["HideAppAD"] = value;
         }
 
         public static bool Get_HideAD()
         {
             container = ApplicationData.Current.LocalSettings;
-            if (container.Values["HideAD"] != null)
+            if (container.Values["HideAppAD"] != null)
             {
-                return (bool)container.Values["HideAD"];
+                return (bool)container.Values["HideAppAD"];
             }
             else
             {
@@ -354,7 +354,7 @@ namespace BiliBili3
             }
             else
             {
-                Set_HideAD(true);
+                Set_MouseBack(true);
                 return true;
             }
         }

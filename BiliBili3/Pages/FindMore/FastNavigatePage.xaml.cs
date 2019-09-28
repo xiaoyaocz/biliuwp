@@ -34,8 +34,15 @@ namespace BiliBili3.Pages
         public FastNavigatePage()
         {
             this.InitializeComponent();
+            MessageCenter.HideAdEvent += MessageCenter_HideAdEvent;
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
+
+        private void MessageCenter_HideAdEvent(object sender, EventArgs e)
+        {
+            gridAd.Visibility = Visibility.Collapsed;
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (SettingHelper.Get_HideAD())
@@ -234,7 +241,7 @@ namespace BiliBili3.Pages
                 }
                 else
                 {
-                    Utils.ShowMessageToast("点一次广告就可以永久关闭了");
+                    Utils.ShowMessageToast("请先点击一次广告，点完再回来这里就能关闭了");
                 }
             }));
             msg.Commands.Add(new UICommand("不关了", (i) => {

@@ -42,7 +42,13 @@ namespace BiliBili3
         public static event MessageHandel ChanageThemeEvent;
         public static event LoginedHandel Logined;
         public static event ChangeBgHandel ChangeBg;
-      
+
+        public static event EventHandler HideAdEvent;
+        public static void SendHideAd()
+        {
+            HideAdEvent?.Invoke(null,null);
+        }
+
         public static void SendMessage(object par)
         {
             if (HasMessaged!=null)
@@ -50,6 +56,7 @@ namespace BiliBili3
                 HasMessaged(null, par);
             }
         }
+
         public static void SendLogined()
         {
             Logined();

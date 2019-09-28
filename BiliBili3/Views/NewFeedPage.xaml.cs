@@ -534,46 +534,57 @@ namespace BiliBili3.Views
         /// </summary>
         public async void LoadHome()
         {
-            _loading = true;
-            showLoading = Visibility.Visible;
-            string idx = "0";
-            if (home_datas != null && home_datas.Count != 0)
+            try
             {
-                idx = home_datas.Last().idx;
-            }
-            var data = await home.GetHome(idx);
-            if (data.success)
-            {
-                var d = data.data.FirstOrDefault(x => x._goto == "banner");
-                if (banner_items == null || banner_items.Count == 0)
+                _loading = true;
+                showLoading = Visibility.Visible;
+                string idx = "0";
+                if (home_datas != null && home_datas.Count != 0)
                 {
-                    banner_items = d.banner_item;
-                    ItemsCount = d.banner_item.Count;
-
+                    idx = home_datas.Last().idx;
                 }
-                if (d != null)
+                var data = await home.GetHome(idx);
+                if (data.success)
                 {
-                    data.data.Remove(d);
-                }
+                    var d = data.data.FirstOrDefault(x => x._goto == "banner");
+                    if (d != null)
+                    {
+                        if (banner_items == null || banner_items.Count == 0)
+                        {
+                            banner_items = d.banner_item;
+                            ItemsCount = d.banner_item.Count;
 
-                if (home_datas == null)
-                {
-                    home_datas = data.data;
+                        }
+                        data.data.Remove(d);
+                    }
+
+                    if (home_datas == null)
+                    {
+                        home_datas = data.data;
+                    }
+                    else
+                    {
+                        foreach (var item in data.data)
+                        {
+                            home_datas.Add(item);
+                        }
+                    }
                 }
                 else
                 {
-                    foreach (var item in data.data)
-                    {
-                        home_datas.Add(item);
-                    }
+                    Utils.ShowMessageToast(data.message);
                 }
+             
             }
-            else
+            catch (Exception)
             {
-                Utils.ShowMessageToast(data.message);
+                
             }
-            showLoading = Visibility.Collapsed;
-            _loading = false;
+            finally
+            {
+                showLoading = Visibility.Collapsed;
+                _loading = false;
+            }
         }
       
         //for hot
