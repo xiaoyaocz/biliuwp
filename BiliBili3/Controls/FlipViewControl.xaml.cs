@@ -99,17 +99,24 @@ namespace BiliBili3.Controls
 
         private void Timer_Tick(object sender, object e)
         {
-            if (flipView.ItemsSource==null||flipView.Items.Count <= 1)
+            if (flipView.ItemsSource == null || flipView.Items.Count <= 1)
             {
                 return;
             }
-            if (flipView.SelectedIndex == flipView.Items.Count - 1)
+            try
             {
-                flipView.SelectedIndex = 0;
+
+                if (flipView.SelectedIndex == flipView.Items.Count - 1)
+                {
+                    flipView.SelectedIndex = 0;
+                }
+                else
+                {
+                    flipView.SelectedIndex += 1;
+                }
             }
-            else
+            catch (Exception)
             {
-                flipView.SelectedIndex += 1;
             }
         }
 

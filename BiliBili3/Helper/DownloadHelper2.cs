@@ -348,12 +348,13 @@ namespace BiliBili3.Helper
 
         public async static Task<bool> ExistsFile(string path)
         {
-            bool re = false;
-            await Task.Run(() =>
-            {
-                re = File.Exists(path);
-            });
-            return re;
+            //File.Exists始终返回False。。。
+            var dir = Path.GetDirectoryName(path);
+            var fileName = Path.GetFileName(path);
+            StorageFile file;
+            StorageFolder folder =await StorageFolder.GetFolderFromPathAsync(dir);
+            file = await folder.TryGetItemAsync(fileName) as StorageFile;
+            return file != null;
         }
 
         public static async void UpdateDowningStatus()
@@ -386,23 +387,17 @@ namespace BiliBili3.Helper
 
 
         }
-        public async static Task<long> GetFileSize(string path)
+        public async static Task<ulong> GetFileSize(string path)
         {
-            long re = 0;
-
-            await Task.Run(() =>
+            ulong re = 0;
+            try
             {
-                try
-                {
-                    FileInfo fileInfo = new FileInfo(path);
-                    re = fileInfo.Length;
-                }
-                catch (Exception)
-                {
-                    re = 0;
-                }
-
-            });
+                StorageFile file = await StorageFile.GetFileFromPathAsync(path);
+                re = (await file.GetBasicPropertiesAsync()).Size;
+            }
+            catch (Exception)
+            {
+            }
             return re;
         }
        

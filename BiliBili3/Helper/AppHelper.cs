@@ -16,7 +16,7 @@ namespace BiliBili3.Helper
         {
             try
             {
-                var results = await WebClientClass.GetResultsUTF8Encode(new Uri("http://pic.iliili.cn/bilimessage.json?rnd=" + ApiHelper.GetTimeSpan_2));
+                var results = await WebClientClass.GetResultsUTF8Encode(new Uri("http://pic.iliili.cn/bilimessageV3.json?rnd=" + ApiHelper.GetTimeSpan_2));
                 DeveloperMessageModel messageModel = JsonConvert.DeserializeObject<DeveloperMessageModel>(results);
                 if (!messageModel.showAD)
                 {
@@ -84,11 +84,23 @@ namespace BiliBili3.Helper
         {
             return verStr.Split('/')[0];
         }
-        public static string verStr = string.Format(@"Ver {0} 
-01、修复首页加载错误
+        public static string verStr = string.Format(@"Ver {0} 2019-11-03
+01、修复下载列表不显示
+02、修复首页跳转问题
 
-有什么建议或反馈直接发邮件给我，不要加群(群满)和加我QQ(很少在线)了
-邮箱:xiaoyaocz@52uwp.com
+/Ver 3.9.46.0&3.9.47.0 2019-11-1
+01、优化首页显示
+02、修复评论显示错误
+03、更新系统版本最低要求至16299
+
+/Ver 3.9.44.0&3.9.45.0 2019-10-01
+01、修复直播无法显示弹幕问题
+02、修复直播清晰度切换问题
+03、增加个人中心显示直播信息
+04、优化首页布局
+
+/Ver 3.9.42.0&3.9.43.0 2019-09-29
+01、修复首页加载错误
 
 /Ver 3.9.40.0&3.9.41.0 2019-09-25
 01、支持设置外挂字幕

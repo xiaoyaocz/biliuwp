@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -33,7 +34,7 @@ namespace BiliBili3.Views
         public NewFeedPage()
         {
             this.InitializeComponent();
-            this.NavigationCacheMode = NavigationCacheMode.Enabled;
+            this.NavigationCacheMode = NavigationCacheMode.Required;
             homeDataTemplateSelector.resource = this.Resources;
             homeTabDataTemplateSelector.resource = this.Resources;
             homePages = new ObservableCollection<HomeModel>() {
@@ -93,17 +94,23 @@ namespace BiliBili3.Views
 
             if (availableSize.Width > 500)
             {
-                num = (int)availableSize.Width / 160;
+                num = (int)availableSize.Width / 260;
             }
 
             bor_width3.Width = (availableSize.Width - (num * 17)) / num;
-            var height = (availableSize.Width * 0.5);
-            bor_height.Width = height-(height*0.42);
+            if (pivot_home != null && availableSize.Width>=800)
+            {
+                pivot_home.Style = App.Current.Resources["PivotHeaderCenterStyle"] as Style;
+            }
+            else
+            {
+                pivot_home.Style = null;
+            }
             return base.MeasureOverride(availableSize);
         }
       
 
-        private void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        private  void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if ((sender as ScrollViewer).VerticalOffset >= ((sender as ScrollViewer).ScrollableHeight - 200))
             {
@@ -143,27 +150,18 @@ namespace BiliBili3.Views
             ((sender as AppBarButton).DataContext as HomeModel).Refresh();
         }
 
-        private void pivot_home_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void pivot_home_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pivot_home.SelectedItem==null)
             {
                 return;
             }
             var m = pivot_home.SelectedItem as HomeModel;
-            if (m.mode== HomeDisplayMode.Home)
+            if (m.mode== HomeDisplayMode.Topic && m.tabData == null)
             {
-                rightHeader.Visibility = Visibility.Visible;
+               await m.LoadTabData();
             }
-            else
-            {
-                rightHeader.Visibility = Visibility.Collapsed;
-                if (m.mode== HomeDisplayMode.Topic&& m.tabData == null)
-                {
-                    m.LoadTabData();
-                }
-               
-            }
-
+           
         }
 
         private void btn_rank_Click(object sender, RoutedEventArgs e)
@@ -183,7 +181,25 @@ namespace BiliBili3.Views
             {
                 return;
             }
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), data.uri);
+            if(Uri.TryCreate(data.uri,UriKind.Absolute,out var uri)&&(uri.Scheme=="https"||uri.Scheme=="http)"))
+            {
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), data.uri);
+            }
+            else
+            {
+
+                await new ContentDialog() {
+                    Title = "暂不支持跳转的类型",
+                    Content = new TextBox()
+                    {
+                        Text=data.uri,
+                        AcceptsReturn=true,
+                        Height=120
+                    },
+                    IsPrimaryButtonEnabled=true,
+                    PrimaryButtonText="知道了"
+                }.ShowAsync();
+            }
 
         }
 
@@ -212,33 +228,41 @@ namespace BiliBili3.Views
             var data = sender.DataContext as Modules.HomeModels.HomeDataModel;
             add_toview.Visibility = Visibility.Collapsed;
             unLike.Visibility = Visibility.Collapsed;
-            unLike_Has.Visibility = Visibility.Collapsed;
-            if (data._goto == "av")
+           // unLike_Has.Visibility = Visibility.Collapsed;
+            if (data.card_goto == "av")
             {
                 add_toview.Tag = data.param;
                 add_toview.Visibility = Visibility.Visible;
             }
 
-            if (data.dislike_reasons != null)
+            if (data.three_point.dislike_reasons != null)
             {
-                //unLike_Has = new MenuFlyoutSubItem() { Text = "不感兴趣" };
-                
-                unLike_Has.Visibility = Visibility.Visible;
-                unLike_Has.Items.Clear();
-                foreach (var item in data.dislike_reasons)
+              
+                var unLike_Has = new MenuFlyoutSubItem() {
+                    Text="不感兴趣"
+                };
+                foreach (var item in data.three_point.dislike_reasons)
                 {
-
-                    var menuItem = new MenuFlyoutItem() { Text = item.reason_name, Tag = item.reason_id, DataContext = data };
+                    var menuItem = new MenuFlyoutItem() { Text = item.name, Tag = item.id, DataContext = data };
                     menuItem.Click += MenuItem_Click;
                     unLike_Has.Items.Add(menuItem);
                 }
+                if(menu.Items.LastOrDefault() is MenuFlyoutSubItem)
+                {
+                    menu.Items[menu.Items.Count - 1] = unLike_Has;
+                }
+                else
+                {
+                    menu.Items.Add(unLike_Has);
+                }
+              
             }
             else
             {
                 unLike.DataContext = data;
                 unLike.Visibility = Visibility.Visible;
             }
-           
+
             menu.ShowAt(sender);
             UpdateLayout();
         }
@@ -251,7 +275,7 @@ namespace BiliBili3.Views
                 return;
             }
             var data = (sender as MenuFlyoutItem).DataContext as Modules.HomeModels.HomeDataModel;
-            var re = await home.UnLikeNeedReason(data._goto, data.param, data.mid.ToString(), (sender as MenuFlyoutItem).Tag.ToInt32(), data.tid.ToString(), data.tag?.tag_id.ToString());
+            var re = await home.UnLikeNeedReason(data.card_goto, data.param, data.args?.up_id, (sender as MenuFlyoutItem).Tag.ToInt32(), data.args?.tid.ToString(), data.args?.tid.ToString());
             if (re.success)
             {
 
@@ -289,7 +313,7 @@ namespace BiliBili3.Views
                 return;
             }
             var data = (sender as MenuFlyoutItem).DataContext as Modules.HomeModels.HomeDataModel;
-            var re = await home.UnLike(data._goto, data.param);
+            var re = await home.UnLike(data.card_goto, data.param);
             if (re.success)
             {
                 homePages[0].home_datas.Remove(data);
@@ -304,11 +328,11 @@ namespace BiliBili3.Views
 
       
 
-        private void btn_LoadMore_Click(object sender, RoutedEventArgs e)
+        private  void btn_LoadMore_Click(object sender, RoutedEventArgs e)
         {
             if (!homePages[0]._loading)
             {
-                homePages[0].LoadHome();
+                 homePages[0].LoadHome();
             }
         }
 
@@ -440,6 +464,17 @@ namespace BiliBili3.Views
                 Utils.ShowMessageToast("不支持跳转的类型");
             }
         }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var height = (e.NewSize.Width * 0.5);
+            bor_height.Width = height - (height * 0.42);
+        }
+
+        private void control_PointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+
+        }
     }
 
     public class NewFeedItemDataTemplateSelector : DataTemplateSelector
@@ -532,8 +567,9 @@ namespace BiliBili3.Views
         /// <summary>
         /// 加载首页动态流
         /// </summary>
-        public async void LoadHome()
+        public async Task LoadHome()
         {
+           
             try
             {
                 _loading = true;
@@ -546,7 +582,7 @@ namespace BiliBili3.Views
                 var data = await home.GetHome(idx);
                 if (data.success)
                 {
-                    var d = data.data.FirstOrDefault(x => x._goto == "banner");
+                    var d = data.data.FirstOrDefault(x => x.card_goto == "banner");
                     if (d != null)
                     {
                         if (banner_items == null || banner_items.Count == 0)
@@ -568,6 +604,11 @@ namespace BiliBili3.Views
                         {
                             home_datas.Add(item);
                         }
+                    }
+                    if (idx=="0")
+                    {
+                        _loading = false;
+                        await LoadHome();
                     }
                 }
                 else
@@ -682,7 +723,7 @@ namespace BiliBili3.Views
         /// <summary>
         /// 加载Tab
         /// </summary>
-        public async void LoadTabData()
+        public async Task LoadTabData()
         {
             _loading = true;
             showLoading = Visibility.Visible;

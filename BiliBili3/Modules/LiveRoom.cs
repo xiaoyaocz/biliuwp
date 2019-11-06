@@ -321,7 +321,7 @@ namespace BiliBili3.Modules
                 //string url = $"https://api.live.bilibili.com/room/v1/Room/playUrl?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&cid={roomid}&device=android&https_url_req=0&mobi_app=android&platform=android&quality={quality}&ts={ApiHelper.GetTimeSpan}";
                 //url += "&sign=" + ApiHelper.GetSign(url);
 
-                string url = $"https://api.live.bilibili.com/room/v1/Room/playUrl?cid={roomid}&quality={quality}&platform=web";
+                string url = $"https://api.live.bilibili.com/room/v1/Room/playUrl?cid={roomid}&qn={quality}&platform=web";
                 var results = await WebClientClass.GetResults(new Uri(url));
                 var model = results.ToDynamicJObject();
                 if (model.code == 0)

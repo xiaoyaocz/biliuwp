@@ -171,7 +171,7 @@ namespace BiliBili3.Pages
 
                 foreach (var item in await folder.GetFoldersAsync())
                 {
-
+                  
                     if (await DownloadHelper2.ExistsFile(item.Path + @"\info.json"))
                     {
 

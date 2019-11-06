@@ -1448,7 +1448,7 @@ namespace BiliBili3.Pages
             //    await new MessageDialog("无法播放此视频" + e.ErrorMessage).ShowAsync();
 
             //}
-            await new MessageDialog("无法播放此视频 ＞﹏＜ \r\n请尝试更换清晰度").ShowAsync();
+            await new MessageDialog("无法播放此视频 ＞﹏＜ \r\n请尝试更换清晰度或者在播放设置中打开/关闭DASH").ShowAsync();
         }
         private void mediaElement_Tapped(object sender, TappedRoutedEventArgs e)
         {

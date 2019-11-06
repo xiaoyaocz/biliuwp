@@ -58,7 +58,7 @@ namespace BiliBili3.Pages
             {
                 pr_Load.Visibility = Visibility.Visible;
                 string Uid = ApiHelper.GetUserId();
-                string results = await WebClientClass.GetResults(new Uri("https://space.bilibili.com/ajax/member/MyInfo?_=" + ApiHelper.GetTimeSpan_2));
+                string results = await WebClientClass.GetResults(new Uri(ApiHelper.GetSignWithUrl($"https://app.bilibili.com/x/v2/account/myinfo?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}",ApiHelper.AndroidKey)));
                 UserModel um = JsonConvert.DeserializeObject<UserModel>(results);
                 switch (um.data.sex)
                 {
@@ -72,7 +72,7 @@ namespace BiliBili3.Pages
                         rb_B.IsChecked = true;
                         break;
                 }
-                dt_Date.Date = um.data.Birthday.Date;
+                dt_Date.Date =DateTime.Parse(um.data.birthday);
                 this.DataContext = um.data;
             }
             catch
@@ -102,7 +102,7 @@ namespace BiliBili3.Pages
                 {
                     sex = "女";
                 }
-                Uri ReUri = new Uri("https://account.bilibili.com/site/UpdateSetting");
+                Uri ReUri = new Uri("https://api.bilibili.com/x/member/web/update");
                 HttpClient hc = new HttpClient();
                 hc.DefaultRequestHeaders.Referer = new Uri("https://account.bilibili.com/site/setting");
                 string QuStr = string.Format("uname={0}&sign={1}&sex={2}&birthday={3}", txt_UserName.Text, txt_Sign.Text, sex, dt_Date.Date.Year + "-" + dt_Date.Date.Month + "-" + dt_Date.Date.Day);
@@ -110,14 +110,14 @@ namespace BiliBili3.Pages
                 response.EnsureSuccessStatusCode();
                 string result = await response.Content.ReadAsStringAsync();
                 JObject json = JObject.Parse(result);
-                if ((string)json["data"] == "成功更新你的资料")
+                if (json["code"].ToInt32()==0)
                 {
                     MessageCenter.SendLogined();
                     Utils.ShowMessageToast("成功更新了你的资料", 3000);
                 }
                 else
                 {
-                    Utils.ShowMessageToast((string)json["data"], 3000);
+                    Utils.ShowMessageToast((string)json["message"], 3000);
 
                 }
             }

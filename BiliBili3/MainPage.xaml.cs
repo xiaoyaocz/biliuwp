@@ -113,6 +113,7 @@ namespace BiliBili3
 
 
         }
+      
 
         private async void MessageCenter_ShowError(object sender, Exception e)
         {
@@ -878,110 +879,6 @@ namespace BiliBili3
             }
         }
 
-        //侧滑来源http://www.cnblogs.com/hebeiDGL/p/4775377.html
-        #region  从屏幕左侧边缘滑动屏幕时，打开 SplitView 菜单
-
-        // SplitView 控件模板中，Pane部分的 Grid
-        Grid PaneRoot;
-
-        //  引用 SplitView 控件中， 保存从 Pane “关闭” 到“打开”的 VisualTransition
-        //  也就是 <VisualTransition From="Closed" To="OpenOverlayLeft"> 这个 
-        VisualTransition from_ClosedToOpenOverlayLeft_Transition;
-
-        private void Border_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
-        {
-            e.Handled = true;
-
-            // 仅当 SplitView 处于 Overlay 模式时（窗口宽度最小时）
-            if (sp_View.DisplayMode == SplitViewDisplayMode.Overlay)
-            {
-                if (PaneRoot == null)
-                {
-                    // 找到 SplitView 控件中，模板的父容器
-                    Grid grid = FindVisualChild<Grid>(sp_View);
-
-                    PaneRoot = grid.FindName("PaneRoot") as Grid;
-
-                    if (from_ClosedToOpenOverlayLeft_Transition == null)
-                    {
-                        // 获取 SplitView 模板中“视觉状态集合”
-                        IList<VisualStateGroup> stateGroup = VisualStateManager.GetVisualStateGroups(grid);
-
-                        //  获取 VisualTransition 对象的集合。
-                        IList<VisualTransition> transitions = stateGroup[0].Transitions;
-
-                        // 找到 SplitView.IsPaneOpen 设置为 true 时，播放的 transition
-                        from_ClosedToOpenOverlayLeft_Transition = transitions?.Where(train => train.From == "Closed" && train.To == "OpenOverlayLeft").First();
-                    }
-                }
-
-
-                // 默认为 Collapsed，所以先显示它
-                PaneRoot.Visibility = Visibility.Visible;
-
-                // 当在 Border 上向右滑动，并且滑动的总距离需要小于 Panel 的默认宽度。否则会脱离左侧窗口，继续向右拖动
-                if (e.Cumulative.Translation.X >= 0 && e.Cumulative.Translation.X < sp_View.OpenPaneLength)
-                {
-                    CompositeTransform ct = PaneRoot.RenderTransform as CompositeTransform;
-                    ct.TranslateX = (e.Cumulative.Translation.X - sp_View.OpenPaneLength);
-                }
-            }
-        }
-
-        private void Border_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
-        {
-            e.Handled = true;
-
-            // 仅当 SplitView 处于 Overlay 模式时（窗口宽度最小时）
-            if (sp_View.DisplayMode == SplitViewDisplayMode.Overlay && PaneRoot != null)
-            {
-                // 因为当 IsPaneOpen 为 true 时，会通过 VisualStateManager 把 PaneRoot.Visibility  设置为
-                // Visibility.Visible，所以这里把它改为 Visibility.Collapsed，以回到初始状态
-                PaneRoot.Visibility = Visibility.Collapsed;
-
-                // 恢复初始状态 
-                CompositeTransform ct = PaneRoot.RenderTransform as CompositeTransform;
-
-
-                // 如果大于 MySplitView.OpenPaneLength 宽度的 1/2 ，则显示，否则隐藏
-                if ((sp_View.OpenPaneLength + ct.TranslateX) > sp_View.OpenPaneLength / 2)
-                {
-                    sp_View.IsPaneOpen = true;
-
-                    // 因为上面设置 IsPaneOpen = true 会再次播放向右滑动的动画，所以这里使用 SkipToFill()
-                    // 方法，直接跳到动画结束状态
-                    from_ClosedToOpenOverlayLeft_Transition?.Storyboard?.SkipToFill();
-
-                }
-
-                ct.TranslateX = 0;
-            }
-        }
-
-
-        public static T FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
-        {
-            int count = Windows.UI.Xaml.Media.VisualTreeHelper.GetChildrenCount(obj);
-            for (int i = 0; i < count; i++)
-            {
-                DependencyObject child = Windows.UI.Xaml.Media.VisualTreeHelper.GetChild(obj, i);
-                if (child != null && child is T)
-                {
-                    return (T)child;
-                }
-                else
-                {
-                    T childOfChild = FindVisualChild<T>(child);
-                    if (childOfChild != null)
-                        return childOfChild;
-                }
-            }
-
-            return null;
-        }
-        #endregion
-
-
         private void play_frame_Navigated(object sender, NavigationEventArgs e)
         {
 
@@ -1098,21 +995,6 @@ namespace BiliBili3
         bool _InBangumi = false;
         private void main_frame_Navigated(object sender, NavigationEventArgs e)
         {
-            //if (main_frame.CanGoBack)
-            //{
-            //    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            //}
-            //else
-            //{
-            //    if (!frame.CanGoBack && !play_frame.CanGoBack)
-            //    {
-            //        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            //    }
-
-            //}
-
-            //if (e.NavigationMode == NavigationMode.Back)
-            //{
             if ((main_frame.Content as Page).Tag == null)
             {
                 return;
@@ -1596,6 +1478,96 @@ namespace BiliBili3
         private void btn_Test_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            if (availableSize.Width>=800)
+            {
+                SetWideUI();
+            }
+            else
+            {
+                SetNarrowUI();
+            }
+            return base.MeasureOverride(availableSize);
+        }
+        //设置宅布局
+        private void SetNarrowUI()
+        {
+            grid_o.BorderThickness = new Thickness(0, 0, 1, 0);
+            bottom.Visibility = Visibility.Visible;
+            bg.Visibility = Visibility.Collapsed;
+            sp_View.DisplayMode = SplitViewDisplayMode.Overlay;
+            Grid.SetColumn(frame, 0);
+            btn_OpenMenu.Visibility = Visibility.Collapsed;
+            SetOneColumn();
+        }
+        //设置宽布局
+        private void SetWideUI()
+        {
+            grid_o.BorderThickness = new Thickness(0, 0, 1, 0);
+            bottom.Visibility = Visibility.Collapsed;
+            sp_View.DisplayMode = SplitViewDisplayMode.CompactOverlay;
+            Grid.SetColumn(frame,1);
+            bg.Visibility = Visibility.Visible;
+            btn_OpenMenu.Visibility = Visibility.Visible;
+            if (frame.CurrentSourcePageType == typeof(BlankPage)&&main_frame.CurrentSourcePageType==typeof(NewFeedPage))
+            {
+                SetOneColumn();
+            }
+            else
+            {
+                SetTwoColumn();
+            }
+        }
+        //显示双列
+        private void SetTwoColumn()
+        {
+            column_left.MaxWidth = 500;
+            column_left.Width = new GridLength(1, GridUnitType.Star);
+            column_right.Width = new GridLength(1, GridUnitType.Star);
+        }
+        //显示单列
+        private void SetOneColumn()
+        {
+            column_left.MaxWidth = double.MaxValue;
+            column_right.Width = new GridLength(0);
+        }
+        private void frame_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if (this.ActualWidth >= 800)
+            {
+                if (e.SourcePageType != typeof(BlankPage))
+                {
+                    SetTwoColumn();
+                }
+                else if (main_frame.SourcePageType == typeof(NewFeedPage))
+                {
+                    SetOneColumn();
+                }
+                else
+                {
+                    SetTwoColumn();
+                }
+            }
+        }
+        private void main_frame_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if (this.ActualWidth >= 800)
+            {
+                if (e.SourcePageType != typeof(NewFeedPage))
+                {
+                    SetTwoColumn();
+                }
+                else if(frame.SourcePageType != typeof(BlankPage))
+                {
+                    SetTwoColumn();
+                }
+                else
+                {
+                    SetOneColumn();
+                }
+            }
         }
     }
 }

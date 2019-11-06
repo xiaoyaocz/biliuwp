@@ -795,11 +795,11 @@
 
     <Grid Background="{ThemeResource Bili-Background}" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="co1" MaxWidth="500"/>
-            <ColumnDefinition x:Name="co"/>
+            <ColumnDefinition x:Name="column_left" />
+            <ColumnDefinition x:Name="column_right"/>
         </Grid.ColumnDefinitions>
 
-        <VisualStateManager.VisualStateGroups>
+        <!--<VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="wide">
                 <VisualState x:Name="w1">
                     <VisualState.StateTriggers>
@@ -807,14 +807,14 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="grid_o.BorderThickness" Value="0 0 1 0"></Setter>
-                        <Setter Target="co.Width" Value="*"></Setter>
+                        <Setter Target="co.Width" Value="0"></Setter>
                         <Setter Target="frame.(Grid.Column)" Value="1"></Setter>
-                        <Setter Target="co1.MaxWidth" Value="500"></Setter>
-                        <Setter Target="bg.Visibility" Value="Visible"></Setter>
+                        <Setter Target="co1.MaxWidth" Value="*"></Setter>
+                        <Setter Target="co1.Width" Value="*"></Setter>
                         <Setter Target="sp_View.DisplayMode" Value="CompactOverlay"></Setter>
                         <Setter Target="bottom.Visibility" Value="Collapsed"></Setter>
                         <Setter Target="btn_OpenMenu.Visibility"  Value="Visible"></Setter>
-                        <Setter Target="bor_SS.Visibility"  Value="Visible"></Setter>
+                     
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="w2">
@@ -826,15 +826,13 @@
                         <Setter Target="frame.(Grid.Column)" Value="0"></Setter>
                         <Setter Target="co.Width" Value="auto"></Setter>
                         <Setter Target="co1.MaxWidth" Value="800"></Setter>
-                        <Setter Target="bg.Visibility" Value="Collapsed"></Setter>
                         <Setter Target="sp_View.DisplayMode" Value="Overlay"></Setter>
                         <Setter Target="bottom.Visibility" Value="Visible"></Setter>
                         <Setter Target="btn_OpenMenu.Visibility"  Value="Collapsed"></Setter>
-                        <Setter Target="bor_SS.Visibility"  Value="Collapsed"></Setter>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+        </VisualStateManager.VisualStateGroups>-->
       
         <Image  x:Name="img_bg" Grid.ColumnSpan="2"></Image>
         <Canvas x:Name="GlassHost" Grid.ColumnSpan="2"/>
@@ -848,6 +846,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
@@ -935,7 +934,7 @@
                 <Button x:Name="btn_Qr" Click="btn_Qr_Click" Grid.Column="5"  Foreground="White" Width="48" Height="48" Background="#00000000">
                     <FontIcon FontFamily="ms-appx:///Assets/logo.ttf#iconfont" Glyph="&#xe6fa;" FontSize="18"/>
                 </Button>
-                <Button x:Name="btn_Search" Click="btn_Search_Click" Grid.Column="6"  Foreground="White" Width="48" Height="48" Background="#00000000">
+                <Button x:Name="btn_Search" Click="btn_Search_Click" Grid.Column="7"  Foreground="White" Width="48" Height="48" Background="#00000000">
                     <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Glyph="&#xe60a;" FontSize="20"/>
                 </Button>
             </Grid>
@@ -1028,8 +1027,7 @@
 
                 </SplitView.Pane>
                 <Grid>
-
-                    <Frame x:Name="main_frame" Navigated="main_frame_Navigated" >
+                    <Frame x:Name="main_frame" Navigating="main_frame_Navigating" Navigated="main_frame_Navigated" >
                         <Frame.ContentTransitions >
                             <TransitionCollection>
 
@@ -1037,14 +1035,6 @@
                             </TransitionCollection>
                         </Frame.ContentTransitions>
                     </Frame>
-
-                    <!--<Image  x:Name="img_bg" ></Image>-->
-
-                    <Border x:Name="bor_SS" 
-					ManipulationMode="TranslateX" 
-					ManipulationCompleted="Border_ManipulationCompleted" 
-					ManipulationDelta="Border_ManipulationDelta"
-					Width="20" Opacity="0" Background="White" HorizontalAlignment="Left"/>
                 </Grid>
             </SplitView>
             <Border x:Name="bor_Width" Width="56" VerticalAlignment="Top"></Border>
@@ -1146,11 +1136,10 @@
             </Frame>
 
 
-          
+
 
         </Grid>
-       
-        <Frame x:Name="frame"  Grid.RowSpan="2"  Visibility="Collapsed"  Navigated="frame_Navigated">
+        <Frame x:Name="frame"  Grid.RowSpan="2"  Visibility="Collapsed" Navigating="frame_Navigating" Navigated="frame_Navigated">
             <Frame.ContentTransitions >
                 <TransitionCollection>
                     <EdgeUIThemeTransition Edge="Right"/>

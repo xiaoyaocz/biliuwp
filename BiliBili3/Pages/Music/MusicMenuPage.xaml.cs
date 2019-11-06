@@ -44,7 +44,7 @@ namespace BiliBili3.Pages.Music
             comment.InitializeComment(new Controls.LoadCommentInfo()
             {
                 commentMode = Controls.CommentMode.MusicMenu,
-                conmmentSortMode = Controls.ConmmentSortMode.All,
+                conmmentSortMode = Controls.ConmmentSortMode.Hot,
                 oid = _menuId
             });
             GetMenuInfo();

@@ -65,7 +65,7 @@ namespace BiliBili3
 
             //await new MessageDialog("出现了一个错误:\r\n" + e.Exception.Message + "\r\n" + e.Exception.StackTrace).ShowAsync();
         }
-        private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
             e.Handled = true;
             try

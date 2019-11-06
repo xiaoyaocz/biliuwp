@@ -182,6 +182,7 @@ namespace BiliBili3.Models
         public UserInfoModel favourite { get; set; }
         public UserInfoModel season { get; set; }
         public UserInfoModel coin_archive { get; set; }
+        public UserInfoModel live { get; set; }
         public List<UserInfoModel> item { get; set; }
         public string fid { get; set; }
         public int cur_count { get; set; }
@@ -193,6 +194,8 @@ namespace BiliBili3.Models
 
         public object cover { get; set; }
 
+        public int liveStatus { get; set; }
+        public string roomid { get; set; }
 
         public string play { get; set; }
         public string danmaku { get; set; }

@@ -110,6 +110,11 @@
                                     <TextBlock Text="{Binding Path=fans}" FontSize="14"  Foreground="White"  FontWeight="Bold"/>
                                 </StackPanel>
                                 <TextBlock Text="{Binding sign}" Margin="15 0" HorizontalAlignment="Center" FontSize="12"  Foreground="White" IsTextSelectionEnabled="True" TextWrapping="Wrap" TextAlignment="Center"/>
+                                <HyperlinkButton x:Name="live" Click="live_Click" Visibility="Collapsed" Foreground="{ThemeResource Bili-ForeColor}" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock>正在直播:<Run x:Name="liveTitle"></Run></TextBlock>
+                                    </StackPanel>
+                                </HyperlinkButton>
                             </StackPanel>
                         </Grid>
                         <HyperlinkButton Grid.Row="1" Visibility="Collapsed" Foreground="{ThemeResource Bili-FontColor}">
@@ -290,7 +295,7 @@
                 </ScrollViewer>
             </PivotItem>
             
-            <PivotItem  Margin="0">
+            <!--<PivotItem  Margin="0">
                 <PivotItem.Header>
                     <TextBlock FontSize="16">关注的人</TextBlock>
                 </PivotItem.Header>
@@ -299,8 +304,8 @@
                         <GridView x:Name="list_AUser" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True" ItemClick="list_AUser_ItemClick">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
-                                    <!--<Setter Property="BorderThickness" Value="0 0 0 1"></Setter>
-                                        <Setter Property="BorderBrush" Value="Gray"></Setter>-->
+                                    --><!--<Setter Property="BorderThickness" Value="0 0 0 1"></Setter>
+                                        <Setter Property="BorderBrush" Value="Gray"></Setter>--><!--
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                                     <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"/>
                                     <Setter Property="Margin" Value="5"/>
@@ -330,7 +335,7 @@
 
 
                 </ScrollViewer>
-            </PivotItem>
+            </PivotItem>-->
             <PivotItem  Margin="0" x:Name="pi_tb" >
                 <PivotItem.Header>
                     <TextBlock FontSize="16">最近投币</TextBlock>

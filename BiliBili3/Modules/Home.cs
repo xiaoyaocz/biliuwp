@@ -31,20 +31,17 @@ namespace BiliBili3.Modules
         {
             try
             {
-                string url = $"https://app.bilibili.com/x/feed/index?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&flush=0&idx={idx}&login_event=2&mobi_app=android&network=wifi&open_event=&platform=android&pull={(idx == "0").ToString().ToLower()}&qn=32&style=2&ts={ApiHelper.GetTimeSpan}";
+                string url = $"https://app.bilibili.com/x/v2/feed/index?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&flush=0&idx={idx}&login_event=2&mobi_app=android&network=wifi&open_event=&platform=android&pull={(idx == "0").ToString().ToLower()}&qn=32&style=2&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
-                results = results.Replace("goto", "_goto");
                 var model = JsonConvert.DeserializeObject<HomeFeedModel>(results);
                 if (model.code == 0)
                 {
+                    
                     ObservableCollection<HomeDataModel> ls = new ObservableCollection<HomeDataModel>();
-                    foreach (var item in model.data)
+                    foreach (var item in model.data.items)
                     {
-                        if (!item.is_ad)
-                        {
-                            ls.Add(item);
-                        }
+                        if(!item.card_goto.Contains("ad_web")) ls.Add(item);
                     }
                     return new ReturnModel<ObservableCollection<HomeDataModel>>()
                     {
@@ -292,10 +289,16 @@ namespace BiliBili3.Modules
             /// <summary>
             /// http://i0.hdslb.com/bfs/archive/939bc05bfe3598d5ad1e759ff022e0bc0c99a16b.png
             /// </summary>
-            public string image { get; set; }
-            /// <summary>
-            /// f274ad57391bd9e3e04479ff1e3e7d52
-            /// </summary>
+
+            private string _image;
+
+            public string image
+            {
+                get { return _image+"@240h.jpg"; }
+                set { _image = value; }
+            }
+
+
             public string hash { get; set; }
             /// <summary>
             /// https://www.bilibili.com/blackboard/activity-BJ0jN5PN7.html
@@ -322,18 +325,50 @@ namespace BiliBili3.Modules
             /// </summary>
             public int cm_mark { get; set; }
         }
+        public class HomeFeedRcmd_reason_style
+        {
+            public string text { get; set; }
+            public string text_color { get; set; }
+            public SolidColorBrush textColor
+            {
+                get
+                {
+                    return new SolidColorBrush(Utils.ToColor2(text_color));
+                }
+            }
+            public string bg_color { get; set; }
+            public SolidColorBrush bgColor
+            {
+                get
+                {
+                    return new SolidColorBrush(Utils.ToColor2(bg_color));
+                }
+            }
+            public string border_color { get; set; }
+            public SolidColorBrush borderColor
+            {
+                get
+                {
+                    return new SolidColorBrush(Utils.ToColor2(border_color));
+                }
+            }
+            public int bg_style { get; set; }
 
-
+        }
+        public class HomeFeedDesc_button
+        {
+            public string text { get; set; }
+        }
         public class Dislike_reasons
         {
             /// <summary>
             /// Reason_id
             /// </summary>
-            public int reason_id { get; set; }
+            public int id { get; set; }
             /// <summary>
             /// UP主:嗫告篇帖
             /// </summary>
-            public string reason_name { get; set; }
+            public string name { get; set; }
         }
         public class Children
         {
@@ -475,14 +510,13 @@ namespace BiliBili3.Modules
 
             public int bg_style { get; set; }
         }
-
+        public class Three_point
+        {
+            public List<Dislike_reasons> dislike_reasons { get; set; }
+        }
         public class HomeDataModel
         {
             public ObservableCollection<Banner_item> banner_item { get; set; }
-            /// <summary>
-            /// 【刀剑神域】当你用爱情公寓的方法打开刀剑神域
-            /// </summary>
-            
             private string _title="";
             public string title {
                 get {
@@ -496,251 +530,108 @@ namespace BiliBili3.Modules
             }
 
             public string cover { get; set; }
-            public string banner_url { get; set; }
-            public Tag tag { get; set; }
-            public List<string> covers { get; set; }
             public string Cover
             {
                 get
                 {
-                    if (cover != null && cover.Length != 0)
+                    if (!string.IsNullOrEmpty(cover))
                     {
                         return cover + "@320w_200h_1e_1c.jpg";
-                        //return cover + ((_goto == "av"||_goto== "bangumi_rcmd") ? "" : "@320w_200h_1e_1c.jpg");
-                    }
-                    if (banner_url != null && banner_url.Length != 0)
-                    {
-                        return banner_url;
-                    }
-                    if (covers != null && covers.Count != 0)
-                    {
-                        return covers[0];
                     }
                     return "";
                 }
             }
-            /// <summary>
-            /// bilibili://video/28430521?page=1&player_preload=%7B%22cid%22%3A49188836%2C%22expire_time%22%3A1533462819%2C%22file_info%22%3A%7B%2215%22%3A%5B%7B%22timelength%22%3A96234%2C%22filesize%22%3A5834702%7D%5D%2C%2232%22%3A%5B%7B%22timelength%22%3A96234%2C%22filesize%22%3A15015218%7D%5D%2C%2264%22%3A%5B%7B%22timelength%22%3A96234%2C%22filesize%22%3A25867434%7D%5D%2C%2280%22%3A%5B%7B%22timelength%22%3A96234%2C%22filesize%22%3A36424063%7D%5D%7D%2C%22support_quality%22%3A%5B80%2C64%2C32%2C15%5D%2C%22support_formats%22%3A%5B%22flv%22%2C%22flv720%22%2C%22flv480%22%2C%22flv360%22%5D%2C%22support_description%22%3A%5B%22%E9%AB%98%E6%B8%85%201080P%22%2C%22%E9%AB%98%E6%B8%85%20720P%22%2C%22%E6%B8%85%E6%99%B0%20480P%22%2C%22%E6%B5%81%E7%95%85%20360P%22%5D%2C%22quality%22%3A32%2C%22url%22%3A%22http%3A%2F%2Fcn-hbcd2-cu-v-12.acgvideo.com%2Fupgcxcode%2F36%2F88%2F49188836%2F49188836-1-32.flv%3Fexpires%3D1533466200%5Cu0026platform%3Dandroid%5Cu0026ssig%3D4hztzWwnr0NuTEZ7CuW6HA%5Cu0026oi%3D2018869370%5Cu0026nfa%3DuTIiNt%2BAQjcYULykM2EttA%3D%3D%5Cu0026dynamic%3D1%5Cu0026hfa%3D2035673872%5Cu0026hfb%3DNzUxMjI5MWJlMDBjMDY0YTQxNjFjMTJiYWE0MjEwYmQ%3D%5Cu0026trid%3Dd749ddd8e0e84cfb838e56f88f10d803%5Cu0026nfc%3D1%22%2C%22video_codecid%22%3A7%2C%22video_project%22%3Atrue%2C%22fnver%22%3A0%2C%22fnval%22%3A0%7D&player_width=1920&player_height=1080&player_rotate=0
-            /// </summary>
+         
             public string uri { get; set; }
-            /// <summary>
-            /// 28430521
-            /// </summary>
             public string param { get; set; }
-            /// <summary>
-            /// av
-            /// </summary>
-            public string _goto { get; set; }
-            /// <summary>
-            /// 249弹幕
-            /// </summary>
-            public string desc { get; set; }
-            /// <summary>
-            /// Play
-            /// </summary>
-            public int play { get; set; }
-            /// <summary>
-            /// Danmaku
-            /// </summary>
-            public int danmaku { get; set; }
-            /// <summary>
-            /// Reply
-            /// </summary>
-            public int reply { get; set; }
-            /// <summary>
-            /// Favorite
-            /// </summary>
-            public int favorite { get; set; }
-            /// <summary>
-            /// Coin
-            /// </summary>
-            public int coin { get; set; }
-            /// <summary>
-            /// Share
-            /// </summary>
-            public int share { get; set; }
-            /// <summary>
-            /// Like
-            /// </summary>
-            public int like { get; set; }
-            /// <summary>
-            /// Dislike
-            /// </summary>
-            public int dislike { get; set; }
-            /// <summary>
-            /// Duration
-            /// </summary>
-            public int duration { get; set; }
-            /// <summary>
-            /// Idx
-            /// </summary>
+            public string card_goto { get; set; }
+          
             public string idx { get; set; }
-            /// <summary>
-            /// Cid
-            /// </summary>
-            public int cid { get; set; }
-            /// <summary>
-            /// Tid
-            /// </summary>
-            public int tid { get; set; }
-            /// <summary>
-            /// MAD·AMV
-            /// </summary>
-            public string tname { get; set; }
-            /// <summary>
-            /// Dislike_reasons
-            /// </summary>
-            public List<Dislike_reasons> dislike_reasons { get; set; }
-            /// <summary>
-            /// Ctime
-            /// </summary>
-            public int ctime { get; set; }
-            /// <summary>
-            /// Autoplay
-            /// </summary>
-            public int autoplay { get; set; }
-            /// <summary>
-            /// Mid
-            /// </summary>
-            public int mid { get; set; }
-            /// <summary>
-            /// 嗫告篇帖
-            /// </summary>
-            public string name { get; set; }
-            /// <summary>
-            /// http://i0.hdslb.com/bfs/face/a5d995ccad22fcff397d5dfa14913d25cb23b48d.jpg
-            /// </summary>
-            public string face { get; set; }
 
-            public bool is_ad { get; set; } = false;
-            public string online { get; set; }
+
+            public Three_point three_point { get; set; }
+            public HomeFeedArgs args { get; set; }
+
+            public HomeFeedRcmd_reason_style rcmd_reason_style { get; set; }
+            public HomeFeedDesc_button desc_button { get; set; }
+            public string cover_left_text_1 { get; set; }
+            public string cover_left_text_2 { get; set; }
+            public int cover_left_icon_1 { get; set; }
+            public int cover_left_icon_2 { get; set; }
+            public string left_text
+            {
+                get
+                {
+                    return $"{iconToText(cover_left_icon_1)}{cover_left_text_1??""} {iconToText(cover_left_icon_2)}{cover_left_text_2??""}";
+                }
+            }
+            public string cover_right_text { get; set; }
+
             public string badge { get; set; }
-            public string area { get; set; }
-            public Category category { get; set; }
+            public bool showBadge
+            {
+                get
+                {
+                    return !string.IsNullOrEmpty(badge);
+                }
+            }
 
-            public Visibility showTag
+            public bool showCoverText
             {
                 get
                 {
-                    if (badge != null && badge.Length != 0)
-                    {
-                        return Visibility.Visible;
-                    }
-                    else if (_goto == "live")
-                    {
-                        badge = "直播";
-                        return Visibility.Visible;
-                    }
-                    else if (_goto == "article_s")
-                    {
-                        badge = "专栏";
-                        return Visibility.Visible;
-                    }
-                    else if (_goto == "ad_web_s")
-                    {
-                        badge = "广告";
-                        return Visibility.Visible;
-                    }
-                    else
-                    {
-                        return Visibility.Collapsed;
-                    }
+                    return !string.IsNullOrEmpty(cover_left_text_1) || !string.IsNullOrEmpty(cover_left_text_2) || !string.IsNullOrEmpty(cover_right_text);
                 }
             }
-            public Visibility showRight
+            public bool showRcmd
             {
                 get
                 {
-                    if (_goto == "av")
-                    {
-                        return Visibility.Visible;
-                    }
-                    else if (_goto == "live")
-                    {
-                        return Visibility.Visible;
-                    }
-                    else
-                    {
-                        return Visibility.Collapsed;
-                    }
+                    return rcmd_reason_style != null;
                 }
             }
-            public Visibility showTname
+            public string bottomText
             {
                 get
                 {
-                    if (_goto == "av")
+                    if (desc_button!=null)
                     {
-                        return Visibility.Visible;
+                        return desc_button.text;
                     }
-                    else
-                    {
-                        return Visibility.Collapsed;
-                    }
+                    return "";
                 }
             }
-            public string hot_bottom
+       
+            public string iconToText(int icon)
             {
-                get
+                switch (icon)
                 {
-                    return name + " · " + tname;
-                }
-            }
-            public string bottom
-            {
-                get
-                {
-                    switch (_goto)
-                    {
-                        case "av":
-                            return tname + ((tag == null) ? "" : " · " + tag.tag_name);
-                        case "live":
-                            return area;
-                        default:
-                            return "";
-                    }
-
-                }
-            }
-            public string rightText
-            {
-                get
-                {
-                    if (_goto == "av")
-                    {
-                        var ts = TimeSpan.FromSeconds(duration);
-                        return ts.ToString(@"mm\:ss");
-                    }
-                    else if (_goto == "live")
-                    {
-                        return name;
-                    }
-                    else
-                    {
+                    case 1:
+                    case 6:
+                        return "观看:";
+                    case 2:
+                        return "人气:";
+                    case 3:
+                        return "弹幕:";
+                    case 4:
+                        return "追番:";
+                    case 7:
+                        return "评论:";
+                    default:
                         return "";
-                    }
                 }
             }
-            public string text
-            {
-                get
-                {
-                    switch (_goto)
-                    {
-                        case "av":
-                            return play.ToW() + "观看 " + danmaku.ToW() + "弹幕";
-                        case "live":
-                            return online.ToW() + "人气";
-                        case "article_s":
-                            return play.ToW() + "观看 " + reply.ToW() + "评论";
-                        default:
-                            return "";
-                    }
-                }
-            }
-
         }
-
+        public class HomeFeedArgs
+        {
+            public string up_id { get; set; }
+            public string up_name { get; set; }
+            public int rid { get; set; }
+            public int tid { get; set; }
+            public string tname { get; set; }
+            public string rname { get; set; }
+            public int aid { get; set; }
+        }
         public class HomeFeedModel
         {
             /// <summary>
@@ -755,12 +646,16 @@ namespace BiliBili3.Modules
             /// Ttl
             /// </summary>
             public int ttl { get; set; }
+
             /// <summary>
             /// Data
             /// </summary>
-            public ObservableCollection<HomeDataModel> data { get; set; }
+            public HomeFeedDataModel data { get; set; }
         }
-
+        public class HomeFeedDataModel
+        {
+            public ObservableCollection<HomeDataModel> items { get; set; }
+        }
         public class TabModel
         {
             /// <summary>
@@ -928,7 +823,15 @@ namespace BiliBili3.Modules
             /// <summary>
             /// http://i0.hdslb.com/bfs/archive/855bfc0a07e498cb16a520c62f86048a236cbbc8.png
             /// </summary>
-            public string cover { get; set; }
+            private string _cover;
+
+            public string cover
+            {
+                get { return _cover+"@300h.jpg"; }
+                set { _cover = value; }
+            }
+
+
             /// <summary>
             /// https://www.bilibili.com/blackboard/activity-Byw_ZqWbZm.html
             /// </summary>
@@ -970,7 +873,15 @@ namespace BiliBili3.Modules
             /// <summary>
             /// http://i0.hdslb.com/bfs/archive/8ce99a09b5639ac5ff74b5736536fabf8cfd5a54.jpg
             /// </summary>
-            public string image { get; set; }
+            private string _image;
+
+            public string image
+            {
+                get { return _image+"@800w.jpg"; }
+                set { _image = value; }
+            }
+
+
             /// <summary>
             /// 
             /// </summary>

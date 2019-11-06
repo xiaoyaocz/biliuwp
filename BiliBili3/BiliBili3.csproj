@@ -12,7 +12,7 @@
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.17134.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -1161,14 +1161,18 @@
     <SDKReference Include="ShanYe MediaPlayer Engine %28Windows 10 UWP%29, Version=1.0.7">
       <Name>ShanYe MediaPlayer Engine %28Windows 10 UWP%29</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.29.0">
-      <Name>SQLite for Universal Windows Platform %28SQLite.UWP.2015, Version=3.29.0%29</Name>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.30.1">
+      <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\GitProject\waslibs-master\waslibs-master\src\AppStudio.Uwp\AppStudio.Uwp.csproj">
+      <Project>{ecedcde9-e70e-4673-a4e9-ffb437b32c0e}</Project>
+      <Name>AppStudio.Uwp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NSDanmaku\NSDanmaku\NSDanmaku.csproj">
       <Project>{964d5bcc-c063-45cc-aeea-89169e4a2e5e}</Project>
       <Name>NSDanmaku</Name>

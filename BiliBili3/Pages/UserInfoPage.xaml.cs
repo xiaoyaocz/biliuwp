@@ -36,22 +36,20 @@ namespace BiliBili3.Pages
         public UserInfoPage()
         {
             this.InitializeComponent();
-         
             NavigationCacheMode = NavigationCacheMode.Required;
         }
         string Uid = string.Empty;
-        bool canB = false;
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.NavigationMode == NavigationMode.New || canB)
+            if (e.NavigationMode == NavigationMode.New||string.IsNullOrEmpty(Uid))
             {
-
                 Uid = "";
                 pivot.SelectedIndex = 0;
                 getPage = 1;
                 page = 1;
                 MaxPage = 0;
-                list_AUser.Items.Clear();
+                //list_AUser.Items.Clear();
                 list_ASubit.Items.Clear();
                 list_ACoin.ItemsSource = null;
                 ls_dynamic.ClearData();
@@ -95,13 +93,6 @@ namespace BiliBili3.Pages
 
                 GetUserInfo();
             }
-            else
-            {
-                //pivot.SelectedIndex = 0;
-
-                canB = true;
-
-            }
         }
         private void btn_Back_Click(object sender, RoutedEventArgs e)
         {
@@ -109,11 +100,14 @@ namespace BiliBili3.Pages
             {
                 this.Frame.GoBack();
             }
-            else
+        }
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            if(e.NavigationMode == NavigationMode.Back)
             {
-                canB = false;
+                NavigationCacheMode = NavigationCacheMode.Disabled;
             }
-
+            base.OnNavigatingFrom(e);
         }
         public async Task<List<GetUserFovBox>> GetUserFovBox()
         {
@@ -188,7 +182,15 @@ namespace BiliBili3.Pages
                     {
                         DT_0.Visibility = Visibility.Visible;
                     }
-
+                    if (m.data.live != null && m.data.live.liveStatus == 1)
+                    {
+                        live.Visibility = Visibility.Visible;
+                        liveTitle.Text = m.data.live.title;
+                    }
+                    else
+                    {
+                        live.Visibility = Visibility.Collapsed;
+                    }
                     if (m.data.card.vip.vipType != 0)
                     {
                         if (m.data.card.vip.vipType == 2)
@@ -265,53 +267,53 @@ namespace BiliBili3.Pages
         int page = 1;
         int MaxPage = 99;
         bool IsLoading = true;
-        public async void GetUserAttention(int pageNum)
-        {
-            try
-            {
-                pr_Load.Visibility = Visibility.Visible;
-                IsLoading = true;
+        //public async void GetUserAttention(int pageNum)
+        //{
+        //    try
+        //    {
+        //        pr_Load.Visibility = Visibility.Visible;
+        //        IsLoading = true;
 
 
-                string results = await WebClientClass.GetResults(new Uri("https://api.bilibili.com/x/relation/followings?vmid=" + Uid + "&ps=20&pn=" + pageNum + "&order=desc&jsonp=json"));
-                //一层
-                GetUserFollow model1 = JsonConvert.DeserializeObject<GetUserFollow>(results);
-                if (model1.code == 0)
-                {
-                    //二层
-                    // GetUserAttention model2 = JsonConvert.DeserializeObject<GetUserAttention>(model1.data.ToString());
-                    // MaxPage = model2.pages;
-                    //三层
-                    //  List<GetUserAttention> lsModel = JsonConvert.DeserializeObject<List<GetUserAttention>>(model2.list.ToString());
-                    foreach (GetUserFollow item in model1.data.list)
-                    {
-                        list_AUser.Items.Add(item);
-                    }
-                    page++;
-                }
-                else
-                {
-                    Utils.ShowMessageToast(model1.message, 2000);
-                }
-            }
-            catch (Exception)
-            {
-                if (list_AUser.Items.Count == 0)
-                {
-                    Utils.ShowMessageToast("没有关注任何人", 2000);
-                }
-                else
-                {
-                    Utils.ShowMessageToast("读取关注失败！", 2000);
-                }
-                //await new MessageDialog("读取关注失败！\r\n" + ex.Message).ShowAsync();
-            }
-            finally
-            {
-                pr_Load.Visibility = Visibility.Collapsed;
-                IsLoading = false;
-            }
-        }
+        //        string results = await WebClientClass.GetResults(new Uri("https://api.bilibili.com/x/relation/followings?vmid=" + Uid + "&ps=20&pn=" + pageNum + "&order=desc&jsonp=json"));
+        //        //一层
+        //        GetUserFollow model1 = JsonConvert.DeserializeObject<GetUserFollow>(results);
+        //        if (model1.code == 0)
+        //        {
+        //            //二层
+        //            // GetUserAttention model2 = JsonConvert.DeserializeObject<GetUserAttention>(model1.data.ToString());
+        //            // MaxPage = model2.pages;
+        //            //三层
+        //            //  List<GetUserAttention> lsModel = JsonConvert.DeserializeObject<List<GetUserAttention>>(model2.list.ToString());
+        //            foreach (GetUserFollow item in model1.data.list)
+        //            {
+        //                list_AUser.Items.Add(item);
+        //            }
+        //            page++;
+        //        }
+        //        else
+        //        {
+        //            Utils.ShowMessageToast(model1.message, 2000);
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        if (list_AUser.Items.Count == 0)
+        //        {
+        //            Utils.ShowMessageToast("没有关注任何人", 2000);
+        //        }
+        //        else
+        //        {
+        //            Utils.ShowMessageToast("读取关注失败！", 2000);
+        //        }
+        //        //await new MessageDialog("读取关注失败！\r\n" + ex.Message).ShowAsync();
+        //    }
+        //    finally
+        //    {
+        //        pr_Load.Visibility = Visibility.Collapsed;
+        //        IsLoading = false;
+        //    }
+        //}
 
 
 
@@ -336,24 +338,24 @@ namespace BiliBili3.Pages
             MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), (e.ClickedItem as UserInfoModel).param);
         }
 
-        private void btn_load_More_Atton_Click(object sender, RoutedEventArgs e)
-        {
-            if (!IsLoading)
-            {
-                GetUserAttention(page);
-            }
-        }
+        //private void btn_load_More_Atton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (!IsLoading)
+        //    {
+        //        GetUserAttention(page);
+        //    }
+        //}
 
-        private void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-            if (sv.VerticalOffset == sv.ScrollableHeight)
-            {
-                if (!IsLoading)
-                {
-                    GetUserAttention(page);
-                }
-            }
-        }
+        //private void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        //{
+        //    if (sv.VerticalOffset == sv.ScrollableHeight)
+        //    {
+        //        if (!IsLoading)
+        //        {
+        //            GetUserAttention(page);
+        //        }
+        //    }
+        //}
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -367,7 +369,6 @@ namespace BiliBili3.Pages
 
         private void list_AUser_ItemClick(object sender, ItemClickEventArgs e)
         {
-            canB = true;
             this.Frame.Navigate(typeof(UserInfoPage), new object[] { ((GetUserFollow)e.ClickedItem).mid });
         }
 
@@ -391,23 +392,24 @@ namespace BiliBili3.Pages
                         await GetSubInfo(Uid);
                     }
                     break;
-                case 3:
-                    if (list_AUser.Items.Count == 0)
-                    {
-                        GetUserAttention(page);
-                    }
-                    break;
+                //case 3:
+                //    if (list_AUser.Items.Count == 0)
+                //    {
+                //        GetUserAttention(page);
+                //    }
+                //    break;
                 default:
                     break;
             }
         }
 
-        private void btn_More_Video_Click(object sender, RoutedEventArgs e)
+        private async void btn_More_Video_Click(object sender, RoutedEventArgs e)
         {
-
             if (page <= MaxPage && !IsLoading)
             {
-                GetUserAttention(page);
+                subLoading = true;
+                await GetSubInfo(Uid);
+                subLoading = false;
             }
             else
             {
@@ -479,7 +481,6 @@ namespace BiliBili3.Pages
 
         private void list_ASubit_ItemClick_1(object sender, ItemClickEventArgs e)
         {
-            canB = false;
             MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), (e.ClickedItem as GetUserSubmit).aid);
         }
 
@@ -578,7 +579,6 @@ namespace BiliBili3.Pages
 
         private void btn_EditProfile_Click(object sender, RoutedEventArgs e)
         {
-            canB = true;
             this.Frame.Navigate(typeof(EditProfilePage));
         }
 
@@ -690,6 +690,9 @@ namespace BiliBili3.Pages
 
         }
 
-      
+        private void live_Click(object sender, RoutedEventArgs e)
+        {
+            MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(Live.LiveRoomPC), (data.DataContext as UserInfoModel).live.roomid);
+        }
     }
 }

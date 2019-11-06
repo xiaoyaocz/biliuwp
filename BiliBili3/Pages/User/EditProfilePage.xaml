@@ -42,7 +42,7 @@
                 </Button>
               
                 <TextBlock Foreground="Gray" FontSize="16">昵称 (修改需要5硬币)</TextBlock>
-                <TextBox x:Name="txt_UserName" Text="{Binding uname}"  Margin="0 5" BorderThickness="1"></TextBox>
+                <TextBox x:Name="txt_UserName" Text="{Binding name}"  Margin="0 5" BorderThickness="1"></TextBox>
                 <TextBlock Foreground="Gray" FontSize="16">性别</TextBlock>
                 <StackPanel Orientation="Horizontal" Margin="0 5">
                     <RadioButton x:Name="rb_B">保密</RadioButton>

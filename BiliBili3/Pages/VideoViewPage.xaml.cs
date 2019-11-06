@@ -66,7 +66,7 @@ namespace BiliBili3.Pages
 
 
         string _aid;
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
@@ -74,9 +74,9 @@ namespace BiliBili3.Pages
             _aid = (e.Parameter as object[])[0].ToString();
             txt_Header.Text = "AV" + _aid;
 
-            GetFavBox();
+            await GetFavBox();
             pivot.SelectedIndex = 0;
-            LoadVideo();
+            await LoadVideo();
 
             if (SecondaryTile.Exists(_aid))
             {
@@ -100,7 +100,7 @@ namespace BiliBili3.Pages
 
         bool isMovie = false;
         bool ISBAN = false;
-        private async void LoadVideo()
+        private async Task LoadVideo()
         {
             try
             {
@@ -581,7 +581,7 @@ namespace BiliBili3.Pages
             comment.InitializeComment(new LoadCommentInfo()
             {
                 commentMode = CommentMode.Video,
-                conmmentSortMode = ConmmentSortMode.All,
+                conmmentSortMode = ConmmentSortMode.Hot,
                 oid = _aid
             });
         }
@@ -635,7 +635,7 @@ namespace BiliBili3.Pages
                 Utils.ShowMessageToast("请先登录", 3000);
             }
         }
-        private async void GetFavBox()
+        private async Task GetFavBox()
         {
 
             if (ApiHelper.IsLogin())

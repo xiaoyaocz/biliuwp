@@ -157,7 +157,7 @@
                   
                 </StackPanel>
                 <AppBarButton Grid.Column="1" Flyout="{StaticResource ResourceKey=menu}" HorizontalAlignment="Right" Icon="More" Grid.RowSpan="2" Width="48" Height="48"></AppBarButton>
-                <TextBlock Grid.Column="1" Grid.Row="1"  FontSize="14" Foreground="Gray" Margin="4 0" VerticalAlignment="Top">#<Run Text="{Binding Path=floor}"></Run> <Run Text="{Binding Path=time}"></Run> <Run Text="{Binding Path=content.plat_str}"></Run></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="1"  FontSize="14" Foreground="Gray" Margin="4 0" VerticalAlignment="Top"><!--#<Run Text="{Binding Path=floor}"></Run>--> <Run Text="{Binding Path=time}"></Run> <Run Text="{Binding Path=content.plat_str}"></Run></TextBlock>
 
                 <ContentControl  Grid.Row="2" Grid.Column="1" Margin="4 0" Content="{Binding Path=content.text}">
                    
@@ -322,17 +322,19 @@
 
         <Grid>
             <StackPanel>
-                <StackPanel x:Name="hot">
-                    <ListView x:Name="ls_hot" ItemTemplate="{StaticResource commentTemplate}" ItemContainerStyle="{StaticResource commentStyle}"  BorderBrush="#33808080" SelectionMode="None" IsItemClickEnabled="False" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-
-                    </ListView>
-                    <HyperlinkButton x:Name="btn_HotSort" Click="btn_HotSort_Click"  HorizontalAlignment="Center">
-                        <TextBlock>更多热门评论</TextBlock>
+                <Grid x:Name="hot">
+                    <TextBlock Margin="12 8" FontSize="18">热门评论</TextBlock>
+                    <HyperlinkButton x:Name="btn_NewSort" Margin="8" Padding="0" VerticalAlignment="Center"  Click="btn_NewSort_Click"  HorizontalAlignment="Right">
+                        <TextBlock>按最新排序</TextBlock>
                     </HyperlinkButton>
-                </StackPanel>
-                <HyperlinkButton x:Name="btn_NewSort" Visibility="Collapsed" Click="btn_NewSort_Click"  HorizontalAlignment="Center">
-                    <TextBlock>查看最新评论</TextBlock>
-                </HyperlinkButton>
+                </Grid>
+                <Grid x:Name="_new">
+                    <TextBlock Margin="12 8" FontSize="18">最新评论</TextBlock>
+                    <HyperlinkButton x:Name="btn_HotSort"  Margin="8" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Right"  Click="btn_HotSort_Click" >
+                        <TextBlock>按热门排序</TextBlock>
+                    </HyperlinkButton>
+                </Grid>
+
                 <ListView x:Name="ls_new" ItemTemplate="{StaticResource commentTemplate}" ItemContainerStyle="{StaticResource commentStyle}"  SelectionMode="None" IsItemClickEnabled="False" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 </ListView>
                 <ProgressBar    x:Name="pr_load" IsIndeterminate="True" Background="#00000000" ></ProgressBar>

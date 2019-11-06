@@ -138,6 +138,7 @@ namespace BiliBili3
              * https://www.bilibili.com/playlist/video/pl688?aid=19827477
              * bilibili://video/19239064
              * bilibili://?av=4284663
+             * https://m.bilibili.com/playlist/pl733016988?avid=68818070
              */
 
             var video = Utils.RegexMatch(url.Replace("aid", "av").Replace("/","").Replace("=",""), @"av(\d+)");
@@ -152,6 +153,13 @@ namespace BiliBili3
                 InfoNavigateToEvent(typeof(VideoViewPage), video);
                 return true;
             }
+            video = Utils.RegexMatch(url, @"avid=(\d+)");
+            if (video != "")
+            {
+                InfoNavigateToEvent(typeof(VideoViewPage), video);
+                return true;
+            }
+          
 
             /* 
              * 番剧/影视
@@ -272,7 +280,7 @@ namespace BiliBili3
                 InfoNavigateToEvent(typeof(MusicMenuPage), musicmenu);
                 return true;
             }
-         
+
 
             /*
              * 相簿及动态
@@ -280,8 +288,9 @@ namespace BiliBili3
              * http://h.bilibili.com/2403422
              * bilibili://album/2403422
              * https://t.bilibili.com/84935538081511530
+             * bilibili://following/detail/314560419758546547
              */
-            var album = Utils.RegexMatch(url.Replace("h.bilibili.com/ywh/h5/", "album").Replace("h.bilibili.com", "album").Replace("t.bilibili.com", "album").Replace("/", ""), @"album(\d+)");
+            var album = Utils.RegexMatch(url.Replace("bilibili://following/detail/", "album").Replace("h.bilibili.com/ywh/h5/", "album").Replace("h.bilibili.com", "album").Replace("t.bilibili.com", "album").Replace("/", ""), @"album(\d+)");
             if (album != "")
             {
                 InfoNavigateToEvent(typeof(DynamicInfoPage),  album);
@@ -337,6 +346,26 @@ namespace BiliBili3
             {
                 //InfoNavigateToEvent(typeof(DynamicTopicPage), new object[] { "", topic });
                 InfoNavigateToEvent(typeof(WebPage), new object[] { "https://member.bilibili.com/v2#/upload/video/frame" });
+                return true;
+            }
+
+            /*
+             * 我的追番
+             * bilibili://main/favorite?tab=bangumi&fav_sub_tab=watching&from=21
+             */
+            if (url.Contains("favorite?tab=bangumi"))
+            {
+                InfoNavigateToEvent(typeof(FollowSeasonPage));
+                return true;
+            }
+
+            /*
+             * 赛事
+             * bilibili://pegasus/channel/v2/9222?tab=5709
+             */
+            if (url.Contains("bilibili://pegasus/channel/v2/9222"))
+            {
+                InfoNavigateToEvent(typeof(WebPage), new object[] { "https://www.bilibili.com/v/game/match" });
                 return true;
             }
 

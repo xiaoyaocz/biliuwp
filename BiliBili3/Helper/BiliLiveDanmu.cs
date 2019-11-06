@@ -164,60 +164,63 @@ namespace BiliBili3.Helper
                         {
                             Debug.WriteLine(json);
                             JObject obj = JObject.Parse(json);
-                            switch (obj["cmd"].ToString())
+                            if (obj["cmd"].ToString().Contains("DANMU_MSG"))
                             {
-                                case "DANMU_MSG":
-                                    var v = new DanmuMsgModel();
-                                    if (obj["info"] != null && obj["info"].ToArray().Length != 0)
+                                var v = new DanmuMsgModel();
+                                if (obj["info"] != null && obj["info"].ToArray().Length != 0)
+                                {
+                                    v.text = obj["info"][1].ToString();
+                                    if (obj["info"][2] != null && obj["info"][2].ToArray().Length != 0)
                                     {
-                                        v.text = obj["info"][1].ToString();
-                                        if (obj["info"][2] != null && obj["info"][2].ToArray().Length != 0)
-                                        {
-                                            v.username = obj["info"][2][1].ToString()+":";
+                                        v.username = obj["info"][2][1].ToString() + ":";
 
-                                            //v.usernameColor = GetColor(obj["info"][2][0].ToString());
-                                            if (obj["info"][2][3] != null && Convert.ToInt32(obj["info"][2][3].ToString()) == 1)
-                                            {
-                                                v.vip = "老爷";
-                                                v.isVip = Visibility.Visible;
-                                            }
-                                            if (obj["info"][2][4] != null && Convert.ToInt32(obj["info"][2][4].ToString()) == 1)
-                                            {
-                                                v.vip = "年费老爷";
-                                                v.isVip = Visibility.Collapsed;
-                                                v.isBigVip = Visibility.Visible;
-                                            }
-                                            if (obj["info"][2][2] != null && Convert.ToInt32(obj["info"][2][2].ToString()) == 1)
-                                            {
-                                                v.vip = "房管";
-                                                v.isAdmin = Visibility.Visible;
-                                            }
-                                        }
-                                        if (obj["info"][3] != null && obj["info"][3].ToArray().Length != 0)
+                                        //v.usernameColor = GetColor(obj["info"][2][0].ToString());
+                                        if (obj["info"][2][3] != null && Convert.ToInt32(obj["info"][2][3].ToString()) == 1)
                                         {
-                                            v.medal_name = obj["info"][3][1].ToString();
-                                            v.medal_lv= obj["info"][3][0].ToString();
-                                            v.medalColor =obj["info"][3][4].ToString();
-                                            v.hasMedal = Visibility.Visible;
+                                            v.vip = "老爷";
+                                            v.isVip = Visibility.Visible;
                                         }
-                                        if (obj["info"][4] != null && obj["info"][4].ToArray().Length != 0)
+                                        if (obj["info"][2][4] != null && Convert.ToInt32(obj["info"][2][4].ToString()) == 1)
                                         {
-                                            v.ul = "UL" + obj["info"][4][0].ToString();
-                                            v.ulColor = obj["info"][4][2].ToString();
+                                            v.vip = "年费老爷";
+                                            v.isVip = Visibility.Collapsed;
+                                            v.isBigVip = Visibility.Visible;
                                         }
-                                        if (obj["info"][5] != null && obj["info"][5].ToArray().Length != 0)
+                                        if (obj["info"][2][2] != null && Convert.ToInt32(obj["info"][2][2].ToString()) == 1)
                                         {
-                                            v.user_title = obj["info"][5][0].ToString();
-                                            v.hasTitle = Visibility.Visible;
-                                        }
-                                       
-                                        if (HasDanmu != null)
-                                        {
-                                            HasDanmu(new LiveDanmuModel() { type = LiveDanmuTypes.Danmu, value = v });
+                                            v.vip = "房管";
+                                            v.isAdmin = Visibility.Visible;
                                         }
                                     }
+                                    if (obj["info"][3] != null && obj["info"][3].ToArray().Length != 0)
+                                    {
+                                        v.medal_name = obj["info"][3][1].ToString();
+                                        v.medal_lv = obj["info"][3][0].ToString();
+                                        v.medalColor = obj["info"][3][4].ToString();
+                                        v.hasMedal = Visibility.Visible;
+                                    }
+                                    if (obj["info"][4] != null && obj["info"][4].ToArray().Length != 0)
+                                    {
+                                        v.ul = "UL" + obj["info"][4][0].ToString();
+                                        v.ulColor = obj["info"][4][2].ToString();
+                                    }
+                                    if (obj["info"][5] != null && obj["info"][5].ToArray().Length != 0)
+                                    {
+                                        v.user_title = obj["info"][5][0].ToString();
+                                        v.hasTitle = Visibility.Visible;
+                                    }
 
-                                    break;
+                                    if (HasDanmu != null)
+                                    {
+                                        HasDanmu(new LiveDanmuModel() { type = LiveDanmuTypes.Danmu, value = v });
+                                    }
+                                }
+                            }
+                            //19/10/01,cmd DANMU_MSG变成了DANMU_MSG:4:0:2:2:2:0
+                            switch (obj["cmd"].ToString())
+                            {
+                                //case "DANMU_MSG":
+                                //    break;
                                 case "SEND_GIFT":
                                     var g = new GiftMsgModel();
                                     if (obj["data"] != null)
@@ -259,6 +262,7 @@ namespace BiliBili3.Helper
 
                                     break;
                                 default:
+
                                     break;
                             }
                         }

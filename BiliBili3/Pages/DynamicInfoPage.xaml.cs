@@ -288,7 +288,7 @@ namespace BiliBili3.Pages
                 comment.InitializeComment(new Controls.LoadCommentInfo()
                 {
                     commentMode = Controls.CommentMode.Dynamic,
-                    conmmentSortMode = Controls.ConmmentSortMode.All,
+                    conmmentSortMode = Controls.ConmmentSortMode.Hot,
                     oid = _data.desc.dynamic_id.ToString()
                 });
             }
@@ -297,7 +297,7 @@ namespace BiliBili3.Pages
                 comment.InitializeComment(new Controls.LoadCommentInfo()
                 {
                     commentMode = Controls.CommentMode.Photo,
-                    conmmentSortMode = Controls.ConmmentSortMode.All,
+                    conmmentSortMode = Controls.ConmmentSortMode.Hot,
                     oid = _data.desc.rid.ToString()
                 });
             }
@@ -306,7 +306,7 @@ namespace BiliBili3.Pages
                 comment.InitializeComment(new Controls.LoadCommentInfo()
                 {
                     commentMode = Controls.CommentMode.MiniVideo,
-                    conmmentSortMode = Controls.ConmmentSortMode.All,
+                    conmmentSortMode = Controls.ConmmentSortMode.Hot,
                     oid = _data.desc.rid.ToString()
                 });
             }

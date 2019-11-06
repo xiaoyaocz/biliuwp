@@ -5,10 +5,12 @@
     xmlns:local="using:BiliBili3.Views"
     xmlns:my="using:BiliBili3"
     xmlns:pr="using:PullToRefresh.UWP"
+    xmlns:appControls="using:AppStudio.Uwp.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Tag="NEWFEED"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:controls="using:BiliBili3.Controls"
     >
     <Page.Resources>
@@ -19,17 +21,35 @@
             <MenuFlyoutItem x:Name="add_toview" Click="add_toview_Click">添加到稍后再看</MenuFlyoutItem>
             <MenuFlyoutItem x:Name="unLike" Text="不感兴趣" Click="unLike_Click">
             </MenuFlyoutItem>
-            <MenuFlyoutSubItem x:Name="unLike_Has" Text="不感兴趣" >
+            <!--<MenuFlyoutSubItem x:Name="unLike_Has" Text="不感兴趣" >
 
-            </MenuFlyoutSubItem>
+            </MenuFlyoutSubItem>-->
         </MenuFlyout>
 
         <DataTemplate x:Key="home">
             <Grid>
 
-                <ScrollViewer   x:Name="sv" ViewChanged="sv_ViewChanged">
+                <ScrollViewer x:Name="sv" ViewChanged="sv_ViewChanged">
                     <StackPanel>
-                        <controls:FlipViewControl Margin="8"  ItemsSource="{Binding banner_items}" IntervalSeconds="3"  FlipViewHeight="300" FlipViewWidth="1020">
+                        <Grid>
+                            <appControls:Carousel x:Name="control" Margin="8" ItemsSource="{Binding banner_items}" MaxItems="1"  AspectRatio="2" GradientOpacity="1.0" MaxHeight="240">
+                                <appControls:Carousel.ContentTemplate>
+                                    <DataTemplate>
+                                        <HyperlinkButton Margin="8" Click="btn_banner_Click" ToolTipService.ToolTip="{Binding title}"  Padding="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+                                            <Image Stretch="UniformToFill" Source="{Binding image}"></Image>
+                                        </HyperlinkButton>
+                                    </DataTemplate>
+                                </appControls:Carousel.ContentTemplate>
+                            </appControls:Carousel>
+                            <appControls:Indicator x:Name="indicator" Margin="0,16"
+                                                   VerticalAlignment="Bottom"
+                                                   HorizontalAlignment="Center"
+                                                   ItemsSource="{Binding ItemsSource, ElementName=control, Mode=TwoWay}"
+                                                   SelectedIndex="{Binding SelectedIndex, ElementName=control, Mode=TwoWay}"
+                                                   ShapeMode="Ellipse" Background="WhiteSmoke"  SelectedBackground="{ThemeResource Bili-ForeColor}" PressedBackground="Gray" />
+                        </Grid>
+                      
+                        <!--<controls:FlipViewControl Margin="8"  ItemsSource="{Binding banner_items}" IntervalSeconds="3"  FlipViewHeight="300" FlipViewWidth="1020">
 
                             <controls:FlipViewControl.ItemTemplate>
                                 <DataTemplate>
@@ -38,8 +58,8 @@
                                     </HyperlinkButton>
                                 </DataTemplate>
                             </controls:FlipViewControl.ItemTemplate>
-                        </controls:FlipViewControl>
-                        <GridView x:Name="ls_feed" ItemsSource="{Binding home_datas}" ScrollViewer.VerticalScrollMode="Disabled" ItemClick="ls_feed_ItemClick" HorizontalContentAlignment="Center" SelectionMode="None" IsItemClickEnabled="True">
+                        </controls:FlipViewControl>-->
+                        <GridView x:Name="ls_feed" ItemsSource="{Binding home_datas}" ScrollViewer.VerticalScrollMode="Disabled" ItemClick="ls_feed_ItemClick" HorizontalContentAlignment="Center" SelectionMode="None" IsItemClickEnabled="True" animations:ReorderGridAnimation.Duration="100">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
@@ -61,7 +81,7 @@
                                             <Grid>
                                                 <Image MinHeight="100" Source="ms-appx:///Assets/Logo/PI160_100.png" Stretch="UniformToFill"></Image>
                                                 <Image MinHeight="100" Source="{Binding Cover}" Stretch="UniformToFill"></Image>
-                                                <Grid VerticalAlignment="Bottom" Padding="4">
+                                                <Grid VerticalAlignment="Bottom" Padding="4" Visibility="{Binding showCoverText}">
                                                     <Grid.Background>
                                                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                                             <GradientStop Color="#CC000005" Offset="0.993"/>
@@ -69,17 +89,20 @@
                                                         </LinearGradientBrush>
                                                     </Grid.Background>
 
-                                                    <TextBlock  FontSize="12" Foreground="White" Text="{Binding text}"></TextBlock>
-                                                    <TextBlock HorizontalAlignment="Right" FontSize="12" Foreground="White" Visibility="{Binding showRight}" Text="{Binding rightText}"></TextBlock>
+                                                    <TextBlock  FontSize="12" Foreground="White" Text="{Binding left_text}"></TextBlock>
+                                                    <TextBlock HorizontalAlignment="Right" FontSize="12" Foreground="White"  Text="{Binding cover_right_text}"></TextBlock>
                                                 </Grid>
                                             </Grid>
 
                                             <TextBlock Height="48"  Margin="8 4 8 0" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" Grid.Row="1" Text="{Binding title}"></TextBlock>
                                             <StackPanel Orientation="Horizontal" Margin="4 0 4 4"  Grid.Row="2">
-                                                <Border Visibility="{Binding showTag}" BorderThickness="1" BorderBrush="{ThemeResource Bili-ForeColor}" Padding="4 0" CornerRadius="4">
-                                                    <TextBlock FontSize="12" Foreground="{ThemeResource Bili-ForeColor}" Text="{Binding badge}"></TextBlock>
+                                                <Border Visibility="{Binding showBadge}" Margin="0 0 4 0" BorderThickness="1" BorderBrush="{ThemeResource Bili-ForeColor}" Padding="4 0" CornerRadius="4">
+                                                    <TextBlock FontSize="12" Foreground="{ThemeResource Bili-ForeColor}" Text="{Binding Path=badge}"></TextBlock>
                                                 </Border>
-                                                <TextBlock FontSize="12" Margin="4 0" Foreground="Gray" VerticalAlignment="Center" Text="{Binding bottom}"></TextBlock>
+                                                <Border Visibility="{Binding showRcmd}" BorderThickness="1" Background="{Binding Path=rcmd_reason_style.bgColor}" BorderBrush="{Binding Path=rcmd_reason_style.borderColor}" Padding="4 0" CornerRadius="4">
+                                                    <TextBlock FontSize="12" Foreground="{Binding Path=rcmd_reason_style.textColor}" Text="{Binding Path=rcmd_reason_style.text}"></TextBlock>
+                                                </Border>
+                                                <TextBlock FontSize="12" Margin="4 0" Foreground="Gray" VerticalAlignment="Center" Text="{Binding bottomText}"></TextBlock>
                                             </StackPanel>
 
                                         </Grid>
@@ -156,7 +179,7 @@
         <DataTemplate x:Key="topic">
             <Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <Grid DataContext="{Binding tabData}">
+                    <Grid DataContext="{Binding tabData}" SizeChanged="Grid_SizeChanged" MaxWidth="780" HorizontalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="*"/>
@@ -389,8 +412,8 @@
     <Grid>
         <Border x:Name="bor_width3" Width="160"></Border>
         <Border x:Name="bor_height" Width="80" VerticalAlignment="Top"></Border>
-        <Pivot x:Name="pivot_home"  SelectionChanged="pivot_home_SelectionChanged" ItemTemplateSelector="{StaticResource ResourceKey=homeDataTemplateSelector}">
-            <Pivot.RightHeader>
+        <Pivot Style="{StaticResource PivotHeaderCenterStyle}" x:Name="pivot_home" SelectionChanged="pivot_home_SelectionChanged" ItemTemplateSelector="{StaticResource ResourceKey=homeDataTemplateSelector}">
+            <!--<Pivot.RightHeader>
                 <StackPanel x:Name="rightHeader" Orientation="Horizontal" Margin="8 0">
                     <HyperlinkButton x:Name="btn_rank" Click="btn_rank_Click" Foreground="{ThemeResource Bili-ForeColor}">
                         <StackPanel Orientation="Horizontal">
@@ -401,7 +424,7 @@
                     </HyperlinkButton>
 
                 </StackPanel>
-            </Pivot.RightHeader>
+            </Pivot.RightHeader>-->
             <Pivot.HeaderTemplate>
                 <DataTemplate>
                     <TextBlock FontSize="16" Text="{Binding header}"></TextBlock>

@@ -54,6 +54,8 @@ namespace BiliBili3.Controls
     /// 支持评论删除
     /// 支持评论置顶显示
     /// 支持AV号直接跳转
+    /// 19-11-1
+    /// B站API更新不在同时返回热门+最新评论
     /// </summary>
     public sealed partial class CommentV2Control : UserControl
     {
@@ -88,7 +90,7 @@ namespace BiliBili3.Controls
 
         public void ClearComment()
         {
-            ls_hot.ItemsSource = null;
+            //ls_hot.ItemsSource = null;
             ls_new.ItemsSource = null;
             _page = 1;
             hot.Visibility = Visibility.Collapsed;
@@ -186,15 +188,16 @@ namespace BiliBili3.Controls
                 default:
                     break;
             }
-             
-            if (_loadCommentInfo.conmmentSortMode== ConmmentSortMode.Hot)
+
+            if (_loadCommentInfo.conmmentSortMode == ConmmentSortMode.Hot)
             {
-                hot.Visibility = Visibility.Collapsed;
-                btn_NewSort.Visibility = Visibility.Visible;
+                hot.Visibility = Visibility.Visible;
+                _new.Visibility = Visibility.Collapsed;
             }
             else
             {
-                btn_NewSort.Visibility = Visibility.Collapsed;
+                hot.Visibility = Visibility.Collapsed;
+                _new.Visibility = Visibility.Visible;
             }
             //_loadCommentInfo = loadCommentInfo;
             _page = 1;
@@ -239,16 +242,21 @@ namespace BiliBili3.Controls
                 default:
                     break;
             }
-
+            if(loadCommentInfo.conmmentSortMode== ConmmentSortMode.All)
+            {
+                loadCommentInfo.conmmentSortMode = ConmmentSortMode.Hot;
+            }
             if (loadCommentInfo.conmmentSortMode == ConmmentSortMode.Hot)
             {
-                hot.Visibility = Visibility.Collapsed;
-                btn_NewSort.Visibility = Visibility.Visible;
+                hot.Visibility = Visibility.Visible;
+                _new.Visibility = Visibility.Collapsed;
             }
             else
             {
-                btn_NewSort.Visibility = Visibility.Collapsed;
+                hot.Visibility = Visibility.Collapsed;
+                _new.Visibility = Visibility.Visible;
             }
+
             _loadCommentInfo = loadCommentInfo;
             _page = 1;
             GetComment();
@@ -272,12 +280,11 @@ namespace BiliBili3.Controls
             {
                 noRepost.Visibility = Visibility.Collapsed;
                 closeRepost.Visibility = Visibility.Collapsed;
-                ls_hot.ItemsSource = null;
+                //ls_hot.ItemsSource = null;
                 ls_new.ItemsSource = null;
             }
             try
             {
-                btn_HotSort.Visibility = Visibility.Collapsed;
                 var sort = 0;
                 if (_loadCommentInfo.conmmentSortMode== ConmmentSortMode.Hot)
                 {
@@ -298,14 +305,7 @@ namespace BiliBili3.Controls
                 dataCommentModel m = JsonConvert.DeserializeObject<dataCommentModel>(re);
                 if (m.code==0)
                 {
-                    if (m.data.hots==null|| m.data.hots.Count==0|| _loadCommentInfo.conmmentSortMode != ConmmentSortMode.All)
-                    {
-                        hot.Visibility = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        hot.Visibility = Visibility.Visible;
-                    }
+                   
 
                     if (m.data.replies.Count!=0)
                     {
@@ -315,9 +315,9 @@ namespace BiliBili3.Controls
                             if (m.data.upper.top!=null)
                             {
                                 m.data.upper.top.showTop = Visibility.Visible;
-                                m.data.hots.Insert(0,m.data.upper.top);
+                                m.data.replies.Insert(0,m.data.upper.top);
                             }
-                            ls_hot.ItemsSource = m.data.hots;
+                            //ls_hot.ItemsSource = m.data.hots;
                             ls_new.ItemsSource = m.data.replies;
                         }
                         else
@@ -366,16 +366,13 @@ namespace BiliBili3.Controls
             catch (Exception)
             {
                 Utils.ShowMessageToast("加载评论失败");
-                //throw;
+                throw;
             }
             finally
             {
                 _loading = false;
                 pr_load.Visibility = Visibility.Collapsed;
-                if (_loadCommentInfo.conmmentSortMode == ConmmentSortMode.All)
-                {
-                    btn_HotSort.Visibility = Visibility.Visible;
-                }
+                
             }
         }
 

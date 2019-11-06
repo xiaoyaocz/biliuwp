@@ -50,7 +50,7 @@ namespace BiliBili3.Pages
             _songId = (e.Parameter as object[])[0].ToString();
             comment.InitializeComment(new Controls.LoadCommentInfo() {
                  commentMode= Controls.CommentMode.MusicSong,
-                 conmmentSortMode= Controls.ConmmentSortMode.All,
+                 conmmentSortMode= Controls.ConmmentSortMode.Hot,
                  oid= _songId
             });
             LoadMusic(_songId);

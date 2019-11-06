@@ -559,6 +559,25 @@ namespace BiliBili3
             }
         }
 
+        public static void Set_Forcelive(bool value)
+        {
+            container = ApplicationData.Current.LocalSettings;
+            container.Values["Forcelive"] = value;
+        }
+
+        public static bool Get_Forcelive()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            if (container.Values["Forcelive"] != null)
+            {
+                return (bool)container.Values["Forcelive"];
+            }
+            else
+            {
+                Set_Forcelive(true);
+                return true;
+            }
+        }
 
         public static int Get_Playback()
         {

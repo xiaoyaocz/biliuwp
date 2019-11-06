@@ -130,8 +130,7 @@ namespace BiliBili3.Pages.Live
                 _biliLiveDanmu = new BiliLiveDanmu();
                 _biliLiveDanmu.HasDanmu += _biliLiveDanmu_HasDanmu;
                 liveRoom = new LiveRoom();
-                await Task.Delay(200);
-                LoadRoomInfo();
+                await LoadRoomInfo();
             //}
             if (dispRequest == null)
             {
@@ -163,7 +162,7 @@ namespace BiliBili3.Pages.Live
         /// <summary>
         /// 加载房间信息
         /// </summary>
-        private async void LoadRoomInfo()
+        private async Task LoadRoomInfo()
         {
             pr_Loading.Visibility = Visibility.Visible;
             LoadSetting();
@@ -461,8 +460,8 @@ namespace BiliBili3.Pages.Live
             sw_AutoGetAward.IsOn = SettingHelper.Get_LAutoGetAward();
 
             //硬件加速
-            media.HardwareAcceleration = SettingHelper.Get_ForceVideo();
-            sw_HardwareAcceleration.IsOn = SettingHelper.Get_ForceVideo();
+            media.HardwareAcceleration = SettingHelper.Get_Forcelive();
+            sw_HardwareAcceleration.IsOn = SettingHelper.Get_Forcelive();
 
             //自动清理弹幕
             slider_Clear.Value = SettingHelper.Get_LClear();
@@ -1244,7 +1243,7 @@ namespace BiliBili3.Pages.Live
                 return;
             }
             media.HardwareAcceleration = sw_HardwareAcceleration.IsOn;
-            SettingHelper.Set_ForceVideo(sw_HardwareAcceleration.IsOn);
+            SettingHelper.Set_Forcelive(sw_HardwareAcceleration.IsOn);
         }
         /// <summary>
         /// 设置弹幕大小
@@ -1348,10 +1347,10 @@ namespace BiliBili3.Pages.Live
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_Refresh_Click(object sender, RoutedEventArgs e)
+        private async void btn_Refresh_Click(object sender, RoutedEventArgs e)
         {
             media.Stop();
-            LoadRoomInfo();
+            await LoadRoomInfo();
         }
         /// <summary>
         /// 分享
