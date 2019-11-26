@@ -198,7 +198,7 @@ namespace BiliBili3.Controls
             if (item.desc.type == 512)
             {
                 var seasonid = 0;
-                if (item.bangumi.apiSeasonInfo==null)
+                if (item.bangumi.apiSeasonInfo == null)
                 {
                     seasonid = item.bangumi.season.season_id;
                 }
@@ -385,6 +385,10 @@ namespace BiliBili3.Views
             {
                 case 1:
                     card.feed = JsonConvert.DeserializeObject<DynamicFeedModel>(card.card);
+                    if (card.display != null && card.display.emoji_info != null)
+                    {
+                        card.feed.item.emoji_details = card.display.emoji_info.emoji_details;
+                    }
                     if (card.feed.item.orig_type == 4)
                     {
                         card.feed.showText = Visibility.Visible;
@@ -439,7 +443,10 @@ namespace BiliBili3.Views
                     if (card.feed1 == null)
                     {
                         card.feed1 = JsonConvert.DeserializeObject<DynamicFeed1Model>(card.card);
-
+                        if (card.display!=null&& card.display.emoji_info!=null)
+                        {
+                            card.feed1.item.emoji_details = card.display.emoji_info.emoji_details;
+                        }
                         if (card.desc != null && card.desc.dynamic_id != 0)
                         {
                             card.feed1.item.dynamic_id = card.desc.dynamic_id;
@@ -468,23 +475,40 @@ namespace BiliBili3.Views
                     return resource["Feed1"] as DataTemplate;
                 case 8:
                     card.video = JsonConvert.DeserializeObject<DynamicVideoModel>(card.card);
+                    if (card.display != null && card.display.emoji_info != null)
+                    {
+                        card.video.emoji_details = card.display.emoji_info.emoji_details;
+                    }
                     return resource["FeedVideo"] as DataTemplate;
                 case 16:
                     card.minivideo = JsonConvert.DeserializeObject<DynamicMiniVideoModel>(card.card);
+                    if (card.display != null && card.display.emoji_info != null)
+                    {
+                        card.minivideo.emoji_details = card.display.emoji_info.emoji_details;
+                    }
                     return resource["FeedMiniVideo"] as DataTemplate;
                 case 64:
                     card.article = JsonConvert.DeserializeObject<DynamicArticleModel>(card.card);
+                  
                     return resource["FeedArticle"] as DataTemplate;
                 case 256:
                     card.music = JsonConvert.DeserializeObject<DynamicMusicModel>(card.card);
+                    if (card.display != null && card.display.emoji_info != null)
+                    {
+                        card.music.emoji_details = card.display.emoji_info.emoji_details;
+                    }
                     return resource["FeedMusic"] as DataTemplate;
                 case 512:
                 case 4099:
                     card.bangumi = JsonConvert.DeserializeObject<DynamicBangumiModel>(card.card);
-                   
+                    
                     return resource["FeedBangumi"] as DataTemplate;
                 case 2048:
                     card.web = JsonConvert.DeserializeObject<DynamicWebModel>(card.card);
+                    if (card.display != null && card.display.emoji_info != null)
+                    {
+                        card.web.emoji_details = card.display.emoji_info.emoji_details;
+                    }
                     return resource["FeedWeb"] as DataTemplate;
                 default:
                     return resource["FeedUnkonw"] as DataTemplate;
@@ -619,6 +643,10 @@ namespace BiliBili3.Views
         public DynamicFeedModel feed { get; set; }
 
         public DynamicMiniVideoModel minivideo { get; set; }
+
+        //包含表情信息
+        public displayModel display { get; set; }
+
 
         private int _reply;
         public int reply
@@ -854,12 +882,26 @@ namespace BiliBili3.Views
 
     }
 
+    public class displayModel
+    {
+        public emoji_infoModel emoji_info { get; set; }
 
+    }
+    public class emoji_infoModel
+    {
+        public List<emoji_detailsModel> emoji_details { get; set; }
+    }
+    public class emoji_detailsModel
+    {
+        public string emoji_name { get; set; }
+        public string text { get; set; }
+        public string url { get; set; }
+    }
     public class DynamicVideoModel
     {
         public long aid { get; set; }
 
-
+        public List<emoji_detailsModel> emoji_details { get; set; }
         public string desc { get; set; }
         public string title { get; set; }
         private string _pic;
@@ -897,11 +939,18 @@ namespace BiliBili3.Views
                     string input = dynamic;
                     input = input.Replace("\r\n", "<LineBreak/>");
                     input = input.Replace("\n", "<LineBreak/>");
-                    MatchCollection mc = Regex.Matches(input, @"\[(.*?)\]");
-                    foreach (Match item in mc)
+                    if (emoji_details!=null&& emoji_details.Count!=0)
                     {
-                        input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", "ms-appx:///Assets/Emoji/" + item.Groups[1].Value + ".png"));
+                        foreach (var item in emoji_details)
+                        {
+                            input = input.Replace(item.emoji_name, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", item.url));
+                        }
                     }
+                    //MatchCollection mc = Regex.Matches(input, @"\[(.*?)\]");
+                    //foreach (Match item in mc)
+                    //{
+                    //    input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", "ms-appx:///Assets/Emoji/" + item.Groups[1].Value + ".png"));
+                    //}
                     if (ctrl != null && ctrl.Length != 0)
                     {
                         var re = ctrl;
@@ -1042,6 +1091,7 @@ namespace BiliBili3.Views
     {
         public long id { get; set; }
 
+        public List<emoji_detailsModel> emoji_details { get; set; }
 
         public string cover { get; set; }
 
@@ -1071,11 +1121,18 @@ namespace BiliBili3.Views
                     string input = intro;
                     input = input.Replace("\r\n", "<LineBreak/>");
                     input = input.Replace("\n", "<LineBreak/>");
-                    MatchCollection mc = Regex.Matches(input, @"\[(.*?)\]");
-                    foreach (Match item in mc)
+                    if (emoji_details != null && emoji_details.Count != 0)
                     {
-                        input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", "ms-appx:///Assets/Emoji/" + item.Groups[1].Value + ".png"));
+                        foreach (var item in emoji_details)
+                        {
+                            input = input.Replace(item.emoji_name, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", item.url));
+                        }
                     }
+                    //MatchCollection mc = Regex.Matches(input, @"\[(.*?)\]");
+                    //foreach (Match item in mc)
+                    //{
+                    //    input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", "ms-appx:///Assets/Emoji/" + item.Groups[1].Value + ".png"));
+                    //}
                     if (ctrl != null && ctrl.Length != 0)
                     {
                         var re = ctrl;
@@ -1149,7 +1206,7 @@ namespace BiliBili3.Views
     }
     public class DynamicMiniVideoModel
     {
-
+        public List<emoji_detailsModel> emoji_details { get; set; }
         public DynamicMiniVideoModel item { get; set; }
 
         public DynamicMiniVideoModel cover { get; set; }
@@ -1181,11 +1238,18 @@ namespace BiliBili3.Views
                     string input = description;
                     input = input.Replace("\r\n", "<LineBreak/>");
                     input = input.Replace("\n", "<LineBreak/>");
-                    MatchCollection mc = Regex.Matches(input, @"\[(.*?)\]");
-                    foreach (Match item in mc)
+                    if (emoji_details != null && emoji_details.Count != 0)
                     {
-                        input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", "ms-appx:///Assets/Emoji/" + item.Groups[1].Value + ".png"));
+                        foreach (var item in emoji_details)
+                        {
+                            input = input.Replace(item.emoji_name, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", item.url));
+                        }
                     }
+                    //MatchCollection mc = Regex.Matches(input, @"\[(.*?)\]");
+                    //foreach (Match item in mc)
+                    //{
+                    //    input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", "ms-appx:///Assets/Emoji/" + item.Groups[1].Value + ".png"));
+                    //}
                     if (ctrl != null && ctrl.Length != 0)
                     {
                         var re = ctrl;
@@ -1291,6 +1355,7 @@ namespace BiliBili3.Views
 
     public class DynamicFeed1Model : INotifyPropertyChanged
     {
+        public List<emoji_detailsModel> emoji_details { get; set; }
         public long doc_id { get; set; }
         public long upload_timestamp { get; set; }
         public long upload_time { get; set; }
@@ -1355,11 +1420,18 @@ namespace BiliBili3.Views
                     string input = description;
                     input = input.Replace("\r\n", "<LineBreak/>");
                     input = input.Replace("\n", "<LineBreak/>");
-                    MatchCollection mc = Regex.Matches(input, @"\[(.*?)\]");
-                    foreach (Match item in mc)
+                    if (emoji_details != null && emoji_details.Count != 0)
                     {
-                        input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", "ms-appx:///Assets/Emoji/" + item.Groups[1].Value + ".png"));
+                        foreach (var item in emoji_details)
+                        {
+                            input = input.Replace(item.emoji_name, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", item.url));
+                        }
                     }
+                    //MatchCollection mc = Regex.Matches(input, @"\[(.*?)\]");
+                    //foreach (Match item in mc)
+                    //{
+                    //    input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", "ms-appx:///Assets/Emoji/" + item.Groups[1].Value + ".png"));
+                    //}
                     if (at_control != null && at_control.Length != 0)
                     {
                         var re = at_control;
@@ -1578,7 +1650,7 @@ namespace BiliBili3.Views
     {
 
 
-
+        public List<emoji_detailsModel> emoji_details { get; set; }
         public DynamicFeedModel item { get; set; }
         public long dynamic_id { get; set; }
         public string content { get; set; }
@@ -1596,11 +1668,18 @@ namespace BiliBili3.Views
                     string input = content;
                     input = input.Replace("\r\n", "<LineBreak/>");
                     input = input.Replace("\n", "<LineBreak/>");
-                    MatchCollection mc = Regex.Matches(input, @"\[(.*?)\]");
-                    foreach (Match item in mc)
+                    if (emoji_details != null && emoji_details.Count != 0)
                     {
-                        input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", "ms-appx:///Assets/Emoji/" + item.Groups[1].Value + ".png"));
+                        foreach (var item in emoji_details)
+                        {
+                            input = input.Replace(item.emoji_name, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", item.url));
+                        }
                     }
+                    //MatchCollection mc = Regex.Matches(input, @"\[(.*?)\]");
+                    //foreach (Match item in mc)
+                    //{
+                    //    input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", "ms-appx:///Assets/Emoji/" + item.Groups[1].Value + ".png"));
+                    //}
                     if (ctrl != null && ctrl.Length != 0)
                     {
                         var re = ctrl;
@@ -1825,7 +1904,7 @@ namespace BiliBili3.Views
         public DynamicWebModel user { get; set; }
         public DynamicWebModel vest { get; set; }
         public DynamicWebModel sketch { get; set; }
-
+        public List<emoji_detailsModel> emoji_details { get; set; }
         public string content { get; set; }
 
         public string desc_text { get; set; }
@@ -1851,11 +1930,18 @@ namespace BiliBili3.Views
                     string input = content;
                     input = input.Replace("\r\n", "<LineBreak/>");
                     input = input.Replace("\n", "<LineBreak/>");
-                    MatchCollection mc = Regex.Matches(input, @"\[(.*?)\]");
-                    foreach (Match item in mc)
+                    if (emoji_details != null && emoji_details.Count != 0)
                     {
-                        input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", "ms-appx:///Assets/Emoji/" + item.Groups[1].Value + ".png"));
+                        foreach (var item in emoji_details)
+                        {
+                            input = input.Replace(item.emoji_name, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", item.url));
+                        }
                     }
+                    //MatchCollection mc = Regex.Matches(input, @"\[(.*?)\]");
+                    //foreach (Match item in mc)
+                    //{
+                    //    input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Image Source=""{0}"" Width=""24"" Height=""24""/></InlineUIContainer>", "ms-appx:///Assets/Emoji/" + item.Groups[1].Value + ".png"));
+                    //}
                     if (ctrl != null && ctrl.Length != 0)
                     {
                         var re = ctrl;

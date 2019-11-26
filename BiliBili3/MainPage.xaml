@@ -5,7 +5,6 @@
     xmlns:local="using:BiliBili3"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    SizeChanged="Page_SizeChanged"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -892,7 +891,7 @@
                                     </StackPanel>
                                 </Button>
                                 <Button x:Name="btn_UserInfo" Click="btn_UserInfo_Click" Visibility="Collapsed" HorizontalAlignment="Stretch" Background="#00000000" >
-                                    <StackPanel Orientation="Horizontal" MinWidth="100">
+                                    <StackPanel Orientation="Horizontal" MinWidth="120">
                                         <Grid>
                                             <Ellipse Height="36" Width="36">
                                                 <Ellipse.Fill>
@@ -912,14 +911,17 @@
                                     <MenuFlyoutItem x:Name="btn_user_mywallet" Click="btn_user_mywallet_Click">我的钱包</MenuFlyoutItem>
                                     <MenuFlyoutItem x:Name="btn_user_Qr" Click="btn_user_Qr_Click">二维码名片</MenuFlyoutItem>
                                     <MenuFlyoutSeparator Background="#19000000"/>
+                                    <MenuFlyoutItem x:Name="btn_user_mycollect" Click="btn_user_mycollect_Click">我的收藏</MenuFlyoutItem>
+                                    <MenuFlyoutItem x:Name="btn_user_seasoncollect" Click="btn_user_seasoncollect_Click">我的追番</MenuFlyoutItem>
+                                    <MenuFlyoutItem x:Name="btn_user_moviecollect" Click="btn_user_moviecollect_Click">我的追剧</MenuFlyoutItem>
+                                    <MenuFlyoutSeparator Background="#19000000"/>
                                     <Grid>
                                         <MenuFlyoutItem x:Name="btn_user_mymessage" Click="btn_user_mymessage_Click">消息中心</MenuFlyoutItem>
                                         <Ellipse x:Name="bor_TZ"  Visibility="Collapsed" Fill="Red"  Width="5" Height="5" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30 10"/>
                                     </Grid>
 
                                     <MenuFlyoutItem x:Name="btn_user_myGuanzhu" Click="btn_user_myGuanzhu_Click">关注的人</MenuFlyoutItem>
-                                    <MenuFlyoutItem x:Name="btn_user_mycollect" Click="btn_user_mycollect_Click">视频收藏</MenuFlyoutItem>
-                                    <MenuFlyoutItem x:Name="btn_user_moviecollect" Click="btn_user_moviecollect_Click">影视收藏</MenuFlyoutItem>
+                                  
                                     <MenuFlyoutItem x:Name="btn_user_mychistory" Click="btn_user_mychistory_Click">历史记录</MenuFlyoutItem>
                                     <MenuFlyoutItem x:Name="btn_user_toView" Click="btn_user_toView_Click">稍后再看</MenuFlyoutItem>
                                     <MenuFlyoutSeparator Background="#19000000"/>
@@ -1037,97 +1039,7 @@
                     </Frame>
                 </Grid>
             </SplitView>
-            <Border x:Name="bor_Width" Width="56" VerticalAlignment="Top"></Border>
-            <!--<Grid Grid.Row="2"  Height="56" BorderThickness="0 4 0 0" Visibility="Visible" Background="{ThemeResource Main-Background}">
-                <Grid.BorderBrush>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#7FC7C7C7"/>
-                        <GradientStop Color="#7FFFFFFF" Offset="0.063"/>
-                    </LinearGradientBrush>
-                </Grid.BorderBrush>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Button HorizontalAlignment="Stretch" Foreground="{ThemeResource Bili-ForeColor}" VerticalAlignment="Stretch" Background="#00000000">
-                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Margin="0 4" FontSize="22"  VerticalAlignment="Center"  Glyph="&#xf012b;" />
-                </Button>
-                <Button HorizontalAlignment="Stretch" Foreground="{ThemeResource Main-ForeColor-No}"  Grid.Column="1"  VerticalAlignment="Stretch" Background="#00000000">
-
-                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Margin="0 4" FontSize="20"  VerticalAlignment="Center"  Glyph="&#xe648;" />
-
-                </Button>
-                <Button HorizontalAlignment="Stretch" Foreground="{ThemeResource Main-ForeColor-No}"  Grid.Column="2"  VerticalAlignment="Stretch" Background="#00000000">
-
-                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Margin="0 4" FontSize="20"  VerticalAlignment="Center"  Glyph="&#xe662;" />
-
-                </Button>
-                <Button HorizontalAlignment="Stretch" Foreground="{ThemeResource Main-ForeColor-No}"   Grid.Column="3"  VerticalAlignment="Stretch" Background="#00000000">
-
-                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Margin="0 4" FontSize="20"  VerticalAlignment="Center"  Glyph="&#xe637;"/>
-
-                </Button>
-                <Button HorizontalAlignment="Stretch" Foreground="{ThemeResource Main-ForeColor-No}"  Grid.Column="4" VerticalAlignment="Stretch" Background="#00000000">
-
-                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Margin="0 4" FontSize="20"  VerticalAlignment="Center"  Glyph="&#xe62c;" />
-
-                </Button>
-
-
-            </Grid>-->
-            <GridView SelectionChanged="bottom_SelectionChanged" Grid.Row="2" x:Name="bottom" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="0"  Height="56" BorderThickness="0 1 0 0" Visibility="Visible" Background="{ThemeResource Main-Background}" >
-                <GridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
-                <GridView.BorderBrush>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#7FC7C7C7"/>
-                        <GradientStop Color="#7FFFFFFF" Offset="0.027"/>
-                    </LinearGradientBrush>
-                </GridView.BorderBrush>
-                <GridViewItem  HorizontalContentAlignment="Stretch"  Height="52"   Foreground="{ThemeResource Main-ForeColor-No}" Style="{StaticResource GridViewItemStyle1}">
-                    <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
-                        <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Margin="0 4" FontSize="22"  VerticalAlignment="Center"  Glyph="&#xf012b;" />
-                    </Border>
-
-                </GridViewItem>
-                
-                <GridViewItem  HorizontalContentAlignment="Stretch"  Height="52"  Foreground="{ThemeResource Main-ForeColor-No}" Style="{StaticResource GridViewItemStyle1}">
-                    <Border Width="{Binding ElementName=bor_Width,Path=Width}">
-                        <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Margin="0 4" FontSize="22"  VerticalAlignment="Center"  Glyph="&#xE62A;" />
-                    </Border>
-
-                </GridViewItem>
-                <GridViewItem  HorizontalContentAlignment="Stretch"  Height="52"  Foreground="{ThemeResource Main-ForeColor-No}" Style="{StaticResource GridViewItemStyle1}">
-                    <Border Width="{Binding ElementName=bor_Width,Path=Width}">
-                        <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Margin="0 4" FontSize="22"  VerticalAlignment="Center"  Glyph="&#xe648;" />
-                    </Border>
-
-                </GridViewItem>
-                <GridViewItem  HorizontalContentAlignment="Stretch"  Height="52"  Foreground="{ThemeResource Main-ForeColor-No}" Style="{StaticResource GridViewItemStyle1}">
-                    <Border Width="{Binding ElementName=bor_Width,Path=Width}">
-                        <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Margin="0 4" FontSize="22"  VerticalAlignment="Center"  Glyph="&#xe662;" />
-                    </Border>
-
-                </GridViewItem>
-                <GridViewItem  HorizontalContentAlignment="Stretch"  Height="52"  Foreground="{ThemeResource Main-ForeColor-No}" Style="{StaticResource GridViewItemStyle1}">
-                    <Border Width="{Binding ElementName=bor_Width,Path=Width}">
-                        <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Margin="0 4" FontSize="22"  VerticalAlignment="Center"  Glyph="&#xe637;" />
-                    </Border>
-
-                </GridViewItem>
-                <GridViewItem HorizontalContentAlignment="Stretch"  Height="52"  Foreground="{ThemeResource Main-ForeColor-No}" Style="{StaticResource GridViewItemStyle1}">
-                    <Border  Width="{Binding ElementName=bor_Width,Path=Width}">
-                        <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Margin="0 4" FontSize="22"  VerticalAlignment="Center"  Glyph="&#xe62c;" />
-                    </Border>
-
-                </GridViewItem>
-            </GridView>
+           
         </Grid>
         <Grid x:Name="bg" Visibility="Visible" Grid.Column="1">
 

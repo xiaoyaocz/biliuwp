@@ -125,26 +125,6 @@ namespace BiliBili3
             get { return Convert.ToInt64((DateTime.Now - new DateTime(1970, 1, 1, 8, 0, 0, 0)).TotalMilliseconds); }
         }
 
-        public static List<EmojiModel> emojis;
-        public static List<FaceModel> emoji;
-        public static async void SetEmojis()
-        {
-            try
-            {
-                string url = "http://api.bilibili.com/x/v2/reply/emojis";
-                string results = await WebClientClass.GetResults(new Uri(url));
-                FaceModel model = JsonConvert.DeserializeObject<FaceModel>(results);
-                emoji = model.data;
-                emojis = new List<EmojiModel>();
-                model.data.ForEach(x => x.emojis.ForEach(y => emojis.Add(y)));
-            }
-            catch (Exception)
-            {
-            }
-
-        }
-
-
         public static List<RegionModel> regions;
         public static async Task SetRegions()
         {

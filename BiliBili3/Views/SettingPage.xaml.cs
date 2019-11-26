@@ -84,6 +84,8 @@ namespace BiliBili3.Views
                 sw_DASHUseHEVC.IsOn = SettingHelper.Get_DASHUseHEVC();
                 sw_PriorityBiliPlus.IsOn = SettingHelper.Get_PriorityBiliPlus();
 
+                sw_ColunmHome.IsOn=SettingHelper.Get_ColunmHome();
+
                 sw_LoadSe.IsOn = SettingHelper.Get_LoadSplash();
                 sw_CloseAD.IsOn = SettingHelper.Get_HideAD();
                 sw_ForceAudio.IsOn = SettingHelper.Get_ForceAudio();
@@ -882,6 +884,11 @@ namespace BiliBili3.Views
         private void Sw_PriorityBiliPlus_Toggled(object sender, RoutedEventArgs e)
         {
             SettingHelper.Set_PriorityBiliPlus(sw_PriorityBiliPlus.IsOn);
+        }
+
+        private void sw_ColunmHome_Toggled(object sender, RoutedEventArgs e)
+        {
+            SettingHelper.Set_ColunmHome(sw_ColunmHome.IsOn);
         }
     }
 }

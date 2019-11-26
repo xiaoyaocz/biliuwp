@@ -87,7 +87,7 @@ namespace BiliBili3
                 DownloadHelper2.LoadDowned();
                 ApiHelper.SetRegions();
                 LiveRoom.GetTitleItems();
-                ApiHelper.SetEmojis();
+                //ApiHelper.SetEmojis();
             }
             catch (Exception)
             {

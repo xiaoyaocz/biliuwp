@@ -1,4 +1,5 @@
-﻿using BiliBili3.Views;
+﻿using BiliBili3.Modules;
+using BiliBili3.Views;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp.Portable;
@@ -30,6 +31,7 @@ namespace BiliBili3.Controls
 {
     public sealed partial class RepostDialog : ContentDialog
     {
+        Emote emote;
         bool isRepost = false;
         DynamicCardsModel _dynamicCardsModel;
         public RepostDialog(DynamicCardsModel dynamicCardsModel)
@@ -43,6 +45,7 @@ namespace BiliBili3.Controls
             {
                 st.Width = Window.Current.CoreWindow.Bounds.Width - 24;
             }
+            emote = new Emote(EmoteMode.dynamic);
             _dynamicCardsModel = dynamicCardsModel;
             isRepost = true;
             repostData.Visibility = Visibility.Visible;
@@ -50,7 +53,6 @@ namespace BiliBili3.Controls
             xtitle.Text = "转发动态";
             LoadRepostData();
             pics.Visibility = Visibility.Collapsed;
-            GetFaces();
             LoadAtList();
         }
         private void LoadRepostData()
@@ -130,13 +132,13 @@ namespace BiliBili3.Controls
             {
                 st.Width = Window.Current.CoreWindow.Bounds.Width - 24;
             }
+            emote = new Emote(EmoteMode.dynamic);
             isRepost = false;
             btn_Image.Visibility = Visibility.Visible;
             repostData.Visibility = Visibility.Collapsed;
             xtitle.Text = "发表动态";
             gv_Pics.ItemsSource = imgs;
-          
-            GetFaces();
+         
             LoadAtList();
         }
 
@@ -151,13 +153,13 @@ namespace BiliBili3.Controls
             {
                 st.Width = Window.Current.CoreWindow.Bounds.Width - 24;
             }
+            emote = new Emote(EmoteMode.dynamic);
             isRepost = false;
             btn_Image.Visibility = Visibility.Visible;
             repostData.Visibility = Visibility.Collapsed;
             xtitle.Text = "发表动态";
             gv_Pics.ItemsSource = imgs;
             txt_Comment.Text = tag;
-            GetFaces();
             LoadAtList();
         }
 
@@ -172,53 +174,6 @@ namespace BiliBili3.Controls
         {
             this.Hide();
         }
-
-
-
-
-
-
-        private async void GetFaces()
-        {
-            try
-            {
-                StorageFile storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Emoji/白眼.png"));
-                var folder = await storageFile.GetParentAsync();
-
-                List<FacesModel> list = new List<FacesModel>();
-
-                foreach (var item in await folder.GetFilesAsync())
-                {
-                    list.Add(new FacesModel()
-                    {
-                        name = item.DisplayName,
-                        path = "ms-appx:///Assets/Emoji/" + item.Name,
-                        data = "[" + item.DisplayName + "]"
-                    });
-                }
-
-                gv_Face.ItemsSource = list;
-            }
-            catch (Exception)
-            {
-                Utils.ShowMessageToast("加载表情失败了");
-            }
-
-
-
-        }
-
-        private void gv_Face_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var item = e.ClickedItem as FacesModel;
-            txt_Comment.Text += item.data;
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            txt_Comment.Text += (sender as Button).Content.ToString();
-        }
-
 
 
         int _userAtPage = 1;
@@ -612,9 +567,43 @@ namespace BiliBili3.Controls
             txt_PicCount.Text = gv_Pics.Items.Count.ToString();
         }
 
-
-
-
+        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            txt_Comment.Text += (e.ClickedItem as EmoteItem).text;
+        }
+        ObservableCollection<EmotePackage> packages;
+        private async void btnEmoji_Click(object sender, RoutedEventArgs e)
+        {
+            if (packages == null)
+            {
+                var data = await emote.LoadEmote();
+                if (data.success)
+                {
+                    packages = data.data;
+                    pivot_face.ItemsSource = packages;
+                }
+                else
+                {
+                    Utils.ShowMessageToast(data.message);
+                }
+            }
+        }
+        private async void pivot_face_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var select = pivot_face.SelectedItem as EmotePackage;
+            if (select.emote == null || select.emote.Count == 0)
+            {
+                var data = await emote.LoadEmote(select.id);
+                if (data.success)
+                {
+                    packages[pivot_face.SelectedIndex] = data.data[0];
+                }
+                else
+                {
+                    Utils.ShowMessageToast(data.message);
+                }
+            }
+        }
     }
 
 

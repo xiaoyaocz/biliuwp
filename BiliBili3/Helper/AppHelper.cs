@@ -84,7 +84,18 @@ namespace BiliBili3.Helper
         {
             return verStr.Split('/')[0];
         }
-        public static string verStr = string.Format(@"Ver {0} 2019-11-03
+        public static string verStr = string.Format(@"Ver {0} 2019-11-26
+01、优化首页热门推荐
+02、首页支持设置为分栏显示
+03、优化动态、评论表情显示
+04、修复其他BUG
+
+4.0版本就快来啦~
+
+/Ver 3.9.50&3.9.51 2019-11-21
+01、修复BUG
+
+/Ver 3.9.48.0&3.9.49 2019-11-03
 01、修复下载列表不显示
 02、修复首页跳转问题
 

@@ -79,9 +79,9 @@ namespace BiliBili3.Controls
             catch (Exception)
             {
             }
-          
+
         }
-       
+
 
         private void btn_User_Click(object sender, RoutedEventArgs e)
         {
@@ -107,7 +107,7 @@ namespace BiliBili3.Controls
         {
             get
             {
-                if (btn_LoadMore.Visibility==Visibility.Visible)
+                if (btn_LoadMore.Visibility == Visibility.Visible)
                 {
                     return true;
                 }
@@ -137,7 +137,7 @@ namespace BiliBili3.Controls
 
 
 
-       
+
         int _page = 1;
         int _type = 0;
         public bool _loading = false;
@@ -146,17 +146,10 @@ namespace BiliBili3.Controls
         /// <summary>
         /// 加载评论
         /// </summary>
-        public  void LoadComment()
+        public void LoadComment()
         {
             GetScollViewer();
-            if (ApiHelper.emojis==null|| ApiHelper.emojis.Count==0)
-            {
-                ApiHelper.SetEmojis();
-            }
-            else
-            {
-                pivot_face.ItemsSource = ApiHelper.emoji;
-            }
+
             //if (loadCommentInfo.conmmentSortMode!= ConmmentSortMode.All)
             //{
             //    hot.Visibility = Visibility.Collapsed;
@@ -211,14 +204,7 @@ namespace BiliBili3.Controls
         public void LoadComment(LoadCommentInfo loadCommentInfo)
         {
             GetScollViewer();
-            if (ApiHelper.emojis == null || ApiHelper.emojis.Count == 0)
-            {
-                ApiHelper.SetEmojis();
-            }
-            else
-            {
-                pivot_face.ItemsSource = ApiHelper.emoji;
-            }
+
             switch (loadCommentInfo.commentMode)
             {
                 case CommentMode.Dynamic:
@@ -242,7 +228,7 @@ namespace BiliBili3.Controls
                 default:
                     break;
             }
-            if(loadCommentInfo.conmmentSortMode== ConmmentSortMode.All)
+            if (loadCommentInfo.conmmentSortMode == ConmmentSortMode.All)
             {
                 loadCommentInfo.conmmentSortMode = ConmmentSortMode.Hot;
             }
@@ -276,7 +262,7 @@ namespace BiliBili3.Controls
 
         private async void GetComment()
         {
-            if (_page==1)
+            if (_page == 1)
             {
                 noRepost.Visibility = Visibility.Collapsed;
                 closeRepost.Visibility = Visibility.Collapsed;
@@ -286,36 +272,36 @@ namespace BiliBili3.Controls
             try
             {
                 var sort = 0;
-                if (_loadCommentInfo.conmmentSortMode== ConmmentSortMode.Hot)
+                if (_loadCommentInfo.conmmentSortMode == ConmmentSortMode.Hot)
                 {
                     sort = 2;
                 }
-                
+
                 btn_LoadMore.Visibility = Visibility.Collapsed;
-               _loading = true;
+                _loading = true;
                 pr_load.Visibility = Visibility.Visible;
                 ObservableCollection<CommentModel> ls = new ObservableCollection<CommentModel>();
                 var url = string.Format("https://api.bilibili.com/x/v2/reply?access_key={0}&appkey={1}&build={7}&mobi_app=android&oid={2}&plat=2&platform=android&pn={3}&ps=20&sort={6}&ts={4}&type={5}",
-                 ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _loadCommentInfo.oid, _page, ApiHelper.GetTimeSpan_2, _type, sort,ApiHelper.build);
+                 ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _loadCommentInfo.oid, _page, ApiHelper.GetTimeSpan_2, _type, sort, ApiHelper.build);
                 url += "&sign=" + ApiHelper.GetSign(url);
 
                 //var url = "https://api.bilibili.com/x/v2/reply?oid=2381475&plat=2&pn=1&ps=20&sort=0&type=11";
 
                 var re = await WebClientClass.GetResults(new Uri(url));
                 dataCommentModel m = JsonConvert.DeserializeObject<dataCommentModel>(re);
-                if (m.code==0)
+                if (m.code == 0)
                 {
-                   
 
-                    if (m.data.replies.Count!=0)
+
+                    if (m.data.replies != null && m.data.replies.Count != 0)
                     {
-                      
-                        if (_page==1)
+
+                        if (_page == 1)
                         {
-                            if (m.data.upper.top!=null)
+                            if (m.data.upper.top != null)
                             {
                                 m.data.upper.top.showTop = Visibility.Visible;
-                                m.data.replies.Insert(0,m.data.upper.top);
+                                m.data.replies.Insert(0, m.data.upper.top);
                             }
                             //ls_hot.ItemsSource = m.data.hots;
                             ls_new.ItemsSource = m.data.replies;
@@ -329,17 +315,17 @@ namespace BiliBili3.Controls
                         }
                         _page++;
 
-                        if (m.data.replies.Count>=20)
+                        if (m.data.replies.Count >= 20)
                         {
                             btn_LoadMore.Visibility = Visibility.Visible;
                         }
                     }
                     else
                     {
-                        if (_page==1)
+                        if (_page == 1)
                         {
                             noRepost.Visibility = Visibility.Visible;
-                         
+
                         }
                         else
                         {
@@ -349,7 +335,7 @@ namespace BiliBili3.Controls
                 }
                 else
                 {
-                    if (m.code== 12002)
+                    if (m.code == 12002)
                     {
                         closeRepost.Visibility = Visibility.Visible;
                     }
@@ -358,21 +344,21 @@ namespace BiliBili3.Controls
                         Utils.ShowMessageToast(m.message);
                     }
                 }
-               
 
-              
-               
+
+
+
             }
             catch (Exception)
             {
                 Utils.ShowMessageToast("加载评论失败");
-                throw;
+
             }
             finally
             {
                 _loading = false;
                 pr_load.Visibility = Visibility.Collapsed;
-                
+
             }
         }
 
@@ -380,7 +366,7 @@ namespace BiliBili3.Controls
         {
             try
             {
-                if (data.replies==null)
+                if (data.replies == null)
                 {
                     data.replies = new ObservableCollection<CommentModel>();
                 }
@@ -394,9 +380,9 @@ namespace BiliBili3.Controls
                 dataCommentModel m = JsonConvert.DeserializeObject<dataCommentModel>(re);
                 if (m.code == 0)
                 {
-                    if (m.data.replies.Count!=0)
+                    if (m.data.replies.Count != 0)
                     {
-                        if (m.data.replies.Count>=10)
+                        if (m.data.replies.Count >= 10)
                         {
                             data.showReplyMore = Visibility.Visible;
                         }
@@ -425,7 +411,7 @@ namespace BiliBili3.Controls
 
         private async void doLike(CommentModel data)
         {
-            if (!ApiHelper.IsLogin()&&!await Utils.ShowLoginDialog())
+            if (!ApiHelper.IsLogin() && !await Utils.ShowLoginDialog())
             {
                 Utils.ShowMessageToast("请登录后再执行操作");
                 return;
@@ -433,17 +419,17 @@ namespace BiliBili3.Controls
             try
             {
                 var action = 0;
-                if (data.action==0)
+                if (data.action == 0)
                 {
                     action = 1;
                 }
                 string url = "https://api.bilibili.com/x/v2/reply/action";
                 string content = string.Format("access_key={0}&appkey={1}&platform=android&type={2}&rpid={4}&oid={3}&action={5}&ts={6}",
-                    ApiHelper.access_key,ApiHelper.AndroidKey.Appkey,_type,_loadCommentInfo.oid,data.rpid, action, ApiHelper.GetTimeSpan_2);
+                    ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _type, _loadCommentInfo.oid, data.rpid, action, ApiHelper.GetTimeSpan_2);
                 content += "&sign=" + ApiHelper.GetSign(content);
-                var re = await WebClientClass.PostResults(new Uri(url),content);
+                var re = await WebClientClass.PostResults(new Uri(url), content);
                 JObject obj = JObject.Parse(re);
-                if (obj["code"].ToInt32()==0)
+                if (obj["code"].ToInt32() == 0)
                 {
                     if (data.action == 0)
                     {
@@ -465,7 +451,7 @@ namespace BiliBili3.Controls
             catch (Exception)
             {
                 Utils.ShowMessageToast("操作失败");
-               // throw;
+                // throw;
             }
 
 
@@ -480,12 +466,12 @@ namespace BiliBili3.Controls
 
         private void btn_ShowComment_Click(object sender, RoutedEventArgs e)
         {
-          
+
 
             var m = (sender as HyperlinkButton).DataContext as CommentModel;
-            if (m.showReplies== Visibility.Collapsed)
+            if (m.showReplies == Visibility.Collapsed)
             {
-                if (scrollViewer!=null)
+                if (scrollViewer != null)
                 {
                     scrollViewerLocation = scrollViewer.VerticalOffset;
                 }
@@ -494,11 +480,11 @@ namespace BiliBili3.Controls
                 m.showReplyBox = Visibility.Visible;
                 m.replies = null;
                 m.loadpage = 1;
-                if (m.replies==null||m.replies.Count==0)
+                if (m.replies == null || m.replies.Count == 0)
                 {
                     GetReply(m);
                 }
-                
+
             }
             else
             {
@@ -514,7 +500,7 @@ namespace BiliBili3.Controls
         private void btn_ShowReplyBtn_Click(object sender, RoutedEventArgs e)
         {
             var m = (sender as HyperlinkButton).DataContext as CommentModel;
-            if (m.showReplyBox== Visibility.Visible)
+            if (m.showReplyBox == Visibility.Visible)
             {
                 m.showReplyBox = Visibility.Collapsed;
             }
@@ -542,13 +528,13 @@ namespace BiliBili3.Controls
             {
                 GetComment();
             }
-          
+
         }
 
         private void btn_HotSort_Click(object sender, RoutedEventArgs e)
         {
             _loadCommentInfo.conmmentSortMode = ConmmentSortMode.Hot;
-            
+
             LoadComment();
         }
 
@@ -564,15 +550,15 @@ namespace BiliBili3.Controls
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            var m= (sender as Button).DataContext as CommentModel;
+            var m = (sender as Button).DataContext as CommentModel;
 
-            if (m!=null)
+            if (m != null)
             {
                 m.replyText += (sender as Button).Content.ToString();
             }
         }
 
-     
+
         public async void ShowCommentBox()
         {
 
@@ -581,8 +567,8 @@ namespace BiliBili3.Controls
                 Utils.ShowMessageToast("请先登录");
                 return;
             }
-            CommentDialog commentDialog = new CommentDialog(_type,_loadCommentInfo.oid);
-           
+            CommentDialog commentDialog = new CommentDialog(_type, _loadCommentInfo.oid);
+
 
             await commentDialog.ShowAsync();
             if (commentDialog.State)
@@ -592,7 +578,7 @@ namespace BiliBili3.Controls
         }
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-           
+
         }
 
         private void btn_SendReply_Click(object sender, RoutedEventArgs e)
@@ -608,7 +594,7 @@ namespace BiliBili3.Controls
                 Utils.ShowMessageToast("登录后再来回复哦");
                 return;
             }
-            if (m.replyText.Trim().Length==0)
+            if (m.replyText.Trim().Length == 0)
             {
                 Utils.ShowMessageToast("不能发送空白信息");
                 return;
@@ -619,7 +605,7 @@ namespace BiliBili3.Controls
 
                 string content =
                     string.Format("access_key={0}&appkey={1}&platform=android&type={2}&oid={3}&ts={4}&message={5}&root={6}&parent={6}",
-                    ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _type, _loadCommentInfo.oid, ApiHelper.GetTimeSpan_2, Uri.EscapeDataString(m.replyText),m.rpid);
+                    ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _type, _loadCommentInfo.oid, ApiHelper.GetTimeSpan_2, Uri.EscapeDataString(m.replyText), m.rpid);
                 content += "&sign=" + ApiHelper.GetSign(content);
                 var re = await WebClientClass.PostResults(new Uri(url), content);
                 JObject obj = JObject.Parse(re);
@@ -670,10 +656,10 @@ namespace BiliBili3.Controls
             {
                 string url = "https://api.bilibili.com/x/v2/reply/add";
 
-                var txt = "回复 @"+m.member.uname + ":"+m.replyText;
+                var txt = "回复 @" + m.member.uname + ":" + m.replyText;
                 string content =
                     string.Format("access_key={0}&appkey={1}&platform=android&type={2}&oid={3}&ts={4}&message={5}&root={6}&parent={7}",
-                    ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _type, _loadCommentInfo.oid, ApiHelper.GetTimeSpan_2, Uri.EscapeDataString(txt), m.root,m.rpid);
+                    ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _type, _loadCommentInfo.oid, ApiHelper.GetTimeSpan_2, Uri.EscapeDataString(txt), m.root, m.rpid);
                 content += "&sign=" + ApiHelper.GetSign(content);
                 var re = await WebClientClass.PostResults(new Uri(url), content);
                 JObject obj = JObject.Parse(re);
@@ -705,10 +691,10 @@ namespace BiliBili3.Controls
 
         private void btn_DeleteComment_Click(object sender, RoutedEventArgs e)
         {
-            CommentModel m = null ;
+            CommentModel m = null;
             if (sender is HyperlinkButton)
             {
-               m= (sender as HyperlinkButton).DataContext as CommentModel;
+                m = (sender as HyperlinkButton).DataContext as CommentModel;
             }
             if (sender is MenuFlyoutItem)
             {
@@ -719,7 +705,7 @@ namespace BiliBili3.Controls
 
         private async void DeletComment(CommentModel m)
         {
-            if (m==null)
+            if (m == null)
             {
                 return;
             }
@@ -728,7 +714,7 @@ namespace BiliBili3.Controls
                 Utils.ShowMessageToast("登录后再来删除哦");
                 return;
             }
-           
+
             try
             {
                 string url = "https://api.bilibili.com/x/v2/reply/del";
@@ -782,8 +768,8 @@ namespace BiliBili3.Controls
 
     public class dataCommentModel
     {
-      
-        public int code  { get; set; }
+
+        public int code { get; set; }
         public string message { get; set; }
 
         public dataCommentModel data { get; set; }
@@ -801,7 +787,7 @@ namespace BiliBili3.Controls
         public CommentModel top { get; set; }
 
     }
-    public class CommentModel: INotifyPropertyChanged
+    public class CommentModel : INotifyPropertyChanged
     {
 
         public CommentModel()
@@ -843,9 +829,10 @@ namespace BiliBili3.Controls
 
         public int count { get; set; }
         private int _rcount;
-        public int rcount {
+        public int rcount
+        {
             get { return _rcount; }
-            set { _rcount = value;thisPropertyChanged("rcount"); }
+            set { _rcount = value; thisPropertyChanged("rcount"); }
         }
         public int _like { get; set; }
         public int like
@@ -857,8 +844,9 @@ namespace BiliBili3.Controls
 
         public string rcount_str
         {
-            get {
-                if (rcount>10000)
+            get
+            {
+                if (rcount > 10000)
                 {
                     return ((double)rcount / 10000).ToString("0.0") + "万";
                 }
@@ -867,7 +855,7 @@ namespace BiliBili3.Controls
                     return rcount.ToString();
                 }
             }
-          
+
         }
         public string like_str
         {
@@ -954,15 +942,16 @@ namespace BiliBili3.Controls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void thisPropertyChanged(string name) {
-            if (PropertyChanged!=null)
+        public void thisPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
             {
-                PropertyChanged(this,new PropertyChangedEventArgs( name));
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
 
 
-        private Visibility _showReplies= Visibility.Collapsed;
+        private Visibility _showReplies = Visibility.Collapsed;
         public Visibility showReplies
         {
             get { return _showReplies; }
@@ -1003,11 +992,12 @@ namespace BiliBili3.Controls
         {
             get
             {
-                if (mid.ToString()==ApiHelper.GetUserId())
+                if (mid.ToString() == ApiHelper.GetUserId())
                 {
                     return Visibility.Visible;
                 }
-                else{
+                else
+                {
                     return Visibility.Collapsed;
                 }
             }
@@ -1015,7 +1005,7 @@ namespace BiliBili3.Controls
 
 
 
-        private int _loadpage =1;
+        private int _loadpage = 1;
         public int loadpage
         {
             get { return _loadpage; }
@@ -1056,9 +1046,9 @@ namespace BiliBili3.Controls
         {
             if (paramenter.ToString().Contains("av"))
             {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), paramenter.ToString().Replace("av",""));
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), paramenter.ToString().Replace("av", ""));
             }
-           
+
         }
 
 
@@ -1102,21 +1092,26 @@ namespace BiliBili3.Controls
                         input = input.Replace("\r\n", "<LineBreak/>");
                         input = input.Replace("\n", "<LineBreak/>");
                         //替换表情
-                        MatchCollection mc = Regex.Matches(input, @"\[(.*?)\]");
+                        MatchCollection mc = Regex.Matches(input, @"\[.*?\]");
                         foreach (Match item in mc)
                         {
-                            var emoji=  ApiHelper.emojis.Where(x => x.name == item.Groups[0].Value);
-                            if (emoji!=null&&emoji.ToList().Count!=0)
+                            if (emote != null && emote.ContainsKey(item.Groups[0].Value))
                             {
-                                input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Border><Image Source=""{0}"" Width=""36"" Height=""36""/></Border></InlineUIContainer>", emoji.First().url));
+                                var emoji = emote[item.Groups[0].Value];
+                                input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Border  Margin=""0 0 0 -4""><Image Source=""{0}"" Width=""{1}"" Height=""{1}"" /></Border></InlineUIContainer>", emoji["url"].ToString(), emoji["meta"]["size"].ToInt32() == 1 ? "20" : "36"));
                             }
+                            //var emoji=  ApiHelper.emojis.Where(x => x.name == item.Groups[0].Value);
+                            //if (emoji!=null&&emoji.ToList().Count!=0)
+                            //{
+                            //    input = input.Replace(item.Groups[0].Value, string.Format(@"<InlineUIContainer><Border><Image Source=""{0}"" Width=""36"" Height=""36""/></Border></InlineUIContainer>", emoji.First().url));
+                            //}
                         }
 
                         //替换av号
                         MatchCollection videos = Regex.Matches(input, @"av(\d+)");
                         foreach (Match item in videos)
                         {
-                            var data  = @"<InlineUIContainer><HyperlinkButton x:Name=""btn"" Command=""{Binding ButtonCommand}""  IsEnabled=""True"" Margin=""0 -4 0 -4"" Padding=""0"" " + string.Format(@" Tag=""{0}""  CommandParameter=""{0}"" >{0}</HyperlinkButton></InlineUIContainer>", item.Groups[0].Value);
+                            var data = @"<InlineUIContainer><HyperlinkButton x:Name=""btn"" Command=""{Binding ButtonCommand}""  IsEnabled=""True"" Margin=""0 -4 0 -4"" Padding=""0"" " + string.Format(@" Tag=""{0}""  CommandParameter=""{0}"" >{0}</HyperlinkButton></InlineUIContainer>", item.Groups[0].Value);
                             input = input.Replace(item.Groups[0].Value, data);
                         }
 
@@ -1141,16 +1136,18 @@ namespace BiliBili3.Controls
                 {
                     var tx = new RichTextBlock();
                     Paragraph paragraph = new Paragraph();
-                    Run run = new Run() { Text= message };
+                    Run run = new Run() { Text = message };
                     paragraph.Inlines.Add(run);
                     tx.Blocks.Add(paragraph);
                     return tx;
-                   
+
                 }
-               
+
             }
 
         }
+
+        public JObject emote { get; set; }
     }
 
 
@@ -1200,9 +1197,9 @@ namespace BiliBili3.Controls
         {
             get
             {
-                if (pendant!=null)
+                if (pendant != null)
                 {
-                    if (pendant.image=="")
+                    if (pendant.image == "")
                     {
                         return "ms-appx:///Assets/MiniIcon/transparent.png";
                     }

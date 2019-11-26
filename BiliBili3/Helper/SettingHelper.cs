@@ -81,7 +81,26 @@ namespace BiliBili3
             }
         }
 
-       
+        public static bool Get_ColunmHome()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            if (container.Values["ColunmHome"] != null)
+            {
+                return (bool)container.Values["ColunmHome"];
+            }
+            else
+            {
+                Set_ColunmHome(false);
+                return false;
+            }
+        }
+
+        public static void Set_ColunmHome(bool value)
+        {
+            container = ApplicationData.Current.LocalSettings;
+            container.Values["ColunmHome"] = value;
+        }
+
 
         public static void Set_Rigth(int value)
         {

@@ -1,5 +1,6 @@
 ﻿using BiliBili3.Controls;
 using BiliBili3.Helper;
+using BiliBili3.Modules;
 using BiliBili3.Pages;
 using BiliBili3.Pages.FindMore;
 using BiliBili3.Pages.Live;
@@ -355,7 +356,7 @@ namespace BiliBili3
              */
             if (url.Contains("favorite?tab=bangumi"))
             {
-                InfoNavigateToEvent(typeof(FollowSeasonPage));
+                InfoNavigateToEvent(typeof(FollowSeasonPage), SeasonType.bangumi);
                 return true;
             }
 

@@ -11,6 +11,6 @@
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
     <Grid>
-        <WebView x:Name="web" MinHeight="300"></WebView>
+        <WebView x:Name="web" MinHeight="400" Width="460"></WebView>
     </Grid>
 </ContentDialog>

@@ -227,6 +227,10 @@
 
                             <Button Foreground="White" x:Name="btn_Clear" Click="btn_Clear_Click" Background="{ThemeResource Bili-ForeColor}">清除缓存</Button>
                             <Grid >
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">首页默认分栏显示</TextBlock>
+                                <ToggleSwitch x:Name="sw_ColunmHome" Toggled="sw_ColunmHome_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                            </Grid>
+                            <Grid Margin="0 10 0 0" >
                                 <TextBlock Foreground="Gray" VerticalAlignment="Center">PC右侧显示(重启生效)</TextBlock>
                                 <ComboBox  x:Name="cb_Rigth" SelectionChanged="cb_Rigth_SelectionChanged" Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
                                     <ComboBoxItem >空白页</ComboBoxItem>

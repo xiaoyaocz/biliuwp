@@ -249,7 +249,6 @@ namespace BiliBili3
                         StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
                         await statusBar.HideAsync();
                     }
-                    bor_Width.Width = (this.ActualWidth / 6) - 2;
                 }
 
             }
@@ -259,7 +258,6 @@ namespace BiliBili3
                 {
                     StatusBar statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
                     await statusBar.ShowAsync();
-                    bor_Width.Width = (this.ActualWidth / 6) - 2;
                 }
             }
         }
@@ -340,7 +338,6 @@ namespace BiliBili3
             main_frame.Visibility = Visibility.Visible;
             menu_List.SelectedIndex = 0;
             Can_Nav = false;
-            bottom.SelectedIndex = 0;
             Can_Nav = true;
             frame.Visibility = Visibility.Visible;
             frame.Navigate(typeof(BlankPage));
@@ -1005,38 +1002,23 @@ namespace BiliBili3
             switch ((main_frame.Content as Page).Tag.ToString())
             {
                 case "首页":
-
-                    bottom.SelectedIndex = 0;
-
                     menu_List.SelectedIndex = 0;
                     txt_Header.Text = "首页";
                     break;
                 case "频道":
-
-                    bottom.SelectedIndex = 1;
-
                     menu_List.SelectedIndex = 1;
                     txt_Header.Text = "频道";
                     break;
                 case "直播":
-
-                    bottom.SelectedIndex = 2;
-
                     menu_List.SelectedIndex = 2;
                     txt_Header.Text = "直播";
                     break;
                 case "番剧":
-
-                    bottom.SelectedIndex = 3;
-
                     menu_List.SelectedIndex = 3;
 
                     txt_Header.Text = "番剧";
                     break;
                 case "动态":
-
-                    bottom.SelectedIndex = 4;
-
                     menu_List.SelectedIndex = 4;
 
                     //menu_List.SelectedIndex = 3;
@@ -1044,9 +1026,6 @@ namespace BiliBili3
                     txt_Header.Text = "动态";
                     break;
                 case "发现":
-
-                    bottom.SelectedIndex = 5;
-
                     menu_List.SelectedIndex = 5;
 
                     //menu_List.SelectedIndex = 4;
@@ -1170,71 +1149,7 @@ namespace BiliBili3
             fy.Hide();
         }
 
-        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            bor_Width.Width = (this.ActualWidth / 6) - 2;
-        }
-
-        private void bottom_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (!Can_Nav)
-            {
-                return;
-            }
-            switch (bottom.SelectedIndex)
-            {
-                case 0:
-
-                    main_frame.Navigate(typeof(NewFeedPage));
-
-                    //if (!Reg_OpenVideo)
-                    //{
-                    //    (main_frame.Content as HomePage).OpenVideo += MainPage_OpenVideo; ;
-                    //    Reg_OpenVideo = true;
-                    //}
-                    txt_Header.Text = "首页";
-                    break;
-                case 1:
-                    main_frame.Navigate(typeof(HomePage));
-
-                    txt_Header.Text = "频道";
-                    break;
-                case 2:
-                    main_frame.Navigate(typeof(LiveV2Page));
-
-                    txt_Header.Text = "直播";
-                    break;
-                case 3:
-                    main_frame.Navigate(typeof(BangumiPage));
-
-                    txt_Header.Text = "追番";
-                    break;
-
-                //case 3:
-                //    main_frame.Navigate(typeof(PartPage));
-
-                //    txt_Header.Text = "分区";
-                //    break;
-                case 4:
-                    main_frame.Navigate(typeof(AttentionPage));
-
-                    txt_Header.Text = "动态";
-                    break;
-                case 5:
-                    main_frame.Navigate(typeof(FindPage));
-
-                    txt_Header.Text = "发现";
-                    break;
-                //case 4:
-                //    main_frame.Navigate(typeof(SettingPage));
-
-                //    txt_Header.Text = "设置";
-                //    break;
-                default:
-                    break;
-            }
-            sp_View.IsPaneOpen = false;
-        }
+     
 
         private void btn_user_myvip_Click(object sender, RoutedEventArgs e)
         {
@@ -1495,25 +1410,32 @@ namespace BiliBili3
         private void SetNarrowUI()
         {
             grid_o.BorderThickness = new Thickness(0, 0, 1, 0);
-            bottom.Visibility = Visibility.Visible;
+           
             bg.Visibility = Visibility.Collapsed;
-            sp_View.DisplayMode = SplitViewDisplayMode.Overlay;
+            sp_View.DisplayMode = SplitViewDisplayMode.CompactOverlay;
             Grid.SetColumn(frame, 0);
-            btn_OpenMenu.Visibility = Visibility.Collapsed;
+            btn_OpenMenu.Visibility = Visibility.Visible;
             SetOneColumn();
         }
         //设置宽布局
         private void SetWideUI()
         {
             grid_o.BorderThickness = new Thickness(0, 0, 1, 0);
-            bottom.Visibility = Visibility.Collapsed;
+         
             sp_View.DisplayMode = SplitViewDisplayMode.CompactOverlay;
             Grid.SetColumn(frame,1);
             bg.Visibility = Visibility.Visible;
             btn_OpenMenu.Visibility = Visibility.Visible;
             if (frame.CurrentSourcePageType == typeof(BlankPage)&&main_frame.CurrentSourcePageType==typeof(NewFeedPage))
             {
-                SetOneColumn();
+                if (SettingHelper.Get_ColunmHome())
+                {
+                    SetTwoColumn();
+                }
+                else
+                {
+                    SetOneColumn();
+                }
             }
             else
             {
@@ -1543,7 +1465,14 @@ namespace BiliBili3
                 }
                 else if (main_frame.SourcePageType == typeof(NewFeedPage))
                 {
-                    SetOneColumn();
+                    if (SettingHelper.Get_ColunmHome())
+                    {
+                        SetTwoColumn();
+                    }
+                    else
+                    {
+                        SetOneColumn();
+                    }
                 }
                 else
                 {
@@ -1565,9 +1494,22 @@ namespace BiliBili3
                 }
                 else
                 {
-                    SetOneColumn();
+                    if (SettingHelper.Get_ColunmHome())
+                    {
+                        SetTwoColumn();
+                    }
+                    else
+                    {
+                        SetOneColumn();
+                    }
                 }
             }
+        }
+
+        private void btn_user_seasoncollect_Click(object sender, RoutedEventArgs e)
+        {
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(FollowSeasonPage), Modules.SeasonType.bangumi);
+            fy.Hide();
         }
     }
 }

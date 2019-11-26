@@ -11,69 +11,30 @@
     Style="{StaticResource myContentDialog}"
   >
     <ContentDialog.Resources>
-        <Style x:Name="btn_Style1" TargetType="Button">
-            <Setter Property="Width" Value="100"></Setter>
-            <Setter Property="Background" Value="#FFF9F9F9"></Setter>
-            <Setter Property="Foreground" Value="Black"></Setter>
-        </Style>
-        <Flyout x:Key="EmojiFlyout" x:Name="EmojiFlyout">
-            <Flyout.FlyoutPresenterStyle>
-                <Style TargetType="FlyoutPresenter">
-                    <Setter Property="ScrollViewer.ZoomMode" Value="Enabled"/>
-                    <Setter Property="Background" Value="#FFF9F9F9"/>
-                    <Setter Property="MinHeight" Value="300"/>
-                    <Setter Property="MinWidth" Value="300"/>
-                </Style>
-            </Flyout.FlyoutPresenterStyle>
-            <Grid>
+        <Flyout  x:Key="FaceFlyout" x:Name="FaceFlyout">
+            <Grid Width="320">
+                <Pivot x:Name="pivot_face" SelectionChanged="pivot_face_SelectionChanged">
+                    <Pivot.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontSize="18" Text="{Binding text}"></TextBlock>
+                        </DataTemplate>
+                    </Pivot.HeaderTemplate>
+                    <Pivot.ItemTemplate>
+                        <DataTemplate>
+                            <GridView  ItemsSource="{Binding emote}" SelectionMode="None" IsItemClickEnabled="True" MaxHeight="300" ItemClick="GridView_ItemClick">
+                                <GridView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel >
+                                            <Image Visibility="{Binding isFace}" Source="{Binding url}" Width="36" Margin="4 0"></Image>
+                                            <TextBlock Width="90" TextAlignment="Center" Visibility="{Binding isText}" FontSize="12" HorizontalAlignment="Center" Text="{Binding text}"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <StackPanel>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(⌒▽⌒)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">（￣▽￣）</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(=・ω・=)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(｀・ω・´)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(〜￣△￣)〜</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(･∀･)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(°∀°)ﾉ</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(｡･ω･｡)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(●￣(ｴ)￣●)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">ε=ε=(ノ≧∇≦)ノ</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">（#-_-)┯━┯</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">_(:3」∠)_</Button>
-                </StackPanel>
-                <StackPanel Grid.Column="1">
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(￣3￣)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">╮(￣▽￣)╭</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">( ´_ゝ｀)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">←_←</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">→_→</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(&lt; _&lt; )</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(&gt; _&lt; )</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(´･_･`)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(-_-#)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">（￣へ￣）</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(笑)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(汗)</Button>
-                </StackPanel>
-                <StackPanel Grid.Column="2">
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">("▔□▔)/</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(ﾟДﾟ≡ﾟдﾟ)!?</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">Σ(ﾟдﾟ;)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">Σ( ￣□￣||)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(´；ω；`)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">（/TДT)/</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(^・ω・^ )</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(￣ε(#￣) Σ</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">ヽ(`Д´)ﾉ</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(╯°口°)╯(┴—┴</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(泣)</Button>
-                    <Button Click="Button_Click_1" Style="{StaticResource btn_Style1}">(苦笑)</Button>
-                </StackPanel>
+                            </GridView>
+                        </DataTemplate>
+                    </Pivot.ItemTemplate>
+                </Pivot>
             </Grid>
         </Flyout>
     </ContentDialog.Resources>
@@ -90,29 +51,11 @@
             
             <Grid Margin="0 4 0 0">
                 <StackPanel Orientation="Horizontal">
-                    <Button Width="36" Height="36" Flyout="{StaticResource EmojiFlyout}" Foreground="White" Background="{ThemeResource Bili-ForeColor}">
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14" Glyph="&#xE775;" />
-                        </StackPanel>
-                    </Button>
-                    <Button Width="36" Height="36"    Margin="4 0 0 0" Foreground="White" Background="{ThemeResource Bili-ForeColor}">
+
+                    <Button Width="36" Height="36" x:Name="btnEmoji" Flyout="{StaticResource FaceFlyout}" Click="btnEmoji_Click" Foreground="White" Background="{ThemeResource Bili-ForeColor}">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14"  Glyph="&#xE170;" />
-
                         </StackPanel>
-                        <Button.Flyout>
-                            <Flyout>
-                                <GridView x:Name="gv_Face" ItemClick="gv_Face_ItemClick" SelectionMode="None" IsItemClickEnabled="True" Width="240" Height="240" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                                    <GridView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Image Width="36" Height="36" Source="{Binding path}"></Image>
-                                        </DataTemplate>
-                                    </GridView.ItemTemplate>
-                                  
-                                   
-                                </GridView>
-                            </Flyout>
-                        </Button.Flyout>
                     </Button>
                     <Button x:Name="btn_Image" Click="btn_Image_Click" Width="36" Height="36"  Visibility="Collapsed"  Margin="4 0 0 0" Foreground="White" Background="{ThemeResource Bili-ForeColor}">
                         <StackPanel Orientation="Horizontal">

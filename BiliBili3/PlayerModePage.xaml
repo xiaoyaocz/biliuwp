@@ -16,7 +16,21 @@
         />
         <StackPanel MaxWidth="300" VerticalAlignment="Center" >
 
-           
+            <!--<RichTextBlock HorizontalAlignment="Stretch"  TextWrapping="Wrap">
+                <Paragraph >来了来了，大家最喜欢的FPX队员痛击队友环节
+                    <InlineUIContainer>
+                        <Border Margin="0 0 0 -6">
+                            <Image Source="http://i0.hdslb.com/bfs/emote/bba7c12aa51fed0199c241465560dfc2714c593e.png" Width="24" Height="24" />
+                        </Border>
+                    </InlineUIContainer>
+                    <InlineUIContainer>
+                        <Border Margin="0 0 0 -6">
+                            <Image Source="http://i0.hdslb.com/bfs/emote/bba7c12aa51fed0199c241465560dfc2714c593e.png" Width="24" Height="24" />
+                        </Border>
+                    </InlineUIContainer>
+                </Paragraph>
+            </RichTextBlock>-->
+            
             <Button x:Name="btn_OpenFilePlay" Click="btn_OpenFilePlay_Click" HorizontalAlignment="Stretch" Foreground="White" Background="{ThemeResource Bili-ForeColor}" FontSize="18" Margin="0 10">打开文件播放</Button>
             <Button HorizontalAlignment="Stretch" Foreground="White" Background="{ThemeResource Bili-ForeColor}" FontSize="18" Margin="0 10" Visibility="Collapsed">打开Url</Button>
             <Button x:Name="btn_Setting" Click="btn_Setting_Click" HorizontalAlignment="Stretch" Foreground="White" Background="{ThemeResource Bili-ForeColor}" FontSize="18" Margin="0 10">应用设置</Button>

@@ -131,7 +131,7 @@
                             </GridView.ItemContainerStyle>
                             <GridView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Height="72" Width="120"  >
+                                    <StackPanel Height="72" Width="80"  >
                                         <Image Source="{Binding icon}" Width="48" Height="48"/>
                                         <TextBlock Text="{Binding title}" FontSize="14" HorizontalAlignment="Center"/>
                                     </StackPanel>
@@ -139,25 +139,25 @@
                             </GridView.ItemTemplate>
                         </GridView>
 
-                        <ListView ItemsSource="{Binding hot_datas}" ScrollViewer.VerticalScrollMode="Disabled"  ItemClick="Ls_hot_ItemClick" HorizontalContentAlignment="Center" SelectionMode="None" IsItemClickEnabled="True">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
+                        <GridView ItemsSource="{Binding hot_datas}" ScrollViewer.VerticalScrollMode="Disabled"  ItemClick="Ls_hot_ItemClick" HorizontalContentAlignment="Center" SelectionMode="None" IsItemClickEnabled="True">
+                            <GridView.ItemContainerStyle>
+                                <Style TargetType="GridViewItem">
                                     <Setter Property="Margin" Value="8 4"></Setter>
                                     <Setter Property="Padding" Value="0"></Setter>
                                     <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"></Setter>
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                                 </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.ItemTemplate>
+                            </GridView.ItemContainerStyle>
+                            <GridView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid>
+                                    <Grid Width="{Binding ElementName=bor_WidthHot,Path=Width}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
                                         <Image Margin="0 0 4 0"  Source="{Binding Cover}" ></Image>
                                         <StackPanel Grid.Column="1" >
-                                            <TextBlock TextWrapping="Wrap" MaxLines="2" Margin="4 0" Text="{Binding title}"></TextBlock>
+                                            <TextBlock MaxLines="1" TextTrimming="CharacterEllipsis" Margin="4 0" Text="{Binding title}"></TextBlock>
                                             <Border Margin="4 2"  BorderThickness="1" CornerRadius="4" Padding="2" HorizontalAlignment="Left"  Background="{Binding Path=rcmd_reason_style.Bg_color}" BorderBrush="{Binding Path=rcmd_reason_style.Border_color}">
                                                 <TextBlock TextTrimming="CharacterEllipsis" FontSize="12" Foreground="{Binding Path=rcmd_reason_style.Text_color}" Text="{Binding Path=rcmd_reason_style.text}"></TextBlock>
                                             </Border>
@@ -167,9 +167,13 @@
 
                                     </Grid>
                                 </DataTemplate>
-                            </ListView.ItemTemplate>
+                            </GridView.ItemTemplate>
+                            <GridView.Footer>
+                                <HyperlinkButton HorizontalAlignment="Center" Foreground="Gray" x:Name="btn_LoadMoreHot" Click="btn_LoadMoreHot_Click">加载更多</HyperlinkButton>
+                            </GridView.Footer>
+                        </GridView>
 
-                        </ListView>
+                    
                     </StackPanel>
                 </ScrollViewer>
                 <ProgressRing Width="56" Height="56" Grid.RowSpan="2" IsActive="True" x:Name="pr_Load" Visibility="{Binding showLoading}"></ProgressRing>
@@ -179,7 +183,7 @@
         <DataTemplate x:Key="topic">
             <Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <Grid DataContext="{Binding tabData}" SizeChanged="Grid_SizeChanged" MaxWidth="780" HorizontalAlignment="Center">
+                    <Grid DataContext="{Binding tabData}" SizeChanged="Grid_SizeChanged" MaxWidth="800" HorizontalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="*"/>
@@ -410,6 +414,7 @@
         </DataTemplate>
     </Page.Resources>
     <Grid>
+        <Border x:Name="bor_WidthHot" Width="450" VerticalAlignment="Top"></Border>
         <Border x:Name="bor_width3" Width="160"></Border>
         <Border x:Name="bor_height" Width="80" VerticalAlignment="Top"></Border>
         <Pivot Style="{StaticResource PivotHeaderCenterStyle}" x:Name="pivot_home" SelectionChanged="pivot_home_SelectionChanged" ItemTemplateSelector="{StaticResource ResourceKey=homeDataTemplateSelector}">

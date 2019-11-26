@@ -69,13 +69,12 @@ namespace BiliBili3.Pages
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
+            
             error.Visibility = Visibility.Collapsed;
             _aid = (e.Parameter as object[])[0].ToString();
             txt_Header.Text = "AV" + _aid;
 
             await GetFavBox();
-            pivot.SelectedIndex = 0;
             await LoadVideo();
 
             if (SecondaryTile.Exists(_aid))
@@ -89,7 +88,7 @@ namespace BiliBili3.Pages
                 btn_Pin.Visibility = Visibility.Visible;
             }
         }
-
+       
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             pivot.SelectedIndex = 0;
@@ -105,6 +104,7 @@ namespace BiliBili3.Pages
             try
             {
                 pivot.SelectedIndex = 0;
+                comment.ClearComment();
                 isMovie = false;
                 tag.Children.Clear();
                 pr_Load.Visibility = Visibility.Visible;
@@ -261,7 +261,12 @@ namespace BiliBili3.Pages
                             cb_Qu.SelectedIndex = 0;
                         }
                     }
-
+                    comment.LoadComment(new LoadCommentInfo()
+                    {
+                        commentMode = CommentMode.Video,
+                        conmmentSortMode = ConmmentSortMode.All,
+                        oid = _aid
+                    });
                 }
                 else
                 {
@@ -577,13 +582,6 @@ namespace BiliBili3.Pages
         {
             pivot.SelectedIndex = 0;
             LoadVideo();
-
-            comment.InitializeComment(new LoadCommentInfo()
-            {
-                commentMode = CommentMode.Video,
-                conmmentSortMode = ConmmentSortMode.Hot,
-                oid = _aid
-            });
         }
 
         private async void btn_GoBrowser_Click(object sender, RoutedEventArgs e)
@@ -919,7 +917,7 @@ namespace BiliBili3.Pages
 
         }
 
-        private async void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private  void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pivot.SelectedIndex == 0)
             {
@@ -929,19 +927,6 @@ namespace BiliBili3.Pages
             {
                 com_bar.Visibility = Visibility.Collapsed;
             }
-
-            if (pivot.SelectedIndex == 1 && comment.CommentCount == 0)
-            {
-                await Task.Delay(200);
-                comment.LoadComment(new LoadCommentInfo()
-                {
-                    commentMode = CommentMode.Video,
-                    conmmentSortMode = ConmmentSortMode.All,
-                    oid = _aid
-                });
-            }
-
-
         }
 
         private async void img_pic_Tapped(object sender, TappedRoutedEventArgs e)

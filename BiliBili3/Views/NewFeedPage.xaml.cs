@@ -1,4 +1,5 @@
-﻿using BiliBili3.Modules;
+﻿using BiliBili3.Helper;
+using BiliBili3.Modules;
 using BiliBili3.Modules.HomeModels;
 using BiliBili3.Pages;
 using BiliBili3.Pages.FindMore;
@@ -54,7 +55,7 @@ namespace BiliBili3.Views
             toView = new ToView();
             home = new Home();
         }
-        Home home ;
+        Home home;
         ObservableCollection<HomeModel> homePages;
         ToView toView;
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -66,7 +67,7 @@ namespace BiliBili3.Views
                 homePages[1].Refresh();
                 LoadTab();
             }
-           
+
         }
         /// <summary>
         /// 加载Tab
@@ -82,7 +83,7 @@ namespace BiliBili3.Views
                     {
                         header = item.name,
                         mode = HomeDisplayMode.Topic,
-                        tab= item,
+                        tab = item,
                         showRefresh = (SettingHelper.Get_RefreshButton() && SettingHelper.IsPc()) ? Visibility.Visible : Visibility.Collapsed
                     });
                 }
@@ -95,27 +96,49 @@ namespace BiliBili3.Views
             if (availableSize.Width > 500)
             {
                 num = (int)availableSize.Width / 260;
+                if (num < 2)
+                {
+                    num = 2;
+                }
             }
 
             bor_width3.Width = (availableSize.Width - (num * 17)) / num;
-            if (pivot_home != null && availableSize.Width>=800)
+
+            int d = Convert.ToInt32(availableSize.Width / 450);
+            if (d > 3)
             {
-                pivot_home.Style = App.Current.Resources["PivotHeaderCenterStyle"] as Style;
+                d = 3;
+            }
+            bor_WidthHot.Width = (availableSize.Width - 16) / d-5*d;
+
+            if (pivot_home != null && availableSize.Width >= 800)
+            {
+                //改样式还得考虑下SDK版本
+                if (SystemHelper.GetSystemBuild()>= 16299)
+                {
+                    pivot_home.Style = App.Current.Resources["PivotHeaderCenterStyle"] as Style;
+                }
+                else
+                {
+                    pivot_home.Style = App.Current.Resources["PivotHeaderCenterStyle14393"] as Style;
+                }
             }
             else
             {
                 pivot_home.Style = null;
             }
+           
             return base.MeasureOverride(availableSize);
-        }
-      
 
-        private  void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        }
+        
+
+        private void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if ((sender as ScrollViewer).VerticalOffset >= ((sender as ScrollViewer).ScrollableHeight - 200))
             {
                 var model = (sender as ScrollViewer).DataContext as HomeModel;
-                if (model!=null)
+                if (model != null)
                 {
                     switch (model.mode)
                     {
@@ -137,13 +160,13 @@ namespace BiliBili3.Views
                             break;
                     }
                 }
-               
-               
+
+
             }
         }
 
-  
-       
+
+
 
         private void b_btn_Refresh_Click(object sender, RoutedEventArgs e)
         {
@@ -152,16 +175,16 @@ namespace BiliBili3.Views
 
         private async void pivot_home_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (pivot_home.SelectedItem==null)
+            if (pivot_home.SelectedItem == null)
             {
                 return;
             }
             var m = pivot_home.SelectedItem as HomeModel;
-            if (m.mode== HomeDisplayMode.Topic && m.tabData == null)
+            if (m.mode == HomeDisplayMode.Topic && m.tabData == null)
             {
-               await m.LoadTabData();
+                await m.LoadTabData();
             }
-           
+
         }
 
         private void btn_rank_Click(object sender, RoutedEventArgs e)
@@ -172,7 +195,7 @@ namespace BiliBili3.Views
         private async void ls_feed_ItemClick(object sender, ItemClickEventArgs e)
         {
             var data = e.ClickedItem as Modules.HomeModels.HomeDataModel;
-            if (data.uri==null)
+            if (data.uri == null)
             {
                 MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(FollowSeasonPage), Modules.SeasonType.bangumi);
                 return;
@@ -181,23 +204,24 @@ namespace BiliBili3.Views
             {
                 return;
             }
-            if(Uri.TryCreate(data.uri,UriKind.Absolute,out var uri)&&(uri.Scheme=="https"||uri.Scheme=="http)"))
+            if (Uri.TryCreate(data.uri, UriKind.Absolute, out var uri) && (uri.Scheme == "https" || uri.Scheme == "http)"))
             {
                 MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), data.uri);
             }
             else
             {
 
-                await new ContentDialog() {
+                await new ContentDialog()
+                {
                     Title = "暂不支持跳转的类型",
                     Content = new TextBox()
                     {
-                        Text=data.uri,
-                        AcceptsReturn=true,
-                        Height=120
+                        Text = data.uri,
+                        AcceptsReturn = true,
+                        Height = 120
                     },
-                    IsPrimaryButtonEnabled=true,
-                    PrimaryButtonText="知道了"
+                    IsPrimaryButtonEnabled = true,
+                    PrimaryButtonText = "知道了"
                 }.ShowAsync();
             }
 
@@ -228,7 +252,7 @@ namespace BiliBili3.Views
             var data = sender.DataContext as Modules.HomeModels.HomeDataModel;
             add_toview.Visibility = Visibility.Collapsed;
             unLike.Visibility = Visibility.Collapsed;
-           // unLike_Has.Visibility = Visibility.Collapsed;
+            // unLike_Has.Visibility = Visibility.Collapsed;
             if (data.card_goto == "av")
             {
                 add_toview.Tag = data.param;
@@ -237,9 +261,10 @@ namespace BiliBili3.Views
 
             if (data.three_point.dislike_reasons != null)
             {
-              
-                var unLike_Has = new MenuFlyoutSubItem() {
-                    Text="不感兴趣"
+
+                var unLike_Has = new MenuFlyoutSubItem()
+                {
+                    Text = "不感兴趣"
                 };
                 foreach (var item in data.three_point.dislike_reasons)
                 {
@@ -247,7 +272,7 @@ namespace BiliBili3.Views
                     menuItem.Click += MenuItem_Click;
                     unLike_Has.Items.Add(menuItem);
                 }
-                if(menu.Items.LastOrDefault() is MenuFlyoutSubItem)
+                if (menu.Items.LastOrDefault() is MenuFlyoutSubItem)
                 {
                     menu.Items[menu.Items.Count - 1] = unLike_Has;
                 }
@@ -255,7 +280,7 @@ namespace BiliBili3.Views
                 {
                     menu.Items.Add(unLike_Has);
                 }
-              
+
             }
             else
             {
@@ -326,13 +351,13 @@ namespace BiliBili3.Views
 
         }
 
-      
 
-        private  void btn_LoadMore_Click(object sender, RoutedEventArgs e)
+
+        private void btn_LoadMore_Click(object sender, RoutedEventArgs e)
         {
             if (!homePages[0]._loading)
             {
-                 homePages[0].LoadHome();
+                homePages[0].LoadHome();
             }
         }
 
@@ -364,8 +389,8 @@ namespace BiliBili3.Views
 
         private void btn_rcmdMore_Click(object sender, RoutedEventArgs e)
         {
-            var data= (sender as HyperlinkButton).DataContext as TabItemModel;
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(DynamicTopicPage),new object[] { data.title,data.param});
+            var data = (sender as HyperlinkButton).DataContext as TabItemModel;
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(DynamicTopicPage), new object[] { data.title, data.param });
         }
 
         private async void ls_players_ItemClick(object sender, ItemClickEventArgs e)
@@ -405,7 +430,7 @@ namespace BiliBili3.Views
             flipView = sender as FlipView;
             if ((sender as FlipView).SelectedIndex == 0)
             {
-                if (timer==null)
+                if (timer == null)
                 {
                     timer = new DispatcherTimer();
                     timer.Interval = TimeSpan.FromSeconds(3);
@@ -417,11 +442,11 @@ namespace BiliBili3.Views
 
         private void Timer_Tick(object sender, object e)
         {
-            if (flipView.Items.Count<=1)
+            if (flipView.Items.Count <= 1)
             {
                 return;
             }
-            if (flipView.SelectedIndex== flipView.Items.Count-1)
+            if (flipView.SelectedIndex == flipView.Items.Count - 1)
             {
                 flipView.SelectedIndex = 0;
             }
@@ -435,14 +460,14 @@ namespace BiliBili3.Views
         private void ls_Part_ItemClick(object sender, ItemClickEventArgs e)
         {
             var data = e.ClickedItem as HotTopItemModel;
-            if (data.module_id== "rank")
+            if (data.module_id == "rank")
             {
                 MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(RankPage));
                 return;
             }
-            if (data.uri.Contains("https://")|| data.uri.Contains("http://"))
+            if (data.uri.Contains("https://") || data.uri.Contains("http://"))
             {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage),data.uri);
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), data.uri);
                 return;
             }
             else
@@ -454,9 +479,9 @@ namespace BiliBili3.Views
         private void Ls_hot_ItemClick(object sender, ItemClickEventArgs e)
         {
             var data = e.ClickedItem as HotItemModel;
-            if (data._goto=="av")
+            if (data._goto == "av")
             {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage),data.param);
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), data.param);
                 return;
             }
             else
@@ -475,11 +500,20 @@ namespace BiliBili3.Views
         {
 
         }
+
+        private void btn_LoadMoreHot_Click(object sender, RoutedEventArgs e)
+        {
+            var model = (sender as HyperlinkButton).DataContext as HomeModel;
+            if (!model._loading)
+            {
+                model.LoadHot();
+            }
+        }
     }
 
     public class NewFeedItemDataTemplateSelector : DataTemplateSelector
     {
-        
+
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             switch ((item as NewFeedModel)._goto)
@@ -542,34 +576,34 @@ namespace BiliBili3.Views
         public TabModel tab { get; set; }
 
         //for home
-        private ObservableCollection<Banner_item> _banner_items=new ObservableCollection<Banner_item>();
+        private ObservableCollection<Banner_item> _banner_items = new ObservableCollection<Banner_item>();
         public ObservableCollection<Banner_item> banner_items
         {
             get { return _banner_items; }
             set { _banner_items = value; ThisPropertyChanged("banner_items"); }
         }
 
-        private ObservableCollection<HomeDataModel> _home_datas=new ObservableCollection<HomeDataModel>();
+        private ObservableCollection<HomeDataModel> _home_datas = new ObservableCollection<HomeDataModel>();
         public ObservableCollection<HomeDataModel> home_datas
         {
             get { return _home_datas; }
             set { _home_datas = value; ThisPropertyChanged("home_datas"); }
         }
 
-      
+
 
         private int _ItemsCount;
         public int ItemsCount
         {
             get { return _ItemsCount; }
-            set { _ItemsCount = value;ThisPropertyChanged("ItemsCount"); }
+            set { _ItemsCount = value; ThisPropertyChanged("ItemsCount"); }
         }
         /// <summary>
         /// 加载首页动态流
         /// </summary>
         public async Task LoadHome()
         {
-           
+
             try
             {
                 _loading = true;
@@ -605,7 +639,7 @@ namespace BiliBili3.Views
                             home_datas.Add(item);
                         }
                     }
-                    if (idx=="0")
+                    if (idx == "0")
                     {
                         _loading = false;
                         await LoadHome();
@@ -615,11 +649,11 @@ namespace BiliBili3.Views
                 {
                     Utils.ShowMessageToast(data.message);
                 }
-             
+
             }
             catch (Exception)
             {
-                
+
             }
             finally
             {
@@ -627,7 +661,7 @@ namespace BiliBili3.Views
                 _loading = false;
             }
         }
-      
+
         //for hot
         private ObservableCollection<HotItemModel> _hot_datas = new ObservableCollection<HotItemModel>();
         public ObservableCollection<HotItemModel> hot_datas
@@ -658,13 +692,13 @@ namespace BiliBili3.Views
                 idx = hot_datas.Last().idx;
                 par = hot_datas.Last().param;
             }
-            var data = await home.GetHot(par,idx);
+            var data = await home.GetHot(par, idx);
             if (data.success)
             {
-                var hots =data.data[0] as ObservableCollection<HotItemModel>;
+                var hots = data.data[0] as ObservableCollection<HotItemModel>;
                 var tops = data.data[1] as ObservableCollection<HotTopItemModel>;
 
-                if (hot_top_items==null||hot_top_items.Count==0)
+                if (hot_top_items == null || hot_top_items.Count == 0)
                 {
                     hot_top_items = tops;
                 }
@@ -686,6 +720,10 @@ namespace BiliBili3.Views
             }
             showLoading = Visibility.Collapsed;
             _loading = false;
+            if (idx == "0")
+            {
+                LoadHot();
+            }
         }
 
 
@@ -705,7 +743,7 @@ namespace BiliBili3.Views
                 hot_datas = null;
                 LoadHot();
             }
-            if (mode== HomeDisplayMode.Topic)
+            if (mode == HomeDisplayMode.Topic)
             {
                 LoadTabData();
             }
@@ -727,7 +765,7 @@ namespace BiliBili3.Views
         {
             _loading = true;
             showLoading = Visibility.Visible;
-           
+
             var data = await home.GetTabData(tab.id);
             if (data.success)
             {
@@ -753,7 +791,7 @@ namespace BiliBili3.Views
             switch ((item as HomeModel).mode)
             {
                 case HomeDisplayMode.Home:
-                    return resource["home"] as DataTemplate; 
+                    return resource["home"] as DataTemplate;
                 case HomeDisplayMode.Hot:
                     return resource["hot"] as DataTemplate;
                 case HomeDisplayMode.Topic:

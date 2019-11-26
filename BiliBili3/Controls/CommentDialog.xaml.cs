@@ -1,7 +1,9 @@
 ﻿using BiliBili3.Models;
+using BiliBili3.Modules;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -24,10 +26,13 @@ namespace BiliBili3.Controls
     /// </summary>
     public sealed partial class CommentDialog : ContentDialog
     {
+        Emote emote;
         public CommentDialog(int type, string oid)
         {
+           
             this.InitializeComponent();
-            pivot_face.ItemsSource = ApiHelper.emoji;
+            emote = new Emote(EmoteMode.reply);
+            //pivot_face.ItemsSource = ApiHelper.emoji;
             _type = type;
             _oid = oid;
 
@@ -108,12 +113,47 @@ namespace BiliBili3.Controls
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            txt_Comment.Text += (e.ClickedItem as EmojiModel).name;
+            txt_Comment.Text += (e.ClickedItem as EmoteItem).text;
         }
 
         private void txt_Comment_TextChanged(object sender, TextChangedEventArgs e)
         {
             //txt_Length.Text =(233- txt_Comment.Text.Length).ToString();
+        }
+        ObservableCollection<EmotePackage> packages;
+        private async void btn_F_Click(object sender, RoutedEventArgs e)
+        {
+            if (packages == null)
+            {
+                var data = await emote.LoadEmote();
+                if (data.success)
+                {
+                    packages = data.data;
+                    pivot_face.ItemsSource = packages;
+                }
+                else
+                {
+                    Utils.ShowMessageToast(data.message);
+                }
+            }
+           
+        }
+
+        private async void pivot_face_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var select = pivot_face.SelectedItem as EmotePackage;
+            if (select.emote==null|| select.emote.Count==0)
+            {
+                var data =await emote.LoadEmote(select.id);
+                if (data.success)
+                {
+                    packages[pivot_face.SelectedIndex] = data.data[0];
+                }
+                else
+                {
+                    Utils.ShowMessageToast(data.message);
+                }
+            }
         }
     }
 }
