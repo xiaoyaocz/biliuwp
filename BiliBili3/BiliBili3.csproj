@@ -1157,19 +1157,12 @@
     <SDKReference Include="ShanYe MediaPlayer Engine %28Windows 10 UWP%29, Version=1.0.7">
       <Name>ShanYe MediaPlayer Engine %28Windows 10 UWP%29</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.30.1">
-      <Name>SQLite for Universal Windows Platform</Name>
-    </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.17134.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\GitProject\waslibs-master\waslibs-master\src\AppStudio.Uwp\AppStudio.Uwp.csproj">
-      <Project>{ecedcde9-e70e-4673-a4e9-ffb437b32c0e}</Project>
-      <Name>AppStudio.Uwp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\NSDanmaku\NSDanmaku\NSDanmaku.csproj">
+    <ProjectReference Include="..\NSDanmaku\NSDanmaku\NSDanmaku.csproj">
       <Project>{964d5bcc-c063-45cc-aeea-89169e4a2e5e}</Project>
       <Name>NSDanmaku</Name>
     </ProjectReference>
@@ -1188,6 +1181,9 @@
     </PackageReference>
     <PackageReference Include="HtmlAgilityPack">
       <Version>1.8.7</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Advertising.XAML">
+      <Version>10.1811.22001</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.1.9</Version>
@@ -1210,8 +1206,14 @@
     <PackageReference Include="SQLite.Net-PCL">
       <Version>3.1.1</Version>
     </PackageReference>
+    <PackageReference Include="SQLite.uwp">
+      <Version>3.30.1</Version>
+    </PackageReference>
     <PackageReference Include="VLC.MediaElement">
       <Version>3.1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="WindowsAppStudio.Uwp">
+      <Version>1.5.3</Version>
     </PackageReference>
     <PackageReference Include="ZXing.Net">
       <Version>0.14.0.1</Version>
