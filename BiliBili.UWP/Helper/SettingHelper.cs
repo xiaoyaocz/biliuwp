@@ -1596,7 +1596,8 @@ namespace BiliBili.UWP
             container = ApplicationData.Current.LocalSettings;
             if (container.Values["PlayerMode"] != null)
             {
-                return (bool)container.Values["PlayerMode"];
+                //功能下线
+                return false;//(bool)container.Values["PlayerMode"];
             }
             else
             {

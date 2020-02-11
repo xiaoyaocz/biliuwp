@@ -36,7 +36,7 @@
                                 <controls:Carousel.ContentTemplate>
                                     <DataTemplate x:DataType="homemodels:Banner_item">
                                         <HyperlinkButton Margin="8" Click="btn_banner_Click" ToolTipService.ToolTip="{x:Bind Path=title}"  Padding="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
-                                            <Image Stretch="UniformToFill" Source="{x:Bind Path=image}"></Image>
+                                            <Image Stretch="UniformToFill" Source="{x:Bind Path=image,Converter={StaticResource imageConvert2},ConverterParameter='240h'}"></Image>
                                         </HyperlinkButton>
                                     </DataTemplate>
                                 </controls:Carousel.ContentTemplate>
@@ -90,7 +90,7 @@
                                             </Grid.RowDefinitions>
                                             <Grid>
                                                 <Image MinHeight="100" Source="ms-appx:///Assets/Logo/PI160_100.png" Stretch="UniformToFill"></Image>
-                                                <Image MinHeight="100" Source="{x:Bind Cover}" Stretch="UniformToFill"></Image>
+                                            <Image MinHeight="100" Source="{x:Bind Path=cover,Converter={StaticResource ResourceKey=imageConvert2},ConverterParameter='320w_200h_1e_1c'}" Stretch="UniformToFill" ></Image>
                                                 <Grid VerticalAlignment="Bottom" Padding="4" Visibility="{Binding showCoverText}">
                                                     <Grid.Background>
                                                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -167,8 +167,8 @@
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <Image Margin="0 0 4 0"  Source="{Binding Cover}" Width="160" Stretch="UniformToFill"></Image>
-                                        <StackPanel Grid.Column="1" >
+                                        <Image Margin="0 0 4 0"  Source="{Binding Path=cover,Converter={StaticResource imageConvert2},ConverterParameter='160w'}" Width="160" Stretch="UniformToFill"></Image>
+                                        <StackPanel Grid.Column="1" Margin="0 2">
                                             <TextBlock MaxLines="1" TextTrimming="CharacterEllipsis" Margin="4 0" Text="{Binding title}"></TextBlock>
                                             <Border Margin="4 2"  BorderThickness="1" CornerRadius="4" Padding="2" HorizontalAlignment="Left"  Background="{Binding Path=rcmd_reason_style.Bg_color}" BorderBrush="{Binding Path=rcmd_reason_style.Border_color}">
                                                 <TextBlock TextTrimming="CharacterEllipsis" FontSize="12" Foreground="{Binding Path=rcmd_reason_style.Text_color}" Text="{Binding Path=rcmd_reason_style.text}"></TextBlock>
@@ -325,7 +325,7 @@
                                 </Grid.RowDefinitions>
                                 <Grid>
                                     <Image MinHeight="100" Source="ms-appx:///Assets/Logo/PI160_100.png" Stretch="UniformToFill"></Image>
-                                    <Image MinHeight="100" Source="{Binding Cover}" Stretch="UniformToFill"></Image>
+                                <Image MinHeight="100" Source="{Binding Path=cover,Converter={StaticResource imageConvert2},ConverterParameter='320w_200h'}" Stretch="UniformToFill"></Image>
                                     <Grid VerticalAlignment="Bottom" Padding="4">
                                         <Grid.Background>
                                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -373,7 +373,7 @@
                         <StackPanel >
                             <Border Width="48" Height="48" CornerRadius="8">
                                 <Border.Background>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Cover}"/>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding cover}"/>
                                 </Border.Background>
                             </Border>
                             <!--<Image Width="48" Stretch="UniformToFill" Height="48" Source="{Binding Cover}"></Image>-->

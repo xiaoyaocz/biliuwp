@@ -1,26 +1,4 @@
-﻿/** 
-* 
-*----------Dragon be here!----------/ 
-* 　　　┏┓　　　┏┓ 
-* 　　┏┛┻━━━┛┻┓ 
-* 　　┃　　　　　　　┃ 
-* 　　┃　　　━　　　┃ 
-* 　　┃　┳┛　┗┳　┃ 
-* 　　┃　　　　　　　┃ 
-* 　　┃　　　┻　　　┃ 
-* 　　┃　　　　　　　┃ 
-* 　　┗━┓　　　┏━┛ 
-* 　　　　┃　　　┃神兽保佑 
-* 　　　　┃　　　┃代码无BUG！ 
-* 　　　　┃　　　┗━━━┓ 
-* 　　　　┃　　　　　　　┣┓ 
-* 　　　　┃　　　　　　　┏┛ 
-* 　　　　┗┓┓┏━┳┓┏┛ 
-* 　　　　　┃┫┫　┃┫┫ 
-* 　　　　　┗┻┛　┗┻┛ 
-* ━━━━━━神兽出没━━━━━━by:coder-pig 
-*/
-using BiliBili.UWP.Controls;
+﻿using BiliBili.UWP.Controls;
 using BiliBili.UWP.Helper;
 using BiliBili.UWP.Models;
 using BiliBili.UWP.Modules;
@@ -234,9 +212,6 @@ namespace BiliBili.UWP
         }
 
 
-
-
-
         private async void MainPage_OrientationChanged(DisplayInformation sender, object args)
         {
 
@@ -331,7 +306,7 @@ namespace BiliBili.UWP
             MessageCenter.HomeNavigateToEvent += MessageCenter_HomeNavigateToEvent;
             MessageCenter.BgNavigateToEvent += MessageCenter_BgNavigateToEvent; ;
             MessageCenter.Logined += MessageCenter_Logined;
-            MessageCenter.ShowOrHideBarEvent += MessageCenter_ShowOrHideBarEvent;
+           
             MessageCenter.ChangeBg += MessageCenter_ChangeBg;
             //main_frame.Navigate(typeof(HomePage));
             MessageCenter_ChangeBg();
@@ -460,19 +435,7 @@ namespace BiliBili.UWP
                 }
             }
 
-            //var RE=await _5DMHelper.GetUrl("21680", 0);
 
-
-            //await ApiHelper.GetBangumiUrl_FLV(new PlayerModel() { Mid= "5042718" },3);
-
-            //MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(FuckMSPage));
-
-            //await  new Account().SSO();
-
-            if (SettingHelper.Get_UseDASH()&&SystemHelper.GetSystemBuild()< 17763)
-            {
-                SettingHelper.Set_UseDASH(false);
-            }
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
@@ -483,7 +446,7 @@ namespace BiliBili.UWP
             MessageCenter.HomeNavigateToEvent -= MessageCenter_HomeNavigateToEvent;
             MessageCenter.BgNavigateToEvent -= MessageCenter_BgNavigateToEvent; ;
             MessageCenter.Logined -= MessageCenter_Logined;
-            MessageCenter.ShowOrHideBarEvent -= MessageCenter_ShowOrHideBarEvent;
+          
             MessageCenter.ChangeBg -= MessageCenter_ChangeBg;
         }
         private async void MessageCenter_ChangeBg()
@@ -591,23 +554,6 @@ namespace BiliBili.UWP
         private void MessageCenter_BgNavigateToEvent(Type page, params object[] par)
         {
             bg_Frame.Navigate(page, par);
-        }
-
-        private void MessageCenter_ShowOrHideBarEvent(bool show)
-        {
-            if (show)
-            {
-                // row_bottom.Height = GridLength.Auto;
-                //bottom.Visibility = Visibility.Visible;
-                //_In.Storyboard.Begin();
-                //_In.Storyboard.Completed += Storyboard_Completed;
-            }
-            else
-            {
-                //bottom.Visibility = Visibility.Visible;
-                //_Out.Storyboard.Begin();
-                // _Out.Storyboard.Completed += Storyboard_Completed;
-            }
         }
 
         private void Storyboard_Completed(object sender, object e)
@@ -810,7 +756,11 @@ namespace BiliBili.UWP
             titleBar.InactiveBackgroundColor = ((SolidColorBrush)grid_Top.Background).Color;
             titleBar.ButtonInactiveBackgroundColor = ((SolidColorBrush)grid_Top.Background).Color;
         }
-
+        /// <summary>
+        /// 重新是否有新的信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Timer_Tick(object sender, object e)
         {
             //if (ApiHelper.IsLogin())
@@ -833,8 +783,6 @@ namespace BiliBili.UWP
                 });
             }
         }
-
-        //}
 
         MessageModel message = new MessageModel();
         private async Task<bool> HasMessage()

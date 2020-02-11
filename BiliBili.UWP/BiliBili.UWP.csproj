@@ -271,6 +271,9 @@
       <DependentUpon>VideoProcessingDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WrapPanel.cs" />
+    <Compile Include="Converters\DisplayConvert.cs" />
+    <Compile Include="Converters\ImageCompressionConvert.cs" />
+    <Compile Include="Converters\ImageSourceConvert.cs" />
     <Compile Include="Helper\ApiHelper.cs" />
     <Compile Include="Helper\AppHelper.cs" />
     <Compile Include="Helper\BiliLiveDanmu.cs" />
@@ -514,9 +517,6 @@
     <Compile Include="Pages\WebPage.xaml.cs">
       <DependentUpon>WebPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PlayerModePage.xaml.cs">
-      <DependentUpon>PlayerModePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SplashPage.xaml.cs">
       <DependentUpon>SplashPage.xaml</DependentUpon>
@@ -678,7 +678,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <None Include="Package.StoreAssociation.xml" />
     <None Include="Package.xml" />
-    <Content Include="page.png" />
+    <Content Include="Assets\page.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -1030,10 +1030,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\WebPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PlayerModePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

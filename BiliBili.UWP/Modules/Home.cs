@@ -304,15 +304,7 @@ namespace BiliBili.UWP.Modules
             /// http://i0.hdslb.com/bfs/archive/939bc05bfe3598d5ad1e759ff022e0bc0c99a16b.png
             /// </summary>
 
-            private string _image;
-
-            public string image
-            {
-                get { return _image+"@240h.jpg"; }
-                set { _image = value; }
-            }
-
-
+            public string image { get; set; }
             public string hash { get; set; }
             /// <summary>
             /// https://www.bilibili.com/blackboard/activity-BJ0jN5PN7.html
@@ -455,18 +447,7 @@ namespace BiliBili.UWP.Modules
             public string param { get; set; }
             public string idx { get; set; }
             public string cover { get; set; }
-            public string Cover
-            {
-                get
-                {
-                    if (cover != null && cover.Length != 0)
-                    {
-                        return cover + "@160w.jpg";
-                        //return cover + ((_goto == "av"||_goto== "bangumi_rcmd") ? "" : "@320w_200h_1e_1c.jpg");
-                    }
-                    return "";
-                }
-            }
+
             public string title { get; set; }
             public string right_desc_1 { get; set; }
             public string right_desc_2 { get; set; }
@@ -544,18 +525,7 @@ namespace BiliBili.UWP.Modules
             }
 
             public string cover { get; set; }
-            public string Cover
-            {
-                get
-                {
-                    if (!string.IsNullOrEmpty(cover))
-                    {
-                        return cover + "@320w_200h_1e_1c.jpg";
-                    }
-                    return "";
-                }
-            }
-         
+           
             public string uri { get; set; }
             public string param { get; set; }
             public string card_goto { get; set; }
@@ -689,18 +659,7 @@ namespace BiliBili.UWP.Modules
 
         public class TabVideoItemModel
         {
-            public string Cover
-            {
-                get
-                {
-                    if (_goto=="web")
-                    {
-                        return cover + "@100w_100h_1e_1c.jpg";
-                    }
-                    return cover + "@320w_200h.jpg";
-
-                }
-            }
+           
             public string rightText
             {
                 get

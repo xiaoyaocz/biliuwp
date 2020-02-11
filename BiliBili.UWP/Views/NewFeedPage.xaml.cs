@@ -64,7 +64,7 @@ namespace BiliBili.UWP.Views
             if (e.NavigationMode == NavigationMode.New && homePages[0].home_datas?.Count == 0)
             {
                 await homePages[0].Refresh();
-                await homePages[1].Refresh();
+                //await homePages[1].Refresh();
                 
                 LoadTab();
             }
@@ -167,6 +167,10 @@ namespace BiliBili.UWP.Views
                 return;
             }
             var m = pivot_home.SelectedItem as HomeModel;
+            if (m.mode== HomeDisplayMode.Hot&&m.hot_datas.Count==0)
+            {
+                await m.Refresh();
+            }
             if (m.mode == HomeDisplayMode.Topic && m.tabData == null)
             {
                 await m.LoadTabData();
@@ -835,7 +839,7 @@ namespace BiliBili.UWP.Views
         private string _cover;
         public string cover
         {
-            get { return _cover + "@500w.png"; }
+            get { return _cover + "@500w.jpg"; }
             set { _cover = value; }
         }
 

@@ -39,7 +39,7 @@
         <uap:Extension Category="windows.fileTypeAssociation" EntryPoint="BiliBili.UWP.App">
           <uap:FileTypeAssociation Name="23333">
             <uap:DisplayName>哔哩哔哩 UWP 播放器</uap:DisplayName>
-            <uap:Logo>page.png</uap:Logo>
+            <uap:Logo>Assets\page.png</uap:Logo>
             <uap:InfoTip>支持播放mp4,flv,avi,wmv,3gp,ovg格式的视频</uap:InfoTip>
             <uap:SupportedFileTypes>
               <uap:FileType>.mp4</uap:FileType>

@@ -40,7 +40,7 @@ namespace BiliBili.UWP
 
             this.Suspending += OnSuspending;
             App.Current.UnhandledException += App_UnhandledException;
-           
+
             this.EnteredBackground += App_EnteredBackground;
             this.LeavingBackground += App_LeavingBackground;
         }
@@ -99,7 +99,7 @@ namespace BiliBili.UWP
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             SYEngine.Core.Initialize();
-           
+
             RegisterExceptionHandlingSynchronizationContext();
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
@@ -163,33 +163,24 @@ namespace BiliBili.UWP
                     }
                 }
 
-                if (SettingHelper.Get_PlayerMode())
+                if (rootFrame.Content == null)
                 {
-                    rootFrame.Navigate(typeof(PlayerModePage));
+                    rootFrame.Navigate(typeof(SplashPage), par);
                 }
                 else
                 {
-                    if (rootFrame.Content == null)
+                    if (par.StartType == StartTypes.Video)
                     {
-                        rootFrame.Navigate(typeof(SplashPage), par);
+                        MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), par.Par1);
                     }
-                    else
+                    if (par.StartType == StartTypes.Bangumi)
                     {
-                        if (par.StartType == StartTypes.Video)
-                        {
-                            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), par.Par1);
-                        }
-                        if (par.StartType == StartTypes.Bangumi)
-                        {
-                            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), par.Par1);
-                        }
-                        if (par.StartType == StartTypes.Live)
-                        {
-                            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(LiveRoomPage), par.Par1);
-                        }
-
+                        MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), par.Par1);
                     }
-
+                    if (par.StartType == StartTypes.Live)
+                    {
+                        MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(LiveRoomPage), par.Par1);
+                    }
 
                 }
 
@@ -413,7 +404,7 @@ namespace BiliBili.UWP
 
         protected override void OnFileActivated(FileActivatedEventArgs args)
         {
-            
+
             RegisterExceptionHandlingSynchronizationContext();
             StartModel par = new StartModel() { StartType = StartTypes.File, Par3 = args.Files };
             Frame rootFrame = Window.Current.Content as Frame;

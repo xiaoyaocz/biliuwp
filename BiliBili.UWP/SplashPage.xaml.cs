@@ -82,9 +82,13 @@ namespace BiliBili.UWP
             }
             try
             {
+                //注册后台任务
                 await RegisterBackgroundTask();
+                //读取已下载的文件
                 DownloadHelper2.LoadDowned();
+                //加载分区
                 ApiHelper.SetRegions();
+                //加载直播头衔
                 LiveRoom.GetTitleItems();
                 //ApiHelper.SetEmojis();
             }
@@ -93,7 +97,6 @@ namespace BiliBili.UWP
             }
             #endregion
 
-            //await Task.Delay(2000); 
              m = e.Parameter as StartModel;
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 1);
@@ -101,7 +104,7 @@ namespace BiliBili.UWP
             timer.Start();
             if (m.StartType== StartTypes.None&&SettingHelper.Get_LoadSplash())
             {
-                await GetResults();
+               // await GetResults();
               
             }
             else
