@@ -37,7 +37,7 @@
             </ComboBox>
             <!--<ComboBox HorizontalAlignment="Stretch" Margin="5" Grid.Column="1" PlaceholderText="天"  BorderThickness="1"></ComboBox>-->
         </Grid>
-        <ScrollViewer Style="{StaticResource ScrollViewerStyle1}" Grid.Row="2">
+        <ScrollViewer  Grid.Row="2">
             <StackPanel>
                 <ListView x:Name="list" IsItemClickEnabled="True" SelectionMode="None" ItemClick="list_ItemClick" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled">
                     <ListView.ItemContainerStyle>

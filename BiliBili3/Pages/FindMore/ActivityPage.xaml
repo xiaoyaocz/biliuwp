@@ -31,7 +31,7 @@
 
             </Grid>
 
-            <ScrollViewer Grid.Row="1" Style="{StaticResource ScrollViewerStyle1}" x:Name="sv" ViewChanged="sv_ViewChanged">
+            <ScrollViewer Grid.Row="1"  x:Name="sv" ViewChanged="sv_ViewChanged">
                 <StackPanel>
                     <Border x:Name="bor_Width" Width="450" VerticalAlignment="Top"></Border>
                     <GridView x:Name="grid_View" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" IsItemClickEnabled="True" SelectionMode="None" ItemClick="list_Topic_ItemClick"  Grid.Row="1">

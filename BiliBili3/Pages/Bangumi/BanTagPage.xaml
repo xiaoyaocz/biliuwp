@@ -97,7 +97,7 @@
                             <RowDefinition/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <ScrollViewer Style="{StaticResource ScrollViewerStyle1}" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer  VerticalScrollBarVisibility="Auto">
                             <StackPanel Margin="10 5">
                                 <TextBlock Foreground="Gray" Margin="5">类型</TextBlock>
                                 <GridView x:Name="view_LX" Margin="5 0" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -200,7 +200,7 @@
                     </Grid>
                    
                 </SplitView.Pane>
-                <ScrollViewer x:Name="sv" Style="{StaticResource ScrollViewerStyle1}" ViewChanged="sv_ViewChanged">
+                <ScrollViewer x:Name="sv"  ViewChanged="sv_ViewChanged">
                     <StackPanel>
                         <Border x:Name="ViewBox2_num" Background="Gray" Width="120"></Border>
                         <GridView x:Name="gv1" ItemClick="gv1_ItemClick" Margin="5" ItemsSource="{Binding Path=per1.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  SelectionMode="None" IsItemClickEnabled="True" >

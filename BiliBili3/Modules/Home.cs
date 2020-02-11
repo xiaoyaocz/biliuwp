@@ -168,11 +168,25 @@ namespace BiliBili3.Modules
                 var model = results.ToDynamicJObject();
                 if (model.code == 0)
                 {
+                    var data = JsonConvert.DeserializeObject<TabDataModel>(model.json["data"].ToString());
+                    var banner = data.item.FirstOrDefault(x => x._goto == "banner");
+                    if (banner!=null)
+                    {
+                        var list= banner.banner_item.Where(x => string.IsNullOrEmpty(x.image)).ToList();
+                        foreach (var item in list)
+                        {
+                            banner.banner_item.Remove(item);
+                        }
+                        if (banner.banner_item.Count == 0)
+                        {
+                            data.item.Remove(banner);
+                        }
+                    }
                     return new ReturnModel<TabDataModel>()
                     {
                         success = true,
                         message = "",
-                        data = JsonConvert.DeserializeObject<TabDataModel>(model.json["data"].ToString())
+                        data = data
                     };
                 }
                 else
@@ -447,7 +461,7 @@ namespace BiliBili3.Modules
                 {
                     if (cover != null && cover.Length != 0)
                     {
-                        return cover + "@120w_100h_1e_1c.jpg";
+                        return cover + "@160w.jpg";
                         //return cover + ((_goto == "av"||_goto== "bangumi_rcmd") ? "" : "@320w_200h_1e_1c.jpg");
                     }
                     return "";
@@ -877,7 +891,7 @@ namespace BiliBili3.Modules
 
             public string image
             {
-                get { return _image+"@800w.jpg"; }
+                get { return _image; }
                 set { _image = value; }
             }
 
@@ -916,7 +930,7 @@ namespace BiliBili3.Modules
 
             public string cover
             {
-                get { return _cover; }
+                get { return _cover+"@300h.jpg"; }
                 set { _cover = value; ThisPropertyChanged("cover"); }
             }
             private ObservableCollection<TabItemModel> _item;

@@ -28,7 +28,7 @@
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis" Text="分区" Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White"></TextBlock>
 
         </Grid>
-        <ScrollViewer Grid.Row="1" Style="{StaticResource ScrollViewerStyle1}" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="1"  VerticalScrollBarVisibility="Auto">
             <StackPanel >
               
                 <GridView  SelectionMode="None" IsItemClickEnabled="True" HorizontalAlignment="Center">

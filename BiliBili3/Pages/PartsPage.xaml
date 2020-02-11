@@ -255,7 +255,7 @@
         <DataTemplate x:Key="ItemsTemplate">
             <Grid>
 
-                <ScrollViewer x:Name="sv_LZ" Style="{StaticResource ScrollViewerStyle1}"   HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" ViewChanged="sv_LZ_ViewChanged" >
+                <ScrollViewer x:Name="sv_LZ"    HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" ViewChanged="sv_LZ_ViewChanged" >
                     <StackPanel>
                         <GridView x:Name="LZ_List" ItemsSource="{Binding VideoList}" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" ItemClick="LZ_List_ItemClick" ItemTemplate="{StaticResource RankItem}" IsItemClickEnabled="True" ItemContainerStyle="{StaticResource ListViewItemStyle}"></GridView>
                         <Button x:Name="btn_LoadMore" Click="btn_LoadMore_Click" HorizontalAlignment="Center" Margin="5" FontSize="14" Foreground="Gray" Background="#00000000" >加载更多</Button>
@@ -284,7 +284,7 @@
         </DataTemplate>
         <DataTemplate x:Key="HomeTemplate">
 
-            <ScrollViewer x:Name="sv" Style="{StaticResource ScrollViewerStyle1}" VerticalScrollBarVisibility="Auto" >
+            <ScrollViewer x:Name="sv"  VerticalScrollBarVisibility="Auto" >
                 <StackPanel>
                     <Grid >
                         <Grid.ColumnDefinitions>

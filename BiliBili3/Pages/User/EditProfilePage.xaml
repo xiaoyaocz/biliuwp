@@ -23,7 +23,7 @@
             <AppBarButton x:Name="btn_back" Click="btn_back_Click" Icon="Back" Width="48" Height="48" Foreground="White"/>
             <TextBlock  Text="编辑资料" Margin="5 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
         </Grid>
-        <ScrollViewer Style="{StaticResource ScrollViewerStyle1}" Grid.Row="1">
+        <ScrollViewer  Grid.Row="1">
             <StackPanel Margin="10">
               
                 <TextBlock Foreground="Gray" FontSize="16">头像 (点击头像更换)</TextBlock>

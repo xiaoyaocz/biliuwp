@@ -70,7 +70,7 @@
                     <ComboBoxItem>国漫</ComboBoxItem>
                 </ComboBox>
             </Grid>
-            <ScrollViewer x:Name="sv" Grid.Row="1"  Style="{StaticResource ScrollViewerStyle1}" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer x:Name="sv" Grid.Row="1"   VerticalScrollBarVisibility="Auto">
                 <StackPanel x:Name="st">
                     <Border x:Name="ViewBox2_num" Background="Gray" Width="120"></Border>
                     <TextBlock FontSize="12" Foreground="Gray" TextAlignment="Center" Margin="10">已经回顾了一整周的更新啦</TextBlock>

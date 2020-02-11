@@ -71,7 +71,7 @@
                     <PivotItem.Header>
                         <TextBlock x:Name="txt_hea_0"  Text="正在直播" FontSize="16"/>
                     </PivotItem.Header>
-                    <ScrollViewer Grid.Row="1" Style="{StaticResource  ScrollViewerStyle1}" x:Name="sv_room" ViewChanged="sv_room_ViewChanged">
+                    <ScrollViewer Grid.Row="1"  x:Name="sv_room" ViewChanged="sv_room_ViewChanged">
                         <StackPanel>
                             <Border x:Name="bor_Width2" Background="Gray" Width="100"></Border>
                             <GridView x:Name="gv_Room" ItemClick="gv_Room_ItemClick" HorizontalAlignment="Center" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemTemplate="{StaticResource GridItem}" ItemContainerStyle="{StaticResource itemStyle}" SelectionMode="None" IsItemClickEnabled="True"></GridView>
@@ -84,7 +84,7 @@
                     <PivotItem.Header>
                         <TextBlock x:Name="txt_hea_1"  Text="主播" FontSize="16"/>
                     </PivotItem.Header>
-                    <ScrollViewer Grid.Row="1" Style="{StaticResource  ScrollViewerStyle1}" x:Name="sv" ViewChanged="sv_ViewChanged">
+                    <ScrollViewer Grid.Row="1"  x:Name="sv" ViewChanged="sv_ViewChanged">
                         <StackPanel>
                             <Border x:Name="bor_Width" Background="Gray" Width="300"></Border>
                             <GridView  x:Name="list_Feed" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True"  ItemClick="list_Feed_ItemClick">

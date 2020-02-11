@@ -109,7 +109,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <ListView x:Name="list_Downed" Style="{StaticResource ListViewStyle1}" Margin="0 5" SelectionMode="None" IsItemClickEnabled="True" ItemClick="list_Downed_ItemClick">
+                    <ListView x:Name="list_Downed"  Margin="0 5" SelectionMode="None" IsItemClickEnabled="True" ItemClick="list_Downed_ItemClick">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"/>
@@ -162,7 +162,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <ScrollViewer Style="{StaticResource ScrollViewerStyle1}">
+                    <ScrollViewer >
                         <ItemsControl x:Name="list_Downed_New" >
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -172,7 +172,7 @@
                                             <HyperlinkButton HorizontalAlignment="Right" Padding="0" VerticalAlignment="Center" x:Name="btn_Delete" Click="btn_Delete_Click">删除全部</HyperlinkButton>
                                         </Grid>
                                        
-                                        <ListView  ItemsSource="{Binding videos}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" Style="{StaticResource ListViewStyle1}" Margin="0 5" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
+                                        <ListView  ItemsSource="{Binding videos}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden"  Margin="0 5" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
                                             <ListView.ItemContainerStyle>
                                                 <Style TargetType="ListViewItem">
                                                     <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"/>

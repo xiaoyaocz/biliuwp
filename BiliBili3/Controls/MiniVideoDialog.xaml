@@ -11,7 +11,7 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerStyle1}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" >
             <StackPanel>
                 <MediaElement AutoPlay="True" Source="{Binding Path=item.video_playurl}" AreTransportControlsEnabled="True">
                     <MediaElement.TransportControls>

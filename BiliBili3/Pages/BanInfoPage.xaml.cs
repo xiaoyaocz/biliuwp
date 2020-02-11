@@ -99,7 +99,7 @@ namespace BiliBili3.Pages
             catch (Exception)
             {
             }
-            
+
             pivot.SelectedIndex = 0;
             sv.ChangeView(null, 0, null);
             //}
@@ -178,7 +178,7 @@ namespace BiliBili3.Pages
                     //        x.index_title = x.long_title;
                     //    }
                     //});
-                   
+
                     if (model.result.episodes != null)
                     {
                         model.result.episodes.ForEach(x =>
@@ -201,14 +201,14 @@ namespace BiliBili3.Pages
                         });
                         model.result.episodes = model.result.episodes.OrderByDescending(x => x.orderindex).ToList();
                         //设置下载清晰度
-                        if (model.result.episodes.Count!=0)
+                        if (model.result.episodes.Count != 0)
                         {
-                            
+
                             var q = await download.GetSeasonQualitys(model.result.episodes[0].av_id.ToString(), model.result.episodes[0].danmaku.ToString(), model.result.episodes[0].season_type, ApiHelper.access_key, ApiHelper.GetUserId());
                             cb_Qu.ItemsSource = q.data;
                             cb_Qu.SelectedIndex = 0;
                         }
-                      
+
                     }
 
 
@@ -608,7 +608,7 @@ namespace BiliBili3.Pages
                     if (comment.CommentCount == 0)
                     {
                         await Task.Delay(200);
-                        if (cb_H.SelectedItem!=null)
+                        if (cb_H.SelectedItem != null)
                         {
                             comment.LoadComment(new LoadCommentInfo()
                             {
@@ -777,14 +777,14 @@ namespace BiliBili3.Pages
             {
                 if (item.IsDowned == Visibility.Collapsed)
                 {
-                    var downloadUrl = await download.GetSeasonDownloadUrl(item.av_id.ToString(), item.danmaku.ToString(),_banId.ToInt32(), item.season_type, cb_Qu.SelectedItem as QualityInfo,ApiHelper.access_key, ApiHelper.GetUserId());
+                    var downloadUrl = await download.GetSeasonDownloadUrl(item.av_id.ToString(), item.danmaku.ToString(), _banId.ToInt32(), item.season_type, cb_Qu.SelectedItem as QualityInfo, ApiHelper.access_key, ApiHelper.GetUserId());
                     if (!downloadUrl.success)
                     {
                         await new MessageDialog($"{item.index} {item.index_title}下载失败:{downloadUrl.message}").ShowAsync();
                         continue;
                     }
 
-                   await DownloadHelper2.CreateDownload(new DownloadTaskModel()
+                    await DownloadHelper2.CreateDownload(new DownloadTaskModel()
                     {
                         downloadMode = DownloadMode.Anime,
                         sid = _banId,
@@ -905,11 +905,11 @@ namespace BiliBili3.Pages
                 //}
                 //else
                 //{
-                    gv_Play.SelectionMode = ListViewSelectionMode.Multiple;
-                    gv_Play.IsItemClickEnabled = false;
-                    Utils.ShowMessageToast("请选中要下载的分P视频，点击确定", 3000);
-                    Down_ComBar.Visibility = Visibility.Visible;
-                    com_bar.Visibility = Visibility.Collapsed;
+                gv_Play.SelectionMode = ListViewSelectionMode.Multiple;
+                gv_Play.IsItemClickEnabled = false;
+                Utils.ShowMessageToast("请选中要下载的分P视频，点击确定", 3000);
+                Down_ComBar.Visibility = Visibility.Visible;
+                com_bar.Visibility = Visibility.Collapsed;
                 //}
 
 
@@ -1241,6 +1241,40 @@ namespace BiliBili3.Pages
         private void Txt_desc_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             txt_desc.IsTextSelectionEnabled = !txt_desc.IsTextSelectionEnabled;
+        }
+
+        private void gv_Pv_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var info = e.ClickedItem as episodesModel;
+            List<PlayerModel> ls = new List<PlayerModel>();
+            // int i = 1;
+            var items = (sender as GridView).ItemsSource as List<episodesModel>;
+
+            foreach (episodesModel item in items)
+            {
+                ls.Add(new PlayerModel()
+                {
+                    season_type = item.season_type,
+                    banId = _banId,
+                    banInfo = item,
+                    Aid = item.av_id,
+                    Mid = item.danmaku.ToString(),
+                    Mode = PlayMode.Video,
+                    No = item.orderindex.ToString(),
+                    VideoTitle = item.title + " " + item.long_title,
+                    Title = txt_Name.Text,
+                    episode_id = item.episode_id,
+                    index = item.orderindex
+                });
+            }
+
+
+            ls = ls.OrderBy(x => x.index).ToList();
+
+            int index = ls.IndexOf(ls.Find(x => x.Mid == info.danmaku.ToString()));
+
+            MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(PlayerPage), new object[] { ls, index });
+            PostHistory(ls[index].Aid, ls[index].VideoTitle);
         }
 
         //private void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)

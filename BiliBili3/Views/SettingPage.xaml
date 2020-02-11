@@ -38,7 +38,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">常规/外观</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer Style="{StaticResource ScrollViewerStyle1}" VerticalScrollBarVisibility="Auto" FontFamily="Segoe UI">
+                <ScrollViewer  VerticalScrollBarVisibility="Auto" FontFamily="Segoe UI">
                     <StackPanel Margin="10">
                         <StackPanel Margin="0 0 0 10">
                             <TextBlock FontSize="16">外观</TextBlock>
@@ -286,7 +286,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">视频/直播</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer Style="{StaticResource ScrollViewerStyle1}" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer  VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="10">
                         <StackPanel Margin="0 0 0 10">
                             <TextBlock FontSize="16">视频</TextBlock>
@@ -427,7 +427,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">弹幕</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer Style="{StaticResource ScrollViewerStyle1}" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer  VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="10">
                         <StackPanel Margin="0 0 0 10">
                             <TextBlock FontSize="16" Margin="0 10 0 0">弹幕屏蔽</TextBlock>
@@ -537,7 +537,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">下载/通知</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer Style="{StaticResource ScrollViewerStyle1}" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer  VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="10">
                         <StackPanel Margin="0 0 0 10">
                             <TextBlock FontSize="16">下载</TextBlock>
@@ -611,7 +611,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">其它</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer Style="{StaticResource ScrollViewerStyle1}" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer  VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="10">
                         <StackPanel Margin="0 0 0 10" Visibility="Collapsed">
                             <TextBlock FontSize="16">黑科技</TextBlock>
@@ -661,7 +661,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">关于</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer VerticalScrollMode="Auto" Style="{StaticResource ScrollViewerStyle1}">
+                <ScrollViewer VerticalScrollMode="Auto" >
                     <StackPanel  Margin="10">
                         <TextBlock FontSize="16">信息</TextBlock>
                         <Grid Margin="0 10 0 0">
@@ -707,7 +707,7 @@
 
                         </HyperlinkButton>
                        
-                        <TextBlock FontSize="18" Margin="0 10 0 0">赞助</TextBlock>
+                        <!--<TextBlock FontSize="18" Margin="0 10 0 0">赞助</TextBlock>
 
                         <HyperlinkButton Click="HyperlinkButton_Click_1"  HorizontalAlignment="Stretch" Foreground="{ThemeResource Bili-FontColor}" HorizontalContentAlignment="Stretch" Padding="0">
                             <Grid Margin="0 10 0 0">
@@ -716,7 +716,7 @@
 
                             </Grid>
 
-                        </HyperlinkButton>
+                        </HyperlinkButton>-->
                         <TextBlock FontSize="18" Margin="0 10 0 0">使用声明</TextBlock>
                         <TextBlock Foreground="Gray" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0 10 0 0" >1、本程序为哔哩哔哩动画第三方客户端，所有资源均来自哔哩哔哩动画</TextBlock>
                         <TextBlock Foreground="Gray" VerticalAlignment="Center"  TextWrapping="Wrap" Margin="0 10 0 0">2、本程序仅供学习交流编程技术使用</TextBlock>
@@ -747,7 +747,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">更新日志</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer VerticalScrollMode="Auto" Style="{StaticResource ScrollViewerStyle1}">
+                <ScrollViewer VerticalScrollMode="Auto" >
                     <StackPanel  Margin="10">
                         <TextBlock TextWrapping="Wrap" x:Name="txt_Ver"></TextBlock>
                         

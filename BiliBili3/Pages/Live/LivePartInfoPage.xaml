@@ -70,7 +70,7 @@
             <TextBlock  Margin="5 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
 
         </Grid>
-        <ScrollViewer Grid.Row="1" Style="{StaticResource  ScrollViewerStyle1}" x:Name="sv" ViewChanged="sv_ViewChanged">
+        <ScrollViewer Grid.Row="1"  x:Name="sv" ViewChanged="sv_ViewChanged">
             <StackPanel>
                 <Border x:Name="bor_Width2" Background="Gray" Width="100" VerticalAlignment="Bottom"></Border>
                 <GridView x:Name="gv" ItemClick="gv_ItemClick" HorizontalAlignment="Center" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemTemplate="{StaticResource GridItem}" ItemContainerStyle="{StaticResource itemStyle}" SelectionMode="None" IsItemClickEnabled="True"></GridView>

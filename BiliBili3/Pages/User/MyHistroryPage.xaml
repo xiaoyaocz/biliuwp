@@ -24,7 +24,7 @@
             <TextBlock  Text="历史记录" Margin="5 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
             <AppBarButton x:Name="btn_Clear" Click="btn_ClearHistory_Click" Icon="Delete" Width="48" Height="48" ToolTipService.ToolTip="清空记录" Foreground="White" Grid.Column="2"></AppBarButton>
         </Grid>
-        <ScrollViewer Grid.Row="1" x:Name="sv" ViewChanged="sv_ViewChanged" Style="{StaticResource ScrollViewerStyle1}">
+        <ScrollViewer Grid.Row="1" x:Name="sv" ViewChanged="sv_ViewChanged" >
             <StackPanel>
 
                 <ListView  x:Name="User_ListView_History" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  SelectionMode="None" IsItemClickEnabled="True" ItemClick="User_ListView_History_ItemClick" >

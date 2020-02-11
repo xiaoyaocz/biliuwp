@@ -26,9 +26,9 @@
             <AppBarButton x:Name="btn_back" Click="btn_back_Click" Icon="Back" Width="48" Height="48" Foreground="White"/>
             <TextBlock  Text="私聊" Margin="5 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
         </Grid>
-        <ScrollViewer x:Name="sc" VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerStyle1}" Grid.Row="1">
+        <ScrollViewer x:Name="sc" VerticalScrollBarVisibility="Auto"  Grid.Row="1">
             <StackPanel >
-                <ListView x:Name="list_view" ItemClick="list_view_ItemClick" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource MessageItemDataTemplateSelector}" SelectionMode="None" IsItemClickEnabled="True" Style="{StaticResource ListViewStyle1}">
+                <ListView x:Name="list_view" ItemClick="list_view_ItemClick" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplateSelector="{StaticResource MessageItemDataTemplateSelector}" SelectionMode="None" IsItemClickEnabled="True" >
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>

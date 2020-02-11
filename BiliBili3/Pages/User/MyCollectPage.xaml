@@ -32,7 +32,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </Grid>
-        <ScrollViewer Grid.Row="1" x:Name="sv" ViewChanged="sv_ViewChanged" Style="{StaticResource ScrollViewerStyle1}">
+        <ScrollViewer Grid.Row="1" x:Name="sv" ViewChanged="sv_ViewChanged" >
             <StackPanel>
                 <Border x:Name="bor_Width" Background="Gray" Width="120"></Border>
                 <GridView  x:Name="User_ListView_FavouriteVideo" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True"  ItemClick="User_ListView_FavouriteVideo_ItemClick">

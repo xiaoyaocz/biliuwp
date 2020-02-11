@@ -75,7 +75,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">热门直播</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer Grid.Row="1" Style="{StaticResource  ScrollViewerStyle1}" x:Name="sv_TJ" ViewChanged="sv_TJ_ViewChanged">
+                <ScrollViewer Grid.Row="1"  x:Name="sv_TJ" ViewChanged="sv_TJ_ViewChanged">
                     <StackPanel>
                         <Border x:Name="bor_Width2" Background="Gray" Width="100" VerticalAlignment="Bottom"></Border>
                         <GridView x:Name="gv_TJ" ItemClick="gv_TJ_ItemClick" HorizontalAlignment="Center" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemTemplate="{StaticResource GridItem}" ItemContainerStyle="{StaticResource itemStyle}" SelectionMode="None" IsItemClickEnabled="True"></GridView>
@@ -87,7 +87,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">最新开播</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer Grid.Row="1" Style="{StaticResource  ScrollViewerStyle1}" x:Name="sv_New" ViewChanged="sv_New_ViewChanged">
+                <ScrollViewer Grid.Row="1"  x:Name="sv_New" ViewChanged="sv_New_ViewChanged">
                     <StackPanel>
 
                         <GridView x:Name="gv_New" ItemClick="gv_TJ_ItemClick" HorizontalAlignment="Center" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemTemplate="{StaticResource GridItem}" ItemContainerStyle="{StaticResource itemStyle}" SelectionMode="None" IsItemClickEnabled="True"></GridView>

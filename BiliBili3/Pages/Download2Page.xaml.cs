@@ -212,7 +212,7 @@ namespace BiliBili3.Pages
                                     }
                                     if (flag)
                                     {
-                                        break;
+                                        continue;
                                     }
                                     var file1 = await item1.GetFileAsync("info.json");
                                     var data1 = await FileIO.ReadTextAsync(file1);

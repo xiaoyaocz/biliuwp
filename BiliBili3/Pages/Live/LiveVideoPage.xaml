@@ -86,7 +86,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">关注</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer Style="{StaticResource  ScrollViewerStyle1}" x:Name="sv_GZ" ViewChanged="sv_GZ_ViewChanged">
+                <ScrollViewer  x:Name="sv_GZ" ViewChanged="sv_GZ_ViewChanged">
                     <StackPanel>
                         <Border x:Name="ViewBox2_num" Background="Gray" Width="300"></Border>
                         <GridView  ItemClick="gv_GZ_ItemClick" x:Name="gv_GZ"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  IsItemClickEnabled="True" HorizontalAlignment="Center"  SelectionMode="None" ItemContainerStyle="{StaticResource  itemStyle}" ItemTemplate="{StaticResource item}" >
@@ -100,7 +100,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">小视频</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer Style="{StaticResource  ScrollViewerStyle1}" x:Name="sv_All" ViewChanged="sv_All_ViewChanged">
+                <ScrollViewer  x:Name="sv_All" ViewChanged="sv_All_ViewChanged">
                     <StackPanel>
                       
                         
@@ -121,7 +121,7 @@
             </PivotItem>
         </Pivot>
         <ContentDialog x:Name="cd"  Grid.RowSpan="2" IsPrimaryButtonEnabled="True" IsSecondaryButtonEnabled="True" PrimaryButtonText="分享" PrimaryButtonClick="cd_PrimaryButtonClick" SecondaryButtonText="关闭">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerStyle1}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" >
                 <StackPanel>
                     <MediaElement AutoPlay="True" Source="{Binding Path=item.video_playurl}" AreTransportControlsEnabled="True">
                         <MediaElement.TransportControls>

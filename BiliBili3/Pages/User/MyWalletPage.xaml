@@ -29,7 +29,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">余额</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer Style="{StaticResource ScrollViewerStyle1}" Grid.Row="1">
+                <ScrollViewer  Grid.Row="1">
                     <StackPanel>
                         <StackPanel Margin="10" Padding="10" Background="{ThemeResource Bili-List-Background }">
                             <TextBlock Foreground="Gray">B币余额</TextBlock>
@@ -55,7 +55,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">消费</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer x:Name="sv_Orders" ViewChanged="sv_Orders_ViewChanged" Style="{StaticResource ScrollViewerStyle1}">
+                <ScrollViewer x:Name="sv_Orders" ViewChanged="sv_Orders_ViewChanged" >
                     <StackPanel Margin="10">
                         <ListView x:Name="list_Orders" ItemClick="list_Orders_ItemClick" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="True">
                             <ListView.ItemContainerStyle>
@@ -94,7 +94,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">充值</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer x:Name="sv_Recharge" ViewChanged="sv_Recharge_ViewChanged" Style="{StaticResource ScrollViewerStyle1}">
+                <ScrollViewer x:Name="sv_Recharge" ViewChanged="sv_Recharge_ViewChanged" >
                     <StackPanel Margin="10">
                         <ListView x:Name="list_Recharge" ItemClick="list_Recharge_ItemClick" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="True">
                             <ListView.ItemContainerStyle>
@@ -133,7 +133,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">B币券</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer x:Name="sv_Quan" ViewChanged="sv_Quan_ViewChanged" Style="{StaticResource ScrollViewerStyle1}">
+                <ScrollViewer x:Name="sv_Quan" ViewChanged="sv_Quan_ViewChanged" >
                     <StackPanel Margin="10">
                         <ListView x:Name="list_Quan"  ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="True">
                             <ListView.ItemContainerStyle>
@@ -172,7 +172,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">硬币记录</TextBlock>
                 </PivotItem.Header>
-                <ListView x:Name="list_Coins" Margin="10" Style="{StaticResource ListViewStyle1}" SelectionMode="None" IsItemClickEnabled="True">
+                <ListView x:Name="list_Coins" Margin="10"  SelectionMode="None" IsItemClickEnabled="True">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>

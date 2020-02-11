@@ -33,7 +33,7 @@
               
             </Grid>
             <Grid Grid.Row="1">
-                <ScrollViewer x:Name="sv" ViewChanged="sv_ViewChanged" Style="{StaticResource ScrollViewerStyle1}" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer x:Name="sv" ViewChanged="sv_ViewChanged"  VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                         <Viewbox MaxWidth="640"  Grid.Column="1" >
                             <FlipView x:Name="ls_Banner"  Height="200" Width="640" Grid.Column="1"   VerticalAlignment="Top" >

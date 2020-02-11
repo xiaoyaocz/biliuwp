@@ -503,7 +503,7 @@ namespace BiliBili3.Pages
             }
         }
 
-      
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);

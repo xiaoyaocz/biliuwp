@@ -75,7 +75,7 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Border x:Name="bor_Width" Width="450" VerticalAlignment="Top"></Border>
-                            <ScrollViewer  x:Name="sv_SP" Style="{StaticResource ScrollViewerStyle1}" Grid.Row="1" VerticalScrollBarVisibility="Auto" ViewChanged="sv_SP_ViewChanged" >
+                            <ScrollViewer  x:Name="sv_SP"  Grid.Row="1" VerticalScrollBarVisibility="Auto" ViewChanged="sv_SP_ViewChanged" >
                                 <StackPanel>
                                     <GridView x:Name="Search_listview_Video" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True" ItemClick="Search_listview_Video_ItemClick">
                                         <GridView.ItemContainerStyle>
@@ -133,7 +133,7 @@
                         <PivotItem.Header>
                             <TextBlock x:Name="txt_hea_1"  Text="UP/用户" FontSize="16"/>
                         </PivotItem.Header>
-                        <ScrollViewer x:Name="sv_UP" Style="{StaticResource ScrollViewerStyle1}" ViewChanged="sv_UP_ViewChanged" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer x:Name="sv_UP"  ViewChanged="sv_UP_ViewChanged" VerticalScrollBarVisibility="Auto">
                             <StackPanel>
                                 <GridView x:Name="Search_listview_Up"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True" ItemClick="Search_listview_Up_ItemClick">
                                     <GridView.ItemContainerStyle>
@@ -177,7 +177,7 @@
                         <PivotItem.Header>
                             <TextBlock x:Name="txt_hea_2"  Text="番剧" FontSize="16"/>
                         </PivotItem.Header>
-                        <ScrollViewer x:Name="sv_Ban" Style="{StaticResource ScrollViewerStyle1}" ViewChanged="sv_Ban_ViewChanged" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer x:Name="sv_Ban"  ViewChanged="sv_Ban_ViewChanged" VerticalScrollBarVisibility="Auto">
                             <StackPanel >
                                 <GridView x:Name="Search_listview_Ban"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True" ItemClick="Search_listview_Ban_ItemClick">
                                     <GridView.ItemContainerStyle>
@@ -218,7 +218,7 @@
                         <PivotItem.Header>
                             <TextBlock x:Name="txt_hea_3"  Text="专题" FontSize="16"/>
                         </PivotItem.Header>
-                        <ScrollViewer x:Name="sv_Season" Style="{StaticResource ScrollViewerStyle1}" ViewChanged="sv_Season_ViewChanged" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer x:Name="sv_Season"  ViewChanged="sv_Season_ViewChanged" VerticalScrollBarVisibility="Auto">
                             <StackPanel >
                                 <GridView x:Name="Search_listview_Sp"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True" ItemClick="Search_listview_Sp_ItemClick">
                                     <GridView.ItemContainerStyle>
@@ -258,7 +258,7 @@
                         <PivotItem.Header>
                             <TextBlock x:Name="txt_hea_4"  Text="影视" FontSize="16"/>
                         </PivotItem.Header>
-                        <ScrollViewer  x:Name="sv_Movie" Style="{StaticResource ScrollViewerStyle1}" Grid.Row="1" VerticalScrollBarVisibility="Auto" ViewChanged="sv_Movie_ViewChanged" >
+                        <ScrollViewer  x:Name="sv_Movie"  Grid.Row="1" VerticalScrollBarVisibility="Auto" ViewChanged="sv_Movie_ViewChanged" >
                             <StackPanel>
                                 <GridView x:Name="Search_listview_Movie" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True" ItemClick="Search_listview_Movie_ItemClick">
                                     <GridView.ItemContainerStyle>
@@ -312,7 +312,7 @@
                     <PivotItem.Header>
                         <TextBlock x:Name="txt_hea_5"  Text="专栏" FontSize="16"/>
                     </PivotItem.Header>
-                    <ScrollViewer  x:Name="sv_Article" Style="{StaticResource ScrollViewerStyle1}" Grid.Row="1" VerticalScrollBarVisibility="Auto" ViewChanged="sv_Article_ViewChanged" >
+                    <ScrollViewer  x:Name="sv_Article"  Grid.Row="1" VerticalScrollBarVisibility="Auto" ViewChanged="sv_Article_ViewChanged" >
                         <StackPanel>
                             <GridView x:Name="Search_listview_Article" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True" ItemClick="Search_listview_Article_ItemClick">
                                 <GridView.ItemContainerStyle>

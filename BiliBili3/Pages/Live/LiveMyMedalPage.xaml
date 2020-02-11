@@ -25,7 +25,7 @@
             <TextBlock x:Name="signed" Visibility="Collapsed" Grid.Column="2" Margin="10 0"  Foreground="White" VerticalAlignment="Center">我的勋章</TextBlock>
             <Button  x:Name="btn_Edit" Click="btn_Edit_Click" Grid.Column="2" Margin="10 0" Background="#00000000"  Foreground="White" Visibility="Collapsed">编辑</Button>
         </Grid>
-        <ScrollViewer Grid.Row="1" Style="{StaticResource ScrollViewerStyle1}">
+        <ScrollViewer Grid.Row="1" >
             <StackPanel>
                 <ListView SelectionMode="None" x:Name="list">
                     <ListView.ItemContainerStyle>

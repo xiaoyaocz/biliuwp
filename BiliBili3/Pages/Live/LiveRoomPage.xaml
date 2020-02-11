@@ -141,7 +141,7 @@
                 <vlc:MediaElement  MediaEnded="mediaElement_MediaEnded" RightTapped="mediaElement_RightTapped" MediaFailed="mediaElement_MediaFailed_1" Tapped="mediaElement_Tapped" Volume="{Binding Path=Value, ElementName=slider_V, Mode=OneWay}"  CurrentStateChanged="mediaElement_CurrentStateChanged"  x:Name="mediaElement" AutoPlay="True">
 
                 </vlc:MediaElement>
-                
+
                 <danmu:Danmaku x:Name="danmu"
                                Opacity="{Binding ElementName=slider_DanmuTran,Path=Value,Mode=OneWay}"
                                sizeZoom="{Binding ElementName=slider_DanmuSize,Path=Value,Mode=OneWay}"
@@ -153,14 +153,14 @@
                     <TextBlock x:Name="txt_VideoData" TextWrapping="Wrap" Foreground="White" IsTextSelectionEnabled="True"></TextBlock>
                 </Border>
 
-                    <ProgressRing  x:Name="mediaLoading" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed" Width="56" Height="56" IsActive="True" ></ProgressRing>
+                <ProgressRing  x:Name="mediaLoading" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed" Width="56" Height="56" IsActive="True" ></ProgressRing>
 
 
 
                 <Grid x:Name="bottom">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                         <ComboBox x:Name="cb_Quality" SelectedValuePath="qn" DisplayMemberPath="name"  HorizontalAlignment="Right" Margin="4" SelectionChanged="cb_Quality_SelectionChanged" BorderThickness="0" Background="Transparent" Foreground="White" VerticalAlignment="Center" Style="{StaticResource ComboBoxStyle4}">
-                         
+
                         </ComboBox>
                         <ComboBox x:Name="cb_Source" DisplayMemberPath="name" HorizontalAlignment="Right" Margin="4" SelectionChanged="cb_Source_SelectionChanged" BorderThickness="0" Background="Transparent" Foreground="White" VerticalAlignment="Center" Style="{StaticResource ComboBoxStyle4}"></ComboBox>
                     </StackPanel>
@@ -215,15 +215,15 @@
 
                     </Grid>
                 </Grid>
-             
-               
+
+
                 <AppBarButton Foreground="White" Width="48" Height="48" Visibility="Collapsed" VerticalAlignment="Center">
                     <AppBarButton.Icon>
                         <FontIcon FontFamily="ms-appx:///Assets/logo.ttf#iconfont" Glyph="&#xe602;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </Grid>
-         
+
             <Grid x:Name="Video_UP" Grid.Row="1" BorderThickness="0 1 0 0" Padding="5" BorderBrush="#33808080">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -232,14 +232,14 @@
 
 
                 <Grid  HorizontalAlignment="Stretch"  Margin="5 0" >
-                        <Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
                     <HyperlinkButton x:Name="btn_User" Click="btn_User_Click" Grid.RowSpan="2" Margin="0,0,10 0" Padding="0">
                         <Ellipse Width="36"  Height="36" >
                             <Ellipse.Fill>
@@ -256,18 +256,18 @@
                             <TextBlock x:Name="txt_title" TextTrimming="CharacterEllipsis" Text="{Binding title}"  Foreground="{ThemeResource Bili-FontColor}" FontSize="16" ></TextBlock>
 
                         </Grid>
-                     
+
                     </HyperlinkButton>
-                       
-                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
-                            <TextBlock  FontSize="14"  x:Name="txt_up" Foreground="{ThemeResource Bili-ForeColor}" Text="{Binding uname}"></TextBlock>
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                        <TextBlock  FontSize="14"  x:Name="txt_up" Foreground="{ThemeResource Bili-ForeColor}" Text="{Binding uname}"></TextBlock>
                         <TextBlock  FontSize="14"  x:Name="txt_ul" Margin="5 0 0 0"  >UP<Run Text="{Binding master_level}"></Run></TextBlock>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE13D;" FontSize="14" Margin="10 0 5 0"/>
-                            <TextBlock  FontSize="14" x:Name="txt_online" ></TextBlock>
-                        </StackPanel>
+                        <TextBlock  FontSize="14" x:Name="txt_online" ></TextBlock>
+                    </StackPanel>
 
-                    </Grid>
-              
+                </Grid>
+
                 <HyperlinkButton x:Name="btn_AttUp" Click="btn_AttUp_Click" Grid.Column="1" Foreground="White" Margin="5 0" >
                     <Border CornerRadius="5" Background="{ThemeResource Bili-ForeColor}"  >
                         <TextBlock x:Name="txt_guanzhu" Margin="10 5">
@@ -279,7 +279,7 @@
             </Grid>
             <Grid Grid.Column="1" x:Name="grid_Info" Background="{ThemeResource Bili-Background}" BorderThickness="1 0 0 0" BorderBrush="#33808080" Grid.RowSpan="3">
                 <Pivot x:Name="pivot" SelectionChanged="pivot_SelectionChanged">
-                 
+
                     <PivotItem Margin="0">
                         <PivotItem.Header>
                             <TextBlock FontSize="16">互动</TextBlock>
@@ -290,12 +290,12 @@
                                 <RowDefinition/>
                                 <RowDefinition Height="48"/>
                             </Grid.RowDefinitions>
-                           
-                            <ScrollViewer x:Name="sc" Style="{StaticResource ScrollViewerStyle1}" Grid.Row="1" VerticalScrollBarVisibility="Auto" >
+
+                            <ScrollViewer x:Name="sc"  Grid.Row="1" VerticalScrollBarVisibility="Auto" >
                                 <StackPanel x:Name="stack_Comment" Padding="10 0">
-                           
+
                                 </StackPanel>
-                                
+
                             </ScrollViewer>
                             <Grid Grid.Row="2"  >
                                 <Grid.ColumnDefinitions>
@@ -309,7 +309,7 @@
                                     <AppBarButton.Icon>
                                         <FontIcon FontFamily="ms-appx:///Assets/logo.ttf#iconfont" Glyph="&#xe602;" />
                                     </AppBarButton.Icon>
-                                  
+
                                 </AppBarButton>
                                 <AppBarButton x:Name="btn_OpenEmoji" Width="48" Icon="Emoji2" Grid.Column="1" Height="48" Background="{ThemeResource Bili-ForeColor}"  Foreground="White">
                                     <AppBarButton.Flyout>
@@ -381,15 +381,15 @@
                                         </Flyout>
                                     </AppBarButton.Flyout>
                                 </AppBarButton>
-                                
+
                                 <TextBox x:Name="txt_Comment" Grid.Column="3" KeyDown="txt_Comment_KeyDown" BorderThickness="0"  ></TextBox>
                                 <AppBarButton x:Name="btn_SendComment" Click="btn_SendComment_Click" Width="48" Height="48" Grid.Column="4" Icon="Send" Background="{ThemeResource Bili-ForeColor}" Foreground="White" />
                             </Grid>
                         </Grid>
 
                     </PivotItem>
-                  
-                 
+
+
                     <PivotItem Margin="0">
                         <PivotItem.Header>
                             <TextBlock FontSize="16">礼物榜</TextBlock>
@@ -448,7 +448,7 @@
 
                         </ListView>
                     </PivotItem>
-                  
+
                     <!--<PivotItem Margin="0" Visibility="Collapsed">
                         <PivotItem.Header>
                             <TextBlock FontSize="16">舰队</TextBlock>
@@ -457,8 +457,8 @@
                 </Pivot>
             </Grid>
 
-        
-            
+
+
         </Grid>
 
         <Grid x:Name="grid_Error" Visibility="Collapsed" Grid.RowSpan="2" Grid.Row="1" Padding="20"   Background="#7F474747">
@@ -468,9 +468,9 @@
                 <TextBlock x:Name="txt_ErrorInfo" HorizontalAlignment="Center" Margin="10">主播正在换女装</TextBlock>
                 <TextBlock HorizontalAlignment="Center" Margin="10 0" FontSize="12">点击刷新</TextBlock>
             </StackPanel>
-           
+
         </Grid>
-        
+
         <Grid x:Name="cd"  Grid.RowSpan="3" VerticalAlignment="Stretch" Visibility="Collapsed">
             <WebView x:Name="web" Margin="20"></WebView>
             <AppBarButton x:Name="btn_Close" Click="btn_Close_Click" Margin="20" HorizontalAlignment="Right" Icon="Clear" Width="48"></AppBarButton>
@@ -504,16 +504,16 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                  
+
                     <Button HorizontalAlignment="Stretch" Margin="0 0 5 0" BorderBrush="{ThemeResource Bili-ForeColor}" Foreground="{ThemeResource Bili-ForeColor}" Background="#00000000" x:Name="btn_cnacelSend_Buy" Click="btn_cnacelSend_Buy_Click">取消</Button>
                     <Button HorizontalAlignment="Stretch" Grid.Column="1" Margin="5 0 0 0" BorderBrush="{ThemeResource Bili-ForeColor}" Background="{ThemeResource Bili-ForeColor}" Foreground="White" x:Name="btn_SendOk_Buy" Click="btn_SendOk_Buy_Click">确定</Button>
                 </Grid>
             </StackPanel>
         </Grid>
         <ContentDialog x:Name="cd_setting" Visibility="Collapsed" PrimaryButtonText="关闭" Grid.RowSpan="3">
-            <ScrollViewer Style="{StaticResource ScrollViewerStyle1}" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer  VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                   
+
                     <TextBlock>直播</TextBlock>
                     <Grid Margin="0 10 0 0" >
                         <TextBlock Foreground="Gray" VerticalAlignment="Center">互动区到达数量自动清除</TextBlock>
@@ -552,8 +552,8 @@
 
                     </Grid>
                     <TextBlock Margin="0 10 0 0" >弹幕</TextBlock>
-                  
-                  
+
+
                     <StackPanel Margin="0 10 0 0" >
                         <Grid >
                             <TextBlock Foreground="Gray" VerticalAlignment="Center">弹幕大小缩放</TextBlock>

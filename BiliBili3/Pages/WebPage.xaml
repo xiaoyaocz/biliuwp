@@ -39,7 +39,7 @@
             <WebView x:Name="webView" Grid.Row="1" NavigationStarting="webview_WebView_NavigationStarting" NavigationCompleted="webView_NavigationCompleted" DOMContentLoaded="webview_WebView_DOMContentLoaded" UnsupportedUriSchemeIdentified="web_UnsupportedUriSchemeIdentified" NewWindowRequested="webview_WebView_NewWindowRequested"></WebView>
         </Grid>
         <!--<ContentDialog x:Name="cd"  Grid.RowSpan="2" IsPrimaryButtonEnabled="True" IsSecondaryButtonEnabled="True" PrimaryButtonText="分享" PrimaryButtonClick="cd_PrimaryButtonClick" SecondaryButtonText="关闭">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerStyle1}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" >
                 <StackPanel>
                     <MediaElement AutoPlay="True" Source="{Binding Path=item.video_playurl}" AreTransportControlsEnabled="True">
                         <MediaElement.TransportControls>

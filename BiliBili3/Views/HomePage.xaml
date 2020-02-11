@@ -16,7 +16,7 @@
     <Grid  x:Name="g">
 
 
-        <ScrollViewer x:Name="sv" Style="{StaticResource ScrollViewerStyle1}" ViewChanged="ScrollViewer_ViewChanged"  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <ScrollViewer x:Name="sv"  ViewChanged="ScrollViewer_ViewChanged"  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <StackPanel>
                 <Grid  Background="{ThemeResource Bili-List-Background}">
                     <GridView SelectionMode="None" x:Name="ls_Part" ItemClick="ls_Part_ItemClick" IsItemClickEnabled="True" HorizontalAlignment="Center" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">

@@ -23,11 +23,11 @@ namespace BiliBili3
         {
             // 连接数据库，如果数据库文件不存在则创建一个空数据库。
             var conn = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath);
-  
+
             conn.CreateTable<HistoryClass>();
             conn.CreateTable<ViewPostHelperClass>();
             conn.CreateTable<DownloadGuidClass>();
-          //  conn.CreateTable<CommicCollectHelperClass>();
+            //  conn.CreateTable<CommicCollectHelperClass>();
             return conn;
         }
 
@@ -35,12 +35,12 @@ namespace BiliBili3
         #region viewHistory
         public static List<HistoryClass> GetHistoryList(int mode)
         {
-           
+
             List<HistoryClass> my = new List<HistoryClass>();
             using (var conn = GetDbConnection())
             {
                 TableQuery<HistoryClass> dbPerson = null;
-                if (mode==0)
+                if (mode == 0)
                 {
                     dbPerson = conn.Table<HistoryClass>().OrderByDescending(x => x.lookTime).Take(30);
                 }
@@ -253,7 +253,7 @@ namespace BiliBili3
         {
             using (var conn = GetDbConnection())
             {
-                TableQuery<DownloadGuidClass> dbPerson = conn.Table<DownloadGuidClass>().Where(x=>x.cid== cid);
+                TableQuery<DownloadGuidClass> dbPerson = conn.Table<DownloadGuidClass>().Where(x => x.cid == cid);
                 return dbPerson.ToList();
             }
         }
@@ -270,7 +270,7 @@ namespace BiliBili3
             using (var conn = GetDbConnection())
             {
                 return conn.Table<DownloadGuidClass>().First(x => x.guid == guid);
-             
+
             }
         }
         public static bool InsertDownload(DownloadGuidClass m)
@@ -288,7 +288,7 @@ namespace BiliBili3
                 }
             }
         }
-       
+
 
     }
 

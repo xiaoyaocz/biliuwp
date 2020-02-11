@@ -29,7 +29,7 @@
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis" Text="关注主播" Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White"></TextBlock>
 
         </Grid>
-        <ScrollViewer Grid.Row="1" Style="{StaticResource  ScrollViewerStyle1}" x:Name="sv" ViewChanged="sv_ViewChanged">
+        <ScrollViewer Grid.Row="1"  x:Name="sv" ViewChanged="sv_ViewChanged">
             <StackPanel>
                 <Border x:Name="bor_Width" Background="Gray" Width="300"></Border>
                 <GridView  x:Name="list_Live"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True"  ItemClick="list_Live_ItemClick">

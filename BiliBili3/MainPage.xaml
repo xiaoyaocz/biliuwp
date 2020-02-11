@@ -907,7 +907,7 @@
                                 <StackPanel x:Name="gv_User" Visibility="Collapsed">
                                     <MenuFlyoutItem x:Name="dtzz" Visibility="Collapsed" Click="dtzz_Click">答题转正</MenuFlyoutItem>
                                     <MenuFlyoutSeparator Background="#19000000"/>
-                                    <MenuFlyoutItem x:Name="btn_user_myvip" Click="btn_user_myvip_Click">我的大会员</MenuFlyoutItem>
+                                    <!--<MenuFlyoutItem x:Name="btn_user_myvip" Click="btn_user_myvip_Click">我的大会员</MenuFlyoutItem>-->
                                     <MenuFlyoutItem x:Name="btn_user_mywallet" Click="btn_user_mywallet_Click">我的钱包</MenuFlyoutItem>
                                     <MenuFlyoutItem x:Name="btn_user_Qr" Click="btn_user_Qr_Click">二维码名片</MenuFlyoutItem>
                                     <MenuFlyoutSeparator Background="#19000000"/>

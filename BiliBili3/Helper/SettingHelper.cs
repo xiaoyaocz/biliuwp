@@ -1093,8 +1093,8 @@ namespace BiliBili3
             }
             else
             {
-                Set_BoldDanmu(true);
-                return true;
+                Set_BoldDanmu(false);
+                return false;
             }
         }
 
@@ -2180,8 +2180,8 @@ namespace BiliBili3
             }
             else
             {
-                container.Values["LDelay"] = 200;
-                return 200;
+                container.Values["LDelay"] = 20;
+                return 20;
             }
         }
 

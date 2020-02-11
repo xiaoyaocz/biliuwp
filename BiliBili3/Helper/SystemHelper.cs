@@ -200,10 +200,15 @@ namespace BiliBili3.Helper
         //        return false;
         //    }
         //}
+        public static ulong SystemBuildVersion = 0;
         public static ulong GetSystemBuild()
         {
-            var version = (ulong.Parse(Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamilyVersion) & 0x00000000FFFF0000L) >> 16;
-            return version;
+            if (SystemBuildVersion==0)
+            {
+                SystemBuildVersion = (ulong.Parse(Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamilyVersion) & 0x00000000FFFF0000L) >> 16;
+            }
+          
+            return SystemBuildVersion;
         }
         public static string SystemVersion()
         {

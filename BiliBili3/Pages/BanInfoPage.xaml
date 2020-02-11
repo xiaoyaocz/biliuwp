@@ -139,7 +139,7 @@
                 <Grid Grid.Row="1" >
 
                     <Grid Grid.Column="2" Grid.RowSpan="2" x:Name="info" Margin="0 0 0 10" Background="{ThemeResource Bili-Background}">
-                        <ScrollViewer Style="{StaticResource ScrollViewerStyle1}">
+                        <ScrollViewer >
                             <StackPanel Margin="10 0">
 
                                 <Grid Padding="10" x:Name="infos" Background="{ThemeResource Bili-List-Background}">
@@ -180,7 +180,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="{Binding Path=payment.dialog.title}"  VerticalAlignment="Center"></TextBlock>
-                                    <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" Visibility="Collapsed" Grid.Column="1" VerticalAlignment="Center">
                                         <HyperlinkButton x:Name="btnPay" Click="BtnPay_Click" Content="{Binding Path=payment.dialog.btn_left.title}" Margin="0 0 8 0"></HyperlinkButton>
                                         <HyperlinkButton Click="BtnPay_Click" Content="{Binding Path=payment.dialog.btn_right.title}"></HyperlinkButton>
                                     </StackPanel>
@@ -272,7 +272,7 @@
                                                 <Grid  Margin="10">
                                                     <TextBlock VerticalAlignment="Center" Text="{Binding title}"></TextBlock>
                                                 </Grid>
-                                                <GridView  x:Name="gv_Pv" Height="auto" ItemsSource="{Binding episodes}" Grid.Row="1"  SelectionMode="None" IsItemClickEnabled="True"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ItemContainerStyle="{StaticResource  GridViewItemStyle}" ItemClick="gv_Play_ItemClick">
+                                                <GridView  x:Name="gv_Pv" Height="auto" ItemsSource="{Binding episodes}" Grid.Row="1"  SelectionMode="None" IsItemClickEnabled="True"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ItemContainerStyle="{StaticResource  GridViewItemStyle}" ItemClick="gv_Pv_ItemClick">
                                                     <GridView.ItemTemplate >
                                                         <DataTemplate>
                                                             <Grid Width="{Binding ElementName=bor_Width,Path=Width}" Holding="Grid_Holding" RightTapped="Grid_RightTapped" ToolTipService.ToolTip="{Binding index_title}">
@@ -375,7 +375,7 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <ListView x:Name="list_Rank"  Margin="10 0" BorderBrush="#4C808080" Padding="10"  Background="{ThemeResource Bili-List-Background}" Style="{StaticResource ListViewStyle1}" Grid.Row="1"  SelectionMode="None" IsItemClickEnabled="True" >
+                        <ListView x:Name="list_Rank"  Margin="10 0" BorderBrush="#4C808080" Padding="10"  Background="{ThemeResource Bili-List-Background}"  Grid.Row="1"  SelectionMode="None" IsItemClickEnabled="True" >
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Margin" Value="5"></Setter>

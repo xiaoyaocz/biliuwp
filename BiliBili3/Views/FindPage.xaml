@@ -11,7 +11,7 @@
     Tag="发现">
 
     <Grid >
-        <ScrollViewer  Style="{StaticResource ScrollViewerStyle1}" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer   VerticalScrollBarVisibility="Auto">
 
             <StackPanel Margin="10">
                 <!--<Border Background="White">-->
@@ -191,7 +191,7 @@
                         <FontIcon  Grid.Column="2" FontSize="12" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" />
                     </Grid>
                 </HyperlinkButton>
-                <HyperlinkButton x:Name="Find_btn_Shop" Click="Find_btn_Shop_Click" Foreground="Gray" Background="{ThemeResource Bili-List-Background}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Height="36" Margin="0 5" >
+                <!--<HyperlinkButton x:Name="Find_btn_Shop" Click="Find_btn_Shop_Click" Foreground="Gray" Background="{ThemeResource Bili-List-Background}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Height="36" Margin="0 5" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="48"/>
@@ -204,7 +204,7 @@
                         </TextBlock>
                         <FontIcon  Grid.Column="2" FontSize="12" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" />
                     </Grid>
-                </HyperlinkButton>
+                </HyperlinkButton>-->
               
                
             </StackPanel>

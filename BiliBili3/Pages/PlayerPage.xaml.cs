@@ -648,7 +648,6 @@ namespace BiliBili3.Pages
 
                                 switch (item.location)
                                 {
-
                                     case NSDanmaku.Model.DanmakuLocation.Top:
                                         danmu.AddTopDanmu(item, false);
                                         break;

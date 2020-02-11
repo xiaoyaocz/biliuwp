@@ -105,7 +105,7 @@
 
                     <Grid x:Name="info" Grid.Column="1"  Background="{ThemeResource Bili-Background}">
 
-                        <ScrollViewer Style="{StaticResource ScrollViewerStyle1}">
+                        <ScrollViewer >
                             <StackPanel Margin="10 0 10 10">
                                 <Grid  x:Name="grid_img" >
                                     <HyperlinkButton HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -404,7 +404,7 @@
                             <RowDefinition/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <ListView x:Name="list_Rank" ItemsSource="{Binding list}" Margin="10 0" BorderBrush="#4C808080" Padding="10"  Background="{ThemeResource Bili-List-Background}" Style="{StaticResource ListViewStyle1}"  SelectionMode="None" IsItemClickEnabled="True" >
+                        <ListView x:Name="list_Rank" ItemsSource="{Binding list}" Margin="10 0" BorderBrush="#4C808080" Padding="10"  Background="{ThemeResource Bili-List-Background}"   SelectionMode="None" IsItemClickEnabled="True" >
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Margin" Value="5"></Setter>
@@ -472,7 +472,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">相关</TextBlock>
                 </PivotItem.Header>
-                <ListView x:Name="list_About" Margin="10 0 10 10" Style="{StaticResource ListViewStyle1}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="list_About_ItemClick">
+                <ListView x:Name="list_About" Margin="10 0 10 10"  SelectionMode="None" IsItemClickEnabled="True" ItemClick="list_About_ItemClick">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"/>

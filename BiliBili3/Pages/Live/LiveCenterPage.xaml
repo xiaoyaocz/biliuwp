@@ -25,7 +25,7 @@
             <TextBlock x:Name="signed" Visibility="Collapsed" Grid.Column="2" Margin="10 0"  Foreground="White" VerticalAlignment="Center">已签到</TextBlock>
             <Button  x:Name="btn_sign" Click="btn_sign_Click" Grid.Column="2" Margin="10 0" Background="#00000000" BorderThickness="1"  Foreground="White" BorderBrush="White">签到</Button>
         </Grid>
-        <ScrollViewer Grid.Row="1" Style="{StaticResource ScrollViewerStyle1}">
+        <ScrollViewer Grid.Row="1" >
             <StackPanel>
                 <Grid Background="{ThemeResource Bili-List-Background}" Padding="10">
                     <Grid >
@@ -72,13 +72,13 @@
                             <TextBlock FontSize="14" Foreground="Gray">金瓜子:<Run Text="{Binding gold}"></Run></TextBlock>
                             <TextBlock FontSize="14" Margin="10 0" Foreground="Gray">银瓜子:<Run Text="{Binding silver}"></Run></TextBlock>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal"  Grid.Column="1" x:Name="novip"  VerticalAlignment="Center" Grid.Row="2" Visibility="Visible">
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" x:Name="novip"  VerticalAlignment="Center" Grid.Row="2" Visibility="Visible">
                             <TextBlock FontSize="14" Foreground="Gray" VerticalAlignment="Center">你还不是老爷哦</TextBlock>
-                            <HyperlinkButton Click="btn_buyVIP_Click" FontSize="14" Margin="10 0">开通</HyperlinkButton>
+                            <!--<HyperlinkButton Click="btn_buyVIP_Click" FontSize="14" Margin="10 0">开通</HyperlinkButton>-->
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" x:Name="isvip"  Grid.Column="1"  VerticalAlignment="Center" Grid.Row="2" Visibility="Collapsed">
                             <TextBlock FontSize="14" Foreground="Gray" VerticalAlignment="Center"><Run Text="{Binding ExTime}"></Run></TextBlock>
-                            <HyperlinkButton Click="btn_buyVIP_Click" FontSize="14" Margin="10 0" >续费</HyperlinkButton>
+                            <!--<HyperlinkButton Click="btn_buyVIP_Click" FontSize="14" Margin="10 0" >续费</HyperlinkButton>-->
                         </StackPanel>
                     </Grid>
                 </Grid>

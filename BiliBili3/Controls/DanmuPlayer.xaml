@@ -51,7 +51,7 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <ScrollViewer x:Name="grid_Setting" Visibility="Collapsed"  ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerStyle1}">
+                    <ScrollViewer x:Name="grid_Setting" Visibility="Collapsed"  ScrollViewer.VerticalScrollBarVisibility="Auto" >
                         <StackPanel Margin="10 5">
                             <Grid  Margin="0 10 0 0">
                                 <TextBlock FontSize="16" Foreground="White" >视频倍速</TextBlock>
@@ -73,7 +73,7 @@
                           
                         </StackPanel>
                     </ScrollViewer>
-                    <ScrollViewer x:Name="grid_DM" Visibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerStyle1}">
+                    <ScrollViewer x:Name="grid_DM" Visibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Auto" >
                         <StackPanel Margin="10 5">
                             <TextBlock FontSize="16" Visibility="Collapsed" Margin="0 10 0 0" Foreground="White">弹幕设置</TextBlock>
                             <Grid Margin="0 10 0 0" Visibility="Collapsed">
@@ -142,7 +142,7 @@
                             <RowDefinition/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerStyle1}">
+                        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" >
                             <StackPanel Margin="10 5">
                                 <TextBlock FontSize="16" Margin="0 10 0 0" Foreground="White">弹幕设置</TextBlock>
                                 <CheckBox x:Name="menu_setting_gd"  Content="屏蔽滚动弹幕"  Checked="menu_setting_gd_Checked" Unchecked="menu_setting_gd_Unchecked"/>
@@ -188,7 +188,7 @@
                     
                     </Grid>
                   
-                    <ScrollViewer x:Name="grid_Info" Visibility="Collapsed" ScrollViewer.VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerStyle1}">
+                    <ScrollViewer x:Name="grid_Info" Visibility="Collapsed" ScrollViewer.VerticalScrollBarVisibility="Auto" >
                         <StackPanel Margin="10 5">
                             <TextBlock FontSize="18" Foreground="White" Margin="0 5">视频信息</TextBlock>
                             <TextBlock Foreground="White"><Run>弹幕数量:</Run><Run x:Name="txt_Num"></Run></TextBlock>

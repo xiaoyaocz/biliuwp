@@ -61,7 +61,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid Background="{ThemeResource Bili-List-Background}">
-                <ListView x:Name="ls_tag"  Width="120" SelectionChanged="ls_tag_SelectionChanged"  ItemContainerStyle="{StaticResource  ListViewItemStyle1}" Style="{StaticResource ListViewStyle1}" >
+                <ListView x:Name="ls_tag"  Width="120" SelectionChanged="ls_tag_SelectionChanged"  ItemContainerStyle="{StaticResource  ListViewItemStyle1}"  >
                     <ListViewItem HorizontalContentAlignment="Stretch">
                         <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >我的</TextBlock>
                     </ListViewItem>
@@ -106,7 +106,7 @@
                     </ListViewItem>
                 </ListView>
             </Grid>
-            <ScrollViewer x:Name="my"  Visibility="Visible" Grid.Column="1" Style="{StaticResource ScrollViewerStyle1}">
+            <ScrollViewer x:Name="my"  Visibility="Visible" Grid.Column="1" >
                 <StackPanel >
 
                     <TextBlock Margin="10">我的关注 <Run Foreground="Gray" >(点击取消订阅)</Run></TextBlock>
@@ -169,7 +169,7 @@
                 </StackPanel>
                 
             </ScrollViewer>
-            <ScrollViewer x:Name="not_my" Visibility="Collapsed" Grid.Column="1" Style="{StaticResource ScrollViewerStyle1}">
+            <ScrollViewer x:Name="not_my" Visibility="Collapsed" Grid.Column="1" >
                 <StackPanel >
 
 

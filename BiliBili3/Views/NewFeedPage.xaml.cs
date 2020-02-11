@@ -58,13 +58,14 @@ namespace BiliBili3.Views
         Home home;
         ObservableCollection<HomeModel> homePages;
         ToView toView;
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             if (e.NavigationMode == NavigationMode.New && homePages[0].home_datas?.Count == 0)
             {
-                homePages[0].Refresh();
-                homePages[1].Refresh();
+                await homePages[0].Refresh();
+                await homePages[1].Refresh();
+                
                 LoadTab();
             }
 
@@ -91,49 +92,35 @@ namespace BiliBili3.Views
         }
         protected override Size MeasureOverride(Size availableSize)
         {
-            int num = 2;
+            //if (pivot_home != null && availableSize.Width >= 800)
+            //{
+            //    //改样式还得考虑下SDK版本
+            //    if (SystemHelper.GetSystemBuild() >= 16299)
+            //    {
+            //        if (pivot_home.Style!= App.Current.Resources["PivotHeaderCenterStyle"])
+            //        {
+            //            pivot_home.Style = App.Current.Resources["PivotHeaderCenterStyle"] as Style;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (pivot_home.Style != App.Current.Resources["PivotHeaderCenterStyle14393"])
+            //        {
+            //            pivot_home.Style = App.Current.Resources["PivotHeaderCenterStyle14393"] as Style;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    pivot_home.Style = null;
+            //}
 
-            if (availableSize.Width > 500)
-            {
-                num = (int)availableSize.Width / 260;
-                if (num < 2)
-                {
-                    num = 2;
-                }
-            }
-
-            bor_width3.Width = (availableSize.Width - (num * 17)) / num;
-
-            int d = Convert.ToInt32(availableSize.Width / 450);
-            if (d > 3)
-            {
-                d = 3;
-            }
-            bor_WidthHot.Width = (availableSize.Width - 16) / d-5*d;
-
-            if (pivot_home != null && availableSize.Width >= 800)
-            {
-                //改样式还得考虑下SDK版本
-                if (SystemHelper.GetSystemBuild()>= 16299)
-                {
-                    pivot_home.Style = App.Current.Resources["PivotHeaderCenterStyle"] as Style;
-                }
-                else
-                {
-                    pivot_home.Style = App.Current.Resources["PivotHeaderCenterStyle14393"] as Style;
-                }
-            }
-            else
-            {
-                pivot_home.Style = null;
-            }
-           
             return base.MeasureOverride(availableSize);
 
         }
         
 
-        private void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        private async void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if ((sender as ScrollViewer).VerticalOffset >= ((sender as ScrollViewer).ScrollableHeight - 200))
             {
@@ -145,7 +132,7 @@ namespace BiliBili3.Views
                         case HomeDisplayMode.Home:
                             if (!model._loading)
                             {
-                                model.LoadHome();
+                               await model.LoadHome();
                             }
                             break;
                         case HomeDisplayMode.Hot:
@@ -168,9 +155,9 @@ namespace BiliBili3.Views
 
 
 
-        private void b_btn_Refresh_Click(object sender, RoutedEventArgs e)
+        private async void b_btn_Refresh_Click(object sender, RoutedEventArgs e)
         {
-            ((sender as AppBarButton).DataContext as HomeModel).Refresh();
+           await ((sender as AppBarButton).DataContext as HomeModel).Refresh();
         }
 
         private async void pivot_home_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -239,15 +226,15 @@ namespace BiliBili3.Views
 
         private void Border_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            ShowMenu(sender as Border);
+            ShowMenu(sender as Grid);
         }
 
         private void Border_Holding(object sender, HoldingRoutedEventArgs e)
         {
-            ShowMenu(sender as Border);
+            ShowMenu(sender as Grid);
         }
 
-        private void ShowMenu(Border sender)
+        private void ShowMenu(Grid sender)
         {
             var data = sender.DataContext as Modules.HomeModels.HomeDataModel;
             add_toview.Visibility = Visibility.Collapsed;
@@ -353,11 +340,11 @@ namespace BiliBili3.Views
 
 
 
-        private void btn_LoadMore_Click(object sender, RoutedEventArgs e)
+        private async void btn_LoadMore_Click(object sender, RoutedEventArgs e)
         {
             if (!homePages[0]._loading)
             {
-                homePages[0].LoadHome();
+                await homePages[0].LoadHome();
             }
         }
 
@@ -730,22 +717,22 @@ namespace BiliBili3.Views
         /// <summary>
         /// 刷新
         /// </summary>
-        public void Refresh()
+        public async Task Refresh()
         {
             if (mode == HomeDisplayMode.Home)
             {
                 banner_items = null;
                 home_datas = null;
-                LoadHome();
+                await LoadHome();
             }
             if (mode == HomeDisplayMode.Hot)
             {
                 hot_datas = null;
-                LoadHot();
+                 LoadHot();
             }
             if (mode == HomeDisplayMode.Topic)
             {
-                LoadTabData();
+                await LoadTabData();
             }
         }
 

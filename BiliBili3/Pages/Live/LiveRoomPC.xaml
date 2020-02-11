@@ -75,7 +75,7 @@
                                     </DataTemplate>
                                 </GridView.ItemTemplate>
                             </GridView>
-                         
+
                         </Grid>
                     </PivotItem>
                     <PivotItem Margin="0">
@@ -224,7 +224,7 @@
                 </Grid>
             </Grid>
         </Grid>
-        
+
 
         <Grid x:Name="info" Grid.Column="1"  BorderThickness="1 0 0 0" BorderBrush="#33808080" Background="{ThemeResource Bili-Background}">
             <Grid.RowDefinitions>
@@ -292,7 +292,7 @@
                                         </Style>
                                     </ListView.ItemContainerStyle>
                                 </ListView>
-                              
+
                             </StackPanel>
                         </ScrollViewer>
                         <Grid Grid.Row="1"  BorderThickness="0 1 0 0" BorderBrush="#33808080">

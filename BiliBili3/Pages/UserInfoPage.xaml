@@ -50,7 +50,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">信息</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer Style="{StaticResource ScrollViewerStyle1}">
+                <ScrollViewer >
                     <StackPanel>
                         <Border x:Name="bor_Width" Width="450" VerticalAlignment="Top"/>
                         <Grid  Height="220"  x:Name="info">
@@ -244,7 +244,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">视频投稿</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer x:Name="sv1" Style="{StaticResource ScrollViewerStyle1}" ViewChanged="sv1_ViewChanged" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer x:Name="sv1"  ViewChanged="sv1_ViewChanged" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                         <StackPanel>
                             <GridView x:Name="list_ASubit" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True" ItemClick="list_ASubit_ItemClick_1">
@@ -299,7 +299,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">关注的人</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer x:Name="sv" Style="{StaticResource ScrollViewerStyle1}" ViewChanged="sv_ViewChanged">
+                <ScrollViewer x:Name="sv"  ViewChanged="sv_ViewChanged">
                     <StackPanel>
                         <GridView x:Name="list_AUser" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True" ItemClick="list_AUser_ItemClick">
                             <GridView.ItemContainerStyle>

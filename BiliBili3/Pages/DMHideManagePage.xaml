@@ -92,7 +92,7 @@
                 <PivotItem.Header>
                     <TextBlock FontSize="16">正则表达式</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer Style="{StaticResource ScrollViewerStyle1}">
+                <ScrollViewer >
                     <StackPanel Margin="10">
                         <TextBox x:Name="txt_ZZ" TextWrapping="Wrap" PlaceholderText="此处输入正则表达式" BorderThickness="1" AcceptsReturn="True"></TextBox>
                         
