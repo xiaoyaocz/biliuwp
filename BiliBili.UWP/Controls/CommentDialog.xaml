@@ -1,0 +1,71 @@
+﻿<ContentDialog
+    x:Class="BiliBili.UWP.Controls.CommentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Style="{StaticResource myContentDialog}">
+    <ContentDialog.Resources>
+        <Flyout  x:Key="FaceFlyout" x:Name="FaceFlyout">
+            <Grid Width="320">
+                <Pivot x:Name="pivot_face" SelectionChanged="pivot_face_SelectionChanged">
+                    <Pivot.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontSize="18" Text="{Binding text}"></TextBlock>
+                        </DataTemplate>
+                    </Pivot.HeaderTemplate>
+                    <Pivot.ItemTemplate>
+                        <DataTemplate>
+                            <GridView  ItemsSource="{Binding emote}" SelectionMode="None" IsItemClickEnabled="True" MaxHeight="300" ItemClick="GridView_ItemClick">
+                                <!--<GridView.ItemContainerStyle>
+                                                -->
+                                <!--<Style TargetType="GridViewItem">
+                                                    <Setter Property="Margin" Value="5"></Setter>
+                                                </Style>-->
+                                <!--
+                                            </GridView.ItemContainerStyle>-->
+                                <GridView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel >
+                                            <Image Visibility="{Binding isFace}" Source="{Binding url}" Width="36" Margin="4 0"></Image>
+                                            <TextBlock Width="90" TextAlignment="Center" Visibility="{Binding isText}" FontSize="12" HorizontalAlignment="Center" Text="{Binding text}"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
+
+                            </GridView>
+                        </DataTemplate>
+                    </Pivot.ItemTemplate>
+                </Pivot>
+            </Grid>
+        </Flyout>
+      
+       
+    </ContentDialog.Resources>
+    <Grid>
+
+        <StackPanel x:Name="st">
+            <TextBox MinHeight="120" TextChanged="txt_Comment_TextChanged"  TextWrapping="Wrap" x:Name="txt_Comment" AcceptsReturn="True" PlaceholderText="说点什么吧..."></TextBox>
+            <Grid Margin="0 4 0 0">
+                <StackPanel Orientation="Horizontal">
+                  
+                    <Button Width="36" Height="36" Flyout="{StaticResource FaceFlyout}" x:Name="btn_F" Click="btn_F_Click"  Foreground="White" Background="{ThemeResource Bili-ForeColor}">
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14"  Glyph="&#xE170;" />
+
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right">
+                    <TextBlock x:Name="txt_Length" Visibility="Collapsed" VerticalAlignment="Center" Foreground="Gray">233</TextBlock>
+                    <Button x:Name="btn_Close" Width="64" Click="btn_Close_Click" Margin="4 0">取消</Button>
+                    <Button  x:Name="btn_Send" Width="64" Click="btn_Send_Click" Foreground="White" Background="{ThemeResource Bili-ForeColor}" >发表</Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+
+    </Grid>
+</ContentDialog>

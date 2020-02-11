@@ -1,0 +1,57 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.Music.MusicCollectPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages.Music"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource Bili-Background}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
+            <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">歌曲收藏</TextBlock>
+            <ComboBox x:Name="cb_favbox" Grid.Column="3" DisplayMemberPath="title" Margin="5 0"  VerticalAlignment="Center" BorderThickness="0" Foreground="White" SelectionChanged="cb_favbox_SelectionChanged">
+                
+            </ComboBox>
+        </Grid>
+
+        <ListView Margin="0 8" x:Name="list_songs" ItemClick="list_songs_ItemClick" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="True" Grid.Row="1">
+            <ListView.Header>
+                <TextBlock Margin="12 8">歌曲列表</TextBlock>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding title}"></TextBlock>
+                        <TextBlock FontSize="14" Foreground="Gray" TextTrimming="CharacterEllipsis" Text="{Binding author}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+        <CommandBar Grid.Row="2" Foreground="White" Background="{ThemeResource Bili-ForeColor}">
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Icon="Delete" Label="删除收藏夹" Visibility="Collapsed"></AppBarButton>
+            </CommandBar.SecondaryCommands>
+            <AppBarButton Foreground="White" Label="播放全部" Click="btn_PlayAll_Click" Icon="Play" x:Name="btn_PlayAll"></AppBarButton>
+            <AppBarToggleButton x:Name="btn_selete" Checked="btn_selete_Checked" Unchecked="btn_selete_Unchecked" Icon="List"  Foreground="White" Label="选择"></AppBarToggleButton>
+            <AppBarButton x:Name="btn_playSelect" Click="btn_playSelect_Click" IsEnabled="{Binding ElementName=btn_selete,Path=IsChecked}" Foreground="White"  Label="播放选中" Icon="Add"></AppBarButton>
+            <AppBarButton x:Name="btn_DeleteSelect" Click="btn_DeleteSelect_Click" IsEnabled="{Binding ElementName=btn_selete,Path=IsChecked}" Foreground="White"  Label="移除" Icon="Delete"></AppBarButton>
+        </CommandBar>
+        <ProgressRing Grid.RowSpan="2" x:Name="pr_Load" Visibility="Collapsed"  Width="56" Height="56" IsActive="True"></ProgressRing>
+    </Grid>
+</Page>

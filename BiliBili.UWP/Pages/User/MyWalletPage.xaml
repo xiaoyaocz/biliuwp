@@ -1,0 +1,211 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.MyWalletPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages"
+        xmlns:my="using:BiliBili.UWP"
+
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+  
+    <Grid Background="{ThemeResource Bili-Background}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Background="{ThemeResource Bili-ForeColor}" Grid.Row="0" Height="48" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="48"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <AppBarButton x:Name="btn_back" Click="btn_Back_Click" Icon="Back" Width="48" Height="48" Foreground="White"/>
+            <TextBlock  Text="我的钱包" Margin="5 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
+          
+        </Grid>
+        <Pivot Grid.Row="1" x:Name="pivot" SelectionChanged="pivot_SelectionChanged">
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">余额</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer  Grid.Row="1">
+                    <StackPanel>
+                        <StackPanel Margin="10" Padding="10" Background="{ThemeResource Bili-List-Background }">
+                            <TextBlock Foreground="Gray">B币余额</TextBlock>
+                            <Grid>
+                                <TextBlock FontSize="18" VerticalAlignment="Center" Text="{Binding defaultBp}"></TextBlock>
+                               
+                            </Grid>
+
+                            <TextBlock Foreground="Gray" Text="{Binding coupon_desc}"></TextBlock>
+                            <Button x:Name="btn_GoPay" Visibility="Collapsed"  Click="btn_GoPay_Click" Margin="0 10 0 0" HorizontalAlignment="Stretch" Foreground="White" Background="{ThemeResource Bili-ForeColor}">立即充值</Button>
+                        </StackPanel>
+                        <StackPanel x:Name="grid_coions" Margin="10 0 10 10" Padding="10" Background="{ThemeResource Bili-List-Background }">
+                            <TextBlock Foreground="Gray">硬币余额</TextBlock>
+                            <Grid>
+                                <TextBlock FontSize="18" VerticalAlignment="Center" Text="{Binding coins}"></TextBlock>
+                               
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">消费</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer x:Name="sv_Orders" ViewChanged="sv_Orders_ViewChanged" >
+                    <StackPanel Margin="10">
+                        <ListView x:Name="list_Orders" ItemClick="list_Orders_ItemClick" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="True">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                    <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"></Setter>
+                                    <Setter Property="Margin" Value="0 0 0 10"></Setter>
+                                    <Setter Property="Padding" Value="10"></Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding remark}"></TextBlock>
+                                        <TextBlock Grid.Row="1" FontSize="12" Foreground="Gray" Margin="0 5 0 0" Text="{Binding ctime}"></TextBlock>
+                                        <TextBlock Grid.Column="1" HorizontalAlignment="Right"><Run Text="{Binding bp}"></Run>B币</TextBlock>
+                                        <TextBlock Grid.Row="1" FontSize="12" Grid.Column="1" Foreground="Gray" Margin="0 5 0 0" Text="{Binding Status}"></TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                           
+                            
+                        </ListView>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">充值</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer x:Name="sv_Recharge" ViewChanged="sv_Recharge_ViewChanged" >
+                    <StackPanel Margin="10">
+                        <ListView x:Name="list_Recharge" ItemClick="list_Recharge_ItemClick" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="True">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                    <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"></Setter>
+                                    <Setter Property="Margin" Value="0 0 0 10"></Setter>
+                                    <Setter Property="Padding" Value="10"></Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding remark}"></TextBlock>
+                                        <TextBlock Grid.Row="1" FontSize="12" Foreground="Gray" Margin="0 5 0 0" Text="{Binding ctime}"></TextBlock>
+                                        <TextBlock Grid.Column="1" HorizontalAlignment="Right"><Run Text="{Binding bp}"></Run>B币</TextBlock>
+                                      
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+
+
+                        </ListView>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">B币券</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer x:Name="sv_Quan" ViewChanged="sv_Quan_ViewChanged" >
+                    <StackPanel Margin="10">
+                        <ListView x:Name="list_Quan"  ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="True">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                    <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"></Setter>
+                                    <Setter Property="Margin" Value="0 0 0 10"></Setter>
+                                    <Setter Property="Padding" Value="10"></Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding activity_name}"></TextBlock>
+                                        <TextBlock Grid.Row="1" FontSize="12" Foreground="Gray" Margin="0 5 0 0" Text="{Binding Ctime}"></TextBlock>
+                                        <TextBlock Grid.Column="1" HorizontalAlignment="Right"><Run Text="{Binding coupon_original}"></Run>B币</TextBlock>
+                                        <TextBlock Grid.Row="1" FontSize="12" Grid.Column="1" Foreground="Gray" Margin="0 5 0 0" Text="{Binding Status}"></TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+
+
+                        </ListView>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">硬币记录</TextBlock>
+                </PivotItem.Header>
+                <ListView x:Name="list_Coins" Margin="10"  SelectionMode="None" IsItemClickEnabled="True">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"></Setter>
+                            <Setter Property="Margin" Value="0 0 0 10"></Setter>
+                            <Setter Property="Padding" Value="10"></Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding reason}"></TextBlock>
+                                <TextBlock Grid.Row="1" FontSize="12" Foreground="Gray" Margin="0 5 0 0" Text="{Binding time}"></TextBlock>
+                                <TextBlock Grid.Column="1" HorizontalAlignment="Right"><Run Text="{Binding Delta}"></Run></TextBlock>
+                             
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+
+                </ListView>
+            </PivotItem>
+        </Pivot>
+   
+        <ProgressRing Width="56" Height="56" x:Name="pr_Load" Grid.RowSpan="2"  IsActive="True" Visibility="Collapsed"></ProgressRing>
+       
+    </Grid>
+</Page>

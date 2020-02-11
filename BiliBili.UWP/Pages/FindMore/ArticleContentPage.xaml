@@ -1,0 +1,47 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.FindMore.ArticleContentPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages"
+       xmlns:my="using:BiliBili.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="grid_bg"  Background="{ThemeResource Bili-Background}" >
+        <Grid x:Name="grid_o" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+         
+            <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Visibility="Collapsed" x:Name="txt_color">1223</TextBlock>
+                <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
+                <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis" Text="专栏" Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White"></TextBlock>
+                <AppBarButton x:Name="btn_Share" Click="btn_Share_Click" Foreground="White" Grid.Column="3" Width="48" Height="48">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton Visibility="Collapsed" Foreground="White" Icon="More" Grid.Column="4" Width="48" Height="48">
+
+                </AppBarButton>
+            </Grid>
+            <Grid Grid.Row="1">
+                <WebView x:Name="web" NavigationStarting="web_NavigationStarting" NewWindowRequested="web_NewWindowRequested" UnsupportedUriSchemeIdentified="web_UnsupportedUriSchemeIdentified" NavigationCompleted="web_NavigationCompleted"></WebView>
+            </Grid>
+        </Grid>
+
+        <ProgressRing Width="56" Height="56" x:Name="pr_Load" IsActive="True" Visibility="Collapsed"></ProgressRing>
+    </Grid>
+</Page>

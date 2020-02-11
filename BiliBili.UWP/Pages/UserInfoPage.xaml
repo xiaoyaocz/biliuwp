@@ -1,0 +1,384 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.UserInfoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages"
+    xmlns:l="using:BiliBili.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:my="using:BiliBili.UWP"
+    mc:Ignorable="d"
+    xmlns:pr="using:PullToRefresh.UWP"
+    xmlns:Controls="using:BiliBili.UWP.Controls"
+    SizeChanged="Page_SizeChanged"
+    >
+
+    <Grid Background="{ThemeResource Bili-Background}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+       
+        <Grid x:Name="grid_top" Background="{ThemeResource Bili-ForeColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Icon="Back" Foreground="White" Width="48" Height="48"  >
+            </AppBarButton>
+            <TextBlock x:Name="txt_Header" Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">用户中心</TextBlock>
+            <StackPanel Orientation="Horizontal" Grid.Column="2">
+                <AppBarButton x:Name="btn_EditProfile" Click="btn_EditProfile_Click" Width="48" Height="48" Foreground="White" Icon="Edit"></AppBarButton>
+                <AppBarButton x:Name="btn_AddFollow"  Click="btn_AddFollow_Click" Width="48" Height="48" Foreground="White">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE006;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton x:Name="btn_CancelFollow" Visibility="Collapsed" Click="btn_CancelFollow_Click"  Width="48" Height="48" Foreground="White">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00B;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton x:Name="btn_Chat"  Width="48" Click="btn_Chat_Click" Height="48" Foreground="White" Icon="Message"></AppBarButton>
+            </StackPanel>
+          
+        </Grid>
+        <Pivot SelectionChanged="pivot_SelectionChanged" Grid.Row="1" x:Name="pivot" >
+            <PivotItem  Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">信息</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer >
+                    <StackPanel>
+                        <Border x:Name="bor_Width" Width="450" VerticalAlignment="Top"/>
+                        <Grid  Height="220"  x:Name="info">
+                            <Grid.Background>
+                                <ImageBrush x:Name="img_bg" Stretch="UniformToFill" />
+                            </Grid.Background>
+                            <Grid Background="#33000000"></Grid>
+                            <StackPanel VerticalAlignment="Center">
+                                <Grid Width="72" >
+                                    <Grid>
+                                        <Ellipse Width="72" Height="72" >
+                                            <Ellipse.Fill>
+                                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=face}"/>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <HyperlinkButton x:Name="btn_verify" Click="btn_verify_Click" ToolTipService.ToolTip="{Binding Path=official_verify.desc}" Padding="0" Margin="0" VerticalAlignment="Bottom"  HorizontalAlignment="Right">
+                                            <Image Width="24" Height="24" Source="{Binding verify}"></Image>
+                                        </HyperlinkButton>
+                                      
+                                    </Grid>
+                                   
+                                </Grid>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                    <TextBlock Text="{Binding  Path=name}" FontSize="16" FontWeight="Bold" Foreground="White"/>
+                                    <Image x:Name="ic_female" Margin="4 0" Visibility="Collapsed" Width="16" Height="16" Source="ms-appx:///Assets/MiniIcon/ic_user_female_border.png"></Image>
+                                    <Image x:Name="ic_gay" Margin="4 0"  Visibility="Collapsed" Width="16" Height="16" Source="ms-appx:///Assets/MiniIcon/ic_user_gay_border.png"></Image>
+                                    <Image x:Name="ic_male" Margin="4 0"  Visibility="Collapsed" Width="16" Height="16" Source="ms-appx:///Assets/MiniIcon/ic_user_male_border.png"></Image>
+                                </StackPanel>
+
+                                <TextBlock x:Name="txt_RZ" Visibility="Collapsed" Margin="10 0" TextAlignment="Center" TextWrapping="Wrap"  HorizontalAlignment="Center" Foreground="#FFFFAE00">
+                                        <Run Text="认证账号"/>
+                                </TextBlock>
+                                <StackPanel Margin="0 5" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Border x:Name="bor_Vip" Margin="5,0"  CornerRadius="5"  Background="#FFFFC937">
+                                        <TextBlock  Foreground="White" Margin="5,2" FontSize="12">
+                                                <Run x:Name="viptype">大会员</Run>
+                                        </TextBlock>
+                                    </Border>
+                                    <Border x:Name="bor_Level"   CornerRadius="5"  Background="#CCFF3030" >
+                                        <TextBlock  Foreground="White" Margin="5,2" FontSize="12">
+                                                <Run>LV</Run>
+                                                <Run Text="{Binding  Path=level_info.current_level}"></Run>
+                                        </TextBlock>
+                                    </Border>
+                                    <TextBlock VerticalAlignment="Center" Foreground="White" Margin="5,0" FontSize="12">
+                                                <Run>经验</Run>
+                                                <Run Text="{Binding Path=level_info.current_exp}"></Run>
+                                                  <Run>/</Run>
+                                              <Run Text="{Binding Path=level_info.next_exp}"></Run>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                    <TextBlock Text="关注" FontSize="14"  Foreground="White" Margin="5 0"/>
+                                    <TextBlock Text="{Binding  Path=attention}" FontSize="14"  Foreground="White" Margin="0,0,10,0"  FontWeight="Bold"/>
+                                    <TextBlock Text="粉丝" FontSize="14" Margin="5 0"  Foreground="White"/>
+                                    <TextBlock Text="{Binding Path=fans}" FontSize="14"  Foreground="White"  FontWeight="Bold"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding sign}" Margin="15 0" HorizontalAlignment="Center" FontSize="12"  Foreground="White" IsTextSelectionEnabled="True" TextWrapping="Wrap" TextAlignment="Center"/>
+                                <HyperlinkButton x:Name="live" Click="live_Click" Visibility="Collapsed" Foreground="{ThemeResource Bili-ForeColor}" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock>正在直播:<Run x:Name="liveTitle"></Run></TextBlock>
+                                    </StackPanel>
+                                </HyperlinkButton>
+                            </StackPanel>
+                        </Grid>
+                        <HyperlinkButton Grid.Row="1" Visibility="Collapsed" Foreground="{ThemeResource Bili-FontColor}">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Background="{ThemeResource Bili-ForeColor}" Width="10" Margin="5 0" Height="20" />
+                                <TextBlock Text="个人资料" VerticalAlignment="Center" FontSize="16" Margin="5 0"/>
+                            </StackPanel>
+                        </HyperlinkButton>
+                        <Grid x:Name="grid_UserInfo" Grid.Row="2" Visibility="Collapsed">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MaxWidth="200"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Assets/MiniIcon/uid.png" />
+                                    <TextBlock Text="UID :" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <TextBlock x:Name="txt_id" Text="{Binding Path=mid}" VerticalAlignment="Center" Foreground="#FF7A7A7A"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Row="1">
+
+                                    <Image Source="/Assets/MiniIcon/Sex.png" />
+                                    <TextBlock Text="性别:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <TextBlock Text="{Binding Path=sex}" VerticalAlignment="Center" Foreground="#FF7A7A7A"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Visibility="Collapsed" Grid.Row="2" x:Name="grid_coins">
+                                    <Image Source="/Assets/MiniIcon/硬币.png" />
+                                    <TextBlock Text="硬币:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <TextBlock Text="{Binding Path=coins}" VerticalAlignment="Center" Foreground="#FF7A7A7A"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                    <Image Source="/Assets/MiniIcon/生日.png" />
+                                    <TextBlock Text="生日:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <TextBlock Text="{Binding birthday}" VerticalAlignment="Center" Foreground="#FF7A7A7A"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Visibility="Collapsed" Grid.Row="1" Grid.Column="1" x:Name="grid_joinTime">
+                                    <Image Source="/Assets/MiniIcon/注册时间.png" />
+                                    <TextBlock Text="注册:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <TextBlock Text="{Binding Regtime}" VerticalAlignment="Center" Foreground="#FF7A7A7A"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+                                    <Image Source="/Assets/MiniIcon/地址.png" />
+                                    <TextBlock Text="地址:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <TextBlock Text="{Binding place}" VerticalAlignment="Center" Foreground="#FF7A7A7A"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                        </Grid>
+                        <StackPanel x:Name="data">
+                            <StackPanel Grid.Row="3" x:Name="favbox">
+                                <HyperlinkButton x:Name="fav" Foreground="{ThemeResource Bili-FontColor}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Background="{ThemeResource Bili-ForeColor}" Width="10" Margin="5 0" Height="20" />
+                                        <TextBlock Text="收藏夹" VerticalAlignment="Center" FontSize="16" Margin="5 0"/>
+                                    </StackPanel>
+                                </HyperlinkButton>
+                                <ScrollViewer  HorizontalScrollBarVisibility="Hidden" HorizontalScrollMode="Enabled" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled">
+                                    <GridView x:Name="user_GridView_FovBox" SelectionMode="None" IsItemClickEnabled="True" HorizontalAlignment="Left" ItemClick="user_GridView_FovBox_ItemClick">
+                                        <GridView.ItemContainerStyle>
+                                            <Style TargetType="GridViewItem">
+                                                <Setter Property="Margin" Value="5"/>
+                                                <Setter Property="Width" Value="100"/>
+                                                <Setter Property="BorderThickness" Value="1"/>
+                                                <Setter Property="BorderBrush" Value="{ThemeResource Bili-Background}"/>
+                                                <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"/>
+                                            </Style>
+                                        </GridView.ItemContainerStyle>
+                                        <GridView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <Image Source="/Assets/MiniIcon/scj.png" Width="100" HorizontalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding name}" HorizontalAlignment="Left" Margin="10,0"/>
+                                                    <TextBlock  HorizontalAlignment="Left" Margin="10,5" Foreground="#FF898989" FontSize="12" ><Run Text="{Binding count}"></Run>个视频</TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridView.ItemTemplate>
+                                    </GridView>
+                                </ScrollViewer>
+
+
+                            </StackPanel>
+                            <HyperlinkButton x:Name="btn_AttBangumi" Foreground="{ThemeResource Bili-FontColor}" Click="btn_AttBangumi_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="{ThemeResource Bili-ForeColor}" Width="10" Margin="5 0" Height="20" />
+                                    <TextBlock Text="追番" VerticalAlignment="Center" FontSize="16" Margin="5 0"/>
+                                </StackPanel>
+                            </HyperlinkButton>
+                            <TextBlock x:Name="DT_0" HorizontalAlignment="Center" Foreground="Gray">
+                                    <Run Text="╮(╯_╰)╭ 没有追番"/>
+                            </TextBlock>
+                            <ScrollViewer HorizontalScrollBarVisibility="Hidden" HorizontalScrollMode="Enabled" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled">
+                                <GridView x:Name="user_GridView_Bangumi" ItemsSource="{Binding Path=season.item}"  ScrollViewer.VerticalScrollBarVisibility="Disabled"  HorizontalAlignment="Left" SelectionMode="None" IsItemClickEnabled="True" ItemClick="user_GridView_Bangumi_ItemClick">
+                                    <GridView.ItemContainerStyle>
+                                        <Style TargetType="GridViewItem">
+                                            <Setter Property="Margin" Value="5 5 5 0"/>
+                                            <Setter Property="Width" Value="100"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                            <Setter Property="BorderBrush" Value="{ThemeResource Bili-Background}"/>
+                                            <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"/>
+                                        </Style>
+                                    </GridView.ItemContainerStyle>
+                                    <GridView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel >
+                                                <Image Source="{Binding cover}" Width="100" Height="135" VerticalAlignment="Top" Stretch="Fill"/>
+                                                <TextBlock Text="{Binding title}"  Height="32" TextWrapping="Wrap" MaxLines="2" FontSize="12"  Margin="5" />
+
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridView.ItemTemplate>
+                                </GridView>
+                            </ScrollViewer>
+                        </StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem  Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">动态</TextBlock>
+                </PivotItem.Header>
+                <Controls:DynamicControls x:Name="ls_dynamic" MaxWidth="800" LoadMore="ls_dynamic_LoadMore" Refresh="ls_dynamic_Refresh"/>
+            </PivotItem>
+            <PivotItem  Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">视频投稿</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer x:Name="sv1"  ViewChanged="sv1_ViewChanged" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <StackPanel>
+                            <GridView x:Name="list_ASubit" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True" ItemClick="list_ASubit_ItemClick_1">
+                                <GridView.ItemContainerStyle>
+                                    <Style TargetType="GridViewItem">
+                                        <!--<Setter Property="BorderThickness" Value="0 0 0 1"></Setter>
+                                        <Setter Property="BorderBrush" Value="Gray"></Setter>-->
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"/>
+                                        <Setter Property="Margin" Value="5"/>
+                                    </Style>
+                                </GridView.ItemContainerStyle>
+                                <GridView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Width="{Binding Width, ElementName=bor_Width}" Margin="5">
+                                            <Grid Height="80">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Image Source="{Binding Pic}" Width="120" Height="80" Grid.RowSpan="4" VerticalAlignment="Center" Stretch="UniformToFill"/>
+                                                <TextBlock Text="{Binding title}" Grid.Column="1" FontSize="14" VerticalAlignment="Center" Margin="5,0" MaxLines="2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"/>
+                                                <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <TextBlock Text="上传于:" FontSize="12"  Foreground="Gray" Margin="5,0,0,0"/>
+                                                    <TextBlock Text="{Binding Created}" FontSize="12"  Foreground="Gray" Margin="0,0,5,0"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="5,0,0,0">
+                                                    <TextBlock Text="播放:" FontSize="12"  Foreground="Gray" Margin="0,0,5,0"/>
+                                                    <TextBlock Text="{Binding play}" FontSize="12"  Foreground="Gray" Margin="0,0,5,0"/>
+                                                    <TextBlock Text="弹幕:" FontSize="12"  Foreground="Gray" Margin="5,0,0,0"/>
+                                                    <TextBlock Text="{Binding video_review}" FontSize="12"  Foreground="Gray" Margin="0,0,5,0"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
+                            </GridView>
+                            <Button x:Name="btn_More_Video" Click="btn_More_Video_Click" FontSize="14" HorizontalAlignment="Center" Foreground="Gray" Background="#00000000">点我加载更多</Button>
+
+                        </StackPanel>
+                    </StackPanel>
+
+                </ScrollViewer>
+            </PivotItem>
+            
+            <!--<PivotItem  Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">关注的人</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer x:Name="sv"  ViewChanged="sv_ViewChanged">
+                    <StackPanel>
+                        <GridView x:Name="list_AUser" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True" ItemClick="list_AUser_ItemClick">
+                            <GridView.ItemContainerStyle>
+                                <Style TargetType="GridViewItem">
+                                    --><!--<Setter Property="BorderThickness" Value="0 0 0 1"></Setter>
+                                        <Setter Property="BorderBrush" Value="Gray"></Setter>--><!--
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"/>
+                                    <Setter Property="Margin" Value="5"/>
+                                </Style>
+                            </GridView.ItemContainerStyle>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="{Binding Width, ElementName=bor_Width}" Margin="5">
+                                        <Grid >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <Ellipse  Width="48" Height="48">
+                                                <Ellipse.Fill>
+                                                    <ImageBrush ImageSource="{Binding face}"/>
+                                                </Ellipse.Fill>
+                                            </Ellipse>
+                                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="5" Text="{Binding uname}"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                        <Button x:Name="btn_load_More_Atton" HorizontalAlignment="Center" Click="btn_load_More_Atton_Click"  Foreground="Gray" FontSize="14" Content="点我加载更多" Background="#00000000"/>
+                    </StackPanel>
+
+
+                </ScrollViewer>
+            </PivotItem>-->
+            <PivotItem  Margin="0" x:Name="pi_tb" >
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">最近投币</TextBlock>
+                </PivotItem.Header>
+                <ListView x:Name="list_ACoin"  SelectionMode="None" IsItemClickEnabled="True" ItemClick="list_ASubit_ItemClick">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"/>
+                            <Setter Property="Margin" Value="5"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,5" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Image Source="{Binding cover}" Width="120"  Grid.RowSpan="4" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding title}" Grid.Column="1" FontSize="14" VerticalAlignment="Center" Margin="5,0" MaxLines="2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"/>
+                                <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="上传于:" FontSize="12"  Foreground="Gray" Margin="5,0,0,0"/>
+                                    <TextBlock Text="{Binding Ctime}" FontSize="12"  Foreground="Gray" Margin="0,0,5,0"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="5,0,0,0">
+                                    <TextBlock Text="播放:" FontSize="12"  Foreground="Gray" Margin="0,0,5,0"/>
+                                    <TextBlock Text="{Binding play}" FontSize="12"  Foreground="Gray" Margin="0,0,5,0"/>
+                                    <TextBlock Text="弹幕:" FontSize="12"  Foreground="Gray" Margin="5,0,0,0"/>
+                                    <TextBlock Text="{Binding danmaku}" FontSize="12"  Foreground="Gray" Margin="0,0,5,0"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </PivotItem>
+        </Pivot>
+        <ProgressRing Width="56" Height="56" x:Name="pr_Load" Grid.RowSpan="2"  IsActive="True" Visibility="Collapsed"></ProgressRing>
+       
+    </Grid>
+</Page>

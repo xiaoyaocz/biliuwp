@@ -1,0 +1,24 @@
+﻿<ContentDialog
+    x:Class="BiliBili.UWP.Controls.ErrorDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="发生一个未处理错误"
+    PrimaryButtonText="发给开发者"
+    SecondaryButtonText="知道了"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid>
+        <StackPanel>
+            <TextBlock>错误信息</TextBlock>
+            <TextBox x:Name="txt_title"></TextBox>
+            <TextBlock>详细信息</TextBlock>
+            <TextBox x:Name="txt_message" Height="100" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBox>
+        </StackPanel>
+       
+    </Grid>
+</ContentDialog>

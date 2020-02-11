@@ -1,0 +1,75 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.Music.MusicMiniPlayerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages.Music"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource Bili-Background}">
+        <StackPanel x:Name="music" Visibility="Visible"  Opacity="0.7" Background="{ThemeResource Bili-ForeColor}" Grid.RowSpan="2" Grid.ColumnSpan="2">
+
+            <Grid   HorizontalAlignment="Right">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="48"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button  BorderThickness="0" Padding="0"  Grid.RowSpan="2"  Background="#00000000">
+                    <Image x:Name="music_img" Height="48" Width="48" Stretch="UniformToFill" ></Image>
+                    <Button.Flyout>
+
+                        <Flyout >
+                            <StackPanel  Width="320">
+                                <TextBlock Margin="4" x:Name="txt_musicInfo" TextWrapping="Wrap"></TextBlock>
+                                <MediaPlayerElement x:Name="musicplayer"  AreTransportControlsEnabled="True">
+                                    <MediaPlayerElement.TransportControls>
+                                        <MediaTransportControls IsFullWindowButtonVisible="False" IsSeekEnabled="True"  IsZoomButtonVisible="False" IsZoomEnabled="False" IsPreviousTrackButtonVisible="True" IsNextTrackButtonVisible="True">
+
+                                        </MediaTransportControls>
+                                    </MediaPlayerElement.TransportControls>
+                                </MediaPlayerElement>
+                            </StackPanel>
+
+                        </Flyout>
+
+                    </Button.Flyout>
+                </Button>
+                <StackPanel Grid.Column="1"  Grid.Row="1" Orientation="Horizontal" Height="48">
+                    <AppBarButton x:Name="btn_showMusicInfo" Icon="Play"  ToolTipService.ToolTip="歌曲详情" Foreground="White" Width="48" Height="48">
+                        
+                    </AppBarButton>
+                    <AppBarButton x:Name="btn_MediaList"  ToolTipService.ToolTip="播放列表" Foreground="White" Icon="List"  Width="48" Height="48">
+                        <AppBarButton.Flyout>
+                            <Flyout >
+                                <ListView  x:Name="ls_music" SelectionMode="Single"  Width="240" Height="240">
+                                    <ListView.Header>
+                                        <TextBlock Margin="0 8">播放列表</TextBlock>
+                                    </ListView.Header>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock><Run Text="{Binding title}"></Run> - <Run Text="{Binding artist}"></Run></TextBlock>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Flyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
+                    <AppBarButton  x:Name="btn_Full"  ToolTipService.ToolTip="恢复窗口" Foreground="White" Click="btn_Full_Click" Width="48" Height="48">
+                        <AppBarButton.Icon>
+                            <FontIcon FontSize="12" FontFamily="Segoe MDL2 Assets" Glyph="&#xE1D9;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </StackPanel>
+
+            </Grid>
+
+
+
+        </StackPanel>
+    </Grid>
+</Page>

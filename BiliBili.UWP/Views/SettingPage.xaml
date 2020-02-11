@@ -1,0 +1,762 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Views.SettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Views"
+      xmlns:my="using:BiliBili.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Tag="设置"
+    >
+
+    <Grid Background="{ThemeResource Bili-Background}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
+            <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">设置</TextBlock>
+            <StackPanel Orientation="Horizontal" Grid.Column="2">
+                <Button x:Name="btn_Feedback" Click="btn_Feedback_Click"  Background="#00000000" BorderBrush="White" Foreground="White" Margin="4 0">反馈</Button>
+                <Button x:Name="btn_Help" Click="btn_Help_Click"  Background="#00000000" BorderBrush="White" Foreground="White" Margin="4 0">帮助</Button>
+            </StackPanel>
+        </Grid>
+        <Pivot Grid.Row="1">
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">常规/外观</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer  VerticalScrollBarVisibility="Auto" FontFamily="Segoe UI">
+                    <StackPanel Margin="10">
+                        <StackPanel Margin="0 0 0 10">
+                            <TextBlock FontSize="16">外观</TextBlock>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">主题颜色</TextBlock>
+                                <ComboBox  x:Name="cb_Theme"  Margin="2 0" HorizontalAlignment="Right" SelectionChanged="cb_Theme_SelectionChanged" Grid.Column="0"  Foreground="White" VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem >
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Width="16" Height="16" Fill="#FFDF85A0" Margin="0,0,5,0"/>
+                                            <TextBlock Foreground="#FFDF85A0">
+												<Run Text="少女粉"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem >
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Width="16" Height="16" Fill="#FF494949" Margin="0,0,5,0"/>
+                                            <TextBlock Foreground="#FF494949">
+												<Run Text="夜间黑"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem >
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Width="16" Height="16" Fill="#FFF70D0D" Margin="0,0,5,0"/>
+                                            <TextBlock Foreground="#FFF70D0D">
+												<Run Text="姨妈红"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Width="16" Height="16" Fill="#FFF9EF23" Margin="0,0,5,0"/>
+                                            <TextBlock Foreground="#FFF9EF23">
+												<Run Text="咸蛋黄"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem >
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Width="16" Height="16" Fill="#FF71F923" Margin="0,0,5,0"/>
+                                            <TextBlock Foreground="#FF71F923">
+												<Run Text="早苗绿"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem >
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Width="16" Height="16" Fill="#FF18BDFB" Margin="0,0,5,0"/>
+                                            <TextBlock Foreground="#FF18BDFB">
+												<Run Text="胖次蓝"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Width="16" Height="16" Fill="#FFB92CBF" Margin="0,0,5,0"/>
+                                            <TextBlock Foreground="#FFB92CBF">
+												<Run Text="基佬紫"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Width="16" Height="16" Fill="#FF9D91CA" Margin="0,0,5,0"/>
+                                            <TextBlock Foreground="#FF9D91CA">
+												<Run Text="EMT紫"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </ComboBoxItem>
+                                </ComboBox>
+                               
+                            </Grid>
+                            <Grid Margin="0 10 0 0" x:Name="CustomBg">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">自定义背景图</TextBlock>
+                                <ToggleSwitch  x:Name="sw_CustomBg" Toggled="sw_CustomBg_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                            
+
+                            </Grid>
+                            
+                            <Grid x:Name="grid_CustomBg" Visibility="Visible">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock  VerticalAlignment="Center" x:Name="txt_BGPath"></TextBlock>
+                                <HyperlinkButton x:Name="btn_BgPath" HorizontalAlignment="Right" Margin="0 0 10 0" Click="btn_ChanageBg_Click">更改</HyperlinkButton>
+
+
+                            </Grid>
+                            <Grid x:Name="grid_Stretch" Visibility="Visible">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock  VerticalAlignment="Center" Foreground="Gray">图片缩放方式</TextBlock>
+                                <ComboBox x:Name="cb_BGStretch" SelectionChanged="cb_BGStretch_SelectionChanged" Margin="2 0" HorizontalAlignment="Right" Grid.Column="0"   VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem>无(None)</ComboBoxItem>
+                                    <ComboBoxItem>填充(Fill)</ComboBoxItem>
+                                    <ComboBoxItem>均匀(Uniform)</ComboBoxItem>
+                                    <ComboBoxItem>均匀填充(UniformToFill)</ComboBoxItem>
+                                </ComboBox>
+                            </Grid>
+                            <Grid x:Name="grid_Hor" Visibility="Visible">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock  VerticalAlignment="Center" Foreground="Gray">水平对齐方式</TextBlock>
+                                <ComboBox  x:Name="cbHor" SelectionChanged="cbHor_SelectionChanged"  Margin="2 0" HorizontalAlignment="Right" Grid.Column="0"   VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem>居左</ComboBoxItem>
+                                    <ComboBoxItem>居中</ComboBoxItem>
+                                    <ComboBoxItem>居右</ComboBoxItem>
+                                    <ComboBoxItem>拉伸</ComboBoxItem>
+                                </ComboBox>
+                            </Grid>
+                            <Grid x:Name="grid_Ver" Visibility="Visible">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock  VerticalAlignment="Center" Foreground="Gray">垂直对齐方式</TextBlock>
+                                <ComboBox x:Name="cb_Ver" SelectionChanged="cb_Ver_SelectionChanged" Margin="2 0" HorizontalAlignment="Right" Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem>居上</ComboBoxItem>
+                                    <ComboBoxItem>居中</ComboBoxItem>
+                                    <ComboBoxItem>居下</ComboBoxItem>
+                                    <ComboBoxItem>拉伸</ComboBoxItem>
+                                </ComboBox>
+                            </Grid>
+                            <Grid x:Name="grid_Opacity" Visibility="Visible" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock  VerticalAlignment="Center" Foreground="Gray">背景透明度</TextBlock>
+                                <ComboBox x:Name="cb_BGOpacity" SelectionChanged="cb_BGOpacity_SelectionChanged" Margin="2 0" HorizontalAlignment="Right" Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem>10%</ComboBoxItem>
+                                    <ComboBoxItem>20%</ComboBoxItem>
+                                    <ComboBoxItem>30%</ComboBoxItem>
+                                    <ComboBoxItem>40%</ComboBoxItem>
+                                    <ComboBoxItem>50%</ComboBoxItem>
+                                    <ComboBoxItem>60%</ComboBoxItem>
+                                    <ComboBoxItem>70%</ComboBoxItem>
+                                    <ComboBoxItem>80%</ComboBoxItem>
+                                    <ComboBoxItem>90%</ComboBoxItem>
+                                    <ComboBoxItem>100%</ComboBoxItem>
+                                </ComboBox>
+                            </Grid>
+                            <Grid x:Name="grid_FrostedGlass" Visibility="Visible" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock  VerticalAlignment="Center" Foreground="Gray">背景高斯模糊(0为不模糊)</TextBlock>
+                                <ComboBox x:Name="cb_FrostedGlass" SelectionChanged="cb_FrostedGlass_SelectionChanged" Margin="2 0" HorizontalAlignment="Right" Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem>0</ComboBoxItem>
+                                    <ComboBoxItem>1</ComboBoxItem>
+                                    <ComboBoxItem>2</ComboBoxItem>
+                                    <ComboBoxItem>3</ComboBoxItem>
+                                    <ComboBoxItem>4</ComboBoxItem>
+                                    <ComboBoxItem>5</ComboBoxItem>
+                                    <ComboBoxItem>6</ComboBoxItem>
+                                    <ComboBoxItem>7</ComboBoxItem>
+                                    <ComboBoxItem>8</ComboBoxItem>
+                                    <ComboBoxItem>9</ComboBoxItem>
+                                    <ComboBoxItem>10</ComboBoxItem>
+                                </ComboBox>
+                            </Grid>
+                            <Grid x:Name="grid_BgWdith" Visibility="Visible" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock  VerticalAlignment="Center" Foreground="Gray">背景最大宽度(0为不设置)</TextBlock>
+                                <TextBox x:Name="txt_BGMaxWidth" TextChanged="txt_BGMaxWidth_TextChanged" HorizontalAlignment="Right" Margin="0 0 10 0" BorderThickness="1" Text="0" TextAlignment="Center"></TextBox>
+                            </Grid>
+                            <Grid x:Name="grid_BgHeigth" Visibility="Visible">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock  VerticalAlignment="Center" Foreground="Gray">背景最大高度(0为不设置)</TextBlock>
+                                <TextBox  x:Name="txt_BGMaxHeight" TextChanged="txt_BGMaxHeight_TextChanged" HorizontalAlignment="Right" Margin="0 0 10 0" BorderThickness="1" Text="0" TextAlignment="Center"></TextBox>
+                            </Grid>
+                            <TextBlock FontSize="16"  Margin="0 10">常规</TextBlock>
+
+                            <Button Foreground="White" x:Name="btn_Clear" Click="btn_Clear_Click" Background="{ThemeResource Bili-ForeColor}">清除缓存</Button>
+                            <Grid >
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">首页默认分栏显示</TextBlock>
+                                <ToggleSwitch x:Name="sw_ColunmHome" Toggled="sw_ColunmHome_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                            </Grid>
+                            <Grid Margin="0 10 0 0" >
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">PC右侧显示(重启生效)</TextBlock>
+                                <ComboBox  x:Name="cb_Rigth" SelectionChanged="cb_Rigth_SelectionChanged" Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem >空白页</ComboBoxItem>
+                                    <ComboBoxItem >快速导航</ComboBoxItem>
+                                    <ComboBoxItem >分区</ComboBoxItem>
+                                    <ComboBoxItem >排行榜</ComboBoxItem>
+                                    <ComboBoxItem >番剧放送表</ComboBoxItem>
+                                    <ComboBoxItem >推荐直播</ComboBoxItem>
+                                </ComboBox>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">首页使用新版首页推荐(重启生效)</TextBlock>
+                                <ToggleSwitch x:Name="sw_NewFeed" Toggled="sw_NewFeed_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                            </Grid>
+                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">播放页面直接播放视频(测试)</TextBlock>
+                                <ToggleSwitch x:Name="sw_PlayPage"  HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">PC页面显示刷新按钮(重载页面生效)</TextBlock>
+                                <ToggleSwitch  x:Name="sw_RefreshButton" Toggled="sw_RefreshButton_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                         
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">手机横屏隐藏状态栏</TextBlock>
+                                <ToggleSwitch x:Name="sw_HideStatus" Toggled="sw_HideStatus_Toggled"  HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">加载启动首屏壁纸/广告</TextBlock>
+                                <ToggleSwitch x:Name="sw_LoadSe" Toggled="sw_LoadSe_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                           
+                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">关闭应用全部广告(重启生效)</TextBlock>
+                                <ToggleSwitch  x:Name="sw_CloseAD" Toggled="sw_CloseAD_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">鼠标侧键及中键返回</TextBlock>
+                                <ToggleSwitch  x:Name="sw_MouseBack" Toggled="sw_MouseBack_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">视频/直播</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer  VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <StackPanel Margin="0 0 0 10">
+                            <TextBlock FontSize="16">视频</TextBlock>
+                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">默认清晰度</TextBlock>
+                                <ComboBox x:Name="cb_PlayQuality" SelectionChanged="cb_PlayQuality_SelectionChanged" Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem Content="流畅"/>
+                                    <ComboBoxItem Content="清晰"/>
+                                    <ComboBoxItem Content="高清"/>
+                                    <ComboBoxItem Content="超清"/>
+                                </ComboBox>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0"  Visibility="Collapsed">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center" >默认格式</TextBlock>
+                                <ComboBox  x:Name="cb_VideoType" IsEnabled="False" SelectionChanged="cb_VideoType_SelectionChanged"  Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem Content="MP4"/>
+                                    <ComboBoxItem Content="FLV"/>
+                                </ComboBox>
+
+                            </Grid>
+                         
+                            <!--<TextBlock Foreground="Gray" FontSize="14" TextWrapping="Wrap" Visibility="Collapsed">*如果格式选择FLV,播放器一些功能将不受支持，如后台播放、倍速播放等</TextBlock>
+                            <TextBlock Foreground="Gray" FontSize="14" TextWrapping="Wrap" IsTextSelectionEnabled="True" Visibility="Visible">*此版本无法使用FLV，请到https://nsapp.win下载</TextBlock>-->
+                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">使用FFmpegInterop软解</TextBlock>
+                                <ToggleSwitch x:Name="sw_FFmpeg" Toggled="sw_FFmpeg_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">强制软解音频</TextBlock>
+                                <ToggleSwitch x:Name="sw_ForceAudio" Toggled="sw_ForceAudio_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0" Visibility="Visible">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">启用DASH播放(测试中,播放有问题请关闭)</TextBlock>
+                                <ToggleSwitch x:Name="sw_UseDASH"  Toggled="Sw_UseDASH_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0" Visibility="Visible">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Left">DASH使用HEVC(如果出现无画面请关闭)</TextBlock>
+                                <ToggleSwitch x:Name="sw_DASHUseHEVC"  Toggled="Sw_DASHUseHEVC_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <HyperlinkButton x:Name="btnOpenInstallHEVC" NavigateUri="ms-windows-store://pdp/?productid=9n4wgh0z6vhq">需要安装扩展才能开启HEVC</HyperlinkButton>
+                            <Grid Margin="0 10 0 0" Visibility="Visible">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">强制软解视频</TextBlock>
+                                <ToggleSwitch x:Name="sw_ForceVideo"  Toggled="sw_ForceVideo_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">默认播放倍速</TextBlock>
+                                <ComboBox x:Name="sw_Playback" SelectionChanged="sw_Playback_SelectionChanged" Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem Content="1.0"/>
+                                    <ComboBoxItem Content="0.5"/>
+                                    <ComboBoxItem Content="1.5"/>
+                                    <ComboBoxItem Content="2.0"/>
+                                </ComboBox>
+
+                            </Grid>
+                          
+                            <TextBlock FontSize="16" Margin="0 10 0 0">播放选项</TextBlock>
+                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">播放自动全屏</TextBlock>
+                              
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">番剧使用播放器</TextBlock>
+
+                                <ComboBox x:Name="cb_BanPlayer" SelectionChanged="cb_BanPlayer_SelectionChanged" Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem Content="原生"/>
+                                    <ComboBoxItem Content="HTML5"/>
+                                    <ComboBoxItem Content="询问"/>
+                                    
+                                </ComboBox>
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">启用后台播放(重启生效)</TextBlock>
+                                <ToggleSwitch x:Name="sw_BackgroundPlay" Toggled="sw_BackgroundPlay_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">流量播放提醒</TextBlock>
+                                <ToggleSwitch x:Name="sw_Play4G" Toggled="sw_Play4G_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">强制横屏播放</TextBlock>
+                                <ToggleSwitch x:Name="sw_QZHP" Toggled="sw_QZHP_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">自动全屏播放</TextBlock>
+                                <ToggleSwitch x:Name="sw_AutoFull" Toggled="sw_AutoFull_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">播放自动隐藏鼠标指针</TextBlock>
+                                <ToggleSwitch x:Name="sw_HideCursor" Toggled="sw_HideCursor_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">使用新窗口播放(仅PC)</TextBlock>
+                                <ToggleSwitch x:Name="sw_NewWidnows" Toggled="sw_NewWidnows_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <TextBlock FontSize="16" Margin="0 10 0 0">直播</TextBlock>
+                            <Grid Margin="0 10 0 0" >
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">互动区到达数量自动清除</TextBlock>
+                                <ComboBox x:Name="cb_ClaerLiveComment" SelectionChanged="cb_ClaerLiveComment_SelectionChanged" Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem Content="无限制"/>
+                                    <ComboBoxItem Content="100"/>
+                                    <ComboBoxItem Content="200"/>
+                                    <ComboBoxItem Content="300"/>
+                                    <ComboBoxItem Content="400"/>
+                                    <ComboBoxItem Content="500"/>
+                                    <ComboBoxItem Content="600"/>
+                                    <ComboBoxItem Content="700"/>
+                                    <ComboBoxItem Content="800"/>
+                                    <ComboBoxItem Content="900"/>
+                                    <ComboBoxItem Content="1000"/>
+                                </ComboBox>
+                            </Grid>
+                            <Grid Margin="0 10 0 0" Visibility="Visible">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">默认使用H5源</TextBlock>
+                                <ToggleSwitch x:Name="sw_H5" Toggled="sw_H5_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                          
+                         
+                           
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">弹幕</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer  VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <StackPanel Margin="0 0 0 10">
+                            <TextBlock FontSize="16" Margin="0 10 0 0">弹幕屏蔽</TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <HyperlinkButton Padding="0 10" x:Name="btn_GoManage" Click="btn_GoManage_Click">进入管理</HyperlinkButton>
+                              
+                            </StackPanel>
+                            <TextBlock FontSize="16" Margin="0 10 0 0">弹幕</TextBlock>
+                          
+                            <Grid Margin="0 10 0 0" >
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">弹幕字体</TextBlock>
+                                <ComboBox x:Name="cb_Font" SelectionChanged="cb_Font_SelectionChanged"  Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                 
+                                </ComboBox>
+                            </Grid>
+                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">弹幕边框</TextBlock>
+                                <ToggleSwitch x:Name="sw_DanmuBorder" Toggled="sw_DanmuBorder_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                            </Grid>
+                            <StackPanel Margin="0 10 0 0">
+                                <Grid >
+                                    <TextBlock Foreground="Gray" VerticalAlignment="Center">弹幕边框样式</TextBlock>
+                                    <ComboBox x:Name="cb_DanmuStyle" SelectionChanged="cb_DanmuStyle_SelectionChanged"  Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                        <ComboBoxItem Content="默认"/>
+                                        <ComboBoxItem Content="无边框"/>
+                                        <ComboBoxItem Content="阴影(较占资源)"/>
+                                        <ComboBoxItem Content="边框(较占资源)"/>
+                                    </ComboBox>
+
+                                </Grid>
+                                <Grid Background="Gray" Padding="4 8" x:Name="danmustyle_noborder" Visibility="Collapsed">
+                                    <TextBlock FontSize="25" HorizontalAlignment="Center" FontWeight="Bold" Foreground="White">预览弹幕2333</TextBlock>
+                                </Grid>
+                                <Grid Background="Gray" Padding="4 8" x:Name="danmustyle_border" Visibility="Collapsed">
+                                    <TextBlock FontSize="25" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Margin="1">预览弹幕2333</TextBlock>
+                                    <TextBlock FontSize="25" HorizontalAlignment="Center" FontWeight="Bold" Foreground="White">预览弹幕2333</TextBlock>
+                                </Grid>
+                                <Grid Background="Gray" Padding="4 8" x:Name="danmustyle_borderV2" Visibility="Visible">
+                                    <Image Source="ms-appx:///Assets/Img/danmaku.png" Stretch="None"  HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+                                </Grid>
+                                <Grid  Background="Gray" Padding="4 8" x:Name="danmustyle_shadow" Visibility="Collapsed">
+                                    <controls:DropShadowPanel BlurRadius="6"
+                                  ShadowOpacity="1"
+                                  OffsetX="0"
+                                  OffsetY="0"
+                                  Color="Black"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center">
+                                        <TextBlock TextWrapping="Wrap"  FontWeight="Bold" FontSize="25" Foreground="White">预览弹幕2333</TextBlock>
+                                    </controls:DropShadowPanel>
+                                </Grid>
+                                
+                            </StackPanel>
+
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">默认弹幕状态</TextBlock>
+                                <ToggleSwitch x:Name="sw_StatusDanmu" Toggled="sw_StatusDanmu_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0" ></ToggleSwitch>
+                            </Grid>
+
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">弹幕加粗</TextBlock>
+                                <ToggleSwitch x:Name="sw_BoldDanmu" Toggled="sw_BoldDanmu_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                            </Grid>
+                            
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">重复弹幕合并</TextBlock>
+                                <ToggleSwitch x:Name="sw_MergeDanmu" Toggled="sw_MergeDanmu_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">防挡字幕</TextBlock>
+                                <ToggleSwitch x:Name="sw_NotSubtitle" Toggled="sw_NotSubtitle_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                            </Grid>
+                            <StackPanel Margin="0 10 0 0" >
+                                <Grid >
+                                    <TextBlock Foreground="Gray" VerticalAlignment="Center">弹幕大小</TextBlock>
+                                    <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0" Text="{Binding Value, ElementName=slider_DanmuSize}"></TextBlock>
+                                </Grid>
+                                <Slider x:Name="slider_DanmuSize" ValueChanged="slider_DanmuSize_ValueChanged" Width="300" HorizontalAlignment="Left"  Maximum="2" Minimum="0.1" StepFrequency="0.05"/>
+                            </StackPanel>
+                            <StackPanel Margin="0 10 0 0">
+                                <Grid >
+                                    <TextBlock Foreground="Gray" VerticalAlignment="Center">弹幕速度(越小越快)</TextBlock>
+                                    <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0" Text="{Binding Value, ElementName=slider_DanmuSpeed}"></TextBlock>
+                                </Grid>
+                                <Slider x:Name="slider_DanmuSpeed" ValueChanged="slider_DanmuSpeed_ValueChanged"  Width="300" HorizontalAlignment="Left"   Maximum="25" />
+                            </StackPanel>
+                            <StackPanel Margin="0 10 0 0">
+                                <Grid >
+                                    <TextBlock Foreground="Gray" VerticalAlignment="Center">弹幕透明度</TextBlock>
+                                    <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0" Text="{Binding Value, ElementName=slider_DanmuTran}"></TextBlock>
+                                </Grid>
+                                <Slider x:Name="slider_DanmuTran" ValueChanged="slider_DanmuTran_ValueChanged"  Width="300" HorizontalAlignment="Left"   Maximum="1" Minimum="0.1" StepFrequency="0.1"/>
+                            </StackPanel>
+                            <StackPanel Margin="0 10 0 0">
+                                <Grid >
+                                    <TextBlock Foreground="Gray" VerticalAlignment="Center">弹幕加载数量(0为不限制)</TextBlock>
+                                    <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10 0" Text="{Binding Value, ElementName=slider_Num}"></TextBlock>
+                                </Grid>
+                                <Slider x:Name="slider_Num" ValueChanged="slider_Num_ValueChanged" Width="300" HorizontalAlignment="Left"  Maximum="100" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">下载/通知</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer  VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <StackPanel Margin="0 0 0 10">
+                            <TextBlock FontSize="16">下载</TextBlock>
+                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">默认清晰度</TextBlock>
+                                <ComboBox x:Name="cb_DownQuality"  SelectionChanged="cb_DownQuality_SelectionChanged" Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem Content="流畅"/>
+                                    <ComboBoxItem Content="清晰"/>
+                                    <ComboBoxItem Content="高清"/>
+                                    <ComboBoxItem Content="超清"/>
+                                </ComboBox>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">下载方式</TextBlock>
+                                <ComboBox x:Name="cb_DownMode" SelectionChanged="cb_DownMode_SelectionChanged" Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem Content="逐条下载"/>
+                                    <ComboBoxItem Content="同时下载"/>
+                                </ComboBox>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">自定义下载路径</TextBlock>
+                                <ToggleSwitch x:Name="sw_CustomPath" Toggled="sw_CustomPath_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                            </Grid>
+                           
+                            <Grid x:Name="grid_CustomDownPath" Visibility="Visible">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock  VerticalAlignment="Center" x:Name="txt_CustomDownPath">系统视频库</TextBlock>
+                                <HyperlinkButton x:Name="btn_CustomDoanPath" HorizontalAlignment="Right" IsEnabled="{Binding ElementName=sw_CustomPath,Path=IsOn}" Margin="0 0 10 0" Click="btn_CustomDoanPath_Click">更改</HyperlinkButton>
+                            </Grid>
+
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">自动合并成单个MP4(暂不可用)</TextBlock>
+                                <ToggleSwitch x:Name="sw_toMp4" IsEnabled="False" Toggled="sw_toMp4_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">允许使用数据下载</TextBlock>
+                                <ToggleSwitch x:Name="sw_Use4GDown" Toggled="sw_Use4GDown_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">保持屏幕常亮(本次有效)</TextBlock>
+                                <ToggleSwitch  HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <TextBlock FontSize="16" Margin=" 0 10 0 0">通知(需要登录)</TextBlock>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">动态磁贴显示动态</TextBlock>
+                                <ToggleSwitch x:Name="sw_DTCT" Toggled="sw_DTCT_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">推送动态更新通知</TextBlock>
+                                <ToggleSwitch x:Name="sw_DT" Toggled="sw_DT_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">推送番剧更新通知</TextBlock>
+                                <ToggleSwitch x:Name="sw_FJ" Toggled="sw_FJ_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+ 
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Margin="0" >
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">其它</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer  VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <StackPanel Margin="0 0 0 10" Visibility="Collapsed">
+                            <TextBlock FontSize="16">黑科技</TextBlock>
+                           
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">伪装香港用户(看港澳专供番)</TextBlock>
+                                <ToggleSwitch  x:Name="tw_MNGA" Toggled="tw_MNGA_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">伪装台湾用户(看台湾专供番)</TextBlock>
+                                <ToggleSwitch  x:Name="tw_MNTW" Toggled="tw_MNTW_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">伪装大陆用户(海外用户专享)</TextBlock>
+                                <ToggleSwitch  x:Name="tw_MNDL" Toggled="tw_MNDL_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+
+                            </Grid>
+                        </StackPanel>
+                        <TextBlock FontSize="16">其他选项</TextBlock>
+                        <HyperlinkButton x:Name="brnAuthBiliPlus" Click="BrnAuthBiliPlus_Click" Foreground="{ThemeResource Bili-ForeColor}">
+                            <TextBlock>
+                                  <Run x:Name="txtBPState"/> 授权BiliPlus(可以解除部分地区限制视频)
+                            </TextBlock>
+                          </HyperlinkButton>
+                        <Grid Margin="0 10 0 0">
+                            <TextBlock Foreground="Gray" VerticalAlignment="Center">优先使用BiliPlus</TextBlock>
+                            <ToggleSwitch  x:Name="sw_PriorityBiliPlus" Toggled="Sw_PriorityBiliPlus_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                        </Grid>
+                        <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                            <TextBlock Foreground="Gray" VerticalAlignment="Center">本地播放器模式(重启生效)</TextBlock>
+                            <ToggleSwitch  x:Name="tw_PlayerMode" Toggled="tw_PlayerMode_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                        </Grid>
+                        <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                            <TextBlock Foreground="Gray" VerticalAlignment="Center">无法播放时使用其他网站源</TextBlock>
+                            <ToggleSwitch  x:Name="tw_OtherSiteMode" Toggled="tw_OtherSiteMode_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                        </Grid>
+                        <Grid Margin="0 10 0 0" Visibility="Collapsed">
+                            <TextBlock Foreground="Gray" VerticalAlignment="Center">一个不知道有什么用的选项</TextBlock>
+                            <ToggleSwitch  x:Name="tw_VipMode" Toggled="tw_VipMode_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">关于</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer VerticalScrollMode="Auto" >
+                    <StackPanel  Margin="10">
+                        <TextBlock FontSize="16">信息</TextBlock>
+                        <Grid Margin="0 10 0 0">
+                            <TextBlock Foreground="Gray" VerticalAlignment="Center">名称</TextBlock>
+                            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center">哔哩哔哩第三方UWP</TextBlock>
+
+                        </Grid>
+                        <Grid Margin="0 10 0 0">
+                            <TextBlock Foreground="Gray" VerticalAlignment="Center">版本</TextBlock>
+                            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="txt_version"></TextBlock>
+
+                        </Grid>
+                        <Grid Margin="0 10 0 0">
+                            <TextBlock Foreground="Gray" VerticalAlignment="Center">作者</TextBlock>
+                            <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center">逍遥橙子(xiaoyaocz)</TextBlock>
+
+                        </Grid>
+
+                        <TextBlock FontSize="18" Margin="0 10 0 0">联系</TextBlock>
+                        <HyperlinkButton Visibility="Collapsed" Click="HyperlinkButton_Click" Tag="771102271" HorizontalAlignment="Stretch" Foreground="{ThemeResource Bili-FontColor}"  HorizontalContentAlignment="Stretch" Padding="0">
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">QQ</TextBlock>
+                                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center">771102271</TextBlock>
+
+                            </Grid>
+                            
+                        </HyperlinkButton>
+                        <HyperlinkButton Click="HyperlinkButton_Click" Tag="xiaoyaocz@52uwp.com" HorizontalAlignment="Stretch" Foreground="{ThemeResource Bili-FontColor}"  HorizontalContentAlignment="Stretch" Padding="0">
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">Email</TextBlock>
+                                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center">xiaoyaocz@52uwp.com</TextBlock>
+
+                            </Grid>
+
+                        </HyperlinkButton>
+                        <TextBlock Visibility="Collapsed" FontSize="18" Margin="0 10 0 0">交流</TextBlock>
+                        <HyperlinkButton Visibility="Collapsed" Click="HyperlinkButton_Click" Tag="530991215" HorizontalAlignment="Stretch"  Foreground="{ThemeResource Bili-FontColor}"  HorizontalContentAlignment="Stretch" Padding="0">
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">QQ群 ①</TextBlock>
+                                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center">530991215</TextBlock>
+
+                            </Grid>
+
+                        </HyperlinkButton>
+                       
+                        <!--<TextBlock FontSize="18" Margin="0 10 0 0">赞助</TextBlock>
+
+                        <HyperlinkButton Click="HyperlinkButton_Click_1"  HorizontalAlignment="Stretch" Foreground="{ThemeResource Bili-FontColor}" HorizontalContentAlignment="Stretch" Padding="0">
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">支付宝</TextBlock>
+                                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center">2500655055@qq.com,**程</TextBlock>
+
+                            </Grid>
+
+                        </HyperlinkButton>-->
+                        <TextBlock FontSize="18" Margin="0 10 0 0">使用声明</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0 10 0 0" >1、本程序为哔哩哔哩动画第三方客户端，所有资源均来自哔哩哔哩动画</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center"  TextWrapping="Wrap" Margin="0 10 0 0">2、本程序仅供学习交流编程技术使用</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0 10 0 0">3、如果侵犯您的合法权益，请及时联系本人以第一时间删除</TextBlock>
+                       
+
+                        
+                        <TextBlock FontSize="18" Margin="0 10 0 0">感谢</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" Margin="0 10 0 0" TextWrapping="Wrap">感谢以下小伙伴在开发过程中给予的各种帮助(排名不分先后)</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" Margin="0 10 0 0" TextWrapping="Wrap">旋风小伙(微页开发者)、Dearest匿爱、座子狮(酷狗音乐第三方UWP开发者)、Loyie King(Key4WiFi开发者)、CodeForCSharp、ThomasWFan</TextBlock>
+                        <TextBlock FontSize="18" Margin="0 10 0 0">引用及参考</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextSelectionEnabled="True"  TextWrapping="Wrap" Margin="0 10 0 0">UWPCommunityToolkit(https://github.com/Microsoft/UWPCommunityToolkit)</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextSelectionEnabled="True"  TextWrapping="Wrap">PullToRefresh.UWP(https://github.com/MS-UAP/PullToRefresh.UWP)</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextSelectionEnabled="True"  TextWrapping="Wrap">ZXing.Net(http://zxingnet.codeplex.com/)</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextSelectionEnabled="True"  TextWrapping="Wrap">SQLite.Net-PCL(https://github.com/oysteinkrog/SQLite.Net-PCL)</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextSelectionEnabled="True"  TextWrapping="Wrap">Newtonsoft.JSON(http://www.newtonsoft.com/json)</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextSelectionEnabled="True"  TextWrapping="Wrap">bilibili-service(https://github.com/WhiteBlue/bilibili-service)</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextSelectionEnabled="True"  TextWrapping="Wrap">BilibiliAPIDocs(https://github.com/fython/BilibiliAPIDocs)</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextSelectionEnabled="True"  TextWrapping="Wrap">biliroku/(https://github.com/zyzsdy/biliroku)</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextScaleFactorEnabled="True" TextWrapping="Wrap">you-get(https://github.com/soimort/you-get)</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextScaleFactorEnabled="True" TextWrapping="Wrap">SYEngine(https://github.com/amamiya/SYEngine)</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextScaleFactorEnabled="True" TextWrapping="Wrap">VLC.MediaElement(https://github.com/kakone/VLC.MediaElement)</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextScaleFactorEnabled="True" TextWrapping="Wrap">VLC(https://code.videolan.org/videolan/vlc-winrt)</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextScaleFactorEnabled="True" TextWrapping="Wrap">AppStudio.Uwp(https://github.com/wasteam/waslibs)</TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">更新日志</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer VerticalScrollMode="Auto" >
+                    <StackPanel  Margin="10">
+                        <TextBlock TextWrapping="Wrap" x:Name="txt_Ver"></TextBlock>
+                        
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+        <ProgressRing Width="56" Height="56" x:Name="pr_Load" Grid.RowSpan="2" IsActive="True" Visibility="Collapsed"></ProgressRing>
+       
+    </Grid>
+</Page>

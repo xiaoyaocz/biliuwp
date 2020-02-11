@@ -1,0 +1,61 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.Music.MusicCollectMenuPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages.Music"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+
+    <Grid Background="{ThemeResource Bili-Background}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
+            <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">专辑收藏</TextBlock>
+           
+        </Grid>
+
+        <ListView Margin="0 8" x:Name="list_menus" ItemClick="list_menus_ItemClick" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="True" Grid.Row="1">
+           
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="56">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Image Width="56" Grid.RowSpan="2" Height="56" Margin="0 0 8 0" Source="{Binding coverUrl}"></Image>
+                        <TextBlock Grid.Column="1" Text="{Binding title}"></TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Margin="0 4" FontSize="14" Foreground="Gray"><Run Text="{Binding songNum}"></Run>首歌曲</TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0"></Setter>
+                    <Setter Property="Margin" Value="12 6"></Setter>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            
+        </ListView>
+        <ProgressRing Grid.RowSpan="2" x:Name="pr_Load" Visibility="Collapsed"  Width="56" Height="56" IsActive="True"></ProgressRing>
+    </Grid>
+</Page>

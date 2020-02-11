@@ -1,0 +1,201 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Views.LiveV2Page"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Views"
+     xmlns:controls="using:BiliBili.UWP.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Tag="直播">
+
+    <Grid >
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Padding="8">
+                <ProgressBar x:Name="pr_Load"  Visibility="{Binding Loading}"  Background="Transparent" IsIndeterminate="True"></ProgressBar>
+                <controls:FlipViewControl  ItemsSource="{Binding Path=Banner.list}" IntervalSeconds="3"  FlipViewHeight="300" FlipViewWidth="960">
+                    <controls:FlipViewControl.ItemTemplate>
+                        <DataTemplate>
+                            <HyperlinkButton  Command="{Binding HandelLiveUrlNavigationCommand}" CommandParameter="{Binding link}"  ToolTipService.ToolTip="{Binding title}" Margin="0" Padding="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <Image Stretch="UniformToFill" Source="{Binding pic}"></Image>
+                            </HyperlinkButton>
+
+                        </DataTemplate>
+                    </controls:FlipViewControl.ItemTemplate>
+                </controls:FlipViewControl>
+
+                <Grid Background="{ThemeResource Bili-List-Background}" Margin="0 8 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnTopbar_MyFeed" Command="{Binding NavigationInfoPageCommand}" CommandParameter="BiliBili.UWP.Pages.LiveFeedPage"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#00000000" >
+                        <StackPanel>
+                            <Image Source="ms-appx:///Assets/Icon/live_home_follow_anchor.png" Width="36" Height="36"></Image>
+                            <TextBlock FontSize="14" TextAlignment="Center">关注</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnTopbar_liveCenter" Command="{Binding NavigationInfoPageCommand}" CommandParameter="BiliBili.UWP.Pages.LiveCenterPage" HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Stretch" Background="#00000000" >
+                        <StackPanel>
+                            <Image Source="ms-appx:///Assets/Icon/live_home_live_center.png" Width="36" Height="36"></Image>
+                            <TextBlock FontSize="14" TextAlignment="Center">中心</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnTopbar_miniVideo" Command="{Binding NavigationInfoPageCommand}" CommandParameter="BiliBili.UWP.Pages.LiveVideoPage" HorizontalAlignment="Stretch" Grid.Column="2" VerticalAlignment="Stretch" Background="#00000000" >
+                        <StackPanel>
+                            <Image Source="ms-appx:///Assets/Icon/live_home_clip_video.png" Width="36" Height="36"></Image>
+                            <TextBlock FontSize="14" TextAlignment="Center">小视频</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnTopbar_Search"  Command="{Binding NavigationInfoPageCommand}" CommandParameter="BiliBili.UWP.Pages.LiveSearchPage" HorizontalAlignment="Stretch" Grid.Column="3" VerticalAlignment="Stretch" Background="#00000000" >
+                        <StackPanel>
+                            <Image Source="ms-appx:///Assets/Icon/live_home_search_room.png" Width="36" Height="36"></Image>
+                            <TextBlock FontSize="14" TextAlignment="Center">搜索</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnTopbar_LivePart" Visibility="Collapsed" Command="{Binding NavigationInfoPageCommand}" CommandParameter="BiliBili.UWP.Pages.LivePartPage" HorizontalAlignment="Stretch" Grid.Column="4" VerticalAlignment="Stretch" Background="#00000000" >
+                        <StackPanel>
+                            <Image Source="ms-appx:///Assets/Icon/live_home_all_category.png" Width="36" Height="36"></Image>
+                            <TextBlock FontSize="14" TextAlignment="Center">分类</TextBlock>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <GridView x:Name="gv_areas" SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemsSource="{Binding Path=Areas.list}" IsItemClickEnabled="True" ItemClick="Gv_areas_ItemClick" SizeChanged="Gv_areas_SizeChanged" Background="{ThemeResource Bili-List-Background}" Margin="0 8 0 0">
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                            <Setter Property="VerticalAlignment" Value="Stretch"/>
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Style>
+                    </GridView.ItemContainerStyle>
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Padding="0 8">
+                                <Image Source="{Binding pic}" HorizontalAlignment="Center" Width="36" Height="36"></Image>
+                                <TextBlock FontSize="14" TextAlignment="Center" Text="{Binding title}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+                <StackPanel Padding="8" Background="{ThemeResource Bili-List-Background}" Margin="0 8 0 0">
+                    <Grid >
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=HourRank.module_info.title}"></TextBlock>
+                            <TextBlock Margin="4 0" VerticalAlignment="Bottom" FontSize="14"  Foreground="Gray" Text="{Binding Path=HourRank.extra_info.sub_title}"></TextBlock>
+                        </StackPanel>
+                        <HyperlinkButton Command="{Binding HandelLiveUrlNavigationCommand}" CommandParameter="https://live.bilibili.com/p/eden/rank" Foreground="Gray" Padding="0" HorizontalAlignment="Right">
+                           
+                            <TextBlock>查看更多 <Run FontSize="12" FontFamily="Segoe MDL2 Assets" Text="&#xE00F;" /></TextBlock>
+                        </HyperlinkButton>
+                    </Grid>
+                    <Grid Margin="0 8 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <HyperlinkButton Command="{Binding OpenLiveRoomCommand}" CommandParameter="{Binding roomid}" Foreground="{ThemeResource Bili-FontColor}" DataContext="{Binding Path=HourRank.list[1]}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" >
+                            <StackPanel VerticalAlignment="Bottom" >
+                                <TextBlock FontSize="14"  TextAlignment="Center" Foreground="#FF6C6C6C">No.2</TextBlock>
+                                <Ellipse Margin="0 4"  Width="48" Height="48">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{Binding Path=face}"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <TextBlock TextAlignment="Center"  FontSize="14" TextTrimming="CharacterEllipsis" Text="{Binding Path=uname}"></TextBlock>
+                                <TextBlock FontSize="12" TextAlignment="Center" Foreground="Gray" TextTrimming="CharacterEllipsis" Text="{Binding Path=area_v2_name}"></TextBlock>
+                            </StackPanel>
+                        </HyperlinkButton>
+                        <HyperlinkButton Command="{Binding OpenLiveRoomCommand}" CommandParameter="{Binding roomid}" Grid.Column="1" Foreground="{ThemeResource Bili-FontColor}" DataContext="{Binding Path=HourRank.list[0]}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" >
+                            <StackPanel VerticalAlignment="Bottom" >
+                                <TextBlock FontSize="14"  TextAlignment="Center" Foreground="Orange">No.1</TextBlock>
+                                <Ellipse Margin="0 4"  Width="56" Height="56">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{Binding Path=face}"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <TextBlock TextAlignment="Center" FontSize="14" TextTrimming="CharacterEllipsis" Text="{Binding Path=uname}"></TextBlock>
+                                <TextBlock FontSize="12" TextAlignment="Center" Foreground="Gray" TextTrimming="CharacterEllipsis" Text="{Binding Path=area_v2_name}"></TextBlock>
+                            </StackPanel>
+                        </HyperlinkButton>
+                        <HyperlinkButton Command="{Binding OpenLiveRoomCommand}" CommandParameter="{Binding roomid}" Grid.Column="2" Foreground="{ThemeResource Bili-FontColor}" DataContext="{Binding Path=HourRank.list[2]}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" >
+                            <StackPanel VerticalAlignment="Bottom" >
+                                <TextBlock FontSize="14"  TextAlignment="Center" Foreground="#FF6C6C6C">No.3</TextBlock>
+                                <Ellipse Margin="0 4"  Width="48" Height="48">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{Binding Path=face}"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <TextBlock TextAlignment="Center" FontSize="14" TextTrimming="CharacterEllipsis" Text="{Binding Path=uname}"></TextBlock>
+                                <TextBlock FontSize="12" TextAlignment="Center" Foreground="Gray" TextTrimming="CharacterEllipsis" Text="{Binding Path=area_v2_name}"></TextBlock>
+                            </StackPanel>
+                        </HyperlinkButton>
+
+                    </Grid>
+                    
+                    
+                </StackPanel>
+                <ItemsControl ItemsSource="{Binding RoomList}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <GridView ItemsSource="{Binding list}"  ItemClick="Gv_room_ItemClick" SelectionMode="None" IsItemClickEnabled="True" Margin="0 8 0 0" ScrollViewer.VerticalScrollMode="Disabled" SizeChanged="GvRoomItem_SizeChanged" Background="{ThemeResource Bili-List-Background}">
+                                <GridView.Header>
+                                    <Grid Padding="8">
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding Path=module_info.title}"></TextBlock>
+                                        <HyperlinkButton Command="{Binding HandelLiveUrlNavigationCommand}" CommandParameter="{Binding Path=module_info.link}" Foreground="Gray" Padding="0" HorizontalAlignment="Right">
+                                            <TextBlock>查看更多 <Run FontSize="12" FontFamily="Segoe MDL2 Assets" Text="&#xE00F;" /></TextBlock>
+                                        </HyperlinkButton>
+                                    </Grid>
+                                </GridView.Header>
+                                <GridView.ItemContainerStyle>
+                                    <Style TargetType="GridViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                        <Setter Property="Margin" Value="4"/>
+                                        <Setter Property="Padding" Value="0"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </Style>
+                                </GridView.ItemContainerStyle>
+                                <GridView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Grid>
+                                                <Image Source="{Binding cover}"></Image>
+                                                <Grid VerticalAlignment="Bottom" Padding="4">
+                                                    <Grid.Background>
+                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                            <GradientStop Color="#CC000005" Offset="0.993"/>
+                                                            <GradientStop Color="#00000000" Offset="0"/>
+                                                        </LinearGradientBrush>
+                                                    </Grid.Background>
+
+                                                    <TextBlock  FontSize="12" Foreground="White" Text="{Binding uname}"></TextBlock>
+                                                    <TextBlock HorizontalAlignment="Right" FontSize="12" Foreground="White" >
+                                        <Run FontFamily="Segoe MDL2 Assets" FontSize="10" Text="&#xE13D;" />
+                                        <Run Text="{Binding online_str}"></Run>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </Grid>
+                                            <TextBlock Margin="0 4" TextTrimming="CharacterEllipsis" Text="{Binding title}"></TextBlock>
+                                            <TextBlock FontSize="12" Foreground="Gray" TextTrimming="CharacterEllipsis" Text="{Binding area_v2_name}"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
+                            </GridView>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              
+            </StackPanel>
+        </ScrollViewer>
+      
+        <AppBarButton  x:Name="b_btn_Refresh" Click="b_btn_Refresh_Click" Width="48" Height="48" Margin="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Icon="Refresh" Background="{ThemeResource Bili-ForeColor}" Opacity="0.6" Foreground="White"></AppBarButton>
+    </Grid>
+</Page>

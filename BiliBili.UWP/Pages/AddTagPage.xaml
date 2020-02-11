@@ -1,0 +1,208 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.AddTagPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages"
+     xmlns:w="using:AppArrange.WrapPanel"
+     xmlns:my="using:BiliBili.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Key="ListViewItemStyle1" TargetType="ListViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="Background" Value="{ThemeResource ListViewItemBackground}"/>
+            <Setter Property="Foreground" Value="{ThemeResource ListViewItemForeground}"/>
+            <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="IsHoldingEnabled" Value="True"/>
+            <Setter Property="Padding" Value="12,0,12,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}"/>
+            <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}"/>
+            <Setter Property="AllowDrop" Value="False"/>
+            <Setter Property="UseSystemFocusVisuals" Value="True"/>
+            <Setter Property="FocusVisualMargin" Value="0"/>
+            <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource ListViewItemFocusVisualPrimaryBrush}"/>
+            <Setter Property="FocusVisualPrimaryThickness" Value="2"/>
+            <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}"/>
+            <Setter Property="FocusVisualSecondaryThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ListViewItemPresenter CheckBrush="{ThemeResource ListViewItemCheckBrush}" ContentMargin="{TemplateBinding Padding}" CheckMode="{ThemeResource ListViewItemCheckMode}" ContentTransitions="{TemplateBinding ContentTransitions}" CheckBoxBrush="{ThemeResource ListViewItemCheckBoxBrush}" DragForeground="{ThemeResource ListViewItemDragForeground}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackground}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}" FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}" FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}" FocusVisualMargin="{TemplateBinding FocusVisualMargin}" FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}" FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}" FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Control.IsTemplateFocusTarget="True" PointerOverForeground="{ThemeResource ListViewItemForegroundPointerOver}" PressedBackground="{ThemeResource ListViewItemBackgroundPressed}" PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackground}" PointerOverBackground="{ThemeResource ListViewItemBackgroundPointerOver}" ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectedPressedBackground="{ThemeResource Bili-Background}" SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}" SelectedForeground="{ThemeResource ListViewItemForegroundSelected}" SelectedPointerOverBackground="{ThemeResource Bili-Background}" SelectedBackground="{ThemeResource Bili-Background}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid Background="{ThemeResource Bili-Background}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
+            <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">标签订阅</TextBlock>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Background="{ThemeResource Bili-List-Background}">
+                <ListView x:Name="ls_tag"  Width="120" SelectionChanged="ls_tag_SelectionChanged"  ItemContainerStyle="{StaticResource  ListViewItemStyle1}"  >
+                    <ListViewItem HorizontalContentAlignment="Stretch">
+                        <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >我的</TextBlock>
+                    </ListViewItem>
+                    <ListViewItem Tag="13" HorizontalContentAlignment="Stretch">
+                        <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >番剧</TextBlock>
+                    </ListViewItem>
+                    <ListViewItem Tag="1" HorizontalContentAlignment="Stretch">
+                        <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >动画</TextBlock>
+                    </ListViewItem>
+                    <ListViewItem Tag="3"  HorizontalContentAlignment="Stretch">
+                        <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >音乐</TextBlock>
+                    </ListViewItem>
+                    <ListViewItem Tag="129"  HorizontalContentAlignment="Stretch">
+                        <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >舞蹈</TextBlock>
+                    </ListViewItem>
+                    <ListViewItem Tag="4"  HorizontalContentAlignment="Stretch">
+                        <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >游戏</TextBlock>
+                    </ListViewItem>
+                    <ListViewItem Tag="36"  HorizontalContentAlignment="Stretch">
+                        <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >科技</TextBlock>
+                    </ListViewItem>
+                    <ListViewItem Tag="160"  HorizontalContentAlignment="Stretch">
+                        <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >生活</TextBlock>
+                    </ListViewItem>
+                    <ListViewItem Tag="119"  HorizontalContentAlignment="Stretch">
+                        <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >鬼畜</TextBlock>
+                    </ListViewItem>
+                    <ListViewItem Tag="155"  HorizontalContentAlignment="Stretch">
+                        <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >时尚</TextBlock>
+                    </ListViewItem>
+                    <ListViewItem Tag="5"  HorizontalContentAlignment="Stretch">
+                        <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >娱乐</TextBlock>
+                    </ListViewItem>
+                    <ListViewItem Tag="23"  HorizontalContentAlignment="Stretch">
+                        <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >电影</TextBlock>
+                    </ListViewItem>
+                    <ListViewItem Tag="11"  HorizontalContentAlignment="Stretch">
+                        <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >电视剧</TextBlock>
+                    </ListViewItem>
+                    <ListViewItem Tag="165"  HorizontalContentAlignment="Stretch">
+                        <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >广告</TextBlock>
+                    </ListViewItem>
+                </ListView>
+            </Grid>
+            <ScrollViewer x:Name="my"  Visibility="Visible" Grid.Column="1" >
+                <StackPanel >
+
+                    <TextBlock Margin="10">我的关注 <Run Foreground="Gray" >(点击取消订阅)</Run></TextBlock>
+                    <GridView x:Name="gv" Grid.Row="1" ScrollViewer.VerticalScrollMode="Disabled"  IsItemClickEnabled="True" SelectionMode="None" ItemClick="gv_ItemClick">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <w:WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                        <GridView.ItemContainerStyle>
+                            <Style TargetType="GridViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                <Setter Property="Margin" Value="10"></Setter>
+                                <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </GridView.ItemContainerStyle>
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="20 0"  Background="{ThemeResource Bili-List-Background}" CornerRadius="5">
+                                    <TextBlock VerticalAlignment="Center"  Text="{Binding name}"></TextBlock>
+                                </Border>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+
+
+                    </GridView>
+                    <Grid Margin="10" Visibility="Collapsed">
+                        <TextBlock VerticalAlignment="Center">猜你喜欢</TextBlock>
+                        <HyperlinkButton x:Name="btn_refresh" Margin="5 0" Click="btn_refresh_Click_1" Foreground="{ThemeResource Bili-FontColor}" HorizontalAlignment="Right" >
+                            <Grid>
+                                <Ellipse Fill="{ThemeResource Bili-ForeColor}"></Ellipse>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" Margin="5" FontSize="12" Foreground="White"/>
+                            </Grid>
+                        </HyperlinkButton>
+                    </Grid>
+
+                    <GridView x:Name="gv_like" Visibility="Collapsed" ScrollViewer.VerticalScrollMode="Disabled"  Grid.Row="1"  IsItemClickEnabled="True" SelectionMode="None" ItemClick="gv_like_ItemClick">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <w:WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                        <GridView.ItemContainerStyle>
+                            <Style TargetType="GridViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                <Setter Property="Margin" Value="10"></Setter>
+                                <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </GridView.ItemContainerStyle>
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="20 0"  Background="{ThemeResource Bili-List-Background}" CornerRadius="5">
+                                    <TextBlock VerticalAlignment="Center"  Text="{Binding tag_name}"></TextBlock>
+                                </Border>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+
+
+                    </GridView>
+                </StackPanel>
+                
+            </ScrollViewer>
+            <ScrollViewer x:Name="not_my" Visibility="Collapsed" Grid.Column="1" >
+                <StackPanel >
+
+
+                    <GridView x:Name="gv_Tags" ScrollViewer.VerticalScrollMode="Disabled"  Grid.Row="1"  IsItemClickEnabled="True" SelectionMode="None" ItemClick="gv_Tags_ItemClick">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <w:WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                        <GridView.ItemContainerStyle>
+                            <Style TargetType="GridViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                <Setter Property="Margin" Value="10"></Setter>
+                                <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </GridView.ItemContainerStyle>
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="20 0"  Background="{ThemeResource Bili-List-Background}" CornerRadius="5">
+                                    <TextBlock VerticalAlignment="Center"  Text="{Binding tag_name}"></TextBlock>
+                                </Border>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+
+
+                    </GridView>
+
+                </StackPanel>
+
+            </ScrollViewer>
+
+        </Grid>
+        <ProgressRing Width="56" Height="56" Grid.RowSpan="2" IsActive="True" x:Name="pr_Load" Visibility="Collapsed"></ProgressRing>
+      
+    </Grid>
+</Page>

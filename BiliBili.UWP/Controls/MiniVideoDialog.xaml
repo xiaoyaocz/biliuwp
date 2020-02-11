@@ -1,0 +1,48 @@
+﻿<ContentDialog
+    x:Class="BiliBili.UWP.Controls.MiniVideoDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    PrimaryButtonText="分享"
+    SecondaryButtonText="关闭"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" >
+            <StackPanel>
+                <MediaElement AutoPlay="True" Source="{Binding Path=item.video_playurl}" AreTransportControlsEnabled="True">
+                    <MediaElement.TransportControls>
+                        <MediaTransportControls IsFullWindowButtonVisible="False" IsZoomButtonVisible="False"></MediaTransportControls>
+                    </MediaElement.TransportControls>
+                </MediaElement>
+                <Grid x:Name="videoinfo" Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Ellipse Width="56" Height="56" Grid.RowSpan="2" Margin="0 0 5 0">
+                        <Ellipse.Fill>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=user.head_url}"/>
+                        </Ellipse.Fill>
+
+                    </Ellipse>
+                    <TextBlock Grid.Column="1" VerticalAlignment="Bottom" Text="{Binding Path=user.name}"></TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="1" Foreground="Gray" FontSize="14" VerticalAlignment="Top">发表于<Run Text="{Binding Path=item.upload_time}"></Run></TextBlock>
+                    <Button Grid.Column="2" Grid.RowSpan="2" Background="#FFDF85A0" Foreground="White" Margin="10 0 0 0" Click="Button_Click">关注</Button>
+                    <TextBlock Margin="0 10" Grid.ColumnSpan="3" Grid.Row="2" IsTextSelectionEnabled="True" Foreground="Gray" TextWrapping="Wrap" Text="{Binding Path=item.description}"></TextBlock>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+        <ProgressRing x:Name="pr_load" Visibility="Collapsed" Width="56" Height="56" IsActive="True"></ProgressRing>
+    </Grid>
+
+</ContentDialog>

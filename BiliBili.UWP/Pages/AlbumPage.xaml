@@ -1,0 +1,130 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.AlbumPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource Bili-Background}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
+            <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">相簿</TextBlock>
+        </Grid>
+
+
+        <Pivot x:Name="pivot" SelectionChanged="pivot_SelectionChanged" Grid.Row="1">
+            <Pivot.RightHeader>
+                <Grid>
+                    <ComboBox x:Name="cb_draw" VerticalAlignment="Center" SelectionChanged="cb_draw_SelectionChanged" Margin="4 0">
+                        <ComboBoxItem>全部</ComboBoxItem>
+                        <ComboBoxItem>插画</ComboBoxItem>
+                        <ComboBoxItem>漫画</ComboBoxItem>
+                        <ComboBoxItem>其他</ComboBoxItem>
+                    </ComboBox>
+                    <ComboBox x:Name="cb_cos" VerticalAlignment="Center" SelectionChanged="cb_cos_SelectionChanged" Margin="4 0">
+                        <ComboBoxItem>全部</ComboBoxItem>
+                        <ComboBoxItem>Cosplay</ComboBoxItem>
+                        <ComboBoxItem>私服</ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+                  
+            </Pivot.RightHeader>
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">画友</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer x:Name="sv_draw" ViewChanged="sv_draw_ViewChanged" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="8 0">
+                        <Border x:Name="bor_Width" Background="Gray" Width="200" VerticalAlignment="Bottom"></Border>
+                        <GridView x:Name="gv_draw" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="None" IsItemClickEnabled="True" ItemClick="gv_draw_ItemClick">
+                            <GridView.ItemContainerStyle>
+                                <Style TargetType="GridViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                    <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"></Setter>
+                                    <Setter Property="Margin" Value="4"></Setter>
+                                </Style>
+                            </GridView.ItemContainerStyle>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+
+                                        <Image Width="{Binding ElementName=bor_Width,Path=Width}" MaxHeight="240" Source="{Binding Path=item.img}"></Image>
+                                        <TextBlock Margin="8 4" TextTrimming="CharacterEllipsis" Text="{Binding Path=item.title}"></TextBlock>
+                                        <StackPanel Orientation="Horizontal" Margin="8 0 8 4">
+                                            <Ellipse Width="24" Height="24">
+                                                <Ellipse.Fill>
+                                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=user.head_url}"/>
+                                                </Ellipse.Fill>
+                                            </Ellipse>
+                                            <TextBlock Margin="4 0" FontSize="14" VerticalAlignment="Center" Foreground="Gray" Text="{Binding Path=user.name}"></TextBlock>
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                        <HyperlinkButton  x:Name="btn_loadMoreDraw" Click="btn_loadMoreDraw_Click" HorizontalAlignment="Center" Foreground="Gray">
+                            <TextBlock>加载更多</TextBlock>
+                        </HyperlinkButton>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">摄影</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer x:Name="sv_cos" ViewChanged="sv_cos_ViewChanged" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="8 0">
+                  
+                        <GridView x:Name="gv_cos" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="None" IsItemClickEnabled="True" ItemClick="gv_draw_ItemClick">
+                            <GridView.ItemContainerStyle>
+                                <Style TargetType="GridViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                    <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"></Setter>
+                                    <Setter Property="Margin" Value="4"></Setter>
+                                </Style>
+                            </GridView.ItemContainerStyle>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+
+                                        <Image Width="{Binding ElementName=bor_Width,Path=Width}" MaxHeight="240" Source="{Binding Path=item.img}"></Image>
+                                        <TextBlock Margin="8 4" TextTrimming="CharacterEllipsis" Text="{Binding Path=item.title}"></TextBlock>
+                                        <StackPanel Orientation="Horizontal" Margin="8 0 8 4">
+                                            <Ellipse Width="24" Height="24">
+                                                <Ellipse.Fill>
+                                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=user.head_url}"/>
+                                                </Ellipse.Fill>
+                                            </Ellipse>
+                                            <TextBlock Margin="4 0" FontSize="14" VerticalAlignment="Center" Foreground="Gray" Text="{Binding Path=user.name}"></TextBlock>
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                        <HyperlinkButton  x:Name="btn_loadMoreCos" Click="btn_loadMoreCos_Click" HorizontalAlignment="Center" Foreground="Gray">
+                            <TextBlock>加载更多</TextBlock>
+                        </HyperlinkButton>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+        <ProgressBar x:Name="pr_Load" Grid.Row="1" VerticalAlignment="Top" Background="#00000000" IsIndeterminate="True"></ProgressBar>
+    </Grid>
+</Page>

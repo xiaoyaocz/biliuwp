@@ -1,0 +1,174 @@
+﻿<ContentDialog
+    x:Class="BiliBili.UWP.Controls.RepostDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignWidth="600"
+    
+    Style="{StaticResource myContentDialog}"
+  >
+    <ContentDialog.Resources>
+        <Flyout  x:Key="FaceFlyout" x:Name="FaceFlyout">
+            <Grid Width="320">
+                <Pivot x:Name="pivot_face" SelectionChanged="pivot_face_SelectionChanged">
+                    <Pivot.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontSize="18" Text="{Binding text}"></TextBlock>
+                        </DataTemplate>
+                    </Pivot.HeaderTemplate>
+                    <Pivot.ItemTemplate>
+                        <DataTemplate>
+                            <GridView  ItemsSource="{Binding emote}" SelectionMode="None" IsItemClickEnabled="True" MaxHeight="300" ItemClick="GridView_ItemClick">
+                                <GridView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel >
+                                            <Image Visibility="{Binding isFace}" Source="{Binding url}" Width="36" Margin="4 0"></Image>
+                                            <TextBlock Width="90" TextAlignment="Center" Visibility="{Binding isText}" FontSize="12" HorizontalAlignment="Center" Text="{Binding text}"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
+
+                            </GridView>
+                        </DataTemplate>
+                    </Pivot.ItemTemplate>
+                </Pivot>
+            </Grid>
+        </Flyout>
+    </ContentDialog.Resources>
+    <Grid>
+
+        <StackPanel x:Name="st" Width="440">
+            <TextBlock x:Name="xtitle" Margin="4 0">转发动态</TextBlock>
+            <TextBox MinHeight="120" Margin="0 4 0 0" TextWrapping="Wrap" MaxLength="233" TextChanged="txt_Comment_TextChanged" x:Name="txt_Comment" AcceptsReturn="True" PlaceholderText="说点什么吧..."></TextBox>
+
+            <StackPanel x:Name="repostData" Margin="0 8" Padding="8" Background="#33808080">
+                <TextBlock x:Name="title" MaxLines="1" TextTrimming="CharacterEllipsis"></TextBlock>
+                <TextBlock x:Name="desc" MaxLines="1" TextTrimming="CharacterEllipsis" FontSize="14" Foreground="Gray"></TextBlock>
+            </StackPanel>
+            
+            <Grid Margin="0 4 0 0">
+                <StackPanel Orientation="Horizontal">
+
+                    <Button Width="36" Height="36" x:Name="btnEmoji" Flyout="{StaticResource FaceFlyout}" Click="btnEmoji_Click" Foreground="White" Background="{ThemeResource Bili-ForeColor}">
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14"  Glyph="&#xE170;" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btn_Image" Click="btn_Image_Click" Width="36" Height="36"  Visibility="Collapsed"  Margin="4 0 0 0" Foreground="White" Background="{ThemeResource Bili-ForeColor}">
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14"  Glyph="&#xEB9F;" />
+
+                        </StackPanel>
+                    </Button>
+                    <Button Width="36" Height="36"    Margin="4 0 0 0" Foreground="White" Background="{ThemeResource Bili-ForeColor}">
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon FontFamily="Segoe MDL2 Assets"  FontSize="14" Glyph="&#xE168;" />
+                        </StackPanel>
+                        <Button.Flyout>
+                            <Flyout>
+                                <Pivot Width="240" Height="240">
+                                    <PivotItem Margin="0">
+                                        <PivotItem.Header>
+                                            <TextBlock FontSize="16">关注的人</TextBlock>
+                                        </PivotItem.Header>
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                            <StackPanel >
+                                                <ProgressBar x:Name="pr_LoadUserAt" IsIndeterminate="True" Background="#00000000"></ProgressBar>
+                                                <ListView x:Name="ls_UserAt" ItemClick="ls_UserAt_ItemClick" SelectionMode="None" IsItemClickEnabled="True">
+                                                    <ListView.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Ellipse Width="36" Height="36">
+                                                                    <Ellipse.Fill>
+                                                                        <ImageBrush Stretch="UniformToFill" ImageSource="{Binding face}"/>
+                                                                    </Ellipse.Fill>
+                                                                </Ellipse>
+                                                                <TextBlock Margin="4 0" VerticalAlignment="Center" Text="{Binding uname}"></TextBlock>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ListView.ItemTemplate>
+
+                                                </ListView>
+                                                <HyperlinkButton x:Name="btn_LoadMoreUserAt" Click="btn_LoadMoreUserAt_Click"  HorizontalAlignment="Center">
+                                                    <TextBlock>加载更多</TextBlock>
+                                                </HyperlinkButton>
+                                            </StackPanel>
+                                        </ScrollViewer>
+                                   
+                                      
+                                    </PivotItem>
+                                    <PivotItem Margin="0">
+                                        <PivotItem.Header>
+                                            <TextBlock FontSize="16">查找</TextBlock>
+                                        </PivotItem.Header>
+                                        <ScrollViewer>
+                                            <StackPanel>
+                                                <AutoSuggestBox x:Name="txt_searchAt" PlaceholderText="输入查找你想@的人" TextChanged="txt_searchAt_TextChanged" Margin="4 0" QueryIcon="Find"></AutoSuggestBox>
+
+                                                <ProgressBar x:Name="pr_LoadSearchAt" Visibility="Collapsed" IsIndeterminate="True" Background="#00000000"></ProgressBar>
+
+                                                <ListView x:Name="ls_SearchAt" ItemClick="ls_SearchAt_ItemClick" SelectionMode="None" IsItemClickEnabled="True">
+                                                            <ListView.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <Ellipse Width="36" Height="36">
+                                                                            <Ellipse.Fill>
+                                                                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding face}"/>
+                                                                            </Ellipse.Fill>
+                                                                        </Ellipse>
+                                                                <TextBlock Margin="4 0" VerticalAlignment="Center" Text="{Binding name}"></TextBlock>
+                                                                    </StackPanel>
+                                                                </DataTemplate>
+                                                            </ListView.ItemTemplate>
+
+                                                        </ListView>
+                                   
+                                            </StackPanel>
+                                           
+                                        </ScrollViewer>
+                                    </PivotItem>
+                                </Pivot>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right">
+                    <TextBlock x:Name="txt_Length" VerticalAlignment="Center" Foreground="Gray">233</TextBlock>
+                    <Button x:Name="btn_Close" Width="64" Click="btn_Close_Click" Margin="4 0">取消</Button>
+                    <Button  x:Name="btn_Send" Width="64" Click="btn_Send_Click" Foreground="White" Background="{ThemeResource Bili-ForeColor}" >发表</Button>
+                </StackPanel>
+            </Grid>
+            <StackPanel x:Name="pr_Upload" Margin="0 4" Visibility="Collapsed">
+                <ProgressBar Background="#00000000" IsIndeterminate="True" ></ProgressBar>
+                <TextBlock FontSize="14" Foreground="Gray" Margin="4 0" VerticalAlignment="Center">图片上传中...</TextBlock>
+            </StackPanel>
+           
+            <StackPanel x:Name="pics" Visibility="Collapsed" Margin="0 4" Padding="4" Background="#33808080">
+                <TextBlock Margin="0 4"><Run x:Name="txt_PicCount"></Run>/9张图片</TextBlock>
+                <GridView x:Name="gv_Pics" HorizontalAlignment="Center" SelectionMode="None" IsItemClickEnabled="True" MaxHeight="200" Margin="0 4 0 0">
+                   
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Image Width="100" Source="{Binding image}" Stretch="UniformToFill"></Image>
+                                <Button  Click="btn_RemovePic_Click" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" BorderThickness="0" Width="24" Height="24" Padding="0" Background="#33000000">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14" Glyph="&#xE947;" />
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                  
+                </GridView>
+            </StackPanel>
+        
+            
+            
+        </StackPanel>
+
+
+    </Grid>
+</ContentDialog>

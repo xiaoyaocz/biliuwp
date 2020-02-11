@@ -1,0 +1,163 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.FindMore.ArticlePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages"
+          xmlns:my="using:BiliBili.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Tag="Article"
+    xmlns:c="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    >
+
+    <Grid   x:Name="g" SizeChanged="Grid_SizeChanged">
+        <Grid x:Name="grid_o" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Border x:Name="bor_SetBanner" Height="0" Width="200"></Border>
+            <Grid x:Name="grid_Top" Visibility="Collapsed" Background="{ThemeResource Bili-ForeColor}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
+                <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis" Text="专栏" Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White"></TextBlock>
+              
+            </Grid>
+            <Grid Grid.Row="1">
+                <ScrollViewer x:Name="sv" ViewChanged="sv_ViewChanged"  VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <Viewbox MaxWidth="640"  Grid.Column="1" >
+                            <FlipView x:Name="ls_Banner"  Height="200" Width="640" Grid.Column="1"   VerticalAlignment="Top" >
+                                <FlipView.ItemTemplate>
+                                    <DataTemplate>
+                                        <HyperlinkButton Padding="0"  Click="btn_Banner_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                            <Grid>
+                                                <c:ImageEx  Source="{Binding image}"  Height="200" PlaceholderSource="ms-appx:///Assets/Logo/PI900_300.png"/>
+                                            </Grid>
+                                        </HyperlinkButton>
+                                    </DataTemplate>
+                                </FlipView.ItemTemplate>
+                            </FlipView>
+                        </Viewbox>
+
+                        <ListView Visibility="Collapsed" ItemClick="ls_Banner_ItemClick" SelectionMode="None" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsStackPanel Orientation="Horizontal"></ItemsStackPanel>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Margin" Value="8 0 8 0"></Setter>
+                                    <Setter Property="Padding" Value="0"></Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Image Height="{Binding ElementName=bor_SetBanner,Path=Width}" Source="{Binding image}"></Image>
+                                        <Grid VerticalAlignment="Bottom">
+                                            <Grid.Background>
+                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                    <GradientStop Offset="0"/>
+                                                    <GradientStop Color="#B29C9C9C" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Grid.Background>
+                                            <TextBlock Foreground="White" Padding="4" Text="{Binding title}"></TextBlock>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+
+                        </ListView>
+                        <Grid Background="{ThemeResource Bili-List-Background}" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <HyperlinkButton  Click="btn_ArticlePart_Click" Tag="2" HorizontalAlignment="Center">
+                                <StackPanel >
+                                    <Image Source="ms-appx:///Assets/PartIcon/a-dh.png" Height="36" Width="36"></Image>
+                                    <TextBlock HorizontalAlignment="Center" Foreground="{ThemeResource Bili-FontColor}">动画</TextBlock>
+                                </StackPanel>
+                            </HyperlinkButton>
+                            <HyperlinkButton  Click="btn_ArticlePart_Click"  Tag="16" Grid.Column="1" HorizontalAlignment="Center">
+                                <StackPanel >
+                                    <Image Source="ms-appx:///Assets/PartIcon/a-qxs.png" Height="36" Width="36"></Image>
+                                    <TextBlock HorizontalAlignment="Center" Foreground="{ThemeResource Bili-FontColor}">轻小说</TextBlock>
+                                </StackPanel>
+                            </HyperlinkButton>
+                            <HyperlinkButton  Click="btn_ArticlePart_Click"  Tag="1"  Grid.Column="2" HorizontalAlignment="Center">
+                                <StackPanel >
+                                    <Image Source="ms-appx:///Assets/PartIcon/a-yx.png" Height="36" Width="36"></Image>
+                                    <TextBlock HorizontalAlignment="Center" Foreground="{ThemeResource Bili-FontColor}">游戏</TextBlock>
+                                </StackPanel>
+                            </HyperlinkButton>
+                            <HyperlinkButton  Click="btn_ArticlePart_Click"  Tag="17"  Grid.Column="3" HorizontalAlignment="Center">
+                                <StackPanel >
+                                    <Image Source="ms-appx:///Assets/PartIcon/a-kj.png" Height="36" Width="36"></Image>
+                                    <TextBlock HorizontalAlignment="Center" Foreground="{ThemeResource Bili-FontColor}">科技</TextBlock>
+                                </StackPanel>
+                            </HyperlinkButton>
+                            <HyperlinkButton  Click="btn_ArticlePart_Click"  Tag="29"  Grid.Column="4" HorizontalAlignment="Center">
+                                <StackPanel >
+                                    <Image Source="ms-appx:///Assets/PartIcon/a-qt.png" Height="36" Width="36"></Image>
+                                    <TextBlock HorizontalAlignment="Center" Foreground="{ThemeResource Bili-FontColor}">其他</TextBlock>
+                                </StackPanel>
+                            </HyperlinkButton>
+                        </Grid>
+                        <ListView SelectionMode="None" ItemClick="ls_article_ItemClick" IsItemClickEnabled="True" x:Name="ls_article">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Margin" Value="4"></Setter>
+                                    <Setter Property="Padding" Value="4"></Setter>
+                                    <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"></Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+                                            <Ellipse Width="16" Height="16">
+                                                <Ellipse.Fill>
+                                                    <ImageBrush Stretch="Fill" ImageSource="{Binding Path=author.face}"/>
+                                                </Ellipse.Fill>
+
+                                            </Ellipse>
+                                            <TextBlock FontSize="14" Foreground="Gray" VerticalAlignment="Center" Margin="4 0" Text="{Binding Path=author.name}"></TextBlock>
+                                        </StackPanel>
+                                        <TextBlock TextWrapping="Wrap" Margin="0 4" Text="{Binding title}"></TextBlock>
+                                        <c:ImageEx  Source="{Binding bannerImage}"  Height="120" PlaceholderSource="ms-appx:///Assets/Logo/PI900_300.png" Stretch="UniformToFill"/>
+                                        <TextBlock Margin="0 4" FontSize="14" TextTrimming="CharacterEllipsis" Foreground="Gray" MaxLines="2" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding summary}"></TextBlock>
+                                        <Grid>
+                                            <TextBlock  FontSize="14" Foreground="Gray"><Run Text="{Binding Path=category.name}"></Run> · <Run Text="{Binding Path=stats.view}"/>阅读</TextBlock>
+
+                                            <TextBlock HorizontalAlignment="Right"  FontSize="14" Foreground="Gray"><Run Text="{Binding Path=stats.reply}"/>评论 <Run Text="{Binding Path=stats.like}"/>赞</TextBlock>
+                                        </Grid>
+                                    </StackPanel>
+
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            
+                        </ListView>
+                    </StackPanel>
+                </ScrollViewer>
+              
+            </Grid>
+        </Grid>
+      
+        <ProgressRing Width="56" Height="56" x:Name="pr_Load" IsActive="True" Visibility="Collapsed"></ProgressRing>
+    </Grid>
+</Page>

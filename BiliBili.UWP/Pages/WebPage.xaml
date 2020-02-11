@@ -1,0 +1,82 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.WebPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages"
+      xmlns:my="using:BiliBili.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid  Background="{ThemeResource Bili-Background}">
+        <Grid x:Name="grid_o" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
+                <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis" Text="{Binding ElementName=webView,Path=DocumentTitle}" Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White"></TextBlock>
+                <AppBarButton Grid.Column="2" Width="48" Height="48" Foreground="White" Icon="More">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem x:Name="btn_refresh" Click="btn_refresh_Click">刷新</MenuFlyoutItem>
+                            <MenuFlyoutItem Click="menu_copy_Click">复制网址</MenuFlyoutItem>
+                            <MenuFlyoutItem Click="menu_open_Click">浏览器打开</MenuFlyoutItem>
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+            </Grid>
+            <WebView x:Name="webView" Grid.Row="1" NavigationStarting="webview_WebView_NavigationStarting" NavigationCompleted="webView_NavigationCompleted" DOMContentLoaded="webview_WebView_DOMContentLoaded" UnsupportedUriSchemeIdentified="web_UnsupportedUriSchemeIdentified" NewWindowRequested="webview_WebView_NewWindowRequested"></WebView>
+        </Grid>
+        <!--<ContentDialog x:Name="cd"  Grid.RowSpan="2" IsPrimaryButtonEnabled="True" IsSecondaryButtonEnabled="True" PrimaryButtonText="分享" PrimaryButtonClick="cd_PrimaryButtonClick" SecondaryButtonText="关闭">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                <StackPanel>
+                    <MediaElement AutoPlay="True" Source="{Binding Path=item.video_playurl}" AreTransportControlsEnabled="True">
+                        <MediaElement.TransportControls>
+                            <MediaTransportControls IsFullWindowButtonVisible="False" IsZoomButtonVisible="False"></MediaTransportControls>
+                        </MediaElement.TransportControls>
+                    </MediaElement>
+                    <Grid x:Name="videoinfo" Margin="0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Ellipse Width="56" Height="56" Grid.RowSpan="2" Margin="0 0 5 0">
+                            <Ellipse.Fill>
+                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=user.head_url}"/>
+                            </Ellipse.Fill>
+
+                        </Ellipse>
+                        <TextBlock Grid.Column="1" VerticalAlignment="Bottom" Text="{Binding Path=user.name}"></TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Foreground="Gray" FontSize="14" VerticalAlignment="Top">发表于<Run Text="{Binding Path=item.upload_time}"></Run></TextBlock>
+                        <Button Grid.Column="2" Grid.RowSpan="2" Background="#FFDF85A0" Foreground="White" Margin="10 0 0 0" Click="Button_Click">关注</Button>
+                        <TextBlock Margin="0 10" Grid.ColumnSpan="3" Grid.Row="2" IsTextSelectionEnabled="True" Foreground="Gray" TextWrapping="Wrap" Text="{Binding Path=item.description}"></TextBlock>
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+
+        </ContentDialog>-->
+        <ProgressRing Width="56" Height="56" x:Name="webview_progressBar" Grid.RowSpan="2"  IsActive="True" Visibility="Collapsed"></ProgressRing>
+        <StackPanel Margin="12" Grid.RowSpan="2" VerticalAlignment="Bottom" Orientation="Horizontal">
+            <AppBarButton x:Name="btn_WebBack" Click="btn_WebBack_Click" Icon="Back"  Foreground="White" Width="48" Height="48" Background="#19000000"></AppBarButton>
+            <AppBarButton x:Name="btn_WebRefresh" Click="btn_WebRefresh_Click" Icon="Refresh"  Foreground="White" Width="48" Height="48" Background="#19000000"></AppBarButton>
+        </StackPanel>
+      
+    </Grid>
+</Page>

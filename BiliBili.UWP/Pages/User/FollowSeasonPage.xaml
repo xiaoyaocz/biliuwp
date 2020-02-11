@@ -1,0 +1,101 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.FollowSeasonPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages"
+     xmlns:my="using:BiliBili.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <MenuFlyout x:Name="menu">
+            <MenuFlyoutItem Tag="2" x:Name="menu2" Click="MenuMove_Click">移动到 在看</MenuFlyoutItem>
+            <MenuFlyoutItem Tag="1" x:Name="menu1" Click="MenuMove_Click">移动到 想看</MenuFlyoutItem>
+            <MenuFlyoutItem Tag="3" x:Name="menu3" Click="MenuMove_Click">移动到 看过</MenuFlyoutItem>
+            <MenuFlyoutSeparator></MenuFlyoutSeparator>
+            <MenuFlyoutItem x:Name="menuCancel" Click="MenuCancel_Click">取消收藏</MenuFlyoutItem>
+        </MenuFlyout>
+    </Page.Resources>
+    <Grid Background="{ThemeResource Bili-Background}">
+        <Grid x:Name="grid_o" BorderThickness="0 0 1 0" BorderBrush="{ThemeResource Bili-ForeColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
+                <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis" Text="我的追番" Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White"></TextBlock>
+            </Grid>
+            <Pivot Grid.Row="1" x:Name="pivot"  SelectionChanged="Pivot_SelectionChanged">
+                <Pivot.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock FontSize="18" Text="{Binding name}"></TextBlock>
+                    </DataTemplate>
+                </Pivot.HeaderTemplate>
+                <Pivot.ItemContainerStyle>
+                    <Style TargetType="PivotItem">
+                        <Setter Property="Margin" Value="0"></Setter>
+                    </Style>
+                </Pivot.ItemContainerStyle>
+                <Pivot.ItemTemplate>
+                    <DataTemplate>
+                        <ScrollViewer x:Name="sv_2" DataContext="{Binding seasonFollow}" ViewChanged="sv_ViewChanged"  VerticalScrollBarVisibility="Auto">
+                            <StackPanel>
+                                <ProgressBar Background="Transparent" Visibility="{Binding Loading}" IsIndeterminate="True"></ProgressBar>
+                                <ListView x:Name="list" ItemsSource="{Binding FollowList}" ScrollViewer.VerticalScrollMode="Disabled" ItemClick="list_ItemClick" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" ></Setter>
+                                            <Setter Property="BorderBrush" Value="#33C1C1C1"></Setter>
+                                            <Setter Property="Padding" Value="10"></Setter>
+                                            <Setter Property="BorderThickness" Value="0 0 0 0.5"></Setter>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Holding="Item_Holding" RightTapped="Item_RightTapped">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid>
+                                                    <Image Source="{Binding cover}" Width="86"></Image>
+                                                    <Border VerticalAlignment="Top" Padding="5 2"  Visibility="{Binding show_badge}" HorizontalAlignment="Right" Background="#FFFFAE00" >
+                                                        <TextBlock FontSize="12" Foreground="White" Text="{Binding badge}"></TextBlock>
+                                                    </Border>
+                                                </Grid>
+                                                <StackPanel Grid.Column="1" Margin="10 0 0 0" VerticalAlignment="Top">
+                                                    <TextBlock Margin="0 4" TextWrapping="Wrap" Text="{Binding title}"></TextBlock>
+                                                    <TextBlock  Margin="0 4" FontSize="14" Foreground="Gray" Visibility="{Binding show_areas}" Text="{Binding Path=areas_str}"></TextBlock>
+                                                    <TextBlock  Margin="0 4" FontSize="14" Foreground="Gray" Text="{Binding Path=new_ep.index_show}"></TextBlock>
+                                                    <TextBlock  Margin="0 4" FontSize="14" Foreground="Gray" Text="{Binding Path=progress.index_show}"></TextBlock>
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+
+                                </ListView>
+                                <HyperlinkButton FontSize="12" Visibility="{Binding Path=HasNext}"  Click="BtnLoadMore_Click" Foreground="Gray" HorizontalAlignment="Center" Margin="10">
+                                    <TextBlock>点击加载更多</TextBlock>
+                                </HyperlinkButton>
+                            </StackPanel>
+
+                        </ScrollViewer>
+                    </DataTemplate>
+                </Pivot.ItemTemplate>
+            </Pivot>
+          
+        </Grid>
+       
+     
+    </Grid>
+</Page>

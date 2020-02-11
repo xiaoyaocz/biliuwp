@@ -1,0 +1,295 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.Music.MusicHomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages.Music"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+         xmlns:c="using:Microsoft.Toolkit.Uwp.UI.Controls"
+     xmlns:pr="using:PullToRefresh.UWP"
+    Tag="Music"
+    >
+    <Page.Resources>
+        <DataTemplate x:Name="musicMenu">
+            <StackPanel Width="{Binding ElementName=ViewBox_num,Path=Width}">
+                <Grid>
+                    <Border Background="{ThemeResource Bili-List-Background}"></Border>
+                    <Image  Source="{Binding coverUrl}" Height="{Binding ElementName=ViewBox_num,Path=Width}" Stretch="UniformToFill"></Image>
+                    <Grid VerticalAlignment="Bottom" Padding="4">
+                        <Grid.Background>
+                            <LinearGradientBrush EndPoint="0,0.5" StartPoint="0,0">
+                                <GradientStop Color="#33000000" Offset="1.3"/>
+                                <GradientStop Color="Transparent"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon Foreground="White" FontSize="14" FontFamily="Segoe MDL2 Assets" Glyph="&#xE7F6;" />
+                            <TextBlock Foreground="White"  FontSize="12" Margin="4 0" Text="{Binding palyNum_str}"></TextBlock>
+                        </StackPanel>
+                    </Grid>
+                    <Border Visibility="{Binding vip}" Padding="8 2"  Background="Orange" VerticalAlignment="Top" HorizontalAlignment="Right">
+                        <TextBlock FontSize="12" Foreground="White">付费</TextBlock>
+                    </Border>
+                </Grid>
+
+                <TextBlock Margin="0 4" FontSize="14"  MinHeight="48" MaxLines="2" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" Text="{Binding title}"></TextBlock>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Name="musicSong">
+            <StackPanel Width="{Binding ElementName=ViewBox_num,Path=Width}">
+                <Grid>
+                    <Border Background="{ThemeResource Bili-List-Background}"></Border>
+                    <Image  Source="{Binding cover_url}" Height="{Binding ElementName=ViewBox_num,Path=Width}" Stretch="UniformToFill"></Image>
+                    <Grid VerticalAlignment="Bottom" Padding="4">
+                        <Grid.Background>
+                            <LinearGradientBrush EndPoint="0,0.5" StartPoint="0,0">
+                                <GradientStop Color="#33000000" Offset="1.3"/>
+                                <GradientStop Color="Transparent"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon Foreground="White" FontSize="14" FontFamily="Segoe MDL2 Assets" Glyph="&#xE7F6;" />
+                            <TextBlock Foreground="White" FontSize="12" Margin="4 0" Text="{Binding palyNum_str}"></TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+                <TextBlock Margin="0 4" FontSize="14"  MinHeight="48" MaxLines="2" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" Text="{Binding title}"></TextBlock>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid >
+        <pr:PullToRefreshBox RefreshInvoked="PullToRefreshBox_RefreshInvoked">
+            <ScrollViewer x:Name="sv"   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel>
+                    <Border x:Name="ViewBox_num" Background="Gray" Width="100"></Border>
+                    <Viewbox MaxWidth="960"  Grid.Column="1" >
+                        <FlipView  x:Name="home_flipView" ItemsSource="{Binding Path=banner.bannerList}" Height="280" Width="960" Grid.Column="1"   VerticalAlignment="Top" >
+                            <FlipView.ItemTemplate>
+                                <DataTemplate>
+                                    <HyperlinkButton Padding="0"  Click="HyperlinkButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                        <Grid>
+                                            <c:ImageEx  Source="{Binding bannerImgUrl}"  Height="280" PlaceholderSource="ms-appx:///Assets/Logo/PI900_300.png"/>
+                                        </Grid>
+                                    </HyperlinkButton>
+                                </DataTemplate>
+                            </FlipView.ItemTemplate>
+                        </FlipView>
+                    </Viewbox>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button BorderThickness="0" HorizontalAlignment="Stretch" Foreground="{ThemeResource TextControlForeground}" Background="#00000000">
+                            <StackPanel>
+                                <Image Width="36" Height="36" Source="ms-appx:///Assets/PartIcon/music_ic_my_voice.png"></Image>
+                                <TextBlock HorizontalAlignment="Center">我的</TextBlock>
+                            </StackPanel>
+                            <Button.Flyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem x:Name="menu_CollectSong" Click="menu_CollectSong_Click">收藏的歌曲</MenuFlyoutItem>
+                                    <MenuFlyoutItem  x:Name="menu_CollectMenu" Click="menu_CollectMenu_Click">收藏的歌单</MenuFlyoutItem>
+                                    <MenuFlyoutItem  x:Name="menu_CollectPMenu" Click="menu_CollectPMenu_Click">收藏的专辑</MenuFlyoutItem>
+                                    <MenuFlyoutItem  x:Name="menu_CollectUser" Click="menu_CollectUser_Click">关注的歌手</MenuFlyoutItem>
+                                </MenuFlyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button x:Name="btn_OpenMenu" BorderThickness="0" Click="btn_OpenMenu_Click" Grid.Column="1" Background="#00000000" HorizontalAlignment="Stretch" >
+                            <StackPanel>
+                                <Image Width="36" Height="36" Source="ms-appx:///Assets/PartIcon/music_ic_menus.png"></Image>
+                                <TextBlock HorizontalAlignment="Center">歌单</TextBlock>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btn_OpenSearch" Click="btn_OpenSearch_Click" BorderThickness="0" Grid.Column="2" Background="#00000000" HorizontalAlignment="Stretch">
+                            <StackPanel>
+                                <Image Width="36" Height="36" Source="ms-appx:///Assets/PartIcon/music_ic_search_voice.png"></Image>
+                                <TextBlock HorizontalAlignment="Center">搜索</TextBlock>
+                            </StackPanel>
+                        </Button>
+                        <Button BorderThickness="0" x:Name="btn_OpenVideo" Click="btn_OpenVideo_Click" Grid.Column="3" HorizontalAlignment="Stretch" Foreground="{ThemeResource TextControlForeground}" Background="#00000000">
+                            <StackPanel>
+                                <Image Width="36" Height="36" Source="ms-appx:///Assets/PartIcon/music_ic_video_tab.png"></Image>
+                                <TextBlock HorizontalAlignment="Center">视频</TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    <GridView Margin="8 4" ItemsSource="{Binding common}" ItemTemplate="{StaticResource musicMenu}" ItemClick="GridView_ItemClick"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="None" IsItemClickEnabled="True">
+                        <GridView.Header>
+                            <Grid Margin="0 4 0 0">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="ms-appx:///Assets/PartIcon/music_ic_recommend_song_list.png" Width="24" Height="24"></Image>
+                                    <TextBlock Margin="8 0" VerticalAlignment="Center">歌单推荐</TextBlock>
+                                </StackPanel>
+                                <HyperlinkButton Click="btn_OpenMenu_Click" FontSize="14" Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Margin="4 0">更多歌单</TextBlock>
+                                        <FontIcon FontSize="14" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" />
+                                    </StackPanel>
+                                </HyperlinkButton>
+                            </Grid>
+
+                        </GridView.Header>
+                        <GridView.Footer>
+                            <HyperlinkButton Tag="sharkMenus" Click="btn_RefreshMenu_Click" HorizontalAlignment="Center">
+                                <Border BorderThickness="1" Padding="16 4" CornerRadius="4" BorderBrush="{ThemeResource HyperlinkButtonForeground}">
+                                  
+                                        <TextBlock VerticalAlignment="Center" >换一批</TextBlock>
+                                
+                                 
+                                </Border>
+                            </HyperlinkButton>
+                        </GridView.Footer>
+                       
+                    </GridView>
+                    <GridView Margin="8 4" ItemsSource="{Binding pmenu}" ItemTemplate="{StaticResource musicMenu}" ItemClick="GridView_ItemClick"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="None" IsItemClickEnabled="True">
+                        <GridView.Header>
+                            <Grid Margin="0 4 0 0">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="ms-appx:///Assets/PartIcon/music_ic_album_section.png" Width="24" Height="24"></Image>
+                                    <TextBlock Margin="8 0" VerticalAlignment="Center">音乐专辑</TextBlock>
+                                </StackPanel>
+                                <HyperlinkButton x:Name="btn_OpenAlbum" Click="btn_OpenAlbum_Click" FontSize="14" Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Margin="4 0">更多专辑</TextBlock>
+                                        <FontIcon FontSize="14" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" />
+                                    </StackPanel>
+                                </HyperlinkButton>
+                            </Grid>
+
+                        </GridView.Header>
+                        <GridView.Footer>
+                            <HyperlinkButton Tag="shark-pgc-menus" Click="btn_RefreshMenu_Click"  HorizontalAlignment="Center">
+                                <Border BorderThickness="1" Padding="16 4" CornerRadius="4" BorderBrush="{ThemeResource HyperlinkButtonForeground}">
+
+                                    <TextBlock VerticalAlignment="Center" >换一批</TextBlock>
+
+
+                                </Border>
+                            </HyperlinkButton>
+                        </GridView.Footer>
+                    </GridView>
+                    <GridView Margin="8 4" ItemsSource="{Binding hitSongs}" ItemTemplate="{StaticResource  musicSong}"  ItemClick="gv_Songs_ItemClick"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="None" IsItemClickEnabled="True">
+                        <GridView.Header>
+                            <Grid Margin="0 4 0 0">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="ms-appx:///Assets/PartIcon/music_ic_recommend_single.png" Width="24" Height="24"></Image>
+                                    <TextBlock Margin="8 0" VerticalAlignment="Center">单曲推荐</TextBlock>
+                                </StackPanel>
+                                
+                            </Grid>
+
+                        </GridView.Header>
+                        <GridView.Footer>
+                            <HyperlinkButton  Tag="sharkHitSongs" Click="btn_RefreshMenu_Click" HorizontalAlignment="Center">
+                                <Border BorderThickness="1" Padding="16 4" CornerRadius="4" BorderBrush="{ThemeResource HyperlinkButtonForeground}">
+
+                                    <TextBlock VerticalAlignment="Center" >换一批</TextBlock>
+
+
+                                </Border>
+                            </HyperlinkButton>
+                        </GridView.Footer>
+                    </GridView>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <HyperlinkButton x:Name="btn_HotRank" DataContext="{Binding hitMenus}" Click="btn_HotRank_Click" HorizontalAlignment="Center" Margin="8 0">
+                            <Image Source="ms-appx:///Assets/PartIcon/music_bg_hit_list.png"  ></Image>
+                        </HyperlinkButton>
+                        <HyperlinkButton  x:Name="btn_NewRank" DataContext="{Binding originMenus}" Click="btn_NewRank_Click" HorizontalAlignment="Center" Grid.Column="1" Margin="8 0">
+                            <Image Source="ms-appx:///Assets/PartIcon/music_bg_origin_list.png"  ></Image>
+                        </HyperlinkButton>
+                    </Grid>
+
+
+                    <GridView Margin="8 4" ItemsSource="{Binding categories}" ItemTemplate="{StaticResource musicMenu}" ItemClick="GridView_ItemClick"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="None" IsItemClickEnabled="True">
+                        <GridView.Header>
+                            <Grid Margin="0 4 0 0">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="ms-appx:///Assets/PartIcon/music_ic_recommend_classify.png" Width="24" Height="24"></Image>
+                                    <TextBlock Margin="8 0" VerticalAlignment="Center">分类榜单</TextBlock>
+                                </StackPanel>
+
+                            </Grid>
+
+                        </GridView.Header>
+                       
+                    </GridView>
+                    <GridView Margin="8 4" ItemsSource="{Binding missEvan}" ItemTemplate="{StaticResource musicMenu}" ItemClick="GridView_ItemClick"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="None" IsItemClickEnabled="True">
+                        <GridView.Header>
+                            <Grid Margin="0 4 0 0">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="ms-appx:///Assets/PartIcon/music_icon_section_missevan.png" Width="24" Height="24"></Image>
+                                    <TextBlock Margin="8 0" VerticalAlignment="Center">猫耳FM专区</TextBlock>
+                                </StackPanel>
+                                <HyperlinkButton x:Name="btn_OpenMissEvan" Click="btn_OpenMissEvan_Click" FontSize="14" Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Margin="4 0">更多专辑</TextBlock>
+                                        <FontIcon FontSize="14" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" />
+                                    </StackPanel>
+                                </HyperlinkButton>
+                            </Grid>
+
+                        </GridView.Header>
+                        <GridView.Footer>
+                            <HyperlinkButton Tag="shark-missevan" Click="btn_RefreshMenu_Click" HorizontalAlignment="Center">
+                                <Border BorderThickness="1" Padding="16 4" CornerRadius="4" BorderBrush="{ThemeResource HyperlinkButtonForeground}">
+
+                                    <TextBlock VerticalAlignment="Center" >换一批</TextBlock>
+
+
+                                </Border>
+                            </HyperlinkButton>
+                        </GridView.Footer>
+                    </GridView>
+
+                    <ItemsControl ItemsSource="{Binding songRecommend}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <GridView Margin="8 4" ItemsSource="{Binding list}" ItemTemplate="{StaticResource  musicSong}"  ItemClick="gv_Songs_ItemClick"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="None" IsItemClickEnabled="True">
+                                    <GridView.Header>
+                                        <Grid Margin="0 4 0 0">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="ms-appx:///Assets/PartIcon/music_ic_song_recomend_section.png" Width="24" Height="24"></Image>
+                                                <TextBlock Margin="8 0" VerticalAlignment="Center" Text="{Binding name}"></TextBlock>
+                                            </StackPanel>
+                                            <HyperlinkButton Click="HyperlinkButton_Click_1" FontSize="14" Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock VerticalAlignment="Center" Margin="4 0">更多单曲</TextBlock>
+                                                    <FontIcon FontSize="14" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" />
+                                                </StackPanel>
+                                            </HyperlinkButton>
+                                        </Grid>
+
+                                    </GridView.Header>
+                                    <GridView.Footer>
+                                        <HyperlinkButton Tag="{Binding cate_type}" Click="btn_RefreshMenu_Click" HorizontalAlignment="Center">
+                                            <Border BorderThickness="1" Padding="16 4" CornerRadius="4" BorderBrush="{ThemeResource HyperlinkButtonForeground}">
+
+                                                <TextBlock VerticalAlignment="Center" >换一批</TextBlock>
+
+
+                                            </Border>
+                                        </HyperlinkButton>
+                                    </GridView.Footer>
+                                </GridView>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    
+                   
+                </StackPanel>
+            </ScrollViewer>
+        </pr:PullToRefreshBox>
+        <AppBarButton x:Name="b_btn_Refresh" Grid.RowSpan="3" Click="b_btn_Refresh_Click" Width="48" Height="48" Margin="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Icon="Refresh" Background="{ThemeResource Bili-ForeColor}" Opacity="0.6" Foreground="White"></AppBarButton>
+        <ProgressBar x:Name="pr_load" Visibility="Collapsed" VerticalAlignment="Top" Background="#00000000" IsIndeterminate="True"></ProgressBar>
+    </Grid>
+</Page>

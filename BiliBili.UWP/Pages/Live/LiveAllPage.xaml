@@ -1,0 +1,102 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.LiveAllPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages"
+     xmlns:my="using:BiliBili.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    SizeChanged="Page_SizeChanged"
+    >
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style x:Key="itemStyle" TargetType="GridViewItem">
+                <Setter Property="Margin" Value="5"></Setter>
+                <Setter Property="Background" Value="{ ThemeResource Bili-List-Background}"></Setter>
+                <Setter Property="BorderBrush" Value="{ ThemeResource Bili-Background}"></Setter>
+                <Setter Property="BorderThickness" Value="1"></Setter>
+            </Style>
+            <DataTemplate x:Key="GridItem">
+                <Grid Width="{Binding ElementName=bor_Width2,Path=Width}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition ></RowDefinition>
+                        <RowDefinition Height="48"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image   Source="{Binding Path=cover}" Stretch="UniformToFill"  ></Image>
+                    <Grid  Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" Margin="10,0,10,5" >
+
+                            <TextBlock Text="{Binding Path=uname}" FontSize="13" TextTrimming="CharacterEllipsis" Foreground="Gray" VerticalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="10,0,10,5" HorizontalAlignment="Right">
+                            <FontIcon Glyph="&#xE13D;" FontSize="12"  Foreground="Gray"  Margin="0,0,5,0"></FontIcon>
+                            <TextBlock Text="{Binding online}" FontSize="13"  Foreground="Gray" VerticalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10 5 10 0" VerticalAlignment="Top">
+                        <TextBlock  MaxWidth="320" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" FontSize="13" >
+                                             <Run Foreground="{ThemeResource Bili-ForeColor}" >#</Run>
+                                             <Run Foreground="{ThemeResource Bili-ForeColor}" Text="{Binding area_name}"></Run>
+                                             <Run Foreground="{ThemeResource Bili-ForeColor}" >#</Run>
+                                            <Run Text="{Binding title}"></Run>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+
+
+            </DataTemplate>
+        
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Background="{ThemeResource Bili-Background}" x:Name="g">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Background="{ThemeResource Bili-ForeColor}" Grid.Row="0" Height="48" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="48"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <AppBarButton x:Name="btn_back" Click="btn_Back_Click" Icon="Back" Width="48" Height="48" Foreground="White"/>
+            <TextBlock  Text="全部直播" Margin="5 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
+
+        </Grid>
+     
+        <Pivot Grid.Row="1" x:Name="pivot" SelectionChanged="pivot_SelectionChanged">
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">热门直播</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer Grid.Row="1"  x:Name="sv_TJ" ViewChanged="sv_TJ_ViewChanged">
+                    <StackPanel>
+                        <Border x:Name="bor_Width2" Background="Gray" Width="100" VerticalAlignment="Bottom"></Border>
+                        <GridView x:Name="gv_TJ" ItemClick="gv_TJ_ItemClick" HorizontalAlignment="Center" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemTemplate="{StaticResource GridItem}" ItemContainerStyle="{StaticResource itemStyle}" SelectionMode="None" IsItemClickEnabled="True"></GridView>
+                        <Button Margin="10" HorizontalAlignment="Center" x:Name="btn_LoadMore_TJ" Click="btn_LoadMore_TJ_Click" FontSize="14" Foreground="Gray" Background="#00000000">点我加载更多</Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="16">最新开播</TextBlock>
+                </PivotItem.Header>
+                <ScrollViewer Grid.Row="1"  x:Name="sv_New" ViewChanged="sv_New_ViewChanged">
+                    <StackPanel>
+
+                        <GridView x:Name="gv_New" ItemClick="gv_TJ_ItemClick" HorizontalAlignment="Center" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemTemplate="{StaticResource GridItem}" ItemContainerStyle="{StaticResource itemStyle}" SelectionMode="None" IsItemClickEnabled="True"></GridView>
+                        <Button Margin="10" HorizontalAlignment="Center" x:Name="btn_LoadMore_New" Click="btn_LoadMore_New_Click" FontSize="14" Foreground="Gray" Background="#00000000">点我加载更多</Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+        <AppBarButton x:Name="b_btn_Refresh" Click="b_btn_Refresh_Click" Width="48" Height="48" Margin="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Icon="Refresh" Background="{ThemeResource Bili-ForeColor}" Opacity="0.6" Foreground="White" Grid.RowSpan="2"></AppBarButton>
+        <ProgressRing Width="56" Height="56" x:Name="pr_Load" Grid.RowSpan="2"  IsActive="True" Visibility="Collapsed"></ProgressRing>
+    </Grid>
+</Page>

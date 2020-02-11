@@ -1,0 +1,115 @@
+﻿<Page xmlns:Controls="using:BiliBili.UWP.Controls" 
+    x:Class="BiliBili.UWP.Pages.DynamicInfoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+  
+    <Grid Background="{ThemeResource Bili-Background}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
+            <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">动态详情</TextBlock>
+            <AppBarButton Width="48" Height="48" Icon="More" Grid.Column="2" Foreground="White">
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem x:Name="btn_Share" Click="btn_Share_Click">分享</MenuFlyoutItem>
+                        <MenuFlyoutItem>举报</MenuFlyoutItem>
+                        <MenuFlyoutItem x:Name="btn_Delete" Click="btn_Delete_Click">删除</MenuFlyoutItem>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <StackPanel MaxWidth="800" HorizontalAlignment="Center" x:Name="st">
+                <Controls:DynamicControls x:Name="dynamic" OpenComment="dynamic_OpenComment"/>
+
+
+                <Pivot x:Name="pivot" SelectionChanged="pivot_SelectionChanged" Background="{ThemeResource Bili-List-Background}" Margin="0 8">
+                    <PivotItem Margin="0">
+                        <PivotItem.Header>
+                            <TextBlock FontSize="16">转发</TextBlock>
+                        </PivotItem.Header>
+                        <Grid>
+                            <StackPanel>
+                                <ListView x:Name="ls_repost" BorderThickness="0 1 0 0" BorderBrush="#33808080" SelectionMode="None" IsItemClickEnabled="False" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                            <Setter Property="BorderThickness" Value="0 0 0 1"></Setter>
+                                            <Setter Property="BorderBrush" Value="#33808080"></Setter>
+                                            <Setter Property="Padding" Value="12"></Setter>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <HyperlinkButton x:Name="btn_User" Click="btn_User_Click" Padding="0" Margin="0" Grid.RowSpan="2">
+                                                    <Ellipse  Height="36" Width="36">
+                                                        <Ellipse.Fill>
+                                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding face_url}"/>
+                                                        </Ellipse.Fill>
+                                                    </Ellipse>
+                                                </HyperlinkButton>
+                                                <TextBlock Grid.Column="1" Margin="8 0" Text="{Binding uname}"></TextBlock>
+                                                <TextBlock Grid.Column="1" Grid.Row="1"  FontSize="12" Foreground="Gray" Margin="8 0" Text="{Binding time}"></TextBlock>
+
+                                                <ContentControl  Grid.Row="2" Grid.Column="1" Margin="8 0" Content="{Binding Content}"></ContentControl>
+
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+
+                                </ListView>
+
+                                <HyperlinkButton x:Name="btn_LoadMoreRepost" Click="btn_LoadMoreRepost_Click" Visibility="Collapsed" HorizontalAlignment="Center">加载更多</HyperlinkButton>
+                                
+                            </StackPanel>
+                           
+
+                            <TextBlock x:Name="noRepost" Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 24">还没有人转发</TextBlock>
+                            
+                        </Grid>
+                      
+                    </PivotItem>
+                    <PivotItem Margin="0">
+                        <PivotItem.Header>
+                            <TextBlock FontSize="16">评论</TextBlock>
+                        </PivotItem.Header>
+                        <Grid BorderThickness="0 1 0 0"  BorderBrush="#33808080" >
+                            <Controls:CommentV2Control x:Name="comment"/>
+                        </Grid>
+                       
+                        
+                        
+                    </PivotItem>
+                </Pivot>
+            </StackPanel>
+        </ScrollViewer>
+        <ProgressBar x:Name="pr_Load"  VerticalAlignment="Bottom" Background="#00000000" IsIndeterminate="True"></ProgressBar>
+    </Grid>
+</Page>

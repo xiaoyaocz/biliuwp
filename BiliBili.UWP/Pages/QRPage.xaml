@@ -1,0 +1,77 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.QRPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    >
+
+    <Page.Resources>
+        <Storyboard x:Name="LineStoryboard" AutoReverse="False"   RepeatBehavior="Forever">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="recScanning">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-269.94"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Page.Resources>
+
+    <!--<Interactivity:Interaction.Behaviors>
+        <Core:EventTriggerBehavior EventName="Loaded">
+            <Media:ControlStoryboardAction Storyboard="{StaticResource LineStoryboard}"/>
+        </Core:EventTriggerBehavior>
+    </Interactivity:Interaction.Behaviors>-->
+
+    <Grid Background="Black">
+        <Grid x:Name="LayoutRoot" >
+            <Grid x:Name="ContentPanel" >
+
+                <!--视频流预览-->
+                <CaptureElement x:Name="VideoCapture" Stretch="UniformToFill"  />
+                
+                <!--Tips-->
+                <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="36">
+                    <TextBlock x:Name="tbkTip" Foreground="White" HorizontalAlignment="Center" Text="将二维码图案置于取景框内"/>
+                    <TextBlock  Foreground="White"  Text="支持视频、番剧、直播、名片扫描及网页、TV端登录" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+
+                </StackPanel>
+                
+                <Grid Width="306" Height="306">
+                    <Rectangle Width="5" Height="50" Fill="Red" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Rectangle Width="5" Height="50" Fill="Red" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                    <Rectangle Width="5" Height="50" Fill="Red" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                    <Rectangle Width="5" Height="50" Fill="Red" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                    <Rectangle Width="50" Height="5" Fill="Red" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Rectangle Width="50" Height="5" Fill="Red" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                    <Rectangle Width="50" Height="5" Fill="Red" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                    <Rectangle Width="50" Height="5" Fill="Red" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+
+                    <Rectangle x:Name="recScanning"  Margin="12,0,12,16" Height="4" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Bottom" d:LayoutOverrides="Height">
+                        <Rectangle.RenderTransform>
+                            <CompositeTransform/>
+                        </Rectangle.RenderTransform>
+                        <Rectangle.Projection>
+                            <PlaneProjection/>
+                        </Rectangle.Projection>
+                        <Rectangle.Fill>
+                            <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+                                <GradientStop Color="#26F10606" Offset="0.15"/>
+                                <GradientStop Color="#26F10606" Offset="0.85"/>
+                                <GradientStop Color="#FFF10606" Offset="0.5"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+
+                    </Rectangle>
+                </Grid>
+            </Grid>
+            <!--扫描结果-->
+            <TextBlock x:Name="tbkResult" Grid.Row="1" Foreground="White" VerticalAlignment="Top" TextWrapping="Wrap"  Margin="12,18" FontSize="25" />
+            <StackPanel  x:Name="pr_Laod" Visibility="Collapsed" Grid.Row="1" VerticalAlignment="Center">
+                <ProgressRing IsActive="True" Width="100" Height="100" Foreground="White"></ProgressRing>
+                <TextBlock Foreground="White" HorizontalAlignment="Center" Margin="10">正在登录...</TextBlock>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

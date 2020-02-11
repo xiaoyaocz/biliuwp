@@ -1,0 +1,56 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.MyQrPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages"
+        xmlns:my="using:BiliBili.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid Background="{ThemeResource Bili-Background}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+
+            </Grid.ColumnDefinitions>
+            <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
+            <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis" Text="我的二维码" Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White"></TextBlock>
+            <AppBarButton Icon="Save" x:Name="btn_Save"  Grid.Column="2" Foreground="White" Height="48" Click="btn_Save_Click"></AppBarButton>
+        </Grid>
+        <Grid Grid.Row="1">
+
+            <StackPanel x:Name="qr" VerticalAlignment="Center" MaxWidth="500" Background="White" Padding="20">
+
+                <Image Width="300" Height="300" HorizontalAlignment="Center" Source="{Binding qr}"></Image>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <Ellipse Height="36" Width="36">
+                        <Ellipse.Fill>
+                            <ImageBrush Stretch="Fill" ImageSource="{Binding photo}"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock  FontSize="18" Margin="10 0" VerticalAlignment="Center" Text="{Binding name}" Foreground="Black"></TextBlock>
+                    <Image Source="ms-appx:///Assets/MiniIcon/ic_user_male_border.png"  x:Name="male"  Width="16" VerticalAlignment="Center"></Image>
+                    <Image Source="ms-appx:///Assets/MiniIcon/ic_user_female_border.png" x:Name="female" Width="16" VerticalAlignment="Center"></Image>
+                    <Image Source="ms-appx:///Assets/MiniIcon/ic_user_gay_border.png" x:Name="gay" Width="16" VerticalAlignment="Center"></Image>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+               
+                    <TextBlock  FontSize="14" Foreground="Gray" VerticalAlignment="Center">扫描二维码关注我</TextBlock>
+                </StackPanel>
+
+
+            </StackPanel>
+
+
+        </Grid>
+      
+    </Grid>
+</Page>

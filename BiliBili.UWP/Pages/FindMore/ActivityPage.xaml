@@ -1,0 +1,78 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.ActivityPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages"
+        xmlns:my="using:BiliBili.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    SizeChanged="Page_SizeChanged"
+    >
+
+    <Grid  Background="{ThemeResource Bili-Background}">
+        <Grid x:Name="grid_o" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
+                <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis" Text="活动中心" Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White"></TextBlock>
+
+            </Grid>
+
+            <ScrollViewer Grid.Row="1"  x:Name="sv" ViewChanged="sv_ViewChanged">
+                <StackPanel>
+                    <Border x:Name="bor_Width" Width="450" VerticalAlignment="Top"></Border>
+                    <GridView x:Name="grid_View" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" IsItemClickEnabled="True" SelectionMode="None" ItemClick="list_Topic_ItemClick"  Grid.Row="1">
+                        <GridView.ItemContainerStyle>
+                            <Style TargetType="GridViewItem">
+                                <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"></Setter>
+                                <Setter Property="Margin" Value="5"></Setter>
+                            </Style>
+                        </GridView.ItemContainerStyle>
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
+                                    <Grid >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Image   Stretch="UniformToFill" Source="ms-appx:///Assets/Logo/PI900_300.png"></Image>
+                                        <Image  Source="{Binding cover}" Stretch="UniformToFill"></Image>
+
+                                        <Grid Grid.Row="1"   Margin="5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding title}"></TextBlock>
+                                            <TextBlock Grid.Column="1" Foreground="{ThemeResource Bili-ForeColor}" Visibility="{Binding state_0}">进行中</TextBlock>
+                                            <TextBlock Grid.Column="1" Foreground="Gray" Visibility="{Binding state_1}">已结束</TextBlock>
+                                        </Grid>
+
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                    <Button x:Name="btn_More_Video" Click="btn_More_Video_Click"  HorizontalAlignment="Center" Foreground="Gray" FontSize="14" Background="#00000000">加载更多</Button>
+                </StackPanel>
+            </ScrollViewer>
+            
+        </Grid>
+        <AppBarButton x:Name="b_btn_Refresh" Click="b_btn_Refresh_Click" Width="48" Height="48" Margin="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Icon="Refresh" Background="{ThemeResource Bili-ForeColor}" Opacity="0.6" Foreground="White"></AppBarButton>
+        <ProgressRing Width="56" Height="56" x:Name="pr_Load" IsActive="True" Visibility="Collapsed"></ProgressRing>
+    </Grid>
+</Page>
