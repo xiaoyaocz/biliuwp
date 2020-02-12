@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -537,12 +538,9 @@ namespace BiliBili.UWP.Views
     {
         private Home home { get; set; } = new Home();
         public event PropertyChangedEventHandler PropertyChanged;
-        public void ThisPropertyChanged(string name)
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(null, new PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public string header { get; set; }
@@ -553,7 +551,7 @@ namespace BiliBili.UWP.Views
         public Visibility showLoading
         {
             get { return _showLoading; }
-            set { _showLoading = value; ThisPropertyChanged("showLoading"); }
+            set { _showLoading = value; RaisePropertyChanged(); }
         }
 
         private Visibility _showRefresh;
@@ -561,7 +559,7 @@ namespace BiliBili.UWP.Views
         public Visibility showRefresh
         {
             get { return _showRefresh; }
-            set { _showRefresh = value; ThisPropertyChanged("showRefresh"); }
+            set { _showRefresh = value; RaisePropertyChanged(); }
         }
 
         public TabModel tab { get; set; }
@@ -571,14 +569,14 @@ namespace BiliBili.UWP.Views
         public ObservableCollection<Banner_item> banner_items
         {
             get { return _banner_items; }
-            set { _banner_items = value; ThisPropertyChanged("banner_items"); }
+            set { _banner_items = value; RaisePropertyChanged(); }
         }
 
         private ObservableCollection<HomeDataModel> _home_datas = new ObservableCollection<HomeDataModel>();
         public ObservableCollection<HomeDataModel> home_datas
         {
             get { return _home_datas; }
-            set { _home_datas = value; ThisPropertyChanged("home_datas"); }
+            set { _home_datas = value; RaisePropertyChanged(); }
         }
 
 
@@ -587,7 +585,7 @@ namespace BiliBili.UWP.Views
         public int ItemsCount
         {
             get { return _ItemsCount; }
-            set { _ItemsCount = value; ThisPropertyChanged("ItemsCount"); }
+            set { _ItemsCount = value; RaisePropertyChanged(); }
         }
         /// <summary>
         /// 加载首页动态流
@@ -658,14 +656,14 @@ namespace BiliBili.UWP.Views
         public ObservableCollection<HotItemModel> hot_datas
         {
             get { return _hot_datas; }
-            set { _hot_datas = value; ThisPropertyChanged("hot_datas"); }
+            set { _hot_datas = value; RaisePropertyChanged(); }
         }
 
         private ObservableCollection<HotTopItemModel> _hot_top_items = new ObservableCollection<HotTopItemModel>();
         public ObservableCollection<HotTopItemModel> hot_top_items
         {
             get { return _hot_top_items; }
-            set { _hot_top_items = value; ThisPropertyChanged("hot_top_items"); }
+            set { _hot_top_items = value; RaisePropertyChanged(); }
         }
 
 
@@ -745,7 +743,7 @@ namespace BiliBili.UWP.Views
         public TabDataModel tabData
         {
             get { return _tabData; }
-            set { _tabData = value; ThisPropertyChanged("tabData"); }
+            set { _tabData = value; RaisePropertyChanged(); }
         }
 
 

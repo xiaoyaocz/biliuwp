@@ -23,6 +23,7 @@ using BiliBili.UWP.Pages;
 using Windows.UI.Xaml.Documents;
 using System.Threading.Tasks;
 using BiliBili.UWP.Models;
+using System.Runtime.CompilerServices;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -801,7 +802,7 @@ namespace BiliBili.UWP.Controls
         public int action
         {
             get { return _action; }
-            set { _action = value; thisPropertyChanged("action"); thisPropertyChanged("LikeColor"); }
+            set { _action = value; RaisePropertyChanged(); RaisePropertyChanged("LikeColor"); }
         }
 
         public SolidColorBrush LikeColor
@@ -832,13 +833,13 @@ namespace BiliBili.UWP.Controls
         public int rcount
         {
             get { return _rcount; }
-            set { _rcount = value; thisPropertyChanged("rcount"); }
+            set { _rcount = value; RaisePropertyChanged(); }
         }
         public int _like { get; set; }
         public int like
         {
             get { return _like; }
-            set { _like = value; thisPropertyChanged("like"); thisPropertyChanged("like_str"); }
+            set { _like = value; RaisePropertyChanged(); RaisePropertyChanged("like_str"); }
         }
 
 
@@ -936,18 +937,15 @@ namespace BiliBili.UWP.Controls
         public ObservableCollection<CommentModel> replies
         {
             get { return _replies; }
-            set { _replies = value; thisPropertyChanged("replies"); }
+            set { _replies = value; RaisePropertyChanged(); }
         }
         //public ObservableCollection<CommentModel> replies { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void thisPropertyChanged(string name)
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
 
@@ -955,21 +953,21 @@ namespace BiliBili.UWP.Controls
         public Visibility showReplies
         {
             get { return _showReplies; }
-            set { _showReplies = value; thisPropertyChanged("showReplies"); }
+            set { _showReplies = value; RaisePropertyChanged(); }
         }
 
         private Visibility _showReplyBtn = Visibility.Collapsed;
         public Visibility showReplyBtn
         {
             get { return _showReplyBtn; }
-            set { _showReplyBtn = value; thisPropertyChanged("showReplyBtn"); }
+            set { _showReplyBtn = value; RaisePropertyChanged(); }
         }
 
         private Visibility _showReplyBox = Visibility.Collapsed;
         public Visibility showReplyBox
         {
             get { return _showReplyBox; }
-            set { _showReplyBox = value; thisPropertyChanged("showReplyBox"); }
+            set { _showReplyBox = value; RaisePropertyChanged(); }
         }
 
 
@@ -977,14 +975,14 @@ namespace BiliBili.UWP.Controls
         public Visibility showReplyMore
         {
             get { return _showReplyMore; }
-            set { _showReplyMore = value; thisPropertyChanged("showReplyMore"); }
+            set { _showReplyMore = value; RaisePropertyChanged(); }
         }
 
         private Visibility _showLoading = Visibility.Collapsed;
         public Visibility showLoading
         {
             get { return _showLoading; }
-            set { _showLoading = value; thisPropertyChanged("showLoading"); }
+            set { _showLoading = value; RaisePropertyChanged(); }
         }
 
 
@@ -1009,7 +1007,7 @@ namespace BiliBili.UWP.Controls
         public int loadpage
         {
             get { return _loadpage; }
-            set { _loadpage = value; thisPropertyChanged("loadpage"); }
+            set { _loadpage = value; RaisePropertyChanged(); }
         }
 
 
@@ -1027,7 +1025,7 @@ namespace BiliBili.UWP.Controls
         public string replyText
         {
             get { return _replyText; }
-            set { _replyText = value; thisPropertyChanged("replyText"); }
+            set { _replyText = value; RaisePropertyChanged(); }
         }
 
 
@@ -1035,7 +1033,7 @@ namespace BiliBili.UWP.Controls
         public Visibility showTop
         {
             get { return _showTop; }
-            set { _showTop = value; thisPropertyChanged("showTop"); }
+            set { _showTop = value; RaisePropertyChanged(); }
         }
 
 

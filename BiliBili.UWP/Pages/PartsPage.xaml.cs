@@ -21,6 +21,7 @@ using Newtonsoft.Json.Linq;
 using Windows.UI.Popups;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Runtime.CompilerServices;
 
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
@@ -2157,26 +2158,26 @@ namespace BiliBili.UWP.Pages
         public FontWeight fontWeight
         {
             get { return _fontWeight; }
-            set { _fontWeight = value; RaisePropertyChanged("fontWeight"); }
+            set { _fontWeight = value; RaisePropertyChanged(); }
         }
         public string HanderText { get; set; }
         private ObservableCollection<DHModel> _VideoList;
         public ObservableCollection<DHModel> VideoList
         {
             get { return _VideoList; }
-            set { _VideoList = value; RaisePropertyChanged("VideoList"); }
+            set { _VideoList = value; RaisePropertyChanged(); }
         }
         private List<DHModel> _Banner;
         public List<DHModel> Banner
         {
             get { return _Banner; }
-            set { _Banner = value;RaisePropertyChanged("Banner"); }
+            set { _Banner = value;RaisePropertyChanged(); }
         }
         private List<DHModel> _DTs;
         public List<DHModel> DTs
         {
             get { return _DTs; }
-            set { _DTs = value; RaisePropertyChanged("DTs"); }
+            set { _DTs = value; RaisePropertyChanged(); }
         }
         private DHModel _homeBanner;
         public DHModel homeBanner
@@ -2185,7 +2186,7 @@ namespace BiliBili.UWP.Pages
             set
             {
                 _homeBanner = value;
-                RaisePropertyChanged("homeBanner");
+                RaisePropertyChanged();
                 if (Banner.Count == 0)
                 {
                     return;
@@ -2240,45 +2241,45 @@ namespace BiliBili.UWP.Pages
         public DHModel leftBanner
         {
             get { return _leftBanner; }
-            set { _leftBanner = value; RaisePropertyChanged("leftBanner"); }
+            set { _leftBanner = value; RaisePropertyChanged(); }
         }
         private DHModel _rightBanner;
         public DHModel rightBanner
         {
             get { return _rightBanner; }
-            set { _rightBanner = value; RaisePropertyChanged("rightBanner"); }
+            set { _rightBanner = value; RaisePropertyChanged(); }
         }
 
         private Visibility _leftVisibility;
         public Visibility leftVisibility
         {
             get { return _leftVisibility; }
-            set { _leftVisibility = value; RaisePropertyChanged("leftVisibility"); }
+            set { _leftVisibility = value; RaisePropertyChanged(); }
         }
 
         private Visibility _rightVisibility;
         public Visibility rightVisibility
         {
             get { return _rightVisibility; }
-            set { _rightVisibility = value; RaisePropertyChanged("rightVisibility"); }
+            set { _rightVisibility = value; RaisePropertyChanged(); }
         }
         private GridLength _grid_c_left;
         public GridLength grid_c_left
         {
             get { return _grid_c_left; }
-            set { _grid_c_left = value; RaisePropertyChanged("grid_c_left"); }
+            set { _grid_c_left = value; RaisePropertyChanged(); }
         }
         private GridLength _grid_c_right;
         public GridLength grid_c_right
         {
             get { return _grid_c_right; }
-            set { _grid_c_right = value; RaisePropertyChanged("grid_c_right"); }
+            set { _grid_c_right = value; RaisePropertyChanged(); }
         }
         private GridLength _grid_c_center;
         public GridLength grid_c_center
         {
             get { return _grid_c_center; }
-            set { _grid_c_center = value; RaisePropertyChanged("grid_c_center"); }
+            set { _grid_c_center = value; RaisePropertyChanged(); }
         }
 
 
@@ -2286,7 +2287,7 @@ namespace BiliBili.UWP.Pages
         public ObservableCollection<TagsModel> TagsList
         {
             get { return _TagsList; }
-            set { _TagsList = value; RaisePropertyChanged("TagsList"); }
+            set { _TagsList = value; RaisePropertyChanged(); }
         }
         public bool isHome { get; set; }
         public int PartId { get; set; }
@@ -2297,23 +2298,20 @@ namespace BiliBili.UWP.Pages
         public TagsModel SelectTag
         {
             get { return _SelectTag; }
-            set { _SelectTag = value; RaisePropertyChanged("SelectTag"); }
+            set { _SelectTag = value; RaisePropertyChanged(); }
         }
 
         private Visibility _ShowTags;
         public Visibility ShowTags
         {
             get { return _ShowTags; }
-            set { _ShowTags = value; RaisePropertyChanged("ShowTags"); }
+            set { _ShowTags = value; RaisePropertyChanged(); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void RaisePropertyChanged(string propertyName)
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
     public class TagsModel

@@ -18,6 +18,7 @@ using Windows.Storage.Streams;
 using Windows.Storage.Provider;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using System.Runtime.CompilerServices;
 
 namespace BiliBili.UWP.Helper
 {
@@ -906,17 +907,14 @@ namespace BiliBili.UWP.Helper
             set
             {
                 _img = value;
-                thisPropertyChanged("img");
+                RaisePropertyChanged();
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void thisPropertyChanged(string name)
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
 
@@ -929,13 +927,11 @@ namespace BiliBili.UWP.Helper
 
         public CancellationTokenSource cts = new CancellationTokenSource();
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void thisPropertyChanged(string name)
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         private DownloadOperation _downOp;
         public DownloadOperation downOp
         {
@@ -953,7 +949,7 @@ namespace BiliBili.UWP.Helper
             set
             {
                 _progress = value;
-                thisPropertyChanged("Progress");
+                RaisePropertyChanged();
             }
         }
 
@@ -964,7 +960,7 @@ namespace BiliBili.UWP.Helper
             set
             {
                 _Size = ((Convert.ToDouble(value) / 1024 / 1024)).ToString("0.0") + "M/" + (Convert.ToDouble(downOp.Progress.TotalBytesToReceive) / 1024 / 1024).ToString("0.0") + "M";
-                thisPropertyChanged("Size");
+                RaisePropertyChanged();
             }
         }
 
@@ -974,20 +970,20 @@ namespace BiliBili.UWP.Helper
         public Visibility PauseVis
         {
             get { return _PauseVis; }
-            set { _PauseVis = value; thisPropertyChanged("PauseVis"); }
+            set { _PauseVis = value; RaisePropertyChanged(); }
         }
         private Visibility _DownVis;
         public Visibility DownVis
         {
             get { return _DownVis; }
-            set { _DownVis = value; thisPropertyChanged("DownVis"); }
+            set { _DownVis = value; RaisePropertyChanged(); }
         }
 
 
         public string _Status;
         public string Status
         {
-            get { thisPropertyChanged("Status"); return _Status; }
+            get { RaisePropertyChanged(); return _Status; }
             set
             {
                 switch (downOp.Progress.Status)
@@ -1041,7 +1037,7 @@ namespace BiliBili.UWP.Helper
                         _Status = "Wait...";
                         break;
                 }
-                thisPropertyChanged("Status");
+                RaisePropertyChanged();
             }
         }
     }

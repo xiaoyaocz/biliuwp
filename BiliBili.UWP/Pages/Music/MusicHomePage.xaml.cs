@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -351,7 +352,7 @@ namespace BiliBili.UWP.Pages.Music
         public ObservableCollection<MusicHomeMenuModel> common
         {
             get { return _common; }
-            set { _common = value; thisPropertyChanged("common"); }
+            set { _common = value; RaisePropertyChanged(); }
         }
 
 
@@ -359,7 +360,7 @@ namespace BiliBili.UWP.Pages.Music
         public ObservableCollection<MusicHomeMenuModel> pmenu
         {
             get { return _pmenu; }
-            set { _pmenu = value; thisPropertyChanged("pmenu"); }
+            set { _pmenu = value; RaisePropertyChanged(); }
         }
 
 
@@ -367,7 +368,7 @@ namespace BiliBili.UWP.Pages.Music
         public ObservableCollection<MusicHomeMenuModel> categories
         {
             get { return _categories; }
-            set { _categories = value; thisPropertyChanged("categories"); }
+            set { _categories = value; RaisePropertyChanged(); }
         }
 
         private ObservableCollection<MusicHomeMenuModel> _missEvan;
@@ -375,7 +376,7 @@ namespace BiliBili.UWP.Pages.Music
         public ObservableCollection<MusicHomeMenuModel> missEvan
         {
             get { return _missEvan; }
-            set { _missEvan = value; thisPropertyChanged("missEvan"); }
+            set { _missEvan = value; RaisePropertyChanged(); }
         }
 
 
@@ -385,22 +386,16 @@ namespace BiliBili.UWP.Pages.Music
         public ObservableCollection<MusicHomeSongModel> hitSongs
         {
             get { return _hitSongs; }
-            set { _hitSongs = value; thisPropertyChanged("hitSongs"); }
+            set { _hitSongs = value; RaisePropertyChanged(); }
         }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void thisPropertyChanged(string name)
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
     }
     public class MusicHomeMenuModel
     {
@@ -540,7 +535,7 @@ namespace BiliBili.UWP.Pages.Music
         public ObservableCollection<MusicHomeSongModel> list
         {
             get { return _list; }
-            set { _list = value; thisPropertyChanged("list"); }
+            set { _list = value; RaisePropertyChanged(); }
         }
 
         public MusicHomeSongTypeModel categories { get; set; }
@@ -550,13 +545,9 @@ namespace BiliBili.UWP.Pages.Music
         public List<subcateModel> subcate { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void thisPropertyChanged(string name)
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

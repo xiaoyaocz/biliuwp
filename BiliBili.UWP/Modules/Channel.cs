@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
@@ -361,7 +362,7 @@ namespace BiliBili.UWP.Modules
                 set
                 {
                     _showCancel = value;
-                    ThisPropertyChanged("showCancel");
+                    RaisePropertyChanged();
                 }
             }
 
@@ -375,17 +376,14 @@ namespace BiliBili.UWP.Modules
                 set
                 {
                     _showAtten = value;
-                    ThisPropertyChanged("showAtten");
+                    RaisePropertyChanged();
                 }
             }
 
             public event PropertyChangedEventHandler PropertyChanged;
-            public void ThisPropertyChanged(string name)
+            public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
             {
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(null, new PropertyChangedEventArgs(name));
-                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
 
 

@@ -22,6 +22,7 @@ using Windows.Storage;
 using BiliBili.UWP.Controls;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Documents;
+using System.Runtime.CompilerServices;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -824,7 +825,7 @@ namespace BiliBili.UWP.Pages
             set
             {
                 _progress = value;
-                thisPropertyChanged("progress");
+                RaisePropertyChanged();
             }
         }
 
@@ -835,7 +836,7 @@ namespace BiliBili.UWP.Pages
             set
             {
                 _size = value;
-                thisPropertyChanged("size");
+                RaisePropertyChanged();
             }
         }
 
@@ -848,7 +849,7 @@ namespace BiliBili.UWP.Pages
             set
             {
                 _backgroundTransferStatus = value;
-                thisPropertyChanged("backgroundTransferStatus");
+                RaisePropertyChanged();
                 Status = "";
             }
 
@@ -923,7 +924,7 @@ namespace BiliBili.UWP.Pages
                         _Status = "Wait...";
                         break;
                 }
-                thisPropertyChanged("Status");
+                RaisePropertyChanged();
             }
         }
 
@@ -938,7 +939,7 @@ namespace BiliBili.UWP.Pages
             set
             {
                 _btnDownload = value;
-                thisPropertyChanged("btnDownload");
+                RaisePropertyChanged();
             }
         }
 
@@ -950,7 +951,7 @@ namespace BiliBili.UWP.Pages
             set
             {
                 _btnPause = value;
-                thisPropertyChanged("btnPause");
+                RaisePropertyChanged();
             }
         }
 
@@ -962,19 +963,16 @@ namespace BiliBili.UWP.Pages
             set
             {
                 _btnRefresh = value;
-                thisPropertyChanged("btnRefresh");
+                RaisePropertyChanged();
             }
         }
 
 
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void thisPropertyChanged(string name)
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
     }
