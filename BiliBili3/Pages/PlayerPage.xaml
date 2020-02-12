@@ -25,7 +25,6 @@
             <MenuFlyoutItem >上次进度</MenuFlyoutItem>
             <MenuFlyoutItem >更新弹幕</MenuFlyoutItem>
             <MenuFlyoutItem >视频信息</MenuFlyoutItem>
-            <MenuFlyoutItem >视频页面</MenuFlyoutItem>
         </MenuFlyout>
 
 
@@ -36,7 +35,7 @@
             <SplitView  x:Name="sp_View"  PaneClosed="Sp_View_PaneClosed" PanePlacement="Right" PaneBackground="#B2000000" >
                 <SplitView.Pane>
                     <Grid RequestedTheme="Dark">
-                        <ListView  SelectionChanged="gv_play_SelectionChanged" Margin="10" IsItemClickEnabled="True" Name="gv_play">
+                        <ListView  SelectionChanged="gv_play_SelectionChanged" Margin="10" IsItemClickEnabled="True" Name="gv_play" ItemClick="btn_VideoPage_Navi">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Background" Value="#B2424959"></Setter>
