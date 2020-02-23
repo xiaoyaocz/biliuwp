@@ -147,6 +147,7 @@
                             </Ellipse.Fill>
                         </Ellipse>
                         <Image Width="56"  Height="56" Source="{Binding Path=member.pendant_str}"></Image>
+                        <Image Width="16" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="8" Height="16" Source="{Binding Path=member.Verify}"></Image>
                     </Grid>
                 </HyperlinkButton>
 
@@ -226,8 +227,10 @@
                                         </StackPanel>
                                     </HyperlinkButton>
 
-                                    <TextBlock Text="{Binding Path=content.message}" IsTextSelectionEnabled="True" TextWrapping="Wrap"></TextBlock>
-                                    
+                                    <!--<TextBlock Text="{Binding Path=content.message}" IsTextSelectionEnabled="True" TextWrapping="Wrap"></TextBlock>-->
+                                    <ContentControl Content="{Binding Path=content.text}">
+
+                                    </ContentControl>
                                    
                                     <Grid>
                                         <StackPanel Margin="0 4" Orientation="Horizontal">

@@ -1243,6 +1243,25 @@ namespace BiliBili.UWP.Controls
             }
         }
 
+        public string Verify
+        {
+            get
+            {
+                if (official_verify == null)
+                {
+                    return "";
+                }
+                switch (official_verify.type)
+                {
+                    case 0:
+                        return "ms-appx:///Assets/MiniIcon/ic_authentication_personal.png";
+                    case 1:
+                        return "ms-appx:///Assets/MiniIcon/ic_authentication_organization.png";
+                    default:
+                        return "ms-appx:///Assets/MiniIcon/transparent.png";
+                }
+            }
+        }
 
 
     }
