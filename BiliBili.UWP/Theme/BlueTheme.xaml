@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BiliBili.UWP">
     <ResourceDictionary.MergedDictionaries>
+        <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
         <ResourceDictionary Source="ms-appx:///Controls/Carousel/Carousel.xaml"/>
         <ResourceDictionary Source="ms-appx:///Controls/RoundButton/RoundButton.xaml"/>
     </ResourceDictionary.MergedDictionaries>
