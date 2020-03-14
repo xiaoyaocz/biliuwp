@@ -381,7 +381,11 @@
                             </Grid>
                             <Grid Margin="0 10 0 0">
                                 <TextBlock Foreground="Gray" VerticalAlignment="Center">自动全屏播放</TextBlock>
-                                <ToggleSwitch x:Name="sw_AutoFull" Toggled="sw_AutoFull_Toggled" HorizontalAlignment="Right" Style="{StaticResource ToggleSwitchStyle1}" Margin="10 0"></ToggleSwitch>
+                                <ComboBox x:Name="sw_AutoFull" SelectionChanged="sw_AutoFull_SelectionChanged" Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0" Style="{StaticResource ComboBoxStyle1}" >
+                                    <ComboBoxItem Content="自动"/>
+                                    <ComboBoxItem Content="关"/>
+                                    <ComboBoxItem Content="开"/>
+                                </ComboBox>
 
                             </Grid>
                             <Grid Margin="0 10 0 0">

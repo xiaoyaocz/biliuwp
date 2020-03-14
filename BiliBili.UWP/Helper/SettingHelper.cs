@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Windows.ApplicationModel;
 using Microsoft.Toolkit.Uwp;
 using Windows.UI.StartScreen;
+using Windows.UI.ViewManagement;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Windows.Foundation.Metadata;
 using BiliBili.UWP.Helper;
@@ -745,28 +746,46 @@ namespace BiliBili.UWP
 
         public static bool Get_AutoFull()
         {
-            container = ApplicationData.Current.LocalSettings;
-            if (container.Values["AutoFull"] != null)
+            bool enabled = false;
+            switch (Get_AutoFullIndex())
             {
-                return (bool)container.Values["AutoFull"];
+                case 0:
+                    enabled = !IsPc() || IsTabletMode();
+                    break;
+                case 2:
+                    enabled = true;
+                    break;
+                default:
+                    break;
             }
-            else
+            return enabled;
+        }
+
+        public static int Get_AutoFullIndex()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            var val = container.Values["AutoFull"];
+            if (val == null)
+                return 0;
+
+            // Migrate from old settings
+            if (val.GetType() == typeof(bool))
             {
-                if (!IsPc())
+                if ((bool) val)
                 {
-                    Set_AutoFull(true);
-                    return true;
+                    Set_AutoFull(2);
+                    return 2;
                 }
                 else
                 {
-                    Set_AutoFull(false);
-                    return false;
+                    Set_AutoFull(1);
+                    return 1;
                 }
             }
+            return (int)val;
         }
 
-
-        public static void Set_AutoFull(bool value)
+        public static void Set_AutoFull(int value)
         {
             container = ApplicationData.Current.LocalSettings;
             container.Values["AutoFull"] = value;
@@ -1861,14 +1880,12 @@ namespace BiliBili.UWP
         public static bool IsPc()
         {
             string device = Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily;
-            if (device != "Windows.Mobile")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return device != "Windows.Mobile";
+        }
+
+        public static bool IsTabletMode()
+        {
+            return UIViewSettings.GetForCurrentView().UserInteractionMode == UserInteractionMode.Touch;
         }
         #endregion
 

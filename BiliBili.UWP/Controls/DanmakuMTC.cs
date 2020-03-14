@@ -119,7 +119,7 @@ namespace BiliBili.UWP.Controls
                 (GetTemplateChild("ShareBtn") as AppBarButton).Click += Btn_Share_Click;
                 (GetTemplateChild("btn_send") as AppBarButton).Click += Btn_Send_Click;
                 (GetTemplateChild("MyFullWindowButton") as AppBarButton).Click += Btn_Full_Click;
-                (GetTemplateChild("CaptureBtn") as AppBarButton).Click += Btn_Capture_Click; ;
+                (GetTemplateChild("CaptureBtn") as AppBarButton).Click += Btn_Capture_Click;
 
                 if (!SettingHelper.Get_DMStatus())
                 {

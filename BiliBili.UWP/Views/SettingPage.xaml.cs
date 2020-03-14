@@ -121,7 +121,7 @@ namespace BiliBili.UWP.Views
                 tw_OtherSiteMode.IsOn = SettingHelper.Get_UseOtherSite();
 
                 sw_QZHP.IsOn = SettingHelper.Get_QZHP();
-                sw_AutoFull.IsOn = SettingHelper.Get_AutoFull();
+                sw_AutoFull.SelectedIndex = SettingHelper.Get_AutoFullIndex();
 
                 slider_DanmuSize.Value = SettingHelper.Get_NewDMSize();
                 slider_Num.Value = SettingHelper.Get_DMNumber();
@@ -721,9 +721,9 @@ namespace BiliBili.UWP.Views
             SettingHelper.Set_QZHP(sw_QZHP.IsOn);
         }
 
-        private void sw_AutoFull_Toggled(object sender, RoutedEventArgs e)
+        private void sw_AutoFull_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            SettingHelper.Set_AutoFull(sw_AutoFull.IsOn);
+            SettingHelper.Set_AutoFull(sw_AutoFull.SelectedIndex);
         }
 
         private void sw_HideCursor_Toggled(object sender, RoutedEventArgs e)
