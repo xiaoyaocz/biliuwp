@@ -64,7 +64,7 @@
                 </Grid.ColumnDefinitions>
                 <AppBarButton x:Name="btn_back" Click="btn_back_Click" Icon="Back" Width="48" Height="48" Foreground="White"/>
                 <TextBlock x:Name="text_Title" Visibility="Collapsed" Text="搜索" Margin="5 0" HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center"  FontSize="16" Foreground="White"/>
-                <AutoSuggestBox x:Name="autoSug_Box" BorderBrush="#00808080" BorderThickness="1" Margin="5 0" Grid.Column="1" PlaceholderText="输入关键字搜索房间、主播" QueryIcon="Find" VerticalAlignment="Center" QuerySubmitted="autoSug_Box_QuerySubmitted"  Style="{StaticResource AutoSuggestBoxStyle1}"></AutoSuggestBox>
+                <AutoSuggestBox x:Name="autoSug_Box" BorderBrush="#00808080" BorderThickness="1" Margin="5 0" Grid.Column="1" PlaceholderText="输入关键字搜索房间、主播" QueryIcon="Find" VerticalAlignment="Center" QuerySubmitted="autoSug_Box_QuerySubmitted"   ></AutoSuggestBox>
             </Grid>
             <Pivot x:Name="pivot"  Grid.Row="1">
                 <PivotItem Margin="0">

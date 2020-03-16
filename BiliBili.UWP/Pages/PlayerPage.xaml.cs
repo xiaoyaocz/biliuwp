@@ -2247,7 +2247,7 @@ namespace BiliBili.UWP.Pages
 
         private void MTC_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            if (!SettingHelper.IsPc())
+            if (!SettingHelper.IsPc() || SettingHelper.IsTabletMode())
             {
                 if (mediaElement.CurrentState == MediaElementState.Playing)
                 {

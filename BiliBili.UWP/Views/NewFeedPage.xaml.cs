@@ -504,25 +504,30 @@ namespace BiliBili.UWP.Views
 
     public class NewFeedItemDataTemplateSelector : DataTemplateSelector
     {
+        public DataTemplate NewFeedAV { get; set; }
+        public DataTemplate NewFeedLive { get; set; }
+        public DataTemplate NewFeedRank { get; set; }
+        public DataTemplate NewFeedTopic { get; set; }
+        public DataTemplate NewFeedBangumi { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             switch ((item as NewFeedModel)._goto)
             {
                 case "av":
-                    return App.Current.Resources["NewFeedAV"] as DataTemplate;
+                    return NewFeedAV;
                 case "live":
-                    return App.Current.Resources["NewFeedLive"] as DataTemplate;
+                    return NewFeedLive;
                 case "rank":
-                    return App.Current.Resources["NewFeedRank"] as DataTemplate;
+                    return NewFeedRank;
                 case "tag":
-                    return App.Current.Resources["NewFeedAV"] as DataTemplate;
+                    return NewFeedAV;
                 case "topic":
-                    return App.Current.Resources["NewFeedTopic"] as DataTemplate; ;
+                    return NewFeedTopic;
                 case "bangumi":
-                    return App.Current.Resources["NewFeedBangumi"] as DataTemplate;
+                    return NewFeedBangumi;
                 default:
-                    return App.Current.Resources["NewFeedAV"] as DataTemplate;
+                    return NewFeedAV;
             }
 
         }

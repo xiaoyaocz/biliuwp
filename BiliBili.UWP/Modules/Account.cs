@@ -208,13 +208,13 @@ namespace BiliBili.UWP.Modules
         /// <param name="password">密码</param>
         /// <param name="captcha">验证码</param>
         /// <returns></returns>
-        public async Task<LoginCallbackModel> LoginV2(string username, string password, string captcha = "")
+        public async Task<LoginCallbackModel> LoginV2(string username, string password, string captcha = null)
         {
             try
             {
                 string url = "https://passport.bilibili.com/api/oauth2/login";
                 string data = $"appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&password={Uri.EscapeDataString(await EncryptedPassword(password))}&platform=android&ts={ApiHelper.GetTimeSpan}&username={Uri.EscapeDataString(username)}";
-                if (data != "")
+                if (!string.IsNullOrEmpty(captcha))
                 {
                     data += "&captcha=" + captcha;
                 }

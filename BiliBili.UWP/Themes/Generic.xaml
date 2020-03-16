@@ -698,7 +698,8 @@
                                         <CommandBar x:Name="MediaControlsCommandBar" Margin="0,0" Style="{StaticResource CommandBarStyle}" IsDynamicOverflowEnabled="False">
                                             <CommandBar.PrimaryCommands>
                                                 <AppBarButton x:Name='VolumeMuteButton'
-                                                Style='{StaticResource AppBarButtonStyle}'
+                                                Width="48"
+                                                              Height="48"
                                                 MediaTransportControlsHelper.DropoutOrder='19'>
                                                     <AppBarButton.Flyout>
                                                         <Flyout x:Name='VolumeFlyout' FlyoutPresenterStyle="{StaticResource FlyoutStyle}">
@@ -763,7 +764,7 @@
                                                 </AppBarButton>
                                                 <AppBarButton x:Name='CCSelect'
                                                   ToolTipService.ToolTip="选择字幕"
-                                              Style='{StaticResource AppBarButtonStyle}'
+                                              Width="48" Height="48"
                                               MediaTransportControlsHelper.DropoutOrder='15'
                                               Flyout="{TemplateBinding CCSelectFlyout}"
                                               Visibility='Visible'>
@@ -942,8 +943,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-
 
     <Style TargetType="local2:FlipSpotControl" >
         <Setter Property="Template">

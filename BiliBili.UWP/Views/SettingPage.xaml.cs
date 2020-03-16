@@ -121,7 +121,7 @@ namespace BiliBili.UWP.Views
                 tw_OtherSiteMode.IsOn = SettingHelper.Get_UseOtherSite();
 
                 sw_QZHP.IsOn = SettingHelper.Get_QZHP();
-                sw_AutoFull.IsOn = SettingHelper.Get_AutoFull();
+                sw_AutoFull.SelectedIndex = SettingHelper.Get_AutoFullIndex();
 
                 slider_DanmuSize.Value = SettingHelper.Get_NewDMSize();
                 slider_Num.Value = SettingHelper.Get_DMNumber();
@@ -272,8 +272,7 @@ namespace BiliBili.UWP.Views
 
         private async void cb_Theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            if (cb_Theme.SelectedItem != null && !get_ing)
+            if (cb_Theme.SelectedIndex != -1 && !get_ing)
             {
                 switch (cb_Theme.SelectedIndex)
                 {
@@ -317,10 +316,7 @@ namespace BiliBili.UWP.Views
                 messageDialog.Commands.Add(new UICommand("取消", (x) => { }));
                 await messageDialog.ShowAsync();
             }
-            MessageCenter.SendChanageThemeEvent(null);
-
-
-
+            //MessageCenter.SendChanageThemeEvent(null);
             //await CoreApplication.RequestRestartAsync(string.Empty);
         }
 
@@ -721,9 +717,9 @@ namespace BiliBili.UWP.Views
             SettingHelper.Set_QZHP(sw_QZHP.IsOn);
         }
 
-        private void sw_AutoFull_Toggled(object sender, RoutedEventArgs e)
+        private void sw_AutoFull_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            SettingHelper.Set_AutoFull(sw_AutoFull.IsOn);
+            SettingHelper.Set_AutoFull(sw_AutoFull.SelectedIndex);
         }
 
         private void sw_HideCursor_Toggled(object sender, RoutedEventArgs e)

@@ -349,14 +349,14 @@ namespace BiliBili.UWP.Helper
                 }
                 string url = "https://www.biliplus.com/BPplayurl.php?cid=" + cid + $"&otype=json&type=&quality={qn}&qn={qn}{season}&access_key={ApiHelper.access_key}";
                 Dictionary<string, string> header = new Dictionary<string, string>();
-                if (SettingHelper.Get_BiliplusCookie() != "")
-                {
-                    if (cookie == "")
-                    {
-                        cookie = SettingHelper.Get_BiliplusCookie();
-                    }
-                    header.Add("Cookie", cookie);
-                }
+                //if (SettingHelper.Get_BiliplusCookie() != "")
+                //{
+                //    if (cookie == "")
+                //    {
+                //        cookie = SettingHelper.Get_BiliplusCookie();
+                //    }
+                //    header.Add("Cookie", cookie);
+                //}
 
                 string re = await WebClientClass.GetResults(new Uri(url));
                 FlvPlyaerUrlModel m = JsonConvert.DeserializeObject<FlvPlyaerUrlModel>(re);
@@ -380,30 +380,30 @@ namespace BiliBili.UWP.Helper
                 }
                 else if (m.code == -403)
                 {
-                    if (ApiHelper.IsLogin())
-                    {
-                        ReturnPlayModel returnPlayModel = null;
-                        MessageDialog messageDialog = new MessageDialog("读取视频地址失败了，是否授权Biliplus后再试一次?");
-                        messageDialog.Commands.Add(new UICommand("授权", async (e) =>
-                        {
-                            var _cookie = await Account.AuthBiliPlus();
-                            if (_cookie != "")
-                            {
-                                returnPlayModel = await GetBiliPlusUrl(cid, qn, referer, season_type, _cookie);
-                            }
-                            else
-                            {
-                                Utils.ShowMessageToast("授权失败了");
-                            }
-                        }));
-                        messageDialog.Commands.Add(new UICommand("取消"));
-                        await messageDialog.ShowAsync();
-                        return returnPlayModel;
-                    }
-                    else
-                    {
+                    //if (ApiHelper.IsLogin())
+                    //{
+                    //    ReturnPlayModel returnPlayModel = null;
+                    //    MessageDialog messageDialog = new MessageDialog("读取视频地址失败了，是否授权Biliplus后再试一次?");
+                    //    messageDialog.Commands.Add(new UICommand("授权", async (e) =>
+                    //    {
+                    //        var _cookie = await Account.AuthBiliPlus();
+                    //        if (_cookie != "")
+                    //        {
+                    //            returnPlayModel = await GetBiliPlusUrl(cid, qn, referer, season_type, _cookie);
+                    //        }
+                    //        else
+                    //        {
+                    //            Utils.ShowMessageToast("授权失败了");
+                    //        }
+                    //    }));
+                    //    messageDialog.Commands.Add(new UICommand("取消"));
+                    //    await messageDialog.ShowAsync();
+                    //    return returnPlayModel;
+                    //}
+                    //else
+                    //{
                         return null;
-                    }
+                    //}
                 }
                 else
                 {
@@ -474,30 +474,30 @@ namespace BiliBili.UWP.Helper
                 }
                 else if (obj["code"].ToInt32() == -403)
                 {
-                    if (ApiHelper.IsLogin())
-                    {
-                        ReturnPlayModel returnPlayModel = null;
-                        MessageDialog messageDialog = new MessageDialog("读取视频地址失败了，是否授权Biliplus后再试一次?");
-                        messageDialog.Commands.Add(new UICommand("授权", async (e) =>
-                        {
-                            var _cookie = await Account.AuthBiliPlus();
-                            if (_cookie != "")
-                            {
-                                returnPlayModel = await GetBiliPlusDashUrl(cid, qn, referer, season_type, _cookie);
-                            }
-                            else
-                            {
-                                Utils.ShowMessageToast("授权失败了");
-                            }
-                        }));
-                        messageDialog.Commands.Add(new UICommand("取消"));
-                        await messageDialog.ShowAsync();
-                        return returnPlayModel;
-                    }
-                    else
-                    {
+                    //if (ApiHelper.IsLogin())
+                    //{
+                    //    ReturnPlayModel returnPlayModel = null;
+                    //    MessageDialog messageDialog = new MessageDialog("读取视频地址失败了，是否授权Biliplus后再试一次?");
+                    //    messageDialog.Commands.Add(new UICommand("授权", async (e) =>
+                    //    {
+                    //        var _cookie = await Account.AuthBiliPlus();
+                    //        if (_cookie != "")
+                    //        {
+                    //            returnPlayModel = await GetBiliPlusDashUrl(cid, qn, referer, season_type, _cookie);
+                    //        }
+                    //        else
+                    //        {
+                    //            Utils.ShowMessageToast("授权失败了");
+                    //        }
+                    //    }));
+                    //    messageDialog.Commands.Add(new UICommand("取消"));
+                    //    await messageDialog.ShowAsync();
+                    //    return returnPlayModel;
+                    //}
+                    //else
+                    //{
                         return null;
-                    }
+                    //}
                 }
                 else
                 {

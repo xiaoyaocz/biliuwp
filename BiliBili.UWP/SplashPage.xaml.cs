@@ -28,6 +28,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.Storage.Streams;
 using System.Text.RegularExpressions;
 using BiliBili.UWP.Modules;
+using Microsoft.Toolkit.Uwp.Helpers;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -76,14 +77,14 @@ namespace BiliBili.UWP
                 case 3:
                     txt_Load.Text = "自由、平等、公正、法治";
                     break;
-                
+
                 default:
                     break;
             }
             try
             {
                 //注册后台任务
-                await RegisterBackgroundTask();
+                RegisterBackgroundTask();
                 //读取已下载的文件
                 DownloadHelper2.LoadDowned();
                 //加载分区
@@ -97,23 +98,23 @@ namespace BiliBili.UWP
             }
             #endregion
 
-             m = e.Parameter as StartModel;
+            m = e.Parameter as StartModel;
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 1);
             timer.Tick += Timer_Tick;
             timer.Start();
-            if (m.StartType== StartTypes.None&&SettingHelper.Get_LoadSplash())
+            if (m.StartType == StartTypes.None && SettingHelper.Get_LoadSplash())
             {
-               // await GetResults();
-              
+                // await GetResults();
+
             }
             else
             {
-               // await Task.Delay(2000);
-               // this.Frame.Navigate(typeof(MainPage), m);
+                // await Task.Delay(2000);
+                // this.Frame.Navigate(typeof(MainPage), m);
             }
 
-         
+
 
 
         }
@@ -121,14 +122,14 @@ namespace BiliBili.UWP
         int maxnum = 3;
         private void Timer_Tick(object sender, object e)
         {
-            if (i!= maxnum)
+            if (i != maxnum)
             {
                 i++;
             }
             else
             {
                 this.Frame.Navigate(typeof(MainPage), m);
-              
+
             }
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -188,19 +189,19 @@ namespace BiliBili.UWP
                 bool pc = SettingHelper.IsPc();
                 if (pc)
                 {
-                   
+
                     img.Stretch = Stretch.Uniform;
                     url = "http://app.bilibili.com/x/splash?plat=0&build=414000&channel=master&width=1920&height=1080";
                 }
-               
+
                 string Result = await WebClientClass.GetResults(new Uri(url));
                 LoadModel obj = JsonConvert.DeserializeObject<LoadModel>(Result);
 
-                if (obj.code== 0)
+                if (obj.code == 0)
                 {
-                    if (obj.data.Count!=0)
+                    if (obj.data.Count != 0)
                     {
-                        var buff= await WebClientClass.GetBuffer(new Uri(obj.data[0].image));
+                        var buff = await WebClientClass.GetBuffer(new Uri(obj.data[0].image));
                         BitmapImage bit = new BitmapImage();
                         await bit.SetSourceAsync(buff.AsStream().AsRandomAccessStream());
                         if (!pc)
@@ -230,13 +231,13 @@ namespace BiliBili.UWP
                     }
                     else
                     {
-                       // await Task.Delay(2000);
-                       
+                        // await Task.Delay(2000);
+
                     }
                 }
                 else
                 {
-                   // await Task.Delay(2000);
+                    // await Task.Delay(2000);
                     //this.Frame.Navigate(typeof(MainPage), m);
                 }
 
@@ -244,13 +245,13 @@ namespace BiliBili.UWP
             }
             catch (Exception)
             {
-               // await Task.Delay(2000);
+                // await Task.Delay(2000);
                 //this.Frame.Navigate(typeof(MainPage), m);
             }
             finally
             {
 
-               
+
             }
 
         }
@@ -292,71 +293,19 @@ namespace BiliBili.UWP
 
         #region 后台任务注册
 
-        private async Task RegisterBackgroundTask()
+        private void RegisterBackgroundTask()
         {
-            var task = await RegisterBackgroundTask(
-                typeof(BiliBili.Background.BackgroundTask),
-                "BackgroundTask",
-                new TimeTrigger(15, false),
-                null);
-
-            task.Progress += TaskOnProgress;
-            task.Completed += TaskOnCompleted;
-        }
-
-        public static async Task<BackgroundTaskRegistration> RegisterBackgroundTask(Type taskEntryPoint,
-                                                                        string taskName,
-                                                                        IBackgroundTrigger trigger,
-                                                                        IBackgroundCondition condition)
-        {
-            var status = await BackgroundExecutionManager.RequestAccessAsync();
-
-            if (status == BackgroundAccessStatus.Unspecified || status == BackgroundAccessStatus.DeniedByUser)
+            if (BackgroundTaskHelper.IsBackgroundTaskRegistered("BackgroundTask"))
             {
-                return null;
+                return;
             }
-
-            foreach (var cur in BackgroundTaskRegistration.AllTasks)
-            {
-                if (cur.Value.Name == taskName)
-                {
-                    cur.Value.Unregister(true);
-                }
-            }
-
-            var builder = new BackgroundTaskBuilder
-            {
-                Name = taskName,
-                TaskEntryPoint = taskEntryPoint.FullName
-            };
-
-            builder.SetTrigger(trigger);
-
-            if (condition != null)
-            {
-                builder.AddCondition(condition);
-            }
-
-            BackgroundTaskRegistration task = builder.Register();
-
-            Debug.WriteLine($"Task {taskName} registered successfully.");
-
-            return task;
+            BackgroundTaskHelper.Register("BackgroundTask", new TimeTrigger(15, false));
         }
 
 
-        private void TaskOnProgress(BackgroundTaskRegistration sender, BackgroundTaskProgressEventArgs args)
-        {
-            Debug.WriteLine($"Background {sender.Name} TaskOnProgress.");
-        }
-
-        private void TaskOnCompleted(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
-        {
-            Debug.WriteLine($"Background {sender.Name} TaskOnCompleted.");
-        }
 
         #endregion
 
-      
+
     }
 }

@@ -309,15 +309,17 @@ namespace BiliBili.UWP.Pages
     }
     public class MessageItemDataTemplateSelector : DataTemplateSelector
     {
+        public DataTemplate Chat1 { get; set; }
+        public DataTemplate Chat2 { get; set; }
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             if ((item as ChatModel).is_me == 2)
             {
-                return App.Current.Resources["Chat1"] as DataTemplate;
+                return Chat1;
             }
             else
             {
-                return App.Current.Resources["Chat2"] as DataTemplate;
+                return Chat2;
             }
         }
     }

@@ -318,7 +318,7 @@
                                     </Flyout>
                                 </Button.Flyout>
                             </Button>
-                            <AutoSuggestBox x:Name="txt_message"  QueryIcon="Send" Style="{StaticResource AutoSuggestBoxStyle1}" Grid.Column="2" VerticalAlignment="Center" Margin="8 0" BorderThickness="0" QuerySubmitted="AutoSuggestBox_QuerySubmitted"></AutoSuggestBox>
+                            <AutoSuggestBox x:Name="txt_message"  QueryIcon="Send"   Grid.Column="2" VerticalAlignment="Center" Margin="8 0" BorderThickness="0" QuerySubmitted="AutoSuggestBox_QuerySubmitted"></AutoSuggestBox>
 
                         </Grid>
                     </Grid>
