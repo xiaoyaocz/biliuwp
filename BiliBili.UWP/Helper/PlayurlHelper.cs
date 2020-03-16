@@ -650,7 +650,12 @@ namespace BiliBili.UWP.Helper
             try
             {
                 List<string> urls = new List<string>();
-                string url = $"https://api.bilibili.com/x/player/playurl?avid={ aid}&cid={cid}&qn=&type=&otype=json&fnver=0&fnval=16";
+                string url = $"https://api.bilibili.com/x/player/playurl?appkey={ApiHelper.AndroidKey.Appkey}&avid={ aid}&cid={cid}&qn={qn}&type=&otype=json&fnver=0&fnval=16";
+                if (ApiHelper.IsLogin())
+                {
+                    url += $"&access_key={ApiHelper.access_key}&mid={ApiHelper.GetUserId()}";
+                }
+                url = ApiHelper.GetSignWithUrl(url,ApiHelper.AndroidKey);
                 string re = await WebClientClass.GetResults(new Uri(url));
                 JObject obj = JObject.Parse(re);
                 if (obj["code"].ToInt32() == 0)
@@ -669,6 +674,10 @@ namespace BiliBili.UWP.Helper
                         {
                             codecid = 7;
                             video = videos.FirstOrDefault(x => x.id == qn && x.codecid == codecid);
+                        }
+                        if (video==null)
+                        {
+                            video = videos.OrderByDescending(x=>x.id).FirstOrDefault(x=>x.codecid == 7);
                         }
                         var audio = audios.FirstOrDefault();
 

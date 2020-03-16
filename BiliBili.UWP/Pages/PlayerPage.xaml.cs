@@ -1153,22 +1153,25 @@ namespace BiliBili.UWP.Pages
 
                 case PlayMode.Video:
 
-
                     var ss = await PlayurlHelper.GetVideoUrl(playNow.Aid, playNow.Mid, (cb_Quity.SelectedItem as QualityModel).qn);
                     if (ss!=null)
                     {
                         txt_site.Text = ss.from;
-                        if (ss.usePlayMode == UsePlayMode.System)
+                        if (ss.usePlayMode == UsePlayMode.System&&!string.IsNullOrEmpty( ss.url))
                         {
                             mediaElement.Source = new Uri(ss.url);
                         }
-                        else if (ss.usePlayMode == UsePlayMode.Dash)
+                        else if (ss.usePlayMode == UsePlayMode.Dash && ss.mediaSource!=null)
                         {
                             mediaElement.SetMediaStreamSource(ss.mediaSource);
                         }
-                        else
+                        else if (ss.playlist != null) 
                         {
                             mediaElement.Source = await ss.playlist.SaveAndGetFileUriAsync();
+                        }
+                        else
+                        {
+                            Utils.ShowMessageToast("更换清晰度失败，无法读取播放地址");
                         }
                     }
                     else
