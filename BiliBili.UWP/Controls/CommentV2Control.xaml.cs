@@ -814,7 +814,7 @@ namespace BiliBili.UWP.Controls
                 }
                 else
                 {
-                    return Application.Current.Resources.MergedDictionaries[0]["Bili-ForeColor"] as SolidColorBrush;
+                    return (Application.Current.Resources.ThemeDictionaries["Light"] as ResourceDictionary)["Bili-ForeColor"] as SolidColorBrush;
                 }
             }
         }

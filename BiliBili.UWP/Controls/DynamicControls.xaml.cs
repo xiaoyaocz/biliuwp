@@ -165,7 +165,7 @@ namespace BiliBili.UWP.Controls
                 item.desc.is_liked = 1;
                 item.desc.like += 1;
 
-                item.desc.likeColor = Application.Current.Resources.MergedDictionaries[0]["Bili-ForeColor"] as SolidColorBrush;
+                item.desc.likeColor = (Application.Current.Resources.ThemeDictionaries["Light"] as ResourceDictionary)["Bili-ForeColor"] as SolidColorBrush;
                 return;
             }
             if (item.desc.is_liked == 1 && d)
@@ -755,7 +755,7 @@ namespace BiliBili.UWP.Views
                 }
                 else
                 {
-                    return Application.Current.Resources.MergedDictionaries[0]["Bili-ForeColor"] as SolidColorBrush;
+                    return (Application.Current.Resources.ThemeDictionaries["Light"] as ResourceDictionary)["Bili-ForeColor"] as SolidColorBrush;
                 }
             }
             set
