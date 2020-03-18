@@ -84,7 +84,11 @@ namespace BiliBili.UWP.Helper
         {
             return verStr.Split('/')[0];
         }
-        public static string verStr = string.Format(@"Ver {0} 2020-03-16
+        public static string verStr = string.Format(@"Ver {0} 2020-03-18
+01、修复点赞问题
+02、修复新窗口播放问题
+
+/ver 3.9.63&3.9.64 2020-03-16
 01、修复视频1080P+播放问题
 02、修复无法登录
 03、优化代码
