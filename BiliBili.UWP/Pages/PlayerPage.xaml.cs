@@ -1452,17 +1452,6 @@ namespace BiliBili.UWP.Pages
             //}
             await new MessageDialog("无法播放此视频 ＞﹏＜ \r\n请尝试更换清晰度或者在播放设置中打开/关闭DASH").ShowAsync();
         }
-        private void mediaElement_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-
-        }
-
-        private void mediaElement_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
-        {
-
-
-        }
-
 
         private void mediaElement_BufferingProgressChanged(object sender, RoutedEventArgs e)
         {
@@ -1543,22 +1532,70 @@ namespace BiliBili.UWP.Pages
 
 
         #region 手势操作
-        private void ss_Volume_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        double ssValue = 0;
+        bool ManipulatingBrightness = false;
+
+        private void Grid_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
             e.Handled = true;
-
-            txt_SSPosition.Visibility = Visibility.Visible;
-            double Y = e.Delta.Translation.Y;
-            if (Y > 0)
+            //progress.Visibility = Visibility.Visible;
+            if (e.Delta.Translation.Y == 0)
             {
-                double dd = Y / (ss_Volume.ActualHeight * 0.8);
+                HandleSlideProgressDelta(e.Delta.Translation.X);
+            }
+            else
+            {
+                if (ManipulatingBrightness)
+                    HandleSlideBrightnessDelta(e.Delta.Translation.Y);
+                else
+                    HandleSlideVolumeDelta(e.Delta.Translation.Y);
+            }
+        }
+
+        private void HandleSlideProgressDelta(double delta)
+        {
+            if (mediaElement.CurrentState != MediaElementState.Playing)
+                return;
+
+            if (delta > 0)
+            {
+                double dd = delta / this.ActualWidth;
+                double d = dd * 90;
+                ssValue += d;
+                //slider.Value += d;
+            }
+            else
+            {
+                double dd = Math.Abs(delta) / this.ActualWidth;
+                double d = dd * 90;
+                ssValue -= d;
+                //slider.Value -= d;
+            }
+            TimeSpan ts = mediaElement.Position;
+            ts = ts.Add(TimeSpan.FromSeconds(ssValue));
+
+            if (ts < TimeSpan.Zero)
+                ts = TimeSpan.Zero;
+            else if (ts > mediaElement.NaturalDuration.TimeSpan)
+                ts = mediaElement.NaturalDuration.TimeSpan;
+            //txt_Post.Text = ts.Hours.ToString("00") + ":" + ts.Minutes.ToString("00") + ":" + ts.Seconds.ToString("00") + "/" + mediaElement.NaturalDuration.TimeSpan.Hours.ToString("00") + ":" + mediaElement.NaturalDuration.TimeSpan.Minutes.ToString("00") + ":" + mediaElement.NaturalDuration.TimeSpan.Seconds.ToString("00");
+
+            txt_SSPosition.Text = ts.Hours.ToString("00") + ":" + ts.Minutes.ToString("00") + ":" + ts.Seconds.ToString("00");
+            //Utils.ShowMessageToast(ts.Hours.ToString("00") + ":" + ts.Minutes.ToString("00") + ":" + ts.Seconds.ToString("00"), 3000);
+        }
+
+        private void HandleSlideVolumeDelta(double delta)
+        {
+            if (delta > 0)
+            {
+                double dd = delta / (this.ActualHeight * 0.8);
 
                 //slider_V.Value -= d;
                 mediaElement.Volume -= dd;
             }
             else
             {
-                double dd = Math.Abs(Y) / (ss_Volume.ActualHeight * 0.8);
+                double dd = Math.Abs(delta) / (this.ActualHeight * 0.8);
                 mediaElement.Volume += dd;
                 //slider_V.Value += d;
             }
@@ -1566,27 +1603,16 @@ namespace BiliBili.UWP.Pages
             //Utils.ShowMessageToast("音量:" + mediaElement.Volume.ToString("P"), 3000);
         }
 
-        private void ss_Volume_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        private void HandleSlideBrightnessDelta(double delta)
         {
-            e.Handled = true;
-            txt_SSPosition.Text = "";
-            txt_SSPosition.Visibility = Visibility.Collapsed;
-        }
-
-        private void ss_Light_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
-        {
-            e.Handled = true;
-
-            txt_SSPosition.Visibility = Visibility.Visible;
-            double Y = e.Delta.Translation.Y;
-            if (Y > 0)
+            if (delta > 0)
             {
-                double dd = Y / (ss_Light.ActualHeight * 0.8);
+                double dd = delta / (this.ActualHeight * 0.8);
                 MTC.Brightness += dd;
             }
             else
             {
-                double dd = Math.Abs(Y) / (ss_Light.ActualHeight * 0.8);
+                double dd = Math.Abs(delta) / (this.ActualHeight * 0.8);
                 MTC.Brightness -= dd;
 
             }
@@ -1599,54 +1625,12 @@ namespace BiliBili.UWP.Pages
                 MTC.Brightness = 1;
             }
             txt_SSPosition.Text = "亮度:" + Math.Abs(MTC.Brightness-1).ToString("P");
-
-        }
-
-        private void ss_Light_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
-        {
-            e.Handled = true;
-            txt_SSPosition.Text = "";
-            txt_SSPosition.Visibility = Visibility.Collapsed;
-        }
-
-
-        double ssValue = 0;
-        private void Grid_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
-        {
-            e.Handled = true;
-            if (mediaElement.CurrentState != MediaElementState.Playing)
-            {
-                return;
-            }
-            //progress.Visibility = Visibility.Visible;
-            double X = e.Delta.Translation.X;
-            if (X > 0)
-            {
-                double dd = X / this.ActualWidth;
-                double d = dd * 90;
-                ssValue += d;
-                //slider.Value += d;
-            }
-            else
-            {
-                double dd = Math.Abs(X) / this.ActualWidth;
-                double d = dd * 90;
-                ssValue -= d;
-                //slider.Value -= d;
-            }
-            TimeSpan ts = mediaElement.Position;
-            ts = ts.Add(TimeSpan.FromSeconds(ssValue));
-            //txt_Post.Text = ts.Hours.ToString("00") + ":" + ts.Minutes.ToString("00") + ":" + ts.Seconds.ToString("00") + "/" + mediaElement.NaturalDuration.TimeSpan.Hours.ToString("00") + ":" + mediaElement.NaturalDuration.TimeSpan.Minutes.ToString("00") + ":" + mediaElement.NaturalDuration.TimeSpan.Seconds.ToString("00");
-
-            txt_SSPosition.Text = ts.Hours.ToString("00") + ":" + ts.Minutes.ToString("00") + ":" + ts.Seconds.ToString("00");
-            //Utils.ShowMessageToast(ts.Hours.ToString("00") + ":" + ts.Minutes.ToString("00") + ":" + ts.Seconds.ToString("00"), 3000);
         }
 
         private void Grid_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
         {
             e.Handled = true;
 
-            double X = e.Cumulative.Translation.X;
             if (ssValue != 0)
             {
                 mediaElement.Position = mediaElement.Position.Add(TimeSpan.FromSeconds(ssValue));
@@ -1654,15 +1638,18 @@ namespace BiliBili.UWP.Pages
             txt_SSPosition.Visibility = Visibility.Collapsed;
         }
 
-        private void MTC_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
+        private void MTC_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
         {
             e.Handled = true;
             ssValue = 0;
             txt_SSPosition.Text = "";
             txt_SSPosition.Visibility = Visibility.Visible;
+
+            if (e.Position.X < this.ActualWidth / 2)
+                ManipulatingBrightness = true;
+            else
+                ManipulatingBrightness = false;
         }
-
-
         #endregion
 
         private void gv_play_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1780,11 +1767,6 @@ namespace BiliBili.UWP.Pages
                 btn_ViewPost.Visibility = Visibility.Collapsed;
 
             }
-        }
-
-        private void ss_Holding(object sender, HoldingRoutedEventArgs e)
-        {
-            menu.ShowAt(this);
         }
 
         private void btn_VideoInfo_Click(object sender, RoutedEventArgs e)
@@ -2683,10 +2665,4 @@ namespace BiliBili.UWP.Pages
             SettingHelper.Set_SubtitleBgTran(e.NewValue);
         }
     }
-
-
-
-
-
-
 }

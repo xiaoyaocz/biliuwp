@@ -264,19 +264,17 @@
 
                     <MediaElement x:Name="mediaElement"  AreTransportControlsEnabled="True"  Stretch="Uniform" MinWidth="100" MinHeight="100" 
                                   MediaEnded="mediaElement_MediaEnded"  
-                                  DoubleTapped="mediaElement_DoubleTapped" 
                                   BufferingProgressChanged="mediaElement_BufferingProgressChanged" 
-                                  Tapped="mediaElement_Tapped" 
                                   MediaFailed="mediaElement_MediaFailed" 
                                   MediaOpened="mediaElement_MediaOpened" 
                                   PointerMoved="mediaElement_PointerMoved"
                                   CurrentStateChanged="mediaElement_CurrentStateChanged" >
                         <MediaElement.TransportControls>
                             <c:DanmakuMTC x:Name="MTC"  
-                                          ManipulationMode="TranslateX" 
+                                          ManipulationMode="TranslateX,TranslateRailsX,TranslateY,TranslateRailsY"
                                           ManipulationCompleted="Grid_ManipulationCompleted"
                                           ManipulationDelta="Grid_ManipulationDelta"
-                                          ManipulationStarting="MTC_ManipulationStarting"
+                                          ManipulationStarted="MTC_ManipulationStarted"
                                           Captured="MTC_Captured" 
                                           FullWindows="MTC_FullWindows" 
                                           IsFullWindowButtonVisible="False" 
@@ -347,11 +345,6 @@
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                     </GridView>
-                    <Border x:Name="ss" Visibility="Collapsed" Holding="ss_Holding"  ManipulationMode="TranslateX" ManipulationDelta="Grid_ManipulationDelta" ManipulationCompleted="Grid_ManipulationCompleted" Background="Transparent" Tapped="MTC_Tapped_1" DoubleTapped="mediaElement_DoubleTapped">
-
-                    </Border>
-                    <Border x:Name="ss_Volume" Margin="0 48 0 86" Background="#00000000" Visibility="Visible"  Width="56" HorizontalAlignment="Right" ManipulationMode="TranslateY" ManipulationDelta="ss_Volume_ManipulationDelta" ManipulationCompleted="ss_Volume_ManipulationCompleted" Tapped="MTC_Tapped_1"   DoubleTapped="MTC_DoubleTapped"  />
-                    <Border x:Name="ss_Light" Margin="0 48 0 86" Background="#00000000" Visibility="Visible"  Width="56" HorizontalAlignment="Left" ManipulationMode="TranslateY" ManipulationDelta="ss_Light_ManipulationDelta" ManipulationCompleted="ss_Light_ManipulationCompleted" Tapped="MTC_Tapped_1"   DoubleTapped="MTC_DoubleTapped"  />
 
                     <StackPanel x:Name="progress" Grid.RowSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <ProgressRing HorizontalAlignment="Center" Width="56" Height="56" Foreground="Gray" IsActive="True"></ProgressRing>
