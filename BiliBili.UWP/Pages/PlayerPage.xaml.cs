@@ -262,6 +262,27 @@ namespace BiliBili.UWP.Pages
         bool LoadDanmu = true;
         int LastPost = 0;
         bool settingFlag = true;
+        BrightnessOverride bo;
+        double _brightness;
+        double Brightness
+        {
+            get => _brightness;
+            set
+            {
+                _brightness = value;
+                if (bo != null && bo.IsSupported)
+                {
+                    // 0-dark => 1-light
+                    bo.SetBrightnessLevel(1 - value, DisplayBrightnessOverrideOptions.None);
+                }
+                else
+                {
+                    // 0-light => 1-dark
+                    MTC.Brightness = value;
+                }
+            }
+        }
+
         public async void LoadPlayer(List<PlayerModel> par, int index)
         {
             
@@ -348,7 +369,7 @@ namespace BiliBili.UWP.Pages
                 }
 
                 SettingHelper.Set_Volume(mediaElement.Volume);
-                SettingHelper.Set_Light(MTC.Brightness);
+                SettingHelper.Set_Light(Brightness);
                 ApplicationView.GetForCurrentView().ExitFullScreenMode();
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
                 if (timer != null)
@@ -360,6 +381,12 @@ namespace BiliBili.UWP.Pages
                 {
                     timer_Date.Stop();
                     timer_Date = null;
+                }
+                if (bo != null)
+                {
+                    if (bo.IsOverrideActive)
+                        bo.StopOverride();
+                    bo = null;
                 }
                 Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 0);
                 //_mediaPlayer.Source = null;
@@ -489,9 +516,6 @@ namespace BiliBili.UWP.Pages
             }
         }
 
-
-
-
         public  void UpdateSetting()
         {
             //if (!SettingHelper.IsPc())
@@ -567,7 +591,13 @@ namespace BiliBili.UWP.Pages
 
             mediaElement.Volume = SettingHelper.Get_Volume();
 
-            MTC.Brightness = SettingHelper.Get_Light();
+            bo = BrightnessOverride.GetForCurrentView();
+            if (bo.IsSupported)
+            {
+                bo.StartOverride();
+            }
+            bo.IsSupportedChanged += Bo_IsSupportedChanged;
+            Brightness = SettingHelper.Get_Light();
 
             DanmuNum = SettingHelper.Get_DMNumber();
             rb_defu.IsChecked = true;
@@ -592,7 +622,18 @@ namespace BiliBili.UWP.Pages
             settingFlag = false;
         }
 
-
+        private void Bo_IsSupportedChanged(BrightnessOverride sender, object args)
+        {
+            if (bo.IsSupported)
+            {
+                MTC.Brightness = 0;
+                bo.SetBrightnessLevel(1 - Brightness, DisplayBrightnessOverrideOptions.None);
+            }
+            else
+            {
+                MTC.Brightness = Brightness;
+            }
+        }
 
         string DMZZBDS = "";
         bool hidePointerFlag = false;
@@ -1605,26 +1646,16 @@ namespace BiliBili.UWP.Pages
 
         private void HandleSlideBrightnessDelta(double delta)
         {
+            double dd = Math.Abs(delta) / (this.ActualHeight * 0.8);
             if (delta > 0)
             {
-                double dd = delta / (this.ActualHeight * 0.8);
-                MTC.Brightness += dd;
+                Brightness = Math.Min(Brightness + dd, 1);
             }
             else
             {
-                double dd = Math.Abs(delta) / (this.ActualHeight * 0.8);
-                MTC.Brightness -= dd;
-
+                Brightness = Math.Max(Brightness - dd, 0);
             }
-            if (MTC.Brightness < 0)
-            {
-                MTC.Brightness = 0;
-            }
-            if (MTC.Brightness > 1)
-            {
-                MTC.Brightness = 1;
-            }
-            txt_SSPosition.Text = "亮度:" + Math.Abs(MTC.Brightness-1).ToString("P");
+            txt_SSPosition.Text = "亮度:" + Math.Abs(Brightness - 1).ToString("P");
         }
 
         private void Grid_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
