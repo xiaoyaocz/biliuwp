@@ -88,7 +88,7 @@ namespace BiliBili.UWP.Helper
 01、初步支持BV号
 02、修复Tab不显示
 03、修复磁贴及通知问题
-04、https://github.com/xiaoyaocz/biliuwp/pull/23 (@dianlujitao)
+04、pull 23 (@dianlujitao)
 
 /Ver 3.9.65&3.9.66 2020-03-18
 01、修复点赞问题

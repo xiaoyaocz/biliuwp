@@ -270,16 +270,16 @@ namespace BiliBili.UWP.Pages
             set
             {
                 _brightness = value;
-                if (bo != null && bo.IsSupported)
-                {
-                    // 0-dark => 1-light
-                    bo.SetBrightnessLevel(1 - value, DisplayBrightnessOverrideOptions.None);
-                }
-                else
-                {
+                //if (bo != null && bo.IsSupported)
+                //{
+                //    // 0-dark => 1-light
+                //    bo.SetBrightnessLevel(1 - value, DisplayBrightnessOverrideOptions.None);
+                //}
+                //else
+                //{
                     // 0-light => 1-dark
                     MTC.Brightness = value;
-                }
+                //}
             }
         }
 
@@ -624,15 +624,15 @@ namespace BiliBili.UWP.Pages
 
         private void Bo_IsSupportedChanged(BrightnessOverride sender, object args)
         {
-            if (bo.IsSupported)
-            {
-                MTC.Brightness = 0;
-                bo.SetBrightnessLevel(1 - Brightness, DisplayBrightnessOverrideOptions.None);
-            }
-            else
-            {
+            //if (bo.IsSupported)
+            //{
+            //    MTC.Brightness = 0;
+            //    bo.SetBrightnessLevel(1 - Brightness, DisplayBrightnessOverrideOptions.None);
+            //}
+            //else
+            //{
                 MTC.Brightness = Brightness;
-            }
+            //}
         }
 
         string DMZZBDS = "";
