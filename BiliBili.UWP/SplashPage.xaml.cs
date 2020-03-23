@@ -295,14 +295,20 @@ namespace BiliBili.UWP
 
         private void RegisterBackgroundTask()
         {
-            if (BackgroundTaskHelper.IsBackgroundTaskRegistered("BackgroundTask"))
-            {
-                return;
-            }
-            BackgroundTaskHelper.Register("BackgroundTask", new TimeTrigger(15, false));
+            var task = BackgroundTaskHelper.Register(typeof(BiliBili.Background.BackgroundTask), new TimeTrigger(15, true),true,true,null);
+            task.Progress += TaskOnProgress;
+            task.Completed += TaskOnCompleted;
         }
 
+        private void TaskOnProgress(BackgroundTaskRegistration sender, BackgroundTaskProgressEventArgs args)
+        {
+            Debug.WriteLine($"Background {sender.Name} TaskOnProgress.");
+        }
 
+        private void TaskOnCompleted(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
+        {
+            Debug.WriteLine($"Background {sender.Name} TaskOnCompleted.");
+        }
 
         #endregion
 

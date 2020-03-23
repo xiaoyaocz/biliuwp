@@ -371,28 +371,18 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="topic">
-            <Grid>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <Grid DataContext="{Binding tabData}" SizeChanged="Grid_SizeChanged" MaxWidth="800" HorizontalAlignment="Center">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Border Height="{Binding ElementName=bor_height,Path=Width}"></Border>
-                        <Image x:Name="img_cover"  Grid.RowSpan="2" Source="{Binding cover}" VerticalAlignment="Top"></Image>
-                        <StackPanel Grid.Row="1" >
-                            <ItemsControl ItemTemplateSelector="{StaticResource homeTabDataTemplateSelector}" ItemsSource="{Binding item}" ScrollViewer.VerticalScrollMode="Disabled">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Vertical"></StackPanel>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
+            <Grid >
+                <ScrollViewer VerticalScrollBarVisibility="Auto" DataContext="{Binding tabData}" MaxWidth="800" HorizontalAlignment="Center">
+                    <ItemsControl ItemTemplateSelector="{StaticResource homeTabDataTemplateSelector}" ItemsSource="{Binding item}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
 
-                            </ItemsControl>
-                        </StackPanel>
-                    </Grid>
+                    </ItemsControl>
                 </ScrollViewer>
-
+               
                 <AppBarButton x:Name="b_btn_Refresh" Click="b_btn_Refresh_Click" Width="48" Grid.RowSpan="2" Visibility="{Binding showRefresh}" Height="48" Margin="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Icon="Refresh" Background="{ThemeResource Bili-ForeColor}" Opacity="0.6" Foreground="White"></AppBarButton>
                 <ProgressRing Width="56" Height="56" Grid.RowSpan="2" IsActive="True" x:Name="pr_Load" Visibility="{Binding showLoading}"></ProgressRing>
             </Grid>
@@ -612,7 +602,6 @@
         </DataTemplate>
     </Page.Resources>
     <Grid>
-        <Border x:Name="bor_height" Width="80" VerticalAlignment="Top"></Border>
         <Pivot 
             Style="{StaticResource PivotHeaderCenterStyle}" 
             x:Name="pivot_home" 

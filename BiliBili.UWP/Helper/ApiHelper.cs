@@ -42,7 +42,7 @@ namespace BiliBili.UWP
         public static ApiKeyInfo IosKey = new ApiKeyInfo("4ebafd7c4951b366", "8cb98205e9b2ad3669aad0fce12a4c13");
 
 
-        public const string build = "5442100";
+        public const string build = "5520400";
 
         private static string _access_key;
         public static string access_key {

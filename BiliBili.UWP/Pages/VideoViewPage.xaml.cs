@@ -49,46 +49,53 @@ namespace BiliBili.UWP.Pages
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
-            //players.FullEvent += Players_FullEvent;
-            //players.MaxWIndowsEvent += Players_MaxWIndowsEvent;
-            //players.PlayerEvent += Players_PlayerEvent;
             download = new Download();
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += DataTransferManager_DataRequested;
         }
         private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
         {
+            var detail = this.DataContext as VideoInfoModels;
             DataRequest request = args.Request;
-            request.Data.Properties.Title = (this.DataContext as VideoInfoModels).title;
-            request.Data.Properties.Description = txt_desc.Text + "\r\n——分享自BiliBili UWP";
-            request.Data.SetWebLink(new Uri("http://www.bilibili.com/video/av" + _aid));
+            request.Data.Properties.Title = detail.title;
+            request.Data.Properties.Description = txt_desc.Text;
+            request.Data.SetWebLink(new Uri(detail.short_link));
         }
 
-
+        bool isMovie = false;
+        bool isSeason = false;
         string _aid;
+        string _bvid;
+        bool isBVID = false;
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            
+
             error.Visibility = Visibility.Collapsed;
-            _aid = (e.Parameter as object[])[0].ToString();
-            txt_Header.Text = "AV" + _aid;
+            var _id = (e.Parameter as object[])[0].ToString();
+            if (int.TryParse(_id,out var aid))
+            {
+                txt_Header.Text = $"AV{_id}";
+                _aid = _id;
+                isBVID = false;
+            }
+            else
+            {
+                if (_id.Substring(0,2).ToUpper()!="BV")
+                {
+                    _id = "BV" + _id;
+                }
+                txt_Header.Text = $"{_id}";
+                _bvid = _id;
+                isBVID = true;
+            }
 
             await GetFavBox();
             await LoadVideo();
 
-            if (SecondaryTile.Exists(_aid))
-            {
-                btn_unPin.Visibility = Visibility.Visible;
-                btn_Pin.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                btn_unPin.Visibility = Visibility.Collapsed;
-                btn_Pin.Visibility = Visibility.Visible;
-            }
+            
         }
-       
+
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             pivot.SelectedIndex = 0;
@@ -97,8 +104,7 @@ namespace BiliBili.UWP.Pages
         }
 
 
-        bool isMovie = false;
-        bool ISBAN = false;
+
         private async Task LoadVideo()
         {
             try
@@ -108,7 +114,7 @@ namespace BiliBili.UWP.Pages
                 isMovie = false;
                 tag.Children.Clear();
                 pr_Load.Visibility = Visibility.Visible;
-                string uri = $"https://app.bilibili.com/x/v2/view?access_key={ ApiHelper.access_key }&aid={ _aid }&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&plat=0&platform=android&ts={ApiHelper.GetTimeSpan}";
+                string uri = $"https://app.bilibili.com/x/v2/view?access_key={ ApiHelper.access_key }&{(isBVID? $"bvid={_bvid}": $"aid={_aid}") }&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&plat=0&platform=android&ts={ApiHelper.GetTimeSpan}";
                 uri += "&sign=" + ApiHelper.GetSign(uri);
                 string results = await WebClientClass.GetResults(new Uri(uri));
 
@@ -129,6 +135,8 @@ namespace BiliBili.UWP.Pages
 
                 if (m.code == 0)
                 {
+                    txt_Header.Text = $"AV{m.data.aid}/{m.data.bvid}";
+                    _aid = m.data.aid;
                     if (m.data.redirect_url != null && m.data.redirect_url != "")
                     {
                         this.Frame.GoBack();
@@ -186,12 +194,12 @@ namespace BiliBili.UWP.Pages
                     }
                     if (m.data.season != null)
                     {
-                        ISBAN = true;
+                        isSeason = true;
                         grid_season.Visibility = Visibility.Visible;
                     }
                     else
                     {
-                        ISBAN = false;
+                        isSeason = false;
                         grid_season.Visibility = Visibility.Collapsed;
                     }
                     if (m.data.tag != null)
@@ -261,6 +269,18 @@ namespace BiliBili.UWP.Pages
                             cb_Qu.SelectedIndex = 0;
                         }
                     }
+
+                    if (SecondaryTile.Exists(_aid))
+                    {
+                        btn_unPin.Visibility = Visibility.Visible;
+                        btn_Pin.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        btn_unPin.Visibility = Visibility.Collapsed;
+                        btn_Pin.Visibility = Visibility.Visible;
+                    }
+
                     comment.LoadComment(new LoadCommentInfo()
                     {
                         commentMode = CommentMode.Video,
@@ -610,8 +630,9 @@ namespace BiliBili.UWP.Pages
 
         private void btn_Share_Click(object sender, RoutedEventArgs e)
         {
+            var detail = this.DataContext as VideoInfoModels;
             Windows.ApplicationModel.DataTransfer.DataPackage pack = new Windows.ApplicationModel.DataTransfer.DataPackage();
-            pack.SetText(string.Format("{0}\r\nhttp://www.bilibili.com/video/av{1}", (this.DataContext as VideoInfoModels).title, _aid));
+            pack.SetText($"{detail.title} {detail.short_link}");
             Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(pack); // 保存 DataPackage 对象到剪切板
             Windows.ApplicationModel.DataTransfer.Clipboard.Flush();
             Utils.ShowMessageToast("已将内容复制到剪切板", 3000);
@@ -871,7 +892,7 @@ namespace BiliBili.UWP.Pages
                                 ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), rich_vid = item.vid, ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Sohu, No = i.ToString(), VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title });
                                 break;
                             default:
-                                if (ISBAN)
+                                if (isSeason)
                                 {
                                     ls.Add(new PlayerModel()
                                     {
@@ -917,7 +938,7 @@ namespace BiliBili.UWP.Pages
 
         }
 
-        private  void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (pivot.SelectedIndex == 0)
             {
@@ -983,7 +1004,7 @@ namespace BiliBili.UWP.Pages
                                     ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), rich_vid = item.vid, ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Sohu, No = "1", VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title });
                                     break;
                                 default:
-                                    if (ISBAN)
+                                    if (isSeason)
                                     {
                                         ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Bangumi, No = "1", VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title, episode_id = (this.DataContext as VideoInfoModels).season.newest_ep_id });
                                     }

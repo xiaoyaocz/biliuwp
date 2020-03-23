@@ -124,17 +124,23 @@ namespace BiliBili.UWP.Modules
         {
             try
             {
-                string url = $"https://app.bilibili.com/x/feed/index/tab?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
+                string url = $"https://app.bilibili.com/x/resource/show/tab?access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 var results = await WebClientClass.GetResults(new Uri(url));
                 var model = results.ToDynamicJObject();
                 if (model.code == 0)
                 {
+                    var tabs = JsonConvert.DeserializeObject<List<TabModel>>(model.json["data"]["tab"].ToString());
+                    ObservableCollection<TabModel> ls = new ObservableCollection<TabModel>();
+                    foreach (var item in tabs.Where(x=>x.tab_id.ToInt32()!=0))
+                    {
+                        ls.Add(item);
+                    }
                     return new ReturnModel<ObservableCollection<TabModel>>()
                     {
                         success = true,
                         message = "",
-                        data = JsonConvert.DeserializeObject<ObservableCollection<TabModel>>(model.json["data"]["tab"].ToString())
+                        data = ls
                     };
                 }
                 else
@@ -653,7 +659,7 @@ namespace BiliBili.UWP.Modules
             /// <summary>
             /// Tab_id
             /// </summary>
-            public int tab_id { get; set; }
+            public string tab_id { get; set; }
         }
 
 

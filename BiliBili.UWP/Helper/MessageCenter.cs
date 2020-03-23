@@ -160,7 +160,18 @@ namespace BiliBili.UWP
                 InfoNavigateToEvent(typeof(VideoViewPage), video);
                 return true;
             }
-          
+
+            /*
+             * 视频BV号
+             * https://www.bilibili.com/video/BV1EE411w75R
+             */
+            var video_bv = Utils.RegexMatch(url, @"BV([a-zA-Z0-9]{5,})");
+            if (video_bv != "")
+            {
+                InfoNavigateToEvent(typeof(VideoViewPage), video_bv);
+                return true;
+            }
+
 
             /* 
              * 番剧/影视

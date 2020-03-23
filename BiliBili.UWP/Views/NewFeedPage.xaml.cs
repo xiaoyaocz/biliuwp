@@ -481,11 +481,6 @@ namespace BiliBili.UWP.Views
             }
         }
 
-        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            var height = (e.NewSize.Width * 0.5);
-            bor_height.Width = height - (height * 0.42);
-        }
 
         private void control_PointerMoved(object sender, PointerRoutedEventArgs e)
         {

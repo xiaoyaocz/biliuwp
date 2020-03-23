@@ -48,6 +48,8 @@ namespace BiliBili.UWP.Models
         /// </summary>
         public interactionModel interaction { get; set; }
 
+        public string bvid { get; set; }
+        public string short_link { get; set; }
         public string Created_at
         {
             get
