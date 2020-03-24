@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using BiliBili.UWP.Models;
+using System.Runtime.CompilerServices;
 
 namespace BiliBili.UWP.Modules
 {
@@ -19,6 +20,11 @@ namespace BiliBili.UWP.Modules
     public class SeasonFollow : IModules, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         /// <summary>
         /// status 1=想看,2=在看,3=看过
         /// </summary>
@@ -28,14 +34,14 @@ namespace BiliBili.UWP.Modules
         public bool HasNext
         {
             get { return _HasNext; }
-            set { _HasNext = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("HasNext")); }
+            set { _HasNext = value; RaisePropertyChanged(); }
         }
 
         private bool _Loading = false;
         public bool Loading
         {
             get { return _Loading; }
-            set { _Loading = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Loading")); }
+            set { _Loading = value; RaisePropertyChanged(); }
         }
 
         public int Page { get; set; } = 0;
@@ -43,7 +49,7 @@ namespace BiliBili.UWP.Modules
         public int Total
         {
             get { return _total; }
-            set { _total = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Total")); }
+            set { _total = value; RaisePropertyChanged(); }
         }
         public SeasonType SeasonType { get; set; }
 
@@ -51,7 +57,7 @@ namespace BiliBili.UWP.Modules
         public ObservableCollection<FollowSeasonInfo> FollowList
         {
             get { return _FollowList; }
-            set { _FollowList = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FollowList")); }
+            set { _FollowList = value; RaisePropertyChanged(); }
         }
         public SeasonFollow(SeasonType seasonType, int status)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -150,19 +151,16 @@ namespace BiliBili.UWP.Controls
         {
             public event PropertyChangedEventHandler PropertyChanged;
 
-            public void thisPropertyChanged(string name)
+            public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
             {
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(name));
-                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
             private SolidColorBrush _color;
 
             public SolidColorBrush color
             {
                 get { return _color; }
-                set { _color = value; thisPropertyChanged("color"); }
+                set { _color = value; RaisePropertyChanged(); }
             }
 
           

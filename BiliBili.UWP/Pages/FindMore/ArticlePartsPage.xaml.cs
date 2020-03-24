@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -250,28 +251,25 @@ namespace BiliBili.UWP.Pages.FindMore
         public int selectIndex
         {
             get { return _selectIndex; }
-            set { _selectIndex = value; thisPropertyChanged("selectIndex"); }
+            set { _selectIndex = value; RaisePropertyChanged(); }
         }
 
         private Visibility _loadVis= Visibility.Collapsed;
         public Visibility loadVis {
             get { return _loadVis; }
-            set { _loadVis = value; thisPropertyChanged("loadVis"); }
+            set { _loadVis = value; RaisePropertyChanged(); }
         }
         private ObservableCollection<ArticlesModel> _articles;
         public ObservableCollection<ArticlesModel> articles
         {
             get { return _articles; }
-            set { _articles = value; thisPropertyChanged("articles"); }
+            set { _articles = value; RaisePropertyChanged(); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void thisPropertyChanged(string name)
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

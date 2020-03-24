@@ -8,6 +8,7 @@ using System.ComponentModel;
 using Newtonsoft.Json;
 using System.Windows.Input;
 using BiliBili.UWP.Pages;
+using System.Runtime.CompilerServices;
 
 namespace BiliBili.UWP.Modules
 {
@@ -19,12 +20,17 @@ namespace BiliBili.UWP.Modules
            
         }
         public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         private bool _Loading = true;
 
         public bool Loading
         {   
             get { return _Loading; }
-            set { _Loading = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Loading")); }
+            set { _Loading = value; RaisePropertyChanged(); }
         }
 
 
@@ -35,7 +41,7 @@ namespace BiliBili.UWP.Modules
         public live_area_entrance_v2 Areas
         {
             get { return _areas; }
-            set { _areas = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Areas")); }
+            set { _areas = value; RaisePropertyChanged(); }
         }
 
         private live_banner _banner;
@@ -45,7 +51,7 @@ namespace BiliBili.UWP.Modules
         public live_banner Banner
         {
             get { return _banner; }
-            set { _banner = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Banner")); }
+            set { _banner = value; RaisePropertyChanged(); }
         }
 
         private live_hour_rank _hour_rank;
@@ -55,7 +61,7 @@ namespace BiliBili.UWP.Modules
         public live_hour_rank HourRank
         {
             get { return _hour_rank; }
-            set { _hour_rank = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("HourRank")); }
+            set { _hour_rank = value; RaisePropertyChanged(); }
         }
 
         private List<room_list> _room_list;
@@ -65,7 +71,7 @@ namespace BiliBili.UWP.Modules
         public List<room_list> RoomList
         {
             get { return _room_list; }
-            set { _room_list = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("RoomList")); }
+            set { _room_list = value; RaisePropertyChanged(); }
         }
 
 

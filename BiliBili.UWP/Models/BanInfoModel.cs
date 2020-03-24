@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
@@ -140,12 +141,9 @@ namespace BiliBili.UWP.Models
         public int type { get; set; } = 1;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string Name)
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(Name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

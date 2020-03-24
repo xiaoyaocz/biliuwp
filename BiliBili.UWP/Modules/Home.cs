@@ -18,6 +18,7 @@ using Windows.UI.Xaml;
 using System.ComponentModel;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
+using System.Runtime.CompilerServices;
 
 namespace BiliBili.UWP.Modules
 {
@@ -882,12 +883,9 @@ namespace BiliBili.UWP.Modules
         public class TabDataModel : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;
-            public void ThisPropertyChanged(string name)
+            public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
             {
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(null, new PropertyChangedEventArgs(name));
-                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
 
 
@@ -896,14 +894,14 @@ namespace BiliBili.UWP.Modules
             public string cover
             {
                 get { return _cover+"@300h.jpg"; }
-                set { _cover = value; ThisPropertyChanged("cover"); }
+                set { _cover = value; RaisePropertyChanged(); }
             }
             private ObservableCollection<TabItemModel> _item;
 
             public ObservableCollection<TabItemModel> item
             {
                 get { return _item; }
-                set { _item = value; ThisPropertyChanged("item"); }
+                set { _item = value; RaisePropertyChanged(); }
             }
 
            

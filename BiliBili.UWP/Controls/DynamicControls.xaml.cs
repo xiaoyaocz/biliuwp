@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -562,7 +563,7 @@ namespace BiliBili.UWP.Views
         public DynamicCardsModel desc
         {
             get { return _desc; }
-            set { _desc = value; thisPropertyChanged("desc"); }
+            set { _desc = value; RaisePropertyChanged(); }
         }
 
         public long uid { get; set; }
@@ -586,7 +587,7 @@ namespace BiliBili.UWP.Views
         public int repost
         {
             get { return _repost; }
-            set { _repost = value; thisPropertyChanged("repost"); }
+            set { _repost = value; RaisePropertyChanged(); }
         }
         //public int repost { get; set; }
 
@@ -597,14 +598,14 @@ namespace BiliBili.UWP.Views
         public int like
         {
             get { return _like; }
-            set { _like = value; thisPropertyChanged("like"); thisPropertyChanged("likeColor"); }
+            set { _like = value; RaisePropertyChanged(); RaisePropertyChanged("likeColor"); }
         }
 
         private int _is_liked;//是否点赞
         public int is_liked
         {
             get { return _is_liked; }
-            set { _is_liked = value; thisPropertyChanged("is_liked"); thisPropertyChanged("likeColor"); }
+            set { _is_liked = value; RaisePropertyChanged(); RaisePropertyChanged("likeColor"); }
         }
 
 
@@ -761,7 +762,7 @@ namespace BiliBili.UWP.Views
             set
             {
                 _likeColor = value;
-                thisPropertyChanged("likeColor");
+                RaisePropertyChanged();
             }
         }
 
@@ -795,12 +796,9 @@ namespace BiliBili.UWP.Views
                 await new Controls.LotteryDialog(paramenter.ToString()).ShowAsync();
             }
         }
-        private void thisPropertyChanged(string name)
+        private void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public DynamicCardsModel extension { get; set; }
@@ -1568,24 +1566,16 @@ namespace BiliBili.UWP.Views
             set
             {
                 _showpictures = value;
-                mPropertyChanged("showpictures");
+                RaisePropertyChanged();
             }
         }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void mPropertyChanged(string name)
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
-
-
-
     }
 
     public class vote_cfgModel
