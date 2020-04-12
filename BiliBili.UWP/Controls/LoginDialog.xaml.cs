@@ -122,8 +122,8 @@ namespace BiliBili.UWP.Controls
                 return;
             }
             IsPrimaryButtonEnabled = false;
-            //var results = await account.LoginV3(txt_Username.Text, txt_Password.Password);
-            var results = await account.LoginV2(txt_Username.Text, txt_Password.Password,txt_captcha.Text);
+            var results = await account.LoginV3(txt_Username.Text, txt_Password.Password);
+            //var results = await account.LoginV2(txt_Username.Text, txt_Password.Password,txt_captcha.Text);
             switch (results.status)
             {
                 case Modules.LoginStatus.Success:
@@ -135,9 +135,9 @@ namespace BiliBili.UWP.Controls
                     break;
                 case Modules.LoginStatus.NeedCaptcha:
                     //V2
-                    chatcha.Visibility = Visibility.Visible;
-                    IsPrimaryButtonEnabled = true;
-                    GetCaptcha();
+                    //chatcha.Visibility = Visibility.Visible;
+                    //IsPrimaryButtonEnabled = true;
+                    //GetCaptcha();
                     //V3
                     //webView.Visibility = Visibility.Visible;
                     //var httpRequestMessage = new Windows.Web.Http.HttpRequestMessage(Windows.Web.Http.HttpMethod.Get, new Uri(results.url));
@@ -146,6 +146,7 @@ namespace BiliBili.UWP.Controls
                     //httpRequestMessage.Headers.Add("Upgrade-Insecure-Requests", "1");
                     //webView.NavigateWithHttpRequestMessage(httpRequestMessage);
                     //webView.Source = new Uri(results.url);
+                    Utils.ShowMessageToast("登录需要验证码，请使用网页登录");
                     break;
                 case Modules.LoginStatus.NeedValidate:
                     Title = "安全验证";
