@@ -35,7 +35,7 @@ namespace BiliBili.UWP.Helper
      3、调用Start方法开始
      4、
          */
-   public  class BiliLiveDanmu : IDisposable
+    public class BiliLiveDanmu : IDisposable
     {
 
         public enum LiveDanmuTypes
@@ -64,7 +64,7 @@ namespace BiliBili.UWP.Helper
         }
 
         //开始
-        public async void Start(int roomid,long userId)
+        public async void Start(int roomid, long userId)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace BiliBili.UWP.Helper
             {
                 _StartState = false;
             }
-            
+
             if (_StartState)
             {
                 if (SendJoinChannel(roomid, userId))
@@ -91,7 +91,7 @@ namespace BiliBili.UWP.Helper
                     _timer.Interval = new TimeSpan(0, 0, 20);
                     _timer.Tick += Timer_Tick;
                     _timer.Start();
-                    await Task.Run(()=> { Listen(); });
+                    await Task.Run(() => { Listen(); });
                 }
                 else
                 {
@@ -141,14 +141,14 @@ namespace BiliBili.UWP.Helper
                     var playloadlength = packetlength - 16;
                     if (playloadlength == 0)
                     {
-
-                        //continue;//没有内容了
+                        continue;//没有内容了
                     }
 
-                    typeId = typeId - 1;//magic, again (为啥要减一啊) 
+                    typeId = typeId - 1;
+
+
                     var buffer = new byte[playloadlength];
                     _netStream.ReadB(buffer, 0, playloadlength);
-                    var json = Encoding.UTF8.GetString(buffer, 0, playloadlength);
                     if (typeId == 2)
                     {
                         var viewer = BitConverter.ToUInt32(buffer.Take(4).Reverse().ToArray(), 0); //观众人数
@@ -157,13 +157,43 @@ namespace BiliBili.UWP.Helper
                             HasDanmu(new LiveDanmuModel() { type = LiveDanmuTypes.Viewer, viewer = Convert.ToInt32(viewer) });
                         }
                         Debug.WriteLine(viewer);
+                        continue;
                     }
-                    else
+                    var json_str = "";
+                    try
                     {
-                        if (json.Trim().Length != 0)
+                        using (MemoryStream outBuffer = new MemoryStream())
                         {
-                            Debug.WriteLine(json);
-                            JObject obj = JObject.Parse(json);
+                            using (System.IO.Compression.DeflateStream compressedzipStream = new System.IO.Compression.DeflateStream(new MemoryStream(buffer, 2, playloadlength - 2), System.IO.Compression.CompressionMode.Decompress))
+                            {
+                                byte[] block = new byte[1024];
+                                while (true)
+                                {
+                                    int bytesRead = compressedzipStream.Read(block, 0, block.Length);
+                                    if (bytesRead <= 0)
+                                        break;
+                                    else
+                                        outBuffer.Write(block, 0, bytesRead);
+                                }
+                                compressedzipStream.Close();
+                                buffer = outBuffer.ToArray();
+                            }
+                        }
+                        json_str = Regex.Replace(Encoding.UTF8.GetString(buffer, 16, buffer.Length - 16), "}\\0\\0.*?\\0\\0{", "},{");
+                    }
+                    catch (Exception)
+                    {
+                        json_str = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+                    }
+   
+                    if (json_str.Trim().Length != 0)
+                    {
+                        json_str = "[" + json_str + "]";
+                        Debug.WriteLine(json_str);
+                        JArray json_array = JArray.Parse(json_str);
+                        foreach (var obj in json_array)
+                        {
+
                             if (obj["cmd"].ToString().Contains("DANMU_MSG"))
                             {
                                 var v = new DanmuMsgModel();
@@ -265,12 +295,15 @@ namespace BiliBili.UWP.Helper
 
                                     break;
                             }
+                            await Task.Delay(delay);
                         }
 
                     }
 
 
 
+
+                    // }
 
                 }
                 catch (Exception ex)
@@ -334,7 +367,7 @@ namespace BiliBili.UWP.Helper
             try
             {
                 var chat = "http://live.bilibili.com/api/player?id=cid:" + _roomId;
-                string results  = await WebClientClass.GetResults(new Uri(chat));
+                string results = await WebClientClass.GetResults(new Uri(chat));
                 var url = Regex.Match(results, "<server>(.*?)</server>", RegexOptions.Singleline).Groups[1].Value;
                 if (url.Length != 0)
                 {
@@ -349,8 +382,8 @@ namespace BiliBili.UWP.Helper
             {
                 return "livecmt-2.bilibili.com";
             }
-               
-                
+
+
 
         }
 
@@ -366,12 +399,12 @@ namespace BiliBili.UWP.Helper
             SendSocketData(2);
         }
 
-        private bool SendJoinChannel(int channelId,long userId)
+        private bool SendJoinChannel(int channelId, long userId)
         {
             var r = new Random();
 
-            long tmpuid =0;
-            if (userId==0)
+            long tmpuid = 0;
+            if (userId == 0)
             {
                 tmpuid = (long)(1e14 + 2e14 * r.NextDouble());
             }
@@ -434,10 +467,10 @@ namespace BiliBili.UWP.Helper
             catch (Exception)
             {
             }
-          
+
         }
 
-      
+
 
 
 
@@ -445,7 +478,7 @@ namespace BiliBili.UWP.Helper
         public async void Dispose()
         {
             _StartState = false;
-            if (_timer!=null)
+            if (_timer != null)
             {
                 _timer.Stop();
             }
@@ -453,12 +486,12 @@ namespace BiliBili.UWP.Helper
             {
                 await _clientSocket.CancelIOAsync();
             }
-           
+
         }
 
         public class LiveDanmuModel
         {
-            
+
             public LiveDanmuTypes type { get; set; }
             public int viewer { get; set; }
             public object value { get; set; }
@@ -468,9 +501,9 @@ namespace BiliBili.UWP.Helper
         {
             public string text { get; set; }
             public string username { get; set; }//昵称
-           // public SolidColorBrush usernameColor { get; set; }//昵称颜色
+                                                // public SolidColorBrush usernameColor { get; set; }//昵称颜色
 
-            public string ul { get; set;}//等级
+            public string ul { get; set; }//等级
             public string ulColor { get; set; }//等级颜色
             public SolidColorBrush ul_color { get; set; }//勋章颜色
 
@@ -497,8 +530,8 @@ namespace BiliBili.UWP.Helper
                     return Modules.LiveRoom.titleItems.FirstOrDefault(x => x.identification == user_title)?.web_pic_url;
                 }
             }
-            public SolidColorBrush uname_color { get; set; } 
-            public SolidColorBrush content_color { get; set; } 
+            public SolidColorBrush uname_color { get; set; }
+            public SolidColorBrush content_color { get; set; }
 
         }
         public class GiftMsgModel
@@ -516,12 +549,12 @@ namespace BiliBili.UWP.Helper
             public string isadmin { get; set; }
             public string uid { get; set; }
             public bool svip { get; set; }
-            
+
         }
 
 
     }
 
-   
+
 
 }

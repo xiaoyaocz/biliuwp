@@ -75,7 +75,7 @@ namespace BiliBili.UWP
                 var available = stream.Read(buffer, offset, count - read);
                 if (available == 0)
                 {
-                    throw new ObjectDisposedException(null);
+                   // throw new ObjectDisposedException(null);
                 }
                 read += available;
                 offset += available;
@@ -257,7 +257,17 @@ namespace BiliBili.UWP
 
         }
 
-
+        public static byte[] ToBE(this byte[] b)
+        {
+            if (BitConverter.IsLittleEndian)
+            {
+                return b.Reverse().ToArray();
+            }
+            else
+            {
+                return b;
+            }
+        }
         public static DateTime GetTime(long timeStamp)
         {
             DateTime dtStart = new DateTime(1970, 1, 1);
@@ -286,6 +296,7 @@ namespace BiliBili.UWP
             return true;
         }
 
+      
 
 
         public void Execute(object parameter)

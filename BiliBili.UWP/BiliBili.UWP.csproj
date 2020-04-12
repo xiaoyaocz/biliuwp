@@ -86,6 +86,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -1116,9 +1117,6 @@
     <SDKReference Include="Microsoft.VCLibs.120, Version=14.0">
       <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Universal</Name>
     </SDKReference>
-    <SDKReference Include="ShanYe MediaPlayer Engine %28Windows 10 UWP%29, Version=1.0.7">
-      <Name>ShanYe MediaPlayer Engine %28Windows 10 UWP%29</Name>
-    </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.18362.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
@@ -1169,6 +1167,9 @@
     </PackageReference>
     <PackageReference Include="SQLite.uwp">
       <Version>3.31.0</Version>
+    </PackageReference>
+    <PackageReference Include="SYEngine.uwp">
+      <Version>1.0.7</Version>
     </PackageReference>
     <PackageReference Include="VLC.MediaElement">
       <Version>3.1.0.1</Version>
