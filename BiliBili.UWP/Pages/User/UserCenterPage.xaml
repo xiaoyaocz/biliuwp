@@ -1,0 +1,178 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.User.UserCenterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages.User"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:modules="using:BiliBili.UWP.Modules.BiliBili.UWP.Modules.UserSubmitVideoModels"
+    xmlns:controls="using:BiliBili.UWP.Controls"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:convert="using:BiliBili.UWP.Converters"
+    Background="{ThemeResource Bili-Background}">
+    <Page.Resources>
+        <convert:DatetimeConvert x:Key="time"/>
+        <convert:NumberToStringConvert x:Key="numberToStringConvert"/>
+    </Page.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.Background>
+                <ImageBrush ImageSource="{x:Bind Path=userCenterVM.top_image,Converter={StaticResource imageConvert2},ConverterParameter='240h',Mode=OneWay}" Stretch="UniformToFill"/>
+            </Grid.Background>
+            <Border Background="#4C000000" />
+            <StackPanel RequestedTheme="Dark" VerticalAlignment="Center" Margin="0 0 0 24" HorizontalAlignment="Center" >
+               
+                <Grid Width="64" >
+                    <Grid>
+                        <Ellipse Width="64" Height="64" >
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="{x:Bind Path=userCenterVM.UserCenterDetail.card.face,Converter={StaticResource imageConvert2},ConverterParameter='100w',Mode=OneWay}"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <HyperlinkButton x:Name="btn_verify" Click="btn_verify_Click" ToolTipService.ToolTip="{x:Bind Path=userCenterVM.UserCenterDetail.card.official_verify.desc,Mode=OneWay}" Padding="0" Margin="0" VerticalAlignment="Bottom"  HorizontalAlignment="Right">
+                            <Image Width="24" Height="24" Source="{x:Bind Path=userCenterVM.UserCenterDetail.card.official_verify.icon,Mode=OneWay}"></Image>
+                        </HyperlinkButton>
+                    </Grid>
+                </Grid>
+                
+                <TextBlock TextAlignment="Center" FontWeight="Bold" Margin="0 2 0 0" Text="{x:Bind Path=userCenterVM.UserCenterDetail.card.name,Mode=OneWay}"></TextBlock>
+                <StackPanel Margin="0 2 0 0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Border Visibility="{x:Bind Path=userCenterVM.UserCenterDetail.card.isVip,Mode=OneWay}" Margin="4,0"  CornerRadius="4"  Background="#FFFFC937">
+                        <TextBlock  Foreground="White" Margin="4,2" FontSize="12" Text="{x:Bind Path=userCenterVM.UserCenterDetail.card.vip.vipText,Mode=OneWay}"></TextBlock>
+                    </Border>
+                    <Border  CornerRadius="4"  Background="{x:Bind Path=userCenterVM.UserCenterDetail.card.level_info.level_color,Mode=OneWay}" >
+                        <TextBlock  Foreground="White" Margin="4,2" FontSize="12">
+                                                <Run>LV</Run>
+                                                <Run Text="{x:Bind Path=userCenterVM.UserCenterDetail.card.level_info.current_level,Mode=OneWay}"></Run>
+                        </TextBlock>
+                    </Border>
+                    <TextBlock VerticalAlignment="Center" Foreground="White" Margin="4,0" FontSize="12">
+                                                <Run>经验</Run>
+                                                <Run Text="{x:Bind Path=userCenterVM.UserCenterDetail.card.level_info.current_exp,Mode=OneWay}"></Run>
+                                                  <Run>/</Run>
+                                              <Run Text="{x:Bind Path=userCenterVM.UserCenterDetail.card.level_info.next_exp,Mode=OneWay}"></Run>
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 2 0 0">
+                    <TextBlock Text="关注" FontSize="14"  Foreground="White" Margin="4 0"/>
+                    <TextBlock Text="{x:Bind Path=userCenterVM.UserCenterDetail.card.attention,Mode=OneWay}" FontSize="14"  Foreground="White" Margin="0,0,8,0"  FontWeight="Bold"/>
+                    <TextBlock Text="粉丝" FontSize="14" Margin="4 0"  Foreground="White"/>
+                    <TextBlock Text="{x:Bind Path=userCenterVM.UserCenterDetail.card.fans,Mode=OneWay}" FontSize="14"  Foreground="White"  FontWeight="Bold"/>
+                </StackPanel>
+                
+                <TextBlock TextAlignment="Center" IsTextSelectionEnabled="True" FontSize="14" Margin="0 2 0 0" Text="{x:Bind Path=userCenterVM.UserCenterDetail.card.sign,Mode=OneWay}"></TextBlock>
+            </StackPanel>
+            <Grid VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <AppBarButton x:Name="btnBack" Click="btnBack_Click" Width="48" Height="48" Icon="Back" Foreground="White"></AppBarButton>
+                <StackPanel Visibility="{x:Bind Path=userCenterVM.is_self,Converter={StaticResource display},Mode=OneWay}" Grid.Column="2" Orientation="Horizontal">
+                    <Button x:Name="btnOpenLiveRoom" Click="btnOpenLiveRoom_Click" Visibility="{x:Bind Path=userCenterVM.UserCenterDetail.living,Mode=OneWay}" Margin="0 0 8 0" MinWidth="80"  Background="{ThemeResource Bili-Color}">
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE116;" FontSize="14" Foreground="White" Margin="0 0 8 0"/>
+                            <TextBlock Foreground="White">正在直播</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button x:Name="btnAddFollow" Click="btnAddFollow_Click" Visibility="{x:Bind Path=userCenterVM.UserCenterDetail.is_follow,Converter={StaticResource display},Mode=OneWay}" Margin="0 0 8 0" MinWidth="80" Background="{ThemeResource Bili-Color}">
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" FontSize="14" Foreground="White" Margin="0 0 8 0"/>
+                            <TextBlock Foreground="White">关注</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnCancelFollow" Click="btnCancelFollow_Click" Visibility="{x:Bind Path=userCenterVM.UserCenterDetail.is_follow,Mode=OneWay}" Margin="0 0 8 0" MinWidth="80"  Background="Gray">
+                        <TextBlock Foreground="White">取消关注</TextBlock>
+                    </Button>
+                  
+                    <Button Margin="0 0 8 0" MinWidth="80" Visibility="Collapsed" Background="{ThemeResource Bili-Color}">
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE119;" FontSize="14" Foreground="White" Margin="0 0 8 0"/>
+                            <TextBlock Foreground="White">私信</TextBlock>
+                        </StackPanel>
+                    </Button>
+                  
+                </StackPanel>
+                <StackPanel Visibility="{x:Bind Path=userCenterVM.is_self,Mode=OneWay}" Grid.Column="2" Orientation="Horizontal">
+                    <AppBarButton x:Name="btnEditProfile" Click="btnEditProfile_Click" Width="48" Height="48" Icon="Edit" Foreground="White"></AppBarButton>
+                </StackPanel>
+            </Grid>
+            
+        </Grid>
+        <Pivot x:Name="pivot" SelectionChanged="pivot_SelectionChanged" Grid.Row="1" Margin="0 -48 0 0">
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="18" RequestedTheme="Dark" >投稿</TextBlock>
+                </PivotItem.Header>
+                <Grid>
+                    <toolkit:AdaptiveGridView 
+                Padding="8 4" 
+                ItemHeight="100" 
+                DesiredWidth="500" 
+                StretchContentForSingleRow="False" 
+                SelectionMode="None" 
+                IsItemClickEnabled="True" 
+                ItemsSource="{x:Bind Path=userCenterVM.SubmitVideos,Mode=OneWay}"
+                ItemClick="SubmitVideo_ItemClick"
+                OneRowModeEnabled="False">
+                        <toolkit:AdaptiveGridView.ItemContainerStyle>
+                            <Style TargetType="GridViewItem">
+                                <Setter Property="Margin" Value="4"></Setter>
+                            </Style>
+                        </toolkit:AdaptiveGridView.ItemContainerStyle>
+                        <toolkit:AdaptiveGridView.ItemTemplate>
+                            <DataTemplate x:DataType="modules:SubmitVideoItemModel">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="160"/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Margin="4">
+                                        <toolkit:ImageEx IsCacheEnabled="True" PlaceholderSource="ms-appx:///Assets/Thumbnails/Placeholde.png" Stretch="UniformToFill" Source="{x:Bind Path=pic,Converter={StaticResource imageConvert},ConverterParameter='120h'}"></toolkit:ImageEx>
+                                        <Border CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4" Padding="4 2" Background="#99000000">
+                                            <TextBlock Foreground="White" FontSize="12" Text="{x:Bind length}"></TextBlock>
+                                        </Border>
+                                    </Grid>
+
+                                    <StackPanel Grid.Column="1" Margin="4 0 0 0" >
+                                        <TextBlock MaxLines="2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Text="{x:Bind title}"></TextBlock>
+
+                                        <TextBlock Foreground="Gray" Margin="0 4 0 0">观看:<Run Text="{x:Bind Path=play,Converter={StaticResource numberToStringConvert}}"/> 弹幕:<Run Text="{x:Bind Path=video_review,Converter={StaticResource numberToStringConvert}}"/></TextBlock>
+                                        <TextBlock Foreground="Gray" Margin="0 4 0 0">发表于 <Run Text="{x:Bind Path=created,Converter={StaticResource time},ConverterParameter='ts'}"/></TextBlock>
+                                    </StackPanel>
+                                    <!--<TextBlock  Grid.Row="2" Margin="4 0 4 4" FontSize="12" Foreground="Gray" MaxLines="2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Text="{Binding desc}"></TextBlock>-->
+                                </Grid>
+                            </DataTemplate>
+                        </toolkit:AdaptiveGridView.ItemTemplate>
+                        <toolkit:AdaptiveGridView.Footer>
+                            <ProgressRing IsActive="True" HorizontalAlignment="Center" Visibility="{x:Bind Path=userCenterVM.SubmitVideos.IsLoading,Mode=OneWay}"></ProgressRing>
+                        </toolkit:AdaptiveGridView.Footer>
+                    </toolkit:AdaptiveGridView>
+                    <controls:RoundButton x:Name="btnRefreshSubmitVideos" Click="btnRefreshSubmitVideos_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="12">
+                        <SymbolIcon Symbol="Refresh" Foreground="White"></SymbolIcon>
+                    </controls:RoundButton>
+                    <TextBlock Visibility="{x:Bind Path=userCenterVM.SubmitVideos.Count,Converter={StaticResource display},ConverterParameter=0,Mode=OneWay}"  Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center">什么都没有...</TextBlock>
+                </Grid>
+                
+            </PivotItem>
+            <PivotItem Margin="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="18" RequestedTheme="Dark" >动态</TextBlock>
+                </PivotItem.Header>
+                <Grid>
+                    <controls:DynamicControls x:Name="ls_dynamic" MaxWidth="800" LoadMore="ls_dynamic_LoadMore" Refresh="ls_dynamic_Refresh"/>
+                    <ProgressRing x:Name="pr_Load" IsActive="True"  VerticalAlignment="Center" HorizontalAlignment="Center" ></ProgressRing>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+        <ProgressRing Grid.RowSpan="2" IsActive="True"  VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{x:Bind Path=userCenterVM.Loading,Mode=OneWay}"></ProgressRing>
+    </Grid>
+</Page>

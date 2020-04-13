@@ -1,5 +1,6 @@
 ﻿using BiliBili.UWP.Controls;
 using BiliBili.UWP.Pages.FindMore;
+using BiliBili.UWP.Pages.User;
 using BiliBili.UWP.Views;
 using Newtonsoft.Json.Linq;
 using System;
@@ -421,12 +422,12 @@ namespace BiliBili.UWP.Pages
             if ((sender as HyperlinkButton).DataContext is DynamicCardsModel)
             {
                 var item = (sender as HyperlinkButton).DataContext as DynamicCardsModel;
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserInfoPage), item.desc.user_profile.info.uid);
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage), item.desc.user_profile.info.uid);
             }
             else
             {
                 var item = (sender as HyperlinkButton).DataContext as RepostModel;
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserInfoPage), item.uid);
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage), item.uid);
             }
 
         }
@@ -495,7 +496,7 @@ namespace BiliBili.UWP.Pages
         private void ButtonClick(object paramenter)
         {
             //Command="{Binding ButtonCommand}"
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserInfoPage), paramenter);
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage), paramenter);
         }
 
         public long uid { get; set; }

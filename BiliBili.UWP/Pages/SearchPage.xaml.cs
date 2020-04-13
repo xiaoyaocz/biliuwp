@@ -1,4 +1,5 @@
 ﻿using BiliBili.UWP.Pages.FindMore;
+using BiliBili.UWP.Pages.User;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -463,7 +464,7 @@ namespace BiliBili.UWP.Pages
 
         private void Search_listview_Up_ItemClick(object sender, ItemClickEventArgs e)
         {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserInfoPage), ((SUpModel)e.ClickedItem).param);
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage), ((SUpModel)e.ClickedItem).param);
             //this.Frame.Navigate(typeof(UserInfoPage), ((SUpModel)e.ClickedItem).mid);
         }
 

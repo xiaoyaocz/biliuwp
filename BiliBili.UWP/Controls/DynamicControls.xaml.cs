@@ -1,5 +1,6 @@
 ﻿using BiliBili.UWP.Pages;
 using BiliBili.UWP.Pages.FindMore;
+using BiliBili.UWP.Pages.User;
 using BiliBili.UWP.Views;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -309,7 +310,7 @@ namespace BiliBili.UWP.Controls
         private void btn_OpenUser_Click(object sender, RoutedEventArgs e)
         {
 
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserInfoPage), (sender as HyperlinkButton).Tag.ToString());
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage), (sender as HyperlinkButton).Tag.ToString());
 
         }
 
@@ -358,7 +359,7 @@ namespace BiliBili.UWP.Controls
         private void btn_User_Click(object sender, RoutedEventArgs e)
         {
             var item = (sender as HyperlinkButton).DataContext as DynamicCardsModel;
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserInfoPage), item.desc.user_profile.info.uid);
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage), item.desc.user_profile.info.uid);
         }
 
         private void btn_LoadMore_Click(object sender, RoutedEventArgs e)
@@ -775,7 +776,7 @@ namespace BiliBili.UWP.Views
         private void ButtonClick(object paramenter)
         {
             //Command="{Binding ButtonCommand}"
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserInfoPage), paramenter);
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage), paramenter);
         }
 
         private void TagCommandClick(object paramenter)

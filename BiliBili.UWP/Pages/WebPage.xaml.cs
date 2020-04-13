@@ -132,7 +132,7 @@ namespace BiliBili.UWP.Pages
             }
             catch (Exception ex)
             {
-                LogHelper.WriteLog(ex);
+                LogHelper.WriteLog("初始化JSbridge失败", LogType.ERROR,ex);
             }
           
 

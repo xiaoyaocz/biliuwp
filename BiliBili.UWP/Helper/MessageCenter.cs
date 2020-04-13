@@ -5,6 +5,7 @@ using BiliBili.UWP.Pages;
 using BiliBili.UWP.Pages.FindMore;
 using BiliBili.UWP.Pages.Live;
 using BiliBili.UWP.Pages.Music;
+using BiliBili.UWP.Pages.User;
 using BiliBili.UWP.Views;
 using System;
 using System.Collections.Generic;
@@ -320,7 +321,7 @@ namespace BiliBili.UWP
             var user = Utils.RegexMatch(url.Replace("space.bilibili.com", "space").Replace("author", "space").Replace("/", ""), @"space(\d+)");
             if (user != "")
             {
-                InfoNavigateToEvent(typeof(UserInfoPage), user);
+                InfoNavigateToEvent(typeof(UserCenterPage), user);
                 return true;
             }
             /*

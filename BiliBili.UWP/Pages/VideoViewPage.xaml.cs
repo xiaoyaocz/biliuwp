@@ -34,6 +34,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.StartScreen;
 using BiliBili.UWP.Modules;
 using BiliBili.UWP.Pages.FindMore;
+using BiliBili.UWP.Pages.User;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -454,13 +455,13 @@ namespace BiliBili.UWP.Pages
 
         private void comment_OpenUser(string id)
         {
-            this.Frame.Navigate(typeof(UserInfoPage), new object[] { id });
+            this.Frame.Navigate(typeof(UserCenterPage), id );
         }
 
         private void btn_UP_Click(object sender, RoutedEventArgs e)
         {
             VideoInfoModels info = (sender as HyperlinkButton).DataContext as VideoInfoModels;
-            this.Frame.Navigate(typeof(UserInfoPage), new object[] { info.owner.mid });
+            this.Frame.Navigate(typeof(UserCenterPage),  info.owner.mid );
         }
 
         private async void btn_AttUp_Click(object sender, RoutedEventArgs e)
@@ -1220,7 +1221,7 @@ namespace BiliBili.UWP.Pages
         private void Gv_Staff_ItemClick(object sender, ItemClickEventArgs e)
         {
             var data = e.ClickedItem as staffModel;
-            this.Frame.Navigate(typeof(UserInfoPage), new object[] { data.mid });
+            this.Frame.Navigate(typeof(UserCenterPage),data.mid );
         }
 
         private void Txt_desc_RightTapped(object sender, RightTappedRoutedEventArgs e)

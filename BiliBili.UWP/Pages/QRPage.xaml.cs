@@ -33,6 +33,7 @@ using BiliBili.UWP.Helper;
 using Windows.Devices.Sensors;
 using Windows.UI.Popups;
 using Windows.Media;
+using BiliBili.UWP.Pages.User;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -269,7 +270,7 @@ namespace BiliBili.UWP.Pages
                         if (ban4.Length != 0)
                         {
                             //args.Handled = true;
-                            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserInfoPage), ban4.Replace("/", ""));
+                            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage), ban4.Replace("/", ""));
                             this.Frame.GoBack();
                             //this.Frame.Navigate(typeof(VideoViewPage), ban3.Replace("/", ""));
                             return;

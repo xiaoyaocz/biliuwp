@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using Windows.Security.ExchangeActiveSyncProvisioning;
-using BiliBili.UWP.Class;
+
 
 namespace BiliBili.UWP
 {
@@ -30,7 +30,7 @@ namespace BiliBili.UWP
                     EasClientDeviceInformation deviceInfo = new EasClientDeviceInformation();
                     hc.DefaultRequestHeaders.Add("client", "bilibili-uwp");
                     hc.DefaultRequestHeaders.Add("ts", ts);
-                    hc.DefaultRequestHeaders.Add("appsign", MD5.GetMd5String("biliUwpXycz0423" + ts + "bilibili-uwp" + SettingHelper.GetVersion() + "0BJSDAHDUAHGAI5D45ADS5" + deviceInfo.Id.ToString()));
+                    hc.DefaultRequestHeaders.Add("appsign", Utils.ToMD5("biliUwpXycz0423" + ts + "bilibili-uwp" + SettingHelper.GetVersion() + "0BJSDAHDUAHGAI5D45ADS5" + deviceInfo.Id.ToString()));
                     hc.DefaultRequestHeaders.Add("version", SettingHelper.GetVersion());
                     hc.DefaultRequestHeaders.Add("device-id", deviceInfo.Id.ToString());
                 }

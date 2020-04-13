@@ -1,5 +1,6 @@
 ﻿using BiliBili.UWP.Models;
 using BiliBili.UWP.Pages;
+using BiliBili.UWP.Pages.User;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -91,7 +92,7 @@ namespace BiliBili.UWP.Controls
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserInfoPage), ((sender as Button).DataContext as LiveVideoModel).user.uid);
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage), ((sender as Button).DataContext as LiveVideoModel).user.uid);
         }
     }
 }

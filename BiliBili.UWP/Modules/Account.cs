@@ -14,38 +14,53 @@ using Windows.Web.Http.Filters;
 using BiliBili.UWP.Modules.AccountModels;
 using Newtonsoft.Json;
 using Windows.Web.Http;
+using BiliBili.UWP.Api.User;
+using BiliBili.UWP.Api;
 
 namespace BiliBili.UWP.Modules
 {
     public class Account : IModules
     {
+        readonly UserCenterAPI userCenterAPI;
+        public Account()
+        {
+            userCenterAPI = new UserCenterAPI();
+        }
         public static MyInfoModel myInfo;
 
-        public async Task<ReturnModel> Follow(int uid)
+        public async Task<ReturnModel> Follow(string uid)
         {
             try
             {
-                string url = "https://api.bilibili.com/x/relation/modify";
-                string data = $"access_key={ApiHelper.access_key}&act=1&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&fid={uid}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}&re_src=31";
-                data += "&sign=" + ApiHelper.GetSign(data);
-                string result = await WebClientClass.PostResults(new Uri(url), data);
-                JObject jb = JObject.Parse(result);
-                if ((int)jb["code"] == 0)
+                var result = await userCenterAPI.Attention(uid, 1).Request();
+                if (result.status)
                 {
-                    return new ReturnModel()
+                    var data = await result.GetJson<ApiDataModel<JObject>>();
+
+                    if (data.success)
                     {
-                        success = true,
-                        message = ""
-                    };
+                        return new ReturnModel()
+                        {
+                            success = true,
+                            message = ""
+                        };
+                    }
+                    else
+                    {
+                        return new ReturnModel()
+                        {
+                            success = false,
+                            message = data.message
+                        };
+                    }
                 }
                 else
                 {
                     return new ReturnModel()
                     {
                         success = false,
-                        message = "关注失败"
+                        message = result.message
                     };
-
                 }
 
             }
@@ -54,31 +69,39 @@ namespace BiliBili.UWP.Modules
                 return HandelError(ex);
             }
         }
-        public async Task<ReturnModel> UnFollow(int uid)
+        public async Task<ReturnModel> UnFollow(string uid)
         {
             try
             {
-                string url = "https://api.bilibili.com/x/relation/modify";
-                string data = $"access_key={ApiHelper.access_key}&act=2&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&fid={uid}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}&re_src=31";
-                data += "&sign=" + ApiHelper.GetSign(data);
-                string result = await WebClientClass.PostResults(new Uri(url), data);
-                JObject jb = JObject.Parse(result);
-                if ((int)jb["code"] == 0)
+                var result = await userCenterAPI.Attention(uid,2).Request();
+                if (result.status)
                 {
-                    return new ReturnModel()
+                    var data = await result.GetJson<ApiDataModel<JObject>>();
+
+                    if (data.success)
                     {
-                        success = true,
-                        message = ""
-                    };
+                        return new ReturnModel()
+                        {
+                            success = true,
+                            message = ""
+                        };
+                    }
+                    else
+                    {
+                        return new ReturnModel()
+                        {
+                            success = false,
+                            message = data.message
+                        };
+                    }
                 }
                 else
                 {
                     return new ReturnModel()
                     {
                         success = false,
-                        message = "取消关注失败"
+                        message = result.message
                     };
-
                 }
 
             }
@@ -276,12 +299,12 @@ namespace BiliBili.UWP.Modules
 
         }
 
-        public async Task SetLoginSuccess(string access_token,string mid)
+        public async Task SetLoginSuccess(string access_token, string mid)
         {
             SettingHelper.Set_Access_key(access_token);
             SettingHelper.Set_Refresh_Token(access_token);
             SettingHelper.Set_LoginExpires(DateTime.Now.AddSeconds(7200));
-            SettingHelper.Set_UserID(long.Parse( mid));
+            SettingHelper.Set_UserID(long.Parse(mid));
             await SSO(access_token);
             MessageCenter.SendLogined();
         }
@@ -469,7 +492,7 @@ namespace BiliBili.UWP.Modules
                 {
                     var data = JsonConvert.DeserializeObject<MyInfoModel>(m.json["data"].ToString());
                     myInfo = data;
-                    
+
                     return new ReturnModel<MyInfoModel>()
                     {
                         success = true,

@@ -254,7 +254,7 @@ namespace BiliBili.UWP.Pages
 
                 user_GridView_FovBox.ItemsSource = await GetUserFovBox();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Utils.ShowMessageToast("读取用户信息失败", 3000);
             }

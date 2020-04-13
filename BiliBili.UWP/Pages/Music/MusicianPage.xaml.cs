@@ -1,4 +1,5 @@
 ﻿using BiliBili.UWP.Helper;
+using BiliBili.UWP.Pages.User;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -227,7 +228,7 @@ namespace BiliBili.UWP.Pages.Music
 
         private void btn_OpenUser_Click(object sender, RoutedEventArgs e)
         {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserInfoPage), _mid);
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage), _mid);
         }
 
         private async void btn_PlayAll_Click(object sender, RoutedEventArgs e)

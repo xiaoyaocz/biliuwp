@@ -2,6 +2,7 @@
 using BiliBili.UWP.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using System.Windows.Input;
 
 namespace BiliBili.UWP.Modules
 {
-    public class IModules
+    public class IModules : INotifyPropertyChanged
     {
 
         public virtual ReturnModel HandelError(Exception ex)
@@ -24,7 +25,7 @@ namespace BiliBili.UWP.Modules
             }
             else
             {
-                LogHelper.WriteLog(ex);
+                LogHelper.WriteLog("模块出错", LogType.ERROR, ex);
                 return new ReturnModel()
                 {
                     success = false,
@@ -44,13 +45,19 @@ namespace BiliBili.UWP.Modules
             }
             else
             {
-                LogHelper.WriteLog(ex);
+                LogHelper.WriteLog("模块出错", LogType.ERROR, ex);
                 return new ReturnModel<T>()
                 {
                     success = false,
                     message = "出现了一个未处理错误，已记录"
                 };
             }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public virtual void DoPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
     }

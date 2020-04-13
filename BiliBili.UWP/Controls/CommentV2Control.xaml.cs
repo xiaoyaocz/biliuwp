@@ -23,6 +23,7 @@ using BiliBili.UWP.Pages;
 using Windows.UI.Xaml.Documents;
 using System.Threading.Tasks;
 using BiliBili.UWP.Models;
+using BiliBili.UWP.Pages.User;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -85,7 +86,7 @@ namespace BiliBili.UWP.Controls
 
         private void btn_User_Click(object sender, RoutedEventArgs e)
         {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserInfoPage), (sender as HyperlinkButton).Tag.ToString());
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage), (sender as HyperlinkButton).Tag.ToString());
         }
 
         public void ClearComment()

@@ -59,7 +59,7 @@ namespace BiliBili.UWP.Controls
             }
             catch (Exception ex)
             {
-                LogHelper.WriteLog(ex);
+                LogHelper.WriteLog("定时隐藏播放控制器出错", LogType.ERROR ,ex);
             }
            
         }
@@ -72,7 +72,7 @@ namespace BiliBili.UWP.Controls
             }
             catch (Exception ex)
             {
-                LogHelper.WriteLog(ex);
+                LogHelper.WriteLog("更新播放器时间出错", LogType.ERROR, ex);
             }
            
         }
@@ -154,7 +154,7 @@ namespace BiliBili.UWP.Controls
             }
             catch (Exception ex)
             {
-                LogHelper.WriteLog(ex);
+                LogHelper.WriteLog("初始化播放控制器失败", LogType.ERROR, ex);
             }
            
         }

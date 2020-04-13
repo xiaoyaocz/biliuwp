@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI;
 using Newtonsoft.Json;
+using Windows.Security.Cryptography.Core;
+using Windows.Storage.Streams;
+using Windows.Security.Cryptography;
 
 namespace BiliBili.UWP
 {
@@ -256,6 +259,47 @@ namespace BiliBili.UWP
 
 
         }
+        /// <summary>
+        /// 将时间戳转为时间
+        /// </summary>
+        /// <param name="ts"></param>
+        /// <returns></returns>
+        public static DateTime TimestampToDatetime(long ts)
+        {
+            DateTime dtStart = new DateTime(1970, 1, 1, 8, 0, 0);
+            long lTime = long.Parse(ts + "0000000");
+            TimeSpan toNow = new TimeSpan(lTime);
+            return dtStart.Add(toNow);
+        }
+        /// <summary>
+        /// 生成时间戳/秒
+        /// </summary>
+        /// <returns></returns>
+        public static long GetTimestampS()
+        {
+            return Convert.ToInt64((DateTime.Now - new DateTime(1970, 1, 1, 8, 0, 0, 0)).TotalSeconds);
+        }
+        /// <summary>
+        /// 生成时间戳/豪秒
+        /// </summary>
+        /// <returns></returns>
+        public static long GetTimestampMS()
+        {
+            return Convert.ToInt64((DateTime.Now - new DateTime(1970, 1, 1, 8, 0, 0, 0)).TotalMilliseconds);
+        }
+        /// <summary>
+        /// MD5
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string ToMD5(string input)
+        {
+            var provider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
+            IBuffer buffer = CryptographicBuffer.ConvertStringToBinary(input, BinaryStringEncoding.Utf8);
+            var hashed = provider.HashData(buffer);
+            var result = CryptographicBuffer.EncodeToHexString(hashed);
+            return result;
+        }
 
         public static byte[] ToBE(this byte[] b)
         {
@@ -268,13 +312,7 @@ namespace BiliBili.UWP
                 return b;
             }
         }
-        public static DateTime GetTime(long timeStamp)
-        {
-            DateTime dtStart = new DateTime(1970, 1, 1);
-            TimeSpan toNow = TimeSpan.FromSeconds(timeStamp);
-            DateTime dt = dtStart.Add(toNow).ToLocalTime();
-            return dt;
-        }
+       
     }
 
 

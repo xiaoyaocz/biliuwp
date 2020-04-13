@@ -184,7 +184,7 @@ namespace BiliBili.UWP.Pages
                 if (flag >= 100)
                 {
                     MessageDialog messageDialog = new MessageDialog("播放组件似乎加载失败了,是否报告开发者？");
-                    messageDialog.Commands.Add(new UICommand("确定", (sender) => { LogHelper.WriteLog(new Exception("无法加载播放器")); }));
+                    messageDialog.Commands.Add(new UICommand("确定", (sender) => { LogHelper.WriteLog("无法初始化播放器", LogType.ERROR); }));
                     messageDialog.Commands.Add(new UICommand("取消"));
                     await messageDialog.ShowAsync();
                     flag = 1;

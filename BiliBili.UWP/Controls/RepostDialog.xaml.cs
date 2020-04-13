@@ -1,4 +1,6 @@
-﻿using BiliBili.UWP.Modules;
+﻿using BiliBili.UWP.Api.User;
+using BiliBili.UWP.Api;
+using BiliBili.UWP.Modules;
 using BiliBili.UWP.Views;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -24,6 +26,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using BiliBili.UWP.Helper;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“内容对话框”项模板
 
@@ -34,9 +37,11 @@ namespace BiliBili.UWP.Controls
         Emote emote;
         bool isRepost = false;
         DynamicCardsModel _dynamicCardsModel;
+        readonly DynamicAPI dynamicAPI;
         public RepostDialog(DynamicCardsModel dynamicCardsModel)
         {
             this.InitializeComponent();
+            dynamicAPI = new DynamicAPI();
             if (Window.Current.CoreWindow.Bounds.Width >= 500)
             {
                 st.Width = 440;
@@ -124,6 +129,7 @@ namespace BiliBili.UWP.Controls
         public RepostDialog()
         {
             this.InitializeComponent();
+            dynamicAPI = new DynamicAPI();
             if (Window.Current.CoreWindow.Bounds.Width >= 500)
             {
                 st.Width = 440;
@@ -145,6 +151,7 @@ namespace BiliBili.UWP.Controls
         public RepostDialog(string tag)
         {
             this.InitializeComponent();
+            dynamicAPI = new DynamicAPI();
             if (Window.Current.CoreWindow.Bounds.Width >= 500)
             {
                 st.Width = 440;
@@ -419,7 +426,7 @@ namespace BiliBili.UWP.Controls
                 }
                 ctrl = JsonConvert.SerializeObject(atlist);
                 at_uids = at_uids.Remove(at_uids.Length - 1, 1);
-                atDisplaylist.Clear();
+                
             }
 
             List<SendImagesModel> send_pics = new List<SendImagesModel>();
@@ -437,30 +444,54 @@ namespace BiliBili.UWP.Controls
 
             try
             {
-                string url =string.Format( "http://api.vc.bilibili.com/link_draw/v1/doc/create?access_key={0}&appkey={1}&build=5250000&platform=android&src=bilih5&ts={2}",ApiHelper.access_key,ApiHelper.AndroidKey.Appkey,ApiHelper.GetTimeSpan_2);
-                url += "&sign" + ApiHelper.GetSign(url);
-                string content = "category=3&pictures={0}&description={1}&setting={2}&at_uids={3}&at_control={4}&jumpfrom=110";
 
-                content = string.Format(content,Uri.EscapeDataString(imgStr),Uri.EscapeDataString(txt), Uri.EscapeDataString(setting), at_uids, Uri.EscapeDataString(ctrl));
-             
-                var re = await WebClientClass.PostResultsUtf8(new Uri(url), content);
-                Newtonsoft.Json.Linq.JObject obj = JObject.Parse(re);
-                if (obj["code"].ToInt32() == 0)
+
+                //string url =string.Format( "http://api.vc.bilibili.com/link_draw/v1/doc/create?access_key={0}&appkey={1}&build=5250000&platform=android&src=bilih5&ts={2}",ApiHelper.access_key,ApiHelper.AndroidKey.Appkey,ApiHelper.GetTimeSpan_2);
+                //url += "&sign" + ApiHelper.GetSign(url);
+                //string content = $"&category=3&pictures={Uri.EscapeDataString(imgStr)}&description={Uri.EscapeDataString(txt)}&setting={Uri.EscapeDataString(setting)}&at_uids={at_uids}&at_control={ Uri.EscapeDataString(ctrl)}&jumpfrom=110";
+                //if (imgStr=="[]")
+                //{
+
+                //}
+
+                //content = string.Format(content,,, , at_uids, Uri.EscapeDataString(ctrl));
+                HttpResults httpResults;
+                if (send_pics.Count==0)
                 {
-                    SendState = true;
-                    Utils.ShowMessageToast("发表动态成功");
-                    this.Hide();
+                    httpResults = await dynamicAPI.CreateDynamicText(txt, at_uids, ctrl).Request();
+                }
+                else
+                {
+                    httpResults = await dynamicAPI.CreateDynamicPhoto(imgStr, txt, at_uids, ctrl).Request();
+                }
+                if (httpResults.status)
+                {
+                   var data=await httpResults.GetData<JObject>();
+                    if (data.code==0)
+                    {
+                        SendState = true;
+                        Utils.ShowMessageToast("发表动态成功");
+                        atDisplaylist.Clear();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        SendState = false;
+                        Utils.ShowMessageToast("发表动态失败:" + data.message);
+                    }
                 }
                 else
                 {
                     SendState = false;
-                    Utils.ShowMessageToast("发表动态失败" + obj["message"].ToString());
+                    Utils.ShowMessageToast(httpResults.message);
                 }
+                
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 SendState = false;
                 Utils.ShowMessageToast("发表动态发生错误");
+                LogHelper.WriteLog("发表动态失败", LogType.ERROR, ex);
             }
 
 

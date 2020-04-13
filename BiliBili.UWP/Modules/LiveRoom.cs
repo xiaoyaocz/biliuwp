@@ -578,7 +578,7 @@ namespace BiliBili.UWP.Modules
                     return new ReturnModel<DateTime>()
                     {
                         success = true,
-                        data = Utils.GetTime(Convert.ToInt64(model["data"]["time_end"]))
+                        data = Utils.TimestampToDatetime(Convert.ToInt64(model["data"]["time_end"]))
                     };
                 }
                 else

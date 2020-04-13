@@ -310,6 +310,13 @@ namespace BiliBili.UWP.Models
 
 
     }
+   
+    public class UserInfoCard
+    {
+
+    }
+  
+
     public class GetUserAttention
     {
         //Josn：http://space.bilibili.com/ajax/friend/GetAttentionList?mid=XXXX&pagesize=999

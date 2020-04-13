@@ -211,7 +211,7 @@ namespace BiliBili.UWP.Controls
             }
             catch (Exception ex)
             {
-                LogHelper.WriteLog(ex);
+                LogHelper.WriteLog("登录WebView设置JSBridge失败", LogType.ERROR, ex);
             }
           
         }

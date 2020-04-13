@@ -21,6 +21,10 @@ namespace BiliBili.UWP.Converters
             {
                 return new BitmapImage(new Uri(value.ToString()));
             }
+            if (value.ToString().Contains("ms-appx"))
+            {
+                return new BitmapImage(new Uri(value.ToString()));
+            }
             var url = value.ToString() + "@" + parameter.ToString() + ".jpg";
             return new BitmapImage(new Uri(url));
         }

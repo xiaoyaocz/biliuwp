@@ -65,23 +65,7 @@ namespace BiliBili.UWP.Modules
             }
             catch (Exception ex)
             {
-                if (LogHelper.IsNetworkError(ex))
-                {
-                    return new ReturnModel<ObservableCollection<ToViewsModel>>()
-                    {
-                        success = false,
-                        message = "无法连接服务器，请检查网络连接"
-                    };
-                }
-                else
-                {
-                    LogHelper.WriteLog(ex);
-                    return new ReturnModel<ObservableCollection<ToViewsModel>>()
-                    {
-                        success = false,
-                        message = "出现了一个未处理错误，已记录"
-                    };
-                }
+                return HandelError<ObservableCollection<ToViewsModel>>(ex);
 
             }
 
@@ -119,15 +103,7 @@ namespace BiliBili.UWP.Modules
             }
             catch (Exception ex)
             {
-                if (LogHelper.IsNetworkError(ex))
-                {
-                    return new ReturnModel() { success = false, message = "无法连接服务器，请检查网络连接" };
-                }
-                else
-                {
-                    LogHelper.WriteLog(ex);
-                    return new ReturnModel() { success = false, message = "发生未处理错误，已记录" };
-                }
+                return HandelError(ex);
             }
         }
         /// <summary>
@@ -158,15 +134,7 @@ namespace BiliBili.UWP.Modules
             }
             catch (Exception ex)
             {
-                if (LogHelper.IsNetworkError(ex))
-                {
-                    return new ReturnModel() { success = false, message = "无法连接服务器，请检查网络连接" };
-                }
-                else
-                {
-                    LogHelper.WriteLog(ex);
-                    return new ReturnModel() { success = false, message = "发生未处理错误，已记录" };
-                }
+                return HandelError(ex);
             }
         }
         /// <summary>
@@ -196,15 +164,7 @@ namespace BiliBili.UWP.Modules
             }
             catch (Exception ex)
             {
-                if (LogHelper.IsNetworkError(ex))
-                {
-                    return new ReturnModel() { success = false, message = "无法连接服务器，请检查网络连接" };
-                }
-                else
-                {
-                    LogHelper.WriteLog(ex);
-                    return new ReturnModel() { success = false, message = "发生未处理错误，已记录" };
-                }
+                return HandelError(ex);
             }
         }
         /// <summary>
@@ -234,15 +194,7 @@ namespace BiliBili.UWP.Modules
             }
             catch (Exception ex)
             {
-                if (LogHelper.IsNetworkError(ex))
-                {
-                    return new ReturnModel() { success = false, message = "无法连接服务器，请检查网络连接" };
-                }
-                else
-                {
-                    LogHelper.WriteLog(ex);
-                    return new ReturnModel() { success = false, message = "发生未处理错误，已记录" };
-                }
+                return HandelError(ex);
             }
         }
         public class ToViewsModel

@@ -1,5 +1,4 @@
-﻿using BiliBili.UWP.Class;
-using BiliBili.UWP.Controls;
+﻿using BiliBili.UWP.Controls;
 using BiliBili.UWP.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -77,7 +76,7 @@ namespace BiliBili.UWP
                 stringBuilder.Append(str1);
             }
             stringBuilder.Append(apiKeyInfo.Secret);
-            result = MD5.GetMd5String(stringBuilder.ToString()).ToLower();
+            result = Utils.ToMD5(stringBuilder.ToString()).ToLower();
             return result;
         }
         public static string GetSignWithUrl(string url, ApiKeyInfo apiKeyInfo)
@@ -93,7 +92,7 @@ namespace BiliBili.UWP
                 stringBuilder.Append(str1);
             }
             stringBuilder.Append(apiKeyInfo.Secret);
-            result = MD5.GetMd5String(stringBuilder.ToString()).ToLower();
+            result = Utils.ToMD5(stringBuilder.ToString()).ToLower();
             return url+="&sign="+result;
         }
 

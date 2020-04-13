@@ -35,6 +35,7 @@ using Windows.Storage.Provider;
 using System.Threading.Tasks;
 using BiliBili.UWP.Modules;
 using Windows.UI.Popups;
+using BiliBili.UWP.Pages.User;
 
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
@@ -670,7 +671,7 @@ namespace BiliBili.UWP.Pages
 
         private void comment_OpenUser(string id)
         {
-            this.Frame.Navigate(typeof(UserInfoPage), new object[] { id });
+            this.Frame.Navigate(typeof(UserCenterPage), id );
         }
 
         private void Video_Refresh_Click(object sender, RoutedEventArgs e)

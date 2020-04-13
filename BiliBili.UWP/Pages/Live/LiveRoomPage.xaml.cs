@@ -40,6 +40,7 @@ using Windows.Storage.Pickers;
 using Windows.Storage.AccessCache;
 using BiliBili.UWP.Modules;
 using BiliBili.UWP.Modules.LiveModels;
+using BiliBili.UWP.Pages.User;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -949,7 +950,7 @@ namespace BiliBili.UWP.Pages
 
         private void btn_User_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(UserInfoPage), new object[] { (Video_UP.DataContext as LiveInfoModel).mid });
+            this.Frame.Navigate(typeof(UserCenterPage),(Video_UP.DataContext as LiveInfoModel).mid );
         }
 
         private void btn_Close_Click(object sender, RoutedEventArgs e)
@@ -1910,7 +1911,7 @@ namespace BiliBili.UWP.Pages
             }
             catch (Exception ex)
             {
-                LogHelper.WriteLog(ex);
+                LogHelper.WriteLog("", LogType.ERROR,ex);
                 Debug_Data.Visibility = Visibility.Collapsed;
             }
 

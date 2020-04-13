@@ -55,7 +55,7 @@ namespace BiliBili.UWP
             e.Handled = true;
             try
             {
-                LogHelper.WriteLog(e.Exception);
+                LogHelper.WriteLog("程序运行出现错误", LogType.ERROR,e.Exception);
                 Utils.ShowMessageToast("程序出现一个错误，已记录");
                 MessageCenter.SendShowError(e.Exception);
             }
@@ -70,7 +70,7 @@ namespace BiliBili.UWP
             e.Handled = true;
             try
             {
-                LogHelper.WriteLog(e.Exception);
+                LogHelper.WriteLog("程序运行出现错误", LogType.ERROR,e.Exception);
                 Utils.ShowMessageToast("程序出现一个错误，已记录");
                 MessageCenter.SendShowError(e.Exception);
             }

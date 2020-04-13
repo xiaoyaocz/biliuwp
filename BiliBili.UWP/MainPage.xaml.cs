@@ -355,7 +355,7 @@ namespace BiliBili.UWP
                         MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(MusicInfoPage), m.Par1);
                         break;
                     case StartTypes.User:
-                        MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserInfoPage), m.Par1);
+                        MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage), m.Par1);
                         break;
                     case StartTypes.File:
                         var files = m.Par3 as IReadOnlyList<IStorageItem>;
@@ -1080,7 +1080,7 @@ namespace BiliBili.UWP
 
         private void btn_UserInfo_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(typeof(UserInfoPage));
+            frame.Navigate(typeof(UserCenterPage),ApiHelper.GetUserId());
             fy.Hide();
         }
 
