@@ -22,7 +22,7 @@ namespace BiliBili.UWP.Helper
                 {
                     MessageCenter.SendHideAd();
                 }
-                if (Get_FirstShowMessage(messageModel.messageId) && messageModel.enddate > DateTime.Now)
+                if (Get_FirstShowMessage(messageModel.messageId) && messageModel.startdate < DateTime.Now && messageModel.enddate > DateTime.Now)
                 {
                     var cd = new ContentDialog();
                     StackPanel stackPanel = new StackPanel();
@@ -84,7 +84,14 @@ namespace BiliBili.UWP.Helper
         {
             return verStr.Split('/')[0];
         }
-        public static string verStr = string.Format(@"Ver {0} 2020-03-23
+        public static string verStr = string.Format(@"Ver {0} 2020-04-13
+01、修复直播弹幕问题
+02、优化BV号跳转
+03、修复读取用户信息失败
+04、登录更新为V3接口(无法登录可以使用网页登录)
+05、修复动态发表失败
+
+/Ver 3.9.69&3.9.70 2020-03-23
 01、初步支持BV号
 02、修复Tab不显示
 03、修复磁贴及通知问题
