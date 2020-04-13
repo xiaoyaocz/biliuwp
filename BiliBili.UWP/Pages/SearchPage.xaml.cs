@@ -44,12 +44,12 @@ namespace BiliBili.UWP.Pages
         private int pageNum_Sp = 1;
         private int pageNum_Movie = 1;
         private int pageNum_Article = 1;
-        bool ArticleLoading=false;
+        bool ArticleLoading = false;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.NavigationMode == NavigationMode.New)
             {
-                if (e.Parameter!=null)
+                if (e.Parameter != null)
                 {
                     keyword = Uri.EscapeDataString(((object[])e.Parameter)[0].ToString());
                     autoSug_Box.Text = ((object[])e.Parameter)[0].ToString();
@@ -83,11 +83,11 @@ namespace BiliBili.UWP.Pages
                 pivot.SelectedIndex = 0;
                 if (!InfoLoading && Search_listview_Video.Items.Count == 0)
                 {
-                    if (keyword.Length!=0)
+                    if (keyword.Length != 0)
                     {
                         SearchVideo();
                     }
-                   
+
                 }
             }
         }
@@ -115,11 +115,11 @@ namespace BiliBili.UWP.Pages
                 string uri = "";
                 if (a == null)
                 {
-                    uri = "http://api.bilibili.com/search?_device=android&appkey="+ApiHelper.AndroidKey.Appkey+"&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum + "&pagesize=20&platform=android&search_type=video&source_type=0" + ((cb_OrderBy.SelectedItem as ComboBoxItem).Tag == null ? "" : "&order=" + (cb_OrderBy.SelectedItem as ComboBoxItem).Tag);
+                    uri = "http://api.bilibili.com/search?_device=android&appkey=" + ApiHelper.AndroidKey.Appkey + "&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum + "&pagesize=20&platform=android&search_type=video&source_type=0" + ((cb_OrderBy.SelectedItem as ComboBoxItem).Tag == null ? "" : "&order=" + (cb_OrderBy.SelectedItem as ComboBoxItem).Tag);
                 }
                 else
                 {
-                    uri = "http://api.bilibili.com/search?_device=android&appkey=" + ApiHelper.AndroidKey.Appkey+"&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum + "&pagesize=20&platform=android&search_type=video&source_type=0&tids=" + a.ToString() + ((cb_OrderBy.SelectedItem as ComboBoxItem).Tag == null ? "" : "&order=" + (cb_OrderBy.SelectedItem as ComboBoxItem).Tag);
+                    uri = "http://api.bilibili.com/search?_device=android&appkey=" + ApiHelper.AndroidKey.Appkey + "&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum + "&pagesize=20&platform=android&search_type=video&source_type=0&tids=" + a.ToString() + ((cb_OrderBy.SelectedItem as ComboBoxItem).Tag == null ? "" : "&order=" + (cb_OrderBy.SelectedItem as ComboBoxItem).Tag);
                 }
                 string sign = ApiHelper.GetSign(uri);
                 uri += "&sign=" + sign;
@@ -174,8 +174,8 @@ namespace BiliBili.UWP.Pages
                 BanLoading = true;
                 object a = (cb_part.SelectedItem as ComboBoxItem).Tag;
                 pr_Loading.Visibility = Visibility.Visible;
-              
-                string uri = "http://api.bilibili.com/search?_device=android&appkey="+ApiHelper.AndroidKey.Appkey+"&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum_Ban + "&pagesize=20&platform=android&search_type=bangumi&source_type=0";
+
+                string uri = "http://api.bilibili.com/search?_device=android&appkey=" + ApiHelper.AndroidKey.Appkey + "&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum_Ban + "&pagesize=20&platform=android&search_type=bangumi&source_type=0";
                 string sign = ApiHelper.GetSign(uri);
                 uri += "&sign=" + sign;
                 string results = await WebClientClass.GetResults(new Uri(uri));
@@ -229,7 +229,7 @@ namespace BiliBili.UWP.Pages
                 object a = (cb_part.SelectedItem as ComboBoxItem).Tag;
                 pr_Loading.Visibility = Visibility.Visible;
                 string uri = string.Format("https://app.bilibili.com/x/v2/search/type?appkey={0}&build=5250000&highlight=0&keyword={1}&mobi_app=android&order=totalrank&platform=android&pn={2}&ps=20&ts={3}&type=2&user_type=0"
-                  ,ApiHelper.AndroidKey.Appkey, keyword, pageNum_Up,ApiHelper.GetTimeSpan);
+                  , ApiHelper.AndroidKey.Appkey, keyword, pageNum_Up, ApiHelper.GetTimeSpan);
                 string sign = ApiHelper.GetSign(uri);
                 uri += "&sign=" + sign;
 
@@ -237,7 +237,7 @@ namespace BiliBili.UWP.Pages
                 SUpModel model = JsonConvert.DeserializeObject<SUpModel>(results);
                 if (model.code == 0)
                 {
-                    if (model.data.items==null|| model.data.items.Count==0)
+                    if (model.data.items == null || model.data.items.Count == 0)
                     {
                         btn_More_UP.Visibility = Visibility.Collapsed;
                         Utils.ShowMessageToast("没有结果了", 2000);
@@ -252,7 +252,7 @@ namespace BiliBili.UWP.Pages
 
                         pageNum_Up++;
                     }
-                   
+
                 }
                 else
                 {
@@ -282,7 +282,7 @@ namespace BiliBili.UWP.Pages
                 btn_More_SP.Visibility = Visibility.Visible;
                 SeasonLoading = true;
                 pr_Loading.Visibility = Visibility.Visible;
-                string uri = "http://api.bilibili.com/search?_device=wp&appkey="+ApiHelper.AndroidKey.Appkey+"&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum_Sp + "&pagesize=20&platform=android&search_type=special&source_type=0";//
+                string uri = "http://api.bilibili.com/search?_device=wp&appkey=" + ApiHelper.AndroidKey.Appkey + "&build=5250000&keyword=" + keyword + "&main_ver=v3&page=" + pageNum_Sp + "&pagesize=20&platform=android&search_type=special&source_type=0";//
                 string sign = ApiHelper.GetSign(uri);
                 uri += "&sign=" + sign;
                 string results = await WebClientClass.GetResults(new Uri(uri));
@@ -341,7 +341,7 @@ namespace BiliBili.UWP.Pages
                 SMovieModel model = JsonConvert.DeserializeObject<SMovieModel>(results);
                 if (model.code == 0)
                 {
-                    if (model.data.items!=null&& model.data.items.Count!=0)
+                    if (model.data.items != null && model.data.items.Count != 0)
                     {
                         foreach (SMovieModel item in model.data.items)
                         {
@@ -364,8 +364,8 @@ namespace BiliBili.UWP.Pages
                         Utils.ShowMessageToast("没有找到相关内容");
                     }
                     //List<SMovieModel> ls = JsonConvert.DeserializeObject<List<SMovieModel>>(model.result.ToString());
-                   
-                   
+
+
                 }
                 else
                 {
@@ -457,8 +457,8 @@ namespace BiliBili.UWP.Pages
 
         private void Search_listview_Video_ItemClick(object sender, ItemClickEventArgs e)
         {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage),new object[] { ((SVideoModel)e.ClickedItem).aid });
-          
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), new object[] { ((SVideoModel)e.ClickedItem).aid });
+
         }
 
         private void Search_listview_Up_ItemClick(object sender, ItemClickEventArgs e)
@@ -486,8 +486,8 @@ namespace BiliBili.UWP.Pages
 
         private void Search_listview_Sp_ItemClick(object sender, ItemClickEventArgs e)
         {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(SubjectPage),new object[] { ((SSpModel)e.ClickedItem).spid });
-           // this.Frame.Navigate(typeof(SPPage), ((SSpModel)e.ClickedItem).spid);
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(SubjectPage), new object[] { ((SSpModel)e.ClickedItem).spid });
+            // this.Frame.Navigate(typeof(SPPage), ((SSpModel)e.ClickedItem).spid);
         }
 
         private void Sp_load_more_Click(object sender, RoutedEventArgs e)
@@ -528,16 +528,16 @@ namespace BiliBili.UWP.Pages
 
         private void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-         
+
             switch (pivot.SelectedIndex)
             {
                 case 0:
                     //btn_Filter.IsEnabled = true;
-                  
+
                     btn_Filter.Visibility = Visibility.Visible;
                     break;
                 case 1:
-                 
+
                     btn_Filter.Visibility = Visibility.Collapsed;
                     if (!UPLoading && Search_listview_Up.Items.Count == 0)
                     {
@@ -545,7 +545,7 @@ namespace BiliBili.UWP.Pages
                     }
                     break;
                 case 2:
-                 
+
                     btn_Filter.Visibility = Visibility.Collapsed;
                     if (!BanLoading && Search_listview_Ban.Items.Count == 0)
                     {
@@ -633,27 +633,30 @@ namespace BiliBili.UWP.Pages
             }
         }
 
-        private void autoSug_Box_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private async void autoSug_Box_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            var m = Regex.Match(autoSug_Box.Text.ToLower(), @"^av(\d+)$");
-            if (m.Groups.Count >= 2)
+            //var m = Regex.Match(autoSug_Box.Text.ToLower(), @"^av(\d+)$");
+            //if (m.Groups.Count >= 2)
+            //{
+            //    MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), new object[] { m.Groups[1].Value });
+            //    return;
+            //}
+            //var anime = Regex.Match(autoSug_Box.Text.ToLower().Replace("/",""), @"^anime(\d+)$");
+            //if (anime.Groups.Count >= 2)
+            //{
+            //    MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), new object[] { anime.Groups[1].Value });
+            //    return;
+            //}
+            //anime = Regex.Match(autoSug_Box.Text.ToLower().Replace("/", ""), @"^ss(\d+)$");
+            //if (anime.Groups.Count >= 2)
+            //{
+            //    MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), new object[] { anime.Groups[1].Value });
+            //    return;
+            //}
+            if (await MessageCenter.HandelUrl(autoSug_Box.Text))
             {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), new object[] { m.Groups[1].Value });
                 return;
             }
-            var anime = Regex.Match(autoSug_Box.Text.ToLower().Replace("/",""), @"^anime(\d+)$");
-            if (anime.Groups.Count >= 2)
-            {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), new object[] { anime.Groups[1].Value });
-                return;
-            }
-            anime = Regex.Match(autoSug_Box.Text.ToLower().Replace("/", ""), @"^ss(\d+)$");
-            if (anime.Groups.Count >= 2)
-            {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), new object[] { anime.Groups[1].Value });
-                return;
-            }
-
 
 
             keyword = Uri.EscapeDataString(autoSug_Box.Text);
@@ -803,7 +806,7 @@ namespace BiliBili.UWP.Pages
 
         private void Search_listview_Article_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var item= e.ClickedItem as SArticleModel;
+            var item = e.ClickedItem as SArticleModel;
             MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(ArticleContentPage), item.id);
         }
 
@@ -879,7 +882,10 @@ namespace BiliBili.UWP.Pages
                 {
                     return "";
                 }
-                return  _cv.Replace("\r\n", " ").Replace("\n", " "); } set {_cv=value; } }
+                return _cv.Replace("\r\n", " ").Replace("\n", " ");
+            }
+            set { _cv = value; }
+        }
 
 
         public string param { get; set; }
@@ -889,7 +895,7 @@ namespace BiliBili.UWP.Pages
         {
             get
             {
-                if (staff==null)
+                if (staff == null)
                 {
                     return "";
                 }

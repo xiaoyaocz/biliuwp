@@ -162,6 +162,8 @@ namespace BiliBili.UWP.Helper
                     var json_str = "";
                     try
                     {
+                        //临时解决方案，可以优化
+                        //参考https://github.com/Bililive/BililiveRecorder
                         using (MemoryStream outBuffer = new MemoryStream())
                         {
                             using (System.IO.Compression.DeflateStream compressedzipStream = new System.IO.Compression.DeflateStream(new MemoryStream(buffer, 2, playloadlength - 2), System.IO.Compression.CompressionMode.Decompress))
