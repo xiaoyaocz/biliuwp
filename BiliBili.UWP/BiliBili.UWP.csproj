@@ -461,7 +461,7 @@
     <Compile Include="Pages\User\MyQrPage.xaml.cs">
       <DependentUpon>MyQrPage.xaml</DependentUpon>
     </Compile>
-	<Compile Include="Pages\PartsPage.xaml.cs">
+    <Compile Include="Pages\PartsPage.xaml.cs">
       <DependentUpon>PartsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\QRPage.xaml.cs">
