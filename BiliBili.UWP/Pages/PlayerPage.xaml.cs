@@ -183,6 +183,26 @@ namespace BiliBili.UWP.Pages
                         MTC.OpenOrCloseDanmaku();
                     }
                     break;
+                //上一话
+                case (Windows.System.VirtualKey)188:
+                case Windows.System.VirtualKey.N:
+                    if (gv_play.SelectedIndex==0)
+                    {
+                        Utils.ShowMessageToast("前面没有了");
+                        return;
+                    }
+                    gv_play.SelectedIndex -= 1;
+                    break;
+                //下一话
+                case (Windows.System.VirtualKey)190:
+                case Windows.System.VirtualKey.M:
+                    if (gv_play.SelectedIndex == gv_play.Items.Count-1)
+                    {
+                        Utils.ShowMessageToast("后面没有了");
+                        return;
+                    }
+                    gv_play.SelectedIndex+= 1;
+                    break;
                 case Windows.System.VirtualKey.F10:
                     CaptureVideo();
                     break;

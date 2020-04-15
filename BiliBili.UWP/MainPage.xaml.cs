@@ -1025,7 +1025,7 @@ namespace BiliBili.UWP
 
         private void btn_Search_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(typeof(SearchPage));
+            frame.Navigate(typeof(SearchV2Page));
         }
 
         private async void btn_Login_Click(object sender, RoutedEventArgs e)

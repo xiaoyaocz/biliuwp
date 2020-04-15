@@ -75,7 +75,7 @@ namespace BiliBili.UWP.Views
 
         private void list_Hot_ItemClick(object sender, ItemClickEventArgs e)
         {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(SearchPage),new object[] { (e.ClickedItem as HotModel).keyword });
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(SearchV2Page),new object[] { (e.ClickedItem as HotModel).keyword });
             
         }
 
@@ -125,8 +125,12 @@ namespace BiliBili.UWP.Views
 
         private void autoSug_Box_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(SearchPage), new object[] { txt_auto_Find .Text});
+            if (string.IsNullOrEmpty(txt_auto_Find.Text))
+            {
+                Utils.ShowMessageToast("关键字不能为空");
+                return;
+            }
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(SearchV2Page), new object[] { txt_auto_Find .Text});
         }
 
         private void Find_btn_Rank_Click(object sender, RoutedEventArgs e)

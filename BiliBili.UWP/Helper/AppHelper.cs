@@ -84,12 +84,16 @@ namespace BiliBili.UWP.Helper
         {
             return verStr.Split('/')[0];
         }
-        public static string verStr = string.Format(@"Ver {0} 2020-04-13
+        public static string verStr = string.Format(@"Ver {0} 2020-04-15
 01、修复直播弹幕问题
 02、优化BV号跳转
 03、修复读取用户信息失败
 04、登录更新为V3接口(无法登录可以使用网页登录)
 05、修复动态发表失败
+06、优化夜间模式显示效果
+07、播放器增加快捷键:按O或P跳过OP，D或F9打开或关闭弹幕，N或<上一话，M或>下一话
+08、修复排行榜无法打开
+09、优化搜索
 
 /Ver 3.9.69&3.9.70 2020-03-23
 01、初步支持BV号

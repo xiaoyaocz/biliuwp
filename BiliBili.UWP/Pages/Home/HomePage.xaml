@@ -23,7 +23,7 @@
         <Pivot x:Name="pivot_home" ItemTemplateSelector="{StaticResource homeTabSelector}" ItemsSource="{x:Bind Path=homeVM.Tabs,Mode=OneWay}" Style="{StaticResource PivotHeaderCenterStyle}" >
             <Pivot.HeaderTemplate>
                 <DataTemplate x:DataType="home:HomeTabItem">
-                    <TextBlock FontSize="16" Text="{x:Bind name}"></TextBlock>
+                    <TextBlock FontSize="15" Text="{x:Bind name}"></TextBlock>
                 </DataTemplate>
             </Pivot.HeaderTemplate>
             <Pivot.ItemContainerStyle>

@@ -39,7 +39,14 @@ namespace BiliBili.UWP.Pages
                 this.Frame.GoBack();
             }
         }
-
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                NavigationCacheMode = NavigationCacheMode.Disabled;
+            }
+            base.OnNavigatingFrom(e);
+        }
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (this.Frame.Name == "bg_Frame")

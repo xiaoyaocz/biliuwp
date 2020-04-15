@@ -215,6 +215,7 @@
     <Compile Include="Api\Home\HomeAPI.cs" />
     <Compile Include="Api\Home\HotAPI.cs" />
     <Compile Include="Api\Home\RecommendAPI.cs" />
+    <Compile Include="Api\SearchAPI.cs" />
     <Compile Include="Api\User\DynamicAPI.cs" />
     <Compile Include="Api\User\UserCenterAPI.cs" />
     <Compile Include="App.xaml.cs">
@@ -315,6 +316,7 @@
     <Compile Include="Modules\LiveCommand.cs" />
     <Compile Include="Modules\RelayCommand.cs" />
     <Compile Include="Modules\LiveHome.cs" />
+    <Compile Include="Modules\SearchVM.cs" />
     <Compile Include="Modules\SeasonFollow.cs" />
     <Compile Include="Modules\Channel.cs" />
     <Compile Include="Modules\Home\HomeVM.cs" />
@@ -447,6 +449,9 @@
     <Compile Include="Pages\PlayerPage.xaml.cs">
       <DependentUpon>PlayerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SearchV2Page.xaml.cs">
+      <DependentUpon>SearchV2Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SubjectPage.xaml.cs">
       <DependentUpon>SubjectPage.xaml</DependentUpon>
     </Compile>
@@ -456,7 +461,9 @@
     <Compile Include="Pages\User\MyQrPage.xaml.cs">
       <DependentUpon>MyQrPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\PartsPage.xaml.cs" />
+	<Compile Include="Pages\PartsPage.xaml.cs">
+      <DependentUpon>PartsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\QRPage.xaml.cs">
       <DependentUpon>QRPage.xaml</DependentUpon>
     </Compile>
@@ -550,9 +557,6 @@
     </Compile>
     <Compile Include="Views\LiveV2Page.xaml.cs">
       <DependentUpon>LiveV2Page.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PartPage.xaml.cs">
-      <DependentUpon>PartPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
@@ -926,6 +930,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\SearchV2Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\SubjectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1095,10 +1103,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LiveV2Page.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

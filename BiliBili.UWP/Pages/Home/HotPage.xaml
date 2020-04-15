@@ -28,7 +28,7 @@
                         <DataTemplate x:DataType="hotmodels:HotTopItemModel">
                             <StackPanel Height="72" Width="80"  >
                                 <Image Source="{x:Bind icon}" Width="48" Height="48"/>
-                                <TextBlock Text="{x:Bind title}" FontSize="14" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{x:Bind title}" FontSize="14" Margin="0 8 0 0" HorizontalAlignment="Center"/>
                             </StackPanel>
                         </DataTemplate>
                     </GridView.ItemTemplate>
