@@ -26,7 +26,7 @@
                 <ImageBrush ImageSource="{x:Bind Path=userCenterVM.top_image,Converter={StaticResource imageConvert2},ConverterParameter='240h',Mode=OneWay}" Stretch="UniformToFill"/>
             </Grid.Background>
             <Border Background="#4C000000" />
-            <StackPanel RequestedTheme="Dark" VerticalAlignment="Center" Margin="0 0 0 24" HorizontalAlignment="Center" >
+            <StackPanel RequestedTheme="Dark" VerticalAlignment="Center"  HorizontalAlignment="Center" >
                
                 <Grid Width="64" >
                     <Grid>
@@ -107,10 +107,10 @@
             </Grid>
             
         </Grid>
-        <Pivot x:Name="pivot" SelectionChanged="pivot_SelectionChanged" Grid.Row="1" Margin="0 -48 0 0">
+        <Pivot x:Name="pivot" SelectionChanged="pivot_SelectionChanged" Grid.Row="1" >
             <PivotItem Margin="0">
                 <PivotItem.Header>
-                    <TextBlock FontSize="18" RequestedTheme="Dark" >投稿</TextBlock>
+                    <TextBlock FontSize="18" >投稿</TextBlock>
                 </PivotItem.Header>
                 <Grid>
                     <toolkit:AdaptiveGridView 
@@ -165,7 +165,7 @@
             </PivotItem>
             <PivotItem Margin="0">
                 <PivotItem.Header>
-                    <TextBlock FontSize="18" RequestedTheme="Dark" >动态</TextBlock>
+                    <TextBlock FontSize="18"  >动态</TextBlock>
                 </PivotItem.Header>
                 <Grid>
                     <controls:DynamicControls x:Name="ls_dynamic" MaxWidth="800" LoadMore="ls_dynamic_LoadMore" Refresh="ls_dynamic_Refresh"/>

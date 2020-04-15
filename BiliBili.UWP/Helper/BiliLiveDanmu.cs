@@ -168,6 +168,7 @@ namespace BiliBili.UWP.Helper
                         {
                             using (System.IO.Compression.DeflateStream compressedzipStream = new System.IO.Compression.DeflateStream(new MemoryStream(buffer, 2, playloadlength - 2), System.IO.Compression.CompressionMode.Decompress))
                             {
+                               
                                 byte[] block = new byte[1024];
                                 while (true)
                                 {
@@ -310,7 +311,7 @@ namespace BiliBili.UWP.Helper
                 }
                 catch (Exception ex)
                 {
-
+                    LogHelper.WriteLog("加载直播弹幕失败", LogType.ERROR, ex);
                 }
 
                 await Task.Delay(delay);

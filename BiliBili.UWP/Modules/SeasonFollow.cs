@@ -16,9 +16,8 @@ namespace BiliBili.UWP.Modules
         bangumi,
         cinema
     }
-    public class SeasonFollow : IModules, INotifyPropertyChanged
+    public class SeasonFollow : IModules
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         /// <summary>
         /// status 1=想看,2=在看,3=看过
         /// </summary>
@@ -28,14 +27,14 @@ namespace BiliBili.UWP.Modules
         public bool HasNext
         {
             get { return _HasNext; }
-            set { _HasNext = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("HasNext")); }
+            set { _HasNext = value; DoPropertyChanged("HasNext"); }
         }
 
         private bool _Loading = false;
         public bool Loading
         {
             get { return _Loading; }
-            set { _Loading = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Loading")); }
+            set { _Loading = value; DoPropertyChanged("Loading"); }
         }
 
         public int Page { get; set; } = 0;
@@ -43,7 +42,7 @@ namespace BiliBili.UWP.Modules
         public int Total
         {
             get { return _total; }
-            set { _total = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Total")); }
+            set { _total = value; DoPropertyChanged("Total"); }
         }
         public SeasonType SeasonType { get; set; }
 
@@ -51,7 +50,7 @@ namespace BiliBili.UWP.Modules
         public ObservableCollection<FollowSeasonInfo> FollowList
         {
             get { return _FollowList; }
-            set { _FollowList = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FollowList")); }
+            set { _FollowList = value; DoPropertyChanged("FollowList"); }
         }
         public SeasonFollow(SeasonType seasonType, int status)
         {

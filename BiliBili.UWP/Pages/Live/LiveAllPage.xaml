@@ -41,9 +41,9 @@
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10 5 10 0" VerticalAlignment="Top">
                         <TextBlock  MaxWidth="320" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" FontSize="13" >
-                                             <Run Foreground="{ThemeResource Bili-ForeColor}" >#</Run>
-                                             <Run Foreground="{ThemeResource Bili-ForeColor}" Text="{Binding area_name}"></Run>
-                                             <Run Foreground="{ThemeResource Bili-ForeColor}" >#</Run>
+                                             <Run Foreground="{ThemeResource Bili-Highlight-TextColor}" >#</Run>
+                                             <Run Foreground="{ThemeResource Bili-Highlight-TextColor}" Text="{Binding area_name}"></Run>
+                                             <Run Foreground="{ThemeResource Bili-Highlight-TextColor}" >#</Run>
                                             <Run Text="{Binding title}"></Run>
                         </TextBlock>
                     </StackPanel>

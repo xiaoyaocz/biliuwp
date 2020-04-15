@@ -4,6 +4,7 @@ using BiliBili.UWP.Models;
 using BiliBili.UWP.Modules;
 using BiliBili.UWP.Pages;
 using BiliBili.UWP.Pages.FindMore;
+using BiliBili.UWP.Pages.Home;
 using BiliBili.UWP.Pages.Music;
 using BiliBili.UWP.Pages.User;
 using BiliBili.UWP.Views;
@@ -308,7 +309,7 @@ namespace BiliBili.UWP
             MessageCenter.Logined += MessageCenter_Logined;
            
             MessageCenter.ChangeBg += MessageCenter_ChangeBg;
-            //main_frame.Navigate(typeof(HomePage));
+            //main_frame.Navigate(typeof(ChannelPage));
             MessageCenter_ChangeBg();
             main_frame.Visibility = Visibility.Visible;
             menu_List.SelectedIndex = 0;
@@ -339,7 +340,7 @@ namespace BiliBili.UWP
                         MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), m.Par1);
                         break;
                     case StartTypes.MiniVideo:
-                        MessageCenter.ShowMiniVideo(m.Par1);
+                        //MessageCenter.ShowMiniVideo(m.Par1);
                         //MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), "http://vc.bilibili.com/mobile/detail?vc=" + m.Par1);
                         break;
                     case StartTypes.Web:
@@ -648,7 +649,7 @@ namespace BiliBili.UWP
                     bg_Frame.Navigate(typeof(FastNavigatePage));
                     break;
                 case 2:
-                    bg_Frame.Navigate(typeof(HomePage));
+                    bg_Frame.Navigate(typeof(ChannelPage));
                     break;
                 case 3:
                     bg_Frame.Navigate(typeof(RankPage));
@@ -975,17 +976,17 @@ namespace BiliBili.UWP
                     //}
                     //else
                     //{
-                    main_frame.Navigate(typeof(NewFeedPage));
+                    main_frame.Navigate(typeof(HomePage));
                     //}
                     //if (!Reg_OpenVideo)
                     //{
-                    //    (main_frame.Content as HomePage).OpenVideo += MainPage_OpenVideo; 
+                    //    (main_frame.Content as ChannelPage).OpenVideo += MainPage_OpenVideo; 
                     //    Reg_OpenVideo = true;
                     //}
                     txt_Header.Text = "首页";
                     break;
                 case 1:
-                    main_frame.Navigate(typeof(HomePage));
+                    main_frame.Navigate(typeof(ChannelPage));
 
                     txt_Header.Text = "频道";
                     break;
@@ -1322,7 +1323,7 @@ namespace BiliBili.UWP
             Grid.SetColumn(frame,1);
             bg.Visibility = Visibility.Visible;
             btn_OpenMenu.Visibility = Visibility.Visible;
-            if (frame.CurrentSourcePageType == typeof(BlankPage)&&main_frame.CurrentSourcePageType==typeof(NewFeedPage))
+            if (frame.CurrentSourcePageType == typeof(BlankPage)&&main_frame.CurrentSourcePageType==typeof(HomePage))
             {
                 if (SettingHelper.Get_ColunmHome())
                 {
@@ -1359,7 +1360,7 @@ namespace BiliBili.UWP
                 {
                     SetTwoColumn();
                 }
-                else if (main_frame.SourcePageType == typeof(NewFeedPage))
+                else if (main_frame.SourcePageType == typeof(HomePage))
                 {
                     if (SettingHelper.Get_ColunmHome())
                     {
@@ -1380,7 +1381,7 @@ namespace BiliBili.UWP
         {
             if (this.ActualWidth >= 800)
             {
-                if (e.SourcePageType != typeof(NewFeedPage))
+                if (e.SourcePageType != typeof(HomePage))
                 {
                     SetTwoColumn();
                 }

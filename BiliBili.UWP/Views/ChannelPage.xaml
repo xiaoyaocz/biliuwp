@@ -1,5 +1,5 @@
 ﻿<Page xmlns:my="using:BiliBili.UWP" 
-    x:Class="BiliBili.UWP.Views.HomePage"
+    x:Class="BiliBili.UWP.Views.ChannelPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BiliBili.UWP.Views"
@@ -57,13 +57,13 @@
                                     </StackPanel>
                                     <TextBlock FontSize="12" Foreground="Gray" HorizontalAlignment="Center" ><Run Text="{Binding Path=atten}"/>订阅</TextBlock>
                                     <HyperlinkButton x:Name="btn_Add" Click="btn_Add_Click" HorizontalAlignment="Center"  Visibility="{Binding showAtten}">
-                                        <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource Bili-ForeColor}" Padding="16 4">
-                                            <TextBlock Foreground="{ThemeResource Bili-ForeColor}">订阅</TextBlock>
+                                        <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource Bili-Highlight-TextColor}" Padding="16 4">
+                                            <TextBlock Foreground="{ThemeResource Bili-Highlight-TextColor}">订阅</TextBlock>
                                         </Border>
                                     </HyperlinkButton>
                                     <HyperlinkButton x:Name="btn_Cancel" Click="btn_Cancel_Click" HorizontalAlignment="Center"  Visibility="{Binding showCancel}">
-                                        <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource Bili-ForeColor}" Padding="16 4">
-                                            <TextBlock Foreground="{ThemeResource Bili-ForeColor}">已订阅</TextBlock>
+                                        <Border CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource Bili-Highlight-TextColor}" Padding="16 4">
+                                            <TextBlock Foreground="{ThemeResource Bili-Highlight-TextColor}">已订阅</TextBlock>
                                         </Border>
                                     </HyperlinkButton>
                                 </StackPanel>

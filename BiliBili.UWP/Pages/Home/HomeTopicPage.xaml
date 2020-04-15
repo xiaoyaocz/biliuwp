@@ -1,0 +1,251 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.Home.HomeTopicPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages.Home"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls="using:BiliBili.UWP.Controls"
+    xmlns:hometopicmodels="using:BiliBili.UWP.Modules.Home.HomeTopicModels"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <!--player-->
+        <DataTemplate x:Key="goto_player" x:DataType="hometopicmodels:TabItemModel">
+            <ListView ItemsSource="{x:Bind item}" ItemClick="ls_players_ItemClick" SelectionMode="None" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Padding" Value="0"></Setter>
+                        <Setter Property="Margin" Value="8 4"></Setter>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border CornerRadius="8" Background="{ThemeResource Bili-List-Background}" >
+                            <StackPanel>
+                                <Grid>
+                                    <Image Source="{Binding cover}"></Image>
+                                    <Grid Background="#33000000"></Grid>
+                                    <TextBlock VerticalAlignment="Top" Foreground="White" TextWrapping="Wrap" Margin="8" Text="{Binding title}"></TextBlock>
+                                    <FontIcon Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" Glyph="&#xE102;" />
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </DataTemplate>
+        <DataTemplate x:Key="goto_special" x:DataType="hometopicmodels:TabItemModel">
+            <!--special-->
+            <HyperlinkButton x:Name="btn_special" Click="btn_special_Click">
+                <Border  CornerRadius="8" Margin="8 4" Background="{ThemeResource Bili-List-Background}" >
+                    <StackPanel>
+                        <Image Source="{x:Bind cover}"></Image>
+                        <TextBlock Margin="8 4" Foreground="{ThemeResource SystemControlBackgroundBaseHighBrush}" Text="{x:Bind title}"></TextBlock>
+                        <TextBlock Margin="8 0 0 4" FontSize="14" Foreground="Gray" Text="{x:Bind desc}"></TextBlock>
+                    </StackPanel>
+                </Border>
+            </HyperlinkButton>
+        </DataTemplate>
+        <DataTemplate x:Key="goto_banner"  x:DataType="hometopicmodels:TabItemModel">
+            <!--banner--> 
+            <controls:FlipViewControl Margin="8"  ItemsSource="{x:Bind banner_item}" IntervalSeconds="3"  FlipViewHeight="300" FlipViewWidth="1020">
+                <controls:FlipViewControl.ItemTemplate>
+                    <DataTemplate x:DataType="hometopicmodels:TabBannerItem">
+                        <HyperlinkButton  Click="btn_topic_banner_Click" ToolTipService.ToolTip="{x:Bind title}" Margin="0" Padding="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <Image Stretch="UniformToFill" Source="{x:Bind image}"></Image>
+                        </HyperlinkButton>
+
+                    </DataTemplate>
+                </controls:FlipViewControl.ItemTemplate>
+            </controls:FlipViewControl>
+
+            <!--<Grid>
+                <Viewbox Margin="8">
+                    <FlipView x:Name="flipView_banner" ItemsSource="{Binding banner_item}" Height="300" Width="1020" >
+                        <FlipView.ItemTemplate>
+                            <DataTemplate>
+                                <HyperlinkButton  Click="btn_topic_banner_Click" ToolTipService.ToolTip="{Binding title}" Margin="0" Padding="0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Image Stretch="UniformToFill" Source="{Binding image}"></Image>
+                                </HyperlinkButton>
+
+                            </DataTemplate>
+                        </FlipView.ItemTemplate>
+
+                    </FlipView>
+                </Viewbox>
+
+            </Grid>-->
+        </DataTemplate>
+        <DataTemplate  x:Key="goto_rcmd"  x:DataType="hometopicmodels:TabItemModel">
+            <!--goto_content_rcmd-->
+            <toolkit:AdaptiveGridView  ItemClick="ls_rcmd_ItemClick" 
+                                       ItemHeight="240"
+                                       DesiredWidth="260" 
+                                       ItemsSource="{x:Bind item}" 
+                                       ScrollViewer.VerticalScrollMode="Disabled"  
+                                       HorizontalContentAlignment="Center" 
+                                       SelectionMode="None" 
+                                       StretchContentForSingleRow="False"
+                                       IsItemClickEnabled="True">
+                <toolkit:AdaptiveGridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        <Setter Property="Margin" Value="8"></Setter>
+                    </Style>
+                </toolkit:AdaptiveGridView.ItemContainerStyle>
+                <toolkit:AdaptiveGridView.Header>
+                    <Grid Margin="8 4">
+                        <TextBlock FontSize="16"  Text="{Binding title}"></TextBlock>
+                        <HyperlinkButton  Click="btn_rcmdMore_Click" Visibility="{Binding showMore}" Padding="0" Margin="0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14" Foreground="Gray">查看更多</HyperlinkButton>
+                    </Grid>
+
+                </toolkit:AdaptiveGridView.Header>
+                <toolkit:AdaptiveGridView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Grid Background="{ThemeResource Bili-List-Background}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="48"/>
+                                <RowDefinition Height="24"/>
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <Image MinHeight="100" Source="ms-appx:///Assets/Logo/PI160_100.png" Stretch="UniformToFill"></Image>
+                                <Image MinHeight="100" Source="{Binding Path=cover,Converter={StaticResource imageConvert2},ConverterParameter='320w_200h'}" Stretch="UniformToFill"></Image>
+                                <Grid VerticalAlignment="Bottom" Padding="4">
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#CC000005" Offset="0.993"/>
+                                            <GradientStop Color="#00000000" Offset="0"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+
+                                    <TextBlock  FontSize="12" Foreground="White" Text="{Binding text}"></TextBlock>
+                                    <TextBlock HorizontalAlignment="Right" FontSize="12" Foreground="White"  Text="{Binding rightText}"></TextBlock>
+                                </Grid>
+                            </Grid>
+
+                            <TextBlock Height="48"  Margin="8 4 8 0" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" Grid.Row="1" Text="{Binding title}"></TextBlock>
+                            <StackPanel Orientation="Horizontal" Margin="4 0 4 4"  Grid.Row="2">
+
+                                <TextBlock FontSize="12" Margin="4 0" Foreground="Gray" VerticalAlignment="Center" Text="{Binding tname}"></TextBlock>
+                            </StackPanel>
+
+                        </Grid>
+
+                    </DataTemplate>
+
+                </toolkit:AdaptiveGridView.ItemTemplate>
+            </toolkit:AdaptiveGridView>
+        </DataTemplate>
+        <DataTemplate x:Key="goto_news"  x:DataType="hometopicmodels:TabItemModel">
+            <Border CornerRadius="8" Margin="8 4" Padding="8" Background="{ThemeResource Bili-List-Background}" >
+                <StackPanel>
+                    <TextBlock Text="{x:Bind title}"></TextBlock>
+                    <TextBlock FontSize="14" Foreground="Gray" TextWrapping="Wrap" Text="{x:Bind content}"></TextBlock>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="goto_entrance"  x:DataType="hometopicmodels:TabItemModel">
+            <GridView  ItemClick="ls_entrance_ItemClick" ItemsSource="{x:Bind item}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="True">
+                <GridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem">
+                        <Setter Property="Margin" Value="8 4"></Setter>
+                        <Setter Property="MinWidth" Value="64"></Setter>
+                    </Style>
+                </GridView.ItemContainerStyle>
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel >
+                            <Border Width="48" Height="48" CornerRadius="8">
+                                <Border.Background>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding cover}"/>
+                                </Border.Background>
+                            </Border>
+                            <!--<Image Width="48" Stretch="UniformToFill" Height="48" Source="{Binding Cover}"></Image>-->
+                            <TextBlock TextAlignment="Center" FontSize="14" HorizontalAlignment="Center" Text="{Binding title}" Margin="0 4"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+
+            </GridView>
+        </DataTemplate>
+        <DataTemplate x:Key="goto_converge"  x:DataType="hometopicmodels:TabItemModel">
+            <Border Background="{ThemeResource Bili-List-Background}" VerticalAlignment="Top" Margin="8 4" CornerRadius="4">
+                <StackPanel Orientation="Vertical">
+                    <Grid Margin="8">
+                        <TextBlock FontSize="16" Text="{x:Bind title}"></TextBlock>
+                    </Grid>
+                    <HyperlinkButton Padding="0" Click="HyperlinkButton_Click">
+                        <Image Source="{x:Bind cover}"></Image>
+                    </HyperlinkButton>
+
+                    <ListView ItemClick="ls_rcmd_ItemClick" ItemsSource="{x:Bind item}" SelectionMode="None" IsItemClickEnabled="True" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Margin="0 0 4 0" Source="{Binding cover}"></Image>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock MaxLines="2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Text="{Binding title}"></TextBlock>
+                                        <TextBlock FontSize="12" Foreground="Gray" Margin="0 4 0 0"><Run Text="{Binding play}"/>播放 <Run Text="{Binding danmaku}"/>弹幕</TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                <Setter Property="Padding" Value="4"></Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                    </ListView>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="goto_unknown"  x:DataType="hometopicmodels:TabItemModel">
+            <Border CornerRadius="8" Margin="8 4" Padding="8" Background="{ThemeResource Bili-List-Background}" >
+                <StackPanel>
+                    <TextBlock>暂未支持显示的类型</TextBlock>
+                 
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="goto_null">
+            <Border></Border>
+        </DataTemplate>
+        <local:HomeTopicTemplateSelector x:Key="selector" 
+                                         Nothing="{StaticResource goto_null}"
+                                         Player="{StaticResource goto_player}"
+                                         Banner="{StaticResource goto_banner}"
+                                         Special="{StaticResource goto_special}"
+                                         Rcmd="{StaticResource goto_rcmd}"
+                                         News="{StaticResource goto_news}"
+                                         Entrance="{StaticResource goto_entrance}"
+                                         Converge="{StaticResource goto_converge}"
+                                         Unknown="{StaticResource goto_unknown}"></local:HomeTopicTemplateSelector>
+    </Page.Resources>
+    <Grid >
+        <ScrollViewer VerticalScrollBarVisibility="Auto" >
+            <ItemsControl  MaxWidth="800"  HorizontalAlignment="Center" ItemTemplateSelector="{StaticResource selector}" 
+                          ItemsSource="{x:Bind Path=topicVM.Detail.item,Mode=OneWay}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+            </ItemsControl>
+        </ScrollViewer>
+
+        <AppBarButton Command="{x:Bind Path=topicVM.RefreshCommand}" Width="48" Grid.RowSpan="2" Visibility="{x:Bind Path=topicVM.Loading,Mode=OneWay,Converter={StaticResource display}}" Height="48" Margin="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Icon="Refresh" Background="{ThemeResource Bili-ForeColor}" Opacity="0.6" Foreground="White"></AppBarButton>
+        <ProgressRing Width="56" Height="56" Grid.RowSpan="2" IsActive="True"  Visibility="{x:Bind Path=topicVM.Loading,Mode=OneWay}"></ProgressRing>
+    </Grid>
+</Page>

@@ -440,8 +440,6 @@ namespace BiliBili.UWP.Controls
                 });
             }
             var imgStr = JsonConvert.SerializeObject(send_pics);
-            string setting= "{\"copy_forbidden\":0}";
-
             try
             {
 

@@ -43,6 +43,17 @@ using BiliBili.UWP.Modules;
 
 namespace BiliBili.UWP.Pages
 {
+    public enum PlayMode
+    {
+        Bangumi,
+        Movie,
+        VipBangumi,
+        Video,
+        QQ,
+        Sohu,
+        Local,
+        FormLocal
+    }
     enum HeartBeatType
     {
         Start,
@@ -155,6 +166,21 @@ namespace BiliBili.UWP.Pages
                         MTC.ExitFull();
                         //ApplicationView.GetForCurrentView().ExitFullScreenMode();
 
+                    }
+                    break;
+                //跳过OP 90秒
+                case Windows.System.VirtualKey.O:
+                case Windows.System.VirtualKey.P:
+                    {
+                        mediaElement.Position = new TimeSpan(0, 0, Convert.ToInt32(mediaElement.Position.TotalSeconds + 90));
+                        Utils.ShowMessageToast(mediaElement.Position.Hours.ToString("00") + ":" + mediaElement.Position.Minutes.ToString("00") + ":" + mediaElement.Position.Seconds.ToString("00"), 3000);
+                    }
+                    break;
+                //打开关闭弹幕
+                case Windows.System.VirtualKey.D:
+                case Windows.System.VirtualKey.F9:
+                    {
+                        MTC.OpenOrCloseDanmaku();
                     }
                     break;
                 case Windows.System.VirtualKey.F10:
@@ -638,7 +664,6 @@ namespace BiliBili.UWP.Pages
         string DMZZBDS = "";
         bool hidePointerFlag = false;
         int DanmuNum = 0;
-        int i = 0;
         bool mergeDanmu = false;
         List<string> sended = new List<string>();
         private void Timer_Date_Tick(object sender, object e)
@@ -1352,54 +1377,7 @@ namespace BiliBili.UWP.Pages
         }
 
 
-        private async Task<List<MyDanmaku.DanMuModel>> GetLocalDanmu(StorageFile danmuFile)
-        {
-            List<MyDanmaku.DanMuModel> ls = new List<MyDanmaku.DanMuModel>();
-            try
-            {
-                string a = await FileIO.ReadTextAsync(danmuFile);
-                XmlDocument xdoc = new XmlDocument();
-                a = Regex.Replace(a, @"[\x00-\x08]|[\x0B-\x0C]|[\x0E-\x1F]", "");
-                xdoc.LoadXml(a);
-                XmlElement el = xdoc.DocumentElement;
-                XmlNodeList xml = el.ChildNodes;
-                foreach (XmlNode item in xml)
-                {
-                    if (item.Attributes["p"] != null)
-                    {
-                        try
-                        {
-                            string heheda = item.Attributes["p"].Value;
-                            string[] haha = heheda.Split(',');
-                            ls.Add(new MyDanmaku.DanMuModel
-                            {
-                                DanTime = decimal.Parse(haha[0]),
-                                DanMode = haha[1],
-                                DanSize = haha[2],
-                                _DanColor = haha[3],
-                                DanSendTime = haha[4],
-                                DanPool = haha[5],
-                                DanID = haha[6],
-                                DanRowID = haha[7],
-                                DanText = item.InnerText,
-                                source = item.OuterXml
-                            });
-                        }
-                        catch (Exception)
-                        {
-                        }
-
-                    }
-                }
-                AddLog("填充弹幕成功，共" + ls.Count + "条");
-                return ls;
-            }
-            catch (Exception)
-            {
-                AddLog("弹幕加载失败了...");
-                return ls;
-            }
-        }
+     
 
         private void btn_Back_Click(object sender, RoutedEventArgs e)
         {
@@ -1409,62 +1387,6 @@ namespace BiliBili.UWP.Pages
             //    this.Frame.GoBack();
             //}
         }
-
-        public async Task<List<MyDanmaku.DanMuModel>> GetDM(string cid, bool IsLocal, bool IsOld, string path)
-        {
-            List<MyDanmaku.DanMuModel> ls = new List<MyDanmaku.DanMuModel>();
-            try
-            {
-
-                string a = await WebClientClass.GetResults(new Uri("http://comment.bilibili.com/" + cid + ".xml" + "?rnd=" + new Random().Next(1, 9999)));
-                XmlDocument xdoc = new XmlDocument();
-                a = Regex.Replace(a, @"[\x00-\x08]|[\x0B-\x0C]|[\x0E-\x1F]", "");
-                xdoc.LoadXml(a);
-                XmlElement el = xdoc.DocumentElement;
-                XmlNodeList xml = el.ChildNodes;
-                foreach (XmlNode item in xml)
-                {
-                    if (item.Attributes["p"] != null)
-                    {
-                        try
-                        {
-                            string heheda = item.Attributes["p"].Value;
-                            string[] haha = heheda.Split(',');
-                            ls.Add(new MyDanmaku.DanMuModel
-                            {
-                                DanTime = decimal.Parse(haha[0]),
-                                DanMode = haha[1],
-                                DanSize = haha[2],
-                                _DanColor = haha[3],
-                                DanSendTime = haha[4],
-                                DanPool = haha[5],
-                                DanID = haha[6],
-                                DanRowID = haha[7],
-                                DanText = item.InnerText,
-                                source = item.OuterXml
-                            });
-                        }
-                        catch (Exception)
-                        {
-                        }
-
-                    }
-                }
-                //if (ls.Count>10000)
-                //{
-                //    ls = ls.Take(6000).ToList();
-                //}  
-                AddLog("填充弹幕成功，共" + ls.Count + "条");
-                return ls;
-            }
-            catch (Exception)
-            {
-                AddLog("弹幕加载失败了...");
-                return ls;
-            }
-
-        }
-
 
         private void btn_Play_Click(object sender, RoutedEventArgs e)
         {
@@ -2151,9 +2073,9 @@ namespace BiliBili.UWP.Pages
             {
                 return;
             }
-            foreach (MyDanmaku.DanMuModel item in list_DisDanmu.SelectedItems)
+            foreach (NSDanmaku.Model.DanmakuModel item in list_DisDanmu.SelectedItems)
             {
-                ReportDM(item.DanRowID);
+                ReportDM(item.rowID);
             }
         }
 

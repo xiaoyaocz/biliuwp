@@ -1,4 +1,5 @@
 ﻿using BiliBili.UWP.Api;
+using BiliBili.UWP.Helper;
 using BiliBili.UWP.Modules.BiliBili.UWP.Modules.UserCenterModels;
 using BiliBili.UWP.Modules.BiliBili.UWP.Modules.UserSubmitVideoModels;
 using Microsoft.Toolkit.Collections;
@@ -159,8 +160,10 @@ namespace BiliBili.UWP.Modules
             }
             catch (Exception ex)
             {
+                Utils.ShowMessageToast("读取用户投稿视频失败");
 
-                throw;
+                LogHelper.WriteLog("读取用户投稿视频失败", LogType.ERROR, ex);
+                return new List<SubmitVideoItemModel>();
             }
            
         }

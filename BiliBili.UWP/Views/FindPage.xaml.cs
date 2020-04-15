@@ -70,7 +70,7 @@ namespace BiliBili.UWP.Views
 
         private void Find_btn_Part_Click(object sender, RoutedEventArgs e)
         {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(HomePage));
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(ChannelPage));
         }
 
         private void list_Hot_ItemClick(object sender, ItemClickEventArgs e)

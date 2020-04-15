@@ -159,7 +159,7 @@ namespace BiliBili.UWP.Pages
                     MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(RankPage));
                     break;
                 case "part":
-                    MessageCenter.SendNavigateTo(NavigateMode.Home, typeof(HomePage));
+                    MessageCenter.SendNavigateTo(NavigateMode.Home, typeof(ChannelPage));
                     break;
                 default:
                     break;

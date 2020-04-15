@@ -31,7 +31,7 @@
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">离线缓存</TextBlock>
-            <Button  x:Name="btn_old" Click="btn_old_Click" Grid.Column="2" Margin="10 0" Background="#00000000" BorderThickness="1"  Foreground="White" BorderBrush="White">旧版离线</Button>
+           
         </Grid>
         <Pivot Grid.Row="1">
             <PivotItem Margin="0">

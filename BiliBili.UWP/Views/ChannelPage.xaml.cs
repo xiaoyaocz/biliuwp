@@ -33,9 +33,9 @@ namespace BiliBili.UWP.Views
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class HomePage : Page
+    public sealed partial class ChannelPage : Page
     {
-        public HomePage()
+        public ChannelPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Required;

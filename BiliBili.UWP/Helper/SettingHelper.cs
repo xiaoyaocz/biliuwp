@@ -1067,15 +1067,6 @@ namespace BiliBili.UWP
         public static bool Get_DMBorder()
         {
             return true;
-            container = ApplicationData.Current.LocalSettings;
-            if (container.Values["DMBorder"] != null)
-            {
-                return (bool)container.Values["DMBorder"];
-            }
-            else
-            {
-                return true;
-            }
         }
 
         public static void Set_DMBorder(bool value)

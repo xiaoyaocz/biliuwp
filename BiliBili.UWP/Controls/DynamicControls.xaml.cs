@@ -997,7 +997,7 @@ namespace BiliBili.UWP.Views
 
                     return p;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
 
                     return new TextBlock()

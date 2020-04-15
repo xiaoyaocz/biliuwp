@@ -280,33 +280,34 @@
                             <RowDefinition/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <ScrollViewer x:Name="sv" VerticalScrollBarVisibility="Auto">
-                            <StackPanel x:Name="st_chats">
-                                <ListView x:Name="list" ItemTemplate="{StaticResource chat}" SelectionMode="None" IsItemClickEnabled="False" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="ListViewItem">
-                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                            <Setter Property="MinHeight" Value="0"></Setter>
-                                            <Setter Property="Margin" Value="0"></Setter>
-                                            <Setter Property="Padding" Value="8 2"></Setter>
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
-                                </ListView>
 
-                            </StackPanel>
-                        </ScrollViewer>
+                        <ListView x:Name="list_chat" ItemTemplate="{StaticResource chat}" SelectionMode="None" IsItemClickEnabled="False" >
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsStackPanel ItemsUpdatingScrollMode="KeepLastItemInView"/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                    <Setter Property="MinHeight" Value="0"></Setter>
+                                    <Setter Property="Margin" Value="0"></Setter>
+                                    <Setter Property="Padding" Value="8 2"></Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
                         <Grid Grid.Row="1"  BorderThickness="0 1 0 0" BorderBrush="#33808080">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition  Width="auto"/>
                                 <ColumnDefinition  Width="auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Button Flyout="{StaticResource fy_gift}" Width="48" Height="48" Padding="0" Background="#00000000" Foreground="{ThemeResource Bili-ForeColor}">
+                            <Button Flyout="{StaticResource fy_gift}" Width="48" Height="48" Padding="0" Background="#00000000" Foreground="{ThemeResource Bili-Highlight-TextColor}">
 
                                 <FontIcon  FontFamily="ms-appx:///Assets/logo.ttf#iconfont" Glyph="&#xe602;" />
 
                             </Button>
-                            <Button Grid.Column="1" Width="48" Height="48" Padding="0" Background="#00000000" Foreground="{ThemeResource Bili-ForeColor}">
+                            <Button Grid.Column="1" Width="48" Height="48" Padding="0" Background="#00000000" Foreground="{ThemeResource Bili-Highlight-TextColor}">
 
                                 <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xE15F;" />
 
@@ -348,18 +349,18 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <HyperlinkButton Margin="4 0" Click="btn_User_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" x:Name="btn_User" >
-                                    <Border BorderThickness="1" BorderBrush="{ThemeResource Bili-ForeColor}" CornerRadius="2" VerticalAlignment="Center" Padding="8 4">
-                                        <TextBlock VerticalAlignment="Center" Foreground="{ThemeResource Bili-ForeColor}" FontSize="14" TextAlignment="Center">个人空间</TextBlock>
+                                    <Border BorderThickness="1" BorderBrush="{ThemeResource Bili-Highlight-TextColor}" CornerRadius="2" VerticalAlignment="Center" Padding="8 4">
+                                        <TextBlock VerticalAlignment="Center" Foreground="{ThemeResource Bili-Highlight-TextColor}" FontSize="14" TextAlignment="Center">个人空间</TextBlock>
                                     </Border>
                                 </HyperlinkButton>
 
                                 <HyperlinkButton Margin="4 0" Grid.Column="1" HorizontalAlignment="Stretch" Click="btn_Follow_Click" HorizontalContentAlignment="Stretch" x:Name="btn_Follow" Visibility="{Binding Path=UserInfo.showFollow}">
-                                    <Border BorderThickness="1" BorderBrush="{ThemeResource Bili-ForeColor}" CornerRadius="2" VerticalAlignment="Center" Padding="8 4">
-                                        <TextBlock VerticalAlignment="Center" Foreground="{ThemeResource Bili-ForeColor}" FontSize="14" TextAlignment="Center">关注</TextBlock>
+                                    <Border BorderThickness="1" BorderBrush="{ThemeResource Bili-Highlight-TextColor}" CornerRadius="2" VerticalAlignment="Center" Padding="8 4">
+                                        <TextBlock VerticalAlignment="Center" Foreground="{ThemeResource Bili-Highlight-TextColor}" FontSize="14" TextAlignment="Center">关注</TextBlock>
                                     </Border>
                                 </HyperlinkButton>
                                 <HyperlinkButton Margin="4 0" Grid.Column="1" x:Name="btn_UnFollow" Click="btn_UnFollow_Click" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding Path=UserInfo.showUnFollow}">
-                                    <Border BorderThickness="1" BorderBrush="{ThemeResource Bili-ForeColor}" CornerRadius="2" VerticalAlignment="Center" Padding="8 4">
+                                    <Border BorderThickness="1" BorderBrush="{ThemeResource Bili-Highlight-TextColor}" CornerRadius="2" VerticalAlignment="Center" Padding="8 4">
                                         <TextBlock VerticalAlignment="Center" Foreground="{ThemeResource Bili-ForeColor}" FontSize="14" TextAlignment="Center">取消关注</TextBlock>
                                     </Border>
                                 </HyperlinkButton>

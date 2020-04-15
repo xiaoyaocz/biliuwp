@@ -121,11 +121,7 @@ namespace BiliBili.UWP
         }
 
 
-        public static void ShowMiniVideo(string vid)
-        {
-            MiniVideoDialog miniVideoDialog = new MiniVideoDialog();
-            miniVideoDialog.ShowAsync(vid);
-        }
+     
 
         /// <summary>
         ///统一处理Url
@@ -245,13 +241,13 @@ namespace BiliBili.UWP
              * bilibili://clip/1399466
              */
 
-            var clip = Utils.RegexMatch(url.Replace("vc=", "clip").Replace("vc.bilibili.com/video", "clip").Replace("/", ""), @"clip(\d+)");
-            if (clip != "")
-            {
-                MiniVideoDialog miniVideoDialog = new MiniVideoDialog();
-                miniVideoDialog.ShowAsync(clip);
-                return true;
-            }
+            //var clip = Utils.RegexMatch(url.Replace("vc=", "clip").Replace("vc.bilibili.com/video", "clip").Replace("/", ""), @"clip(\d+)");
+            //if (clip != "")
+            //{
+            //    MiniVideoDialog miniVideoDialog = new MiniVideoDialog();
+            //    miniVideoDialog.ShowAsync(clip);
+            //    return true;
+            //}
 
 
             /*

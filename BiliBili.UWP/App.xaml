@@ -39,6 +39,10 @@
                     <SolidColorBrush  x:Key="Main-ForeColor" Color="#FFDF85A0" />
                     <SolidColorBrush  x:Key="Main-ForeColor-No" Color="#FFD4D4D4" />
                     <SolidColorBrush  x:Key="SystemControlHighlightAltAccentBrush" Color="#FFDF85A0" />
+                    
+                    <!--高亮文本颜色-->
+                    <SolidColorBrush x:Key="Bili-Highlight-TextColor" Color="#FFDF85A0" />
+                    
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
                     <!--背景颜色-->
@@ -59,7 +63,9 @@
                     <SolidColorBrush x:Key="Bili-List-Background" Color="#7F4B4B4B" />
 
                     <SolidColorBrush x:Key="Bili-MenuBack" Color="#FF454545"></SolidColorBrush>
-
+                    <!--高亮文本颜色-->
+                    <SolidColorBrush x:Key="Bili-Highlight-TextColor" Color="White" />
+                    
                     <SolidColorBrush  x:Key="Main-Background" Color="#FF3E3E3E" />
                     <SolidColorBrush  x:Key="Main-ForeColor" Color="#FFDF85A0" />
                     <SolidColorBrush  x:Key="Main-ForeColor-No" Color="#FFD4D4D4" />

@@ -264,7 +264,7 @@ namespace BiliBili.UWP.Api
         {
             return await Task.Run<T>(() =>
             {
-                return JsonConvert.DeserializeObject<T>(results);
+                return JsonConvert.DeserializeObject<T>(results??"");
             });
 
         }

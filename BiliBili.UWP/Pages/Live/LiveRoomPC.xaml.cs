@@ -6,6 +6,7 @@ using Microsoft.Toolkit.Uwp.UI.Extensions;
 using NSDanmaku.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -52,6 +53,8 @@ namespace BiliBili.UWP.Pages.Live
             MessageCenter.Logined += MessageCenter_Logined;
             account = new Account();
             liveCenter = new LiveCenter();
+            danmu_list = new ObservableCollection<DanmuMsgModel>();
+            list_chat.ItemsSource = danmu_list;
         }
 
         private void MessageCenter_Logined()
@@ -111,6 +114,9 @@ namespace BiliBili.UWP.Pages.Live
         //轮播播放地址
         List<Durl> playUrls;
         private DisplayRequest dispRequest = null;//保持屏幕常亮
+
+        ObservableCollection<DanmuMsgModel> danmu_list;
+
         /// <summary>
         /// 是否处于画中画
         /// </summary>
@@ -601,27 +607,27 @@ namespace BiliBili.UWP.Pages.Live
         /// </summary>
         private async void LoadLastMsg()
         {
-            var last = await liveRoom.GetLastLiveMsg(roomId);
-            if (last.success)
-            {
-                foreach (var m in last.data)
-                {
-                    if (m.medalColor != null && m.medalColor != "")
-                    {
-                        m.ul_color = new SolidColorBrush(Utils.ToColor(m.ulColor));
-                    }
-                    else
-                    {
-                        m.ul_color = new SolidColorBrush(Colors.Gray);
-                    }
-                    if (m.medalColor != null && m.medalColor != "")
-                    {
-                        m.medal_color = new SolidColorBrush(Utils.ToColor(m.medalColor));
-                    }
+            //var last = await liveRoom.GetLastLiveMsg(roomId);
+            //if (last.success)
+            //{
+            //    foreach (var m in last.data)
+            //    {
+            //        if (m.medalColor != null && m.medalColor != "")
+            //        {
+            //            m.ul_color = new SolidColorBrush(Utils.ToColor(m.ulColor));
+            //        }
+            //        else
+            //        {
+            //            m.ul_color = new SolidColorBrush(Colors.Gray);
+            //        }
+            //        if (m.medalColor != null && m.medalColor != "")
+            //        {
+            //            m.medal_color = new SolidColorBrush(Utils.ToColor(m.medalColor));
+            //        }
 
-                    list.Items.Add(m);
-                }
-            }
+            //        list.Items.Add(m);
+            //    }
+            //}
 
         }
         /// <summary>
@@ -663,7 +669,7 @@ namespace BiliBili.UWP.Pages.Live
                                 m.medal_color = new SolidColorBrush(Utils.ToColor(m.medalColor));
                             }
                             m.content_color = (SettingHelper.Get_Theme() == "Dark") ? new SolidColorBrush(Colors.White) : new SolidColorBrush(Colors.Black);
-                            list.Items.Add(m);
+                            danmu_list.Add(m);
 
                         });
                         break;
@@ -691,7 +697,7 @@ namespace BiliBili.UWP.Pages.Live
                                 }
                             }
 
-                            list.Items.Add(new DanmuMsgModel()
+                            danmu_list.Add(new DanmuMsgModel()
                             {
                                 hasUL = Visibility.Collapsed,
                                 username = info.uname + " 赠送了",
@@ -711,7 +717,7 @@ namespace BiliBili.UWP.Pages.Live
                             }
                             var info = value.value as WelcomeMsgModel;
 
-                            list.Items.Add(new DanmuMsgModel()
+                            danmu_list.Add(new DanmuMsgModel()
                             {
                                 isVip = ((info.svip) ? Visibility.Collapsed : Visibility.Visible),
                                 isBigVip = ((info.svip) ? Visibility.Visible : Visibility.Collapsed),
@@ -733,7 +739,7 @@ namespace BiliBili.UWP.Pages.Live
                             {
                                 return;
                             }
-                            list.Items.Add(new DanmuMsgModel()
+                            danmu_list.Add(new DanmuMsgModel()
                             {
                                 hasUL = Visibility.Collapsed,
                                 username = "",
@@ -749,12 +755,11 @@ namespace BiliBili.UWP.Pages.Live
 
                 await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    if (list.Items.Count > slider_Clear.Value)
+                    if (danmu_list.Count > slider_Clear.Value)
                     {
-                        list.Items.Clear();
+                        danmu_list.Clear();
                         GC.Collect();
                     }
-                    sv.ChangeView(null, sv.ExtentHeight, null);
                 });
 
             }

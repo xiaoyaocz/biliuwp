@@ -212,6 +212,9 @@
   <ItemGroup>
     <Compile Include="Api\ApiRequest.cs" />
     <Compile Include="Api\ApiUtils.cs" />
+    <Compile Include="Api\Home\HomeAPI.cs" />
+    <Compile Include="Api\Home\HotAPI.cs" />
+    <Compile Include="Api\Home\RecommendAPI.cs" />
     <Compile Include="Api\User\DynamicAPI.cs" />
     <Compile Include="Api\User\UserCenterAPI.cs" />
     <Compile Include="App.xaml.cs">
@@ -232,9 +235,6 @@
       <DependentUpon>CommentV2Control.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DanmakuMTC.cs" />
-    <Compile Include="Controls\DanmuPlayer.xaml.cs">
-      <DependentUpon>DanmuPlayer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\DynamicControls.xaml.cs">
       <DependentUpon>DynamicControls.xaml</DependentUpon>
     </Compile>
@@ -257,14 +257,7 @@
     <Compile Include="Controls\MessageToast.xaml.cs">
       <DependentUpon>MessageToast.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MiniVideoDialog.xaml.cs">
-      <DependentUpon>MiniVideoDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\MyDanmaku.xaml.cs" />
     <Compile Include="Controls\OrientedSize.cs" />
-    <Compile Include="Controls\PlayerControl.xaml.cs">
-      <DependentUpon>PlayerControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\RepostDialog.xaml.cs">
       <DependentUpon>RepostDialog.xaml</DependentUpon>
     </Compile>
@@ -276,6 +269,7 @@
       <DependentUpon>VideoProcessingDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WrapPanel.cs" />
+    <Compile Include="Converters\ColorConvert.cs" />
     <Compile Include="Converters\DatetimeConvert.cs" />
     <Compile Include="Converters\DisplayConvert.cs" />
     <Compile Include="Converters\ImageCompressionConvert.cs" />
@@ -284,7 +278,6 @@
     <Compile Include="Helper\ApiHelper.cs" />
     <Compile Include="Helper\AppHelper.cs" />
     <Compile Include="Helper\BiliLiveDanmu.cs" />
-    <Compile Include="Helper\DownloadHelper.cs" />
     <Compile Include="Helper\DownloadHelper2.cs" />
     <Compile Include="Helper\DynamicJObject.cs" />
     <Compile Include="Helper\ExceptionHandler.cs" />
@@ -315,13 +308,16 @@
     <Compile Include="Modules\Account.cs" />
     <Compile Include="Modules\Download.cs" />
     <Compile Include="Modules\Emote.cs" />
+    <Compile Include="Modules\Home\HotVM.cs" />
+    <Compile Include="Modules\Home\RecommendVM.cs" />
+    <Compile Include="Modules\Home\TopicVM.cs" />
     <Compile Include="Modules\LiveArea.cs" />
     <Compile Include="Modules\LiveCommand.cs" />
     <Compile Include="Modules\RelayCommand.cs" />
     <Compile Include="Modules\LiveHome.cs" />
     <Compile Include="Modules\SeasonFollow.cs" />
     <Compile Include="Modules\Channel.cs" />
-    <Compile Include="Modules\Home.cs" />
+    <Compile Include="Modules\Home\HomeVM.cs" />
     <Compile Include="Modules\IModules.cs" />
     <Compile Include="Modules\InteractionVideo.cs" />
     <Compile Include="Modules\LiveCenter.cs" />
@@ -343,9 +339,6 @@
     <Compile Include="Pages\Download2Page.xaml.cs">
       <DependentUpon>Download2Page.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\DownloadPage.xaml.cs">
-      <DependentUpon>DownloadPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\DynamicInfoPage.xaml.cs">
       <DependentUpon>DynamicInfoPage.xaml</DependentUpon>
     </Compile>
@@ -364,8 +357,17 @@
     <Compile Include="Pages\FindMore\FeedbackPage.xaml.cs">
       <DependentUpon>FeedbackPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\FuckMSPage.xaml.cs">
-      <DependentUpon>FuckMSPage.xaml</DependentUpon>
+    <Compile Include="Pages\Home\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Home\HomeTopicPage.xaml.cs">
+      <DependentUpon>HomeTopicPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Home\HotPage.xaml.cs">
+      <DependentUpon>HotPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Home\RecommendPage.xaml.cs">
+      <DependentUpon>RecommendPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Live\LiveMyMedalPage.xaml.cs">
       <DependentUpon>LiveMyMedalPage.xaml</DependentUpon>
@@ -540,17 +542,14 @@
     <Compile Include="Views\FindPage.xaml.cs">
       <DependentUpon>FindPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
+    <Compile Include="Views\ChannelPage.xaml.cs">
+      <DependentUpon>ChannelPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LivePage.xaml.cs">
       <DependentUpon>LivePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LiveV2Page.xaml.cs">
       <DependentUpon>LiveV2Page.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\NewFeedPage.xaml.cs">
-      <DependentUpon>NewFeedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PartPage.xaml.cs">
       <DependentUpon>PartPage.xaml</DependentUpon>
@@ -715,10 +714,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DanmuPlayer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\DynamicControls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -744,18 +739,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MessageToast.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\MiniVideoDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\MyDanmaku.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\PlayerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -799,10 +782,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\DownloadPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\DynamicInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -827,7 +806,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\FuckMSPage.xaml">
+    <Page Include="Pages\Home\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Home\HomeTopicPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Home\HotPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Home\RecommendPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1095,7 +1086,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\HomePage.xaml">
+    <Page Include="Views\ChannelPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1104,10 +1095,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LiveV2Page.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\NewFeedPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

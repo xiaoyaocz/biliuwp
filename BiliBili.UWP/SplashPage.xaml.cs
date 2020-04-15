@@ -63,24 +63,9 @@ namespace BiliBili.UWP
         }
         DispatcherTimer timer;
         StartModel m;
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             #region
-            switch (new Random().Next(1, 4))
-            {
-                case 1:
-                    txt_Load.Text = "爱国、敬业、诚信、友善";
-                    break;
-                case 2:
-                    txt_Load.Text = "富强、民主、文明、和谐";
-                    break;
-                case 3:
-                    txt_Load.Text = "自由、平等、公正、法治";
-                    break;
-
-                default:
-                    break;
-            }
             try
             {
                 //注册后台任务

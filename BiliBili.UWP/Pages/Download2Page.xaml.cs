@@ -629,12 +629,6 @@ namespace BiliBili.UWP.Pages
             await new MessageDialog("该功能还未完成").ShowAsync();
         }
 
-       
-
-        private void btn_old_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(DownloadPage));
-        }
 
         private async void hy_UpdateDM_Click(object sender, RoutedEventArgs e)
         {

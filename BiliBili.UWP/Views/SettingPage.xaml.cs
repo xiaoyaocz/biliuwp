@@ -650,8 +650,6 @@ namespace BiliBili.UWP.Views
         private async void sw_CustomPath_Toggled(object sender, RoutedEventArgs e)
         {
             SettingHelper.Set_CustomDownPath(sw_CustomPath.IsOn);
-            await DownloadHelper.GetfolderList();
-            await DownloadHelper.SetfolderList();
         }
 
         private async void btn_CustomDoanPath_Click(object sender, RoutedEventArgs e)
@@ -666,8 +664,6 @@ namespace BiliBili.UWP.Views
             string mruToken = StorageApplicationPermissions.MostRecentlyUsedList.Add(f, f.Path);
             SettingHelper.Set_DownPath(f.Path);
             txt_CustomDownPath.Text = f.Path;
-            await DownloadHelper.GetfolderList();
-            await DownloadHelper.SetfolderList();
             //读取文件夹
             // string mruFirstToken = StorageApplicationPermissions.MostRecentlyUsedList.Entries.First(x=>x.Metadata==f.Path).Token;
             //StorageFolder retrievedFile = await StorageApplicationPermissions.MostRecentlyUsedList.GetFolderAsync(mruFirstToken);

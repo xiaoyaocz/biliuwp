@@ -94,7 +94,7 @@ namespace BiliBili.UWP.Pages.User
                             ImageSrc = item.pic,
                             index = i,
                             Mid = item1.cid.ToString(),
-                            Mode = Controls.PlayMode.Video,
+                            Mode = PlayMode.Video,
                             Title = item.title,
                             VideoTitle = $"{item.title}\r\nP{item1.page + "  " + item1.part}"
                         });
@@ -112,11 +112,11 @@ namespace BiliBili.UWP.Pages.User
                             ImageSrc = item.pic,
                             index = i,
                             Mid = item1.cid.ToString(),
-                            Mode = Controls.PlayMode.Bangumi,
+                            Mode = PlayMode.Bangumi,
                             Title = item.bangumi.season.title,
                             banId= item.bangumi.season.season_id.ToString(),
                             episode_id=item.bangumi.ep_id.ToString(),
-                            playMode= Controls.PlayMode.Bangumi,
+                            playMode= PlayMode.Bangumi,
                             VideoTitle = $"{item.bangumi.season.title}\r\nP{item.bangumi.title + "  " + item.bangumi.long_title}"
                         });
                         i++;

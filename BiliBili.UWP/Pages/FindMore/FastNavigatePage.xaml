@@ -26,30 +26,30 @@
                 <RowDefinition  Height="auto"/>
             </Grid.RowDefinitions>
             <StackPanel HorizontalAlignment="Center" Margin="10">
-                <FontIcon FontFamily="ms-appx:///Assets/logo.ttf#iconfont" Glyph="&#xe600;" FontSize="64" Foreground="{ThemeResource Bili-ForeColor}"/>
+                <FontIcon FontFamily="ms-appx:///Assets/logo.ttf#iconfont" Glyph="&#xe600;" FontSize="64" Foreground="{ThemeResource Bili-Highlight-TextColor}"/>
             </StackPanel>
 
             <AutoSuggestBox x:Name="txt_auto_Find" QuerySubmitted="autoSug_Box_QuerySubmitted" TextChanged="autoSug_Box_TextChanged" SuggestionChosen="autoSug_Box_SuggestionChosen" Grid.Row="1" Style="{StaticResource AutoSearchBox}"  BorderThickness="1" BorderBrush="Gray" QueryIcon="Find" PlaceholderText="输入关键字搜索或输入URL跳转" Margin="0 10"></AutoSuggestBox>
             <GridView ItemClick="GridView_ItemClick" Grid.Row="2"  HorizontalAlignment="Center" IsItemClickEnabled="True" SelectionMode="None">
-                <GridViewItem Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="yh">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE13D;" FontSize="24" Margin="0 5"/>
                         <TextBlock>用户中心</TextBlock>
                     </StackPanel>
                 </GridViewItem>
-                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="dt">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE006;" FontSize="24" Margin="0 5"/>
                         <TextBlock>关注动态</TextBlock>
                     </StackPanel>
                 </GridViewItem>
-                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="sc">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1CE;" FontSize="24" Margin="0 5"/>
                         <TextBlock>我的收藏</TextBlock>
                     </StackPanel>
                 </GridViewItem>
-                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="ls">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE121;" FontSize="24" Margin="0 5"/>
                         <TextBlock>浏览历史</TextBlock>
@@ -58,25 +58,25 @@
                 
             </GridView>
             <GridView Grid.Row="3" ItemClick="GridView_ItemClick_1" HorizontalAlignment="Center"  IsItemClickEnabled="True" SelectionMode="None">
-                <GridViewItem Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="fs">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE163;" FontSize="24" Margin="0 5"/>
                         <TextBlock>番剧放送</TextBlock>
                     </StackPanel>
                 </GridViewItem>
-                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="sy">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE958;" FontSize="24" Margin="0 5"/>
                         <TextBlock>番剧索引</TextBlock>
                     </StackPanel>
                 </GridViewItem>
-                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="rank">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1E5;" FontSize="24" Margin="0 5"/>
                         <TextBlock>排行榜</TextBlock>
                     </StackPanel>
                 </GridViewItem>
-                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="part">
 
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE80A;" FontSize="24" Margin="0 5"/>
@@ -86,25 +86,25 @@
 
             </GridView>
             <GridView ItemClick="GridView_ItemClick_2" Grid.Row="4" HorizontalAlignment="Center" IsItemClickEnabled="True" SelectionMode="None">
-                <GridViewItem Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="tj">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE116;" FontSize="24" Margin="0 5"/>
                         <TextBlock>直播推荐</TextBlock>
                     </StackPanel>
                 </GridViewItem>
-                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="live">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE80A;" FontSize="24" Margin="0 5"/>
                         <TextBlock>直播分区</TextBlock>
                     </StackPanel>
                 </GridViewItem>
-                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="alive">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D4;" FontSize="24" Margin="0 5"/>
                         <TextBlock>关注主播</TextBlock>
                     </StackPanel>
                 </GridViewItem>
-                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="mini">
 
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE13B;" FontSize="24" Margin="0 5"/>
@@ -114,25 +114,25 @@
 
             </GridView>
             <GridView ItemClick="GridView_ItemClick_3" Grid.Row="5" HorizontalAlignment="Center" IsItemClickEnabled="True" SelectionMode="None">
-                <GridViewItem Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="ht">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE134;" FontSize="24" Margin="0 5"/>
                         <TextBlock>话题中心</TextBlock>
                     </StackPanel>
                 </GridViewItem>
-                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="hd">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE129;" FontSize="24" Margin="0 5"/>
                         <TextBlock>活动中心</TextBlock>
                     </StackPanel>
                 </GridViewItem>
-                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="sq">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE1CD;" FontSize="24" Margin="0 5"/>
                         <TextBlock>试试手气</TextBlock>
                     </StackPanel>
                 </GridViewItem>
-                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-ForeColor}" >
+                <GridViewItem  Margin="20" Foreground="{ThemeResource Bili-Highlight-TextColor}" >
                     <StackPanel Tag="setting">
 
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE115;" FontSize="24" Margin="0 5"/>

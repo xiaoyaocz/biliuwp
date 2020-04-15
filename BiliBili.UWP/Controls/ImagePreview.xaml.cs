@@ -41,7 +41,6 @@ namespace BiliBili.UWP.Controls
 
         }
        
-        IRandomAccessStream _bitimg;
         private void NotifyPopup_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -196,13 +195,13 @@ namespace BiliBili.UWP.Controls
 
         private void btn_Share_Click(object sender, RoutedEventArgs e)
         {
-            DataPackage dataPackage = new DataPackage();
-            RandomAccessStreamReference randomAccessStreamReference =
-                RandomAccessStreamReference.CreateFromStream(_bitimg);
-            dataPackage.SetBitmap(randomAccessStreamReference);
+            //DataPackage dataPackage = new DataPackage();
+            //RandomAccessStreamReference randomAccessStreamReference =
+            //    RandomAccessStreamReference.CreateFromStream(_bitimg);
+            //dataPackage.SetBitmap(randomAccessStreamReference);
 
-            Clipboard.SetContent(dataPackage);
-            Utils.ShowMessageToast("已将图片复制到剪贴板");
+            //Clipboard.SetContent(dataPackage);
+            //Utils.ShowMessageToast("已将图片复制到剪贴板");
             //DataTransferManager.ShowShareUI();
         }
 

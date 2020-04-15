@@ -17,7 +17,7 @@
             </StackPanel>
             <StackPanel VerticalAlignment="Bottom" Margin="0 30">
                 <ProgressRing Width="50" Height="50" IsActive="True" Margin="0 5" Foreground="Gray"></ProgressRing>
-                <TextBlock x:Name="txt_Load" HorizontalAlignment="Center"  Foreground="Gray" ></TextBlock>
+                <TextBlock HorizontalAlignment="Center"  Foreground="Gray" Text="加载中..."></TextBlock>
             </StackPanel>
         </Grid>
         <Grid x:Name="grid_Load" >

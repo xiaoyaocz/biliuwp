@@ -1748,21 +1748,14 @@ namespace BiliBili.UWP.Modules
             {
                 get
                 {
-                    if (verify_type != null)
+                    switch (verify_type)
                     {
-                        switch (verify_type)
-                        {
-                            case 0:
-                                return "ms-appx:///Assets/MiniIcon/ic_authentication_personal.png";
-                            case 1:
-                                return "ms-appx:///Assets/MiniIcon/ic_authentication_organization.png";
-                            default:
-                                return "ms-appx:///Assets/MiniIcon/transparent.png";
-                        }
-                    }
-                    else
-                    {
-                        return "";
+                        case 0:
+                            return "ms-appx:///Assets/MiniIcon/ic_authentication_personal.png";
+                        case 1:
+                            return "ms-appx:///Assets/MiniIcon/ic_authentication_organization.png";
+                        default:
+                            return "ms-appx:///Assets/MiniIcon/transparent.png";
                     }
                 }
             }

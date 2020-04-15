@@ -20,7 +20,9 @@
 
     <SolidColorBrush x:Key="Bili-MenuBack" Color="White"></SolidColorBrush>
 
-
+    <!--高亮文本颜色-->
+    <SolidColorBrush x:Key="Bili-Highlight-TextColor" Color="#FF2095F3" />
+    
     <SolidColorBrush  x:Key="Main-Background" Color="White" />
     <SolidColorBrush  x:Key="Main-ForeColor" Color="#FF2095F3" />
     <SolidColorBrush  x:Key="Main-ForeColor-No" Color="#FFD4D4D4" />
