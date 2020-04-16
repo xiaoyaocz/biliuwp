@@ -177,20 +177,7 @@
                         <FontIcon  Grid.Column="2" FontSize="12" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" />
                     </Grid>
                 </HyperlinkButton>
-                <HyperlinkButton x:Name="Find_btn_BlackRoom" Click="Find_btn_BlackRoom_Click" Foreground="Gray" Background="{ThemeResource Bili-List-Background}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Height="36" Margin="0 5" >
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="48"/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="48"/>
-                        </Grid.ColumnDefinitions>
-                        <SymbolIcon Symbol="Page2" Foreground="Gray"/>
-                        <TextBlock Grid.Column="1" FontSize="14">
-												<Run Text="小黑屋"/>
-                        </TextBlock>
-                        <FontIcon  Grid.Column="2" FontSize="12" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" />
-                    </Grid>
-                </HyperlinkButton>
+              
                 <!--<HyperlinkButton x:Name="Find_btn_Shop" Click="Find_btn_Shop_Click" Foreground="Gray" Background="{ThemeResource Bili-List-Background}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Height="36" Margin="0 5" >
                     <Grid>
                         <Grid.ColumnDefinitions>

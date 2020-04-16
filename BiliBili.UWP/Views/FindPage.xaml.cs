@@ -163,11 +163,7 @@ namespace BiliBili.UWP.Views
             MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(LocalHistoryPage));
         }
 
-        private void Find_btn_BlackRoom_Click(object sender, RoutedEventArgs e)
-        {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), "http://www.bilibili.com/blackroom");
-        }
-        
+     
         private async void btn_Tag_Click(object sender, RoutedEventArgs e)
         {
             if (!ApiHelper.IsLogin() && !await Utils.ShowLoginDialog())
