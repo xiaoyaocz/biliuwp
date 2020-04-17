@@ -606,7 +606,6 @@
     <Content Include="Assets\Logo\HappyBirthDay.png" />
     <Content Include="Assets\Logo\ic_bili_logo.png" />
     <Content Include="Assets\Logo\ic_splash_default.png" />
-    <Content Include="Assets\Logo.png" />
     <Content Include="Assets\Logo\NoLogin.png" />
     <Content Include="Assets\Logo\PI520_300.png" />
     <Content Include="Assets\Logo\PI640_480.png" />
@@ -667,6 +666,11 @@
     <Content Include="Assets\Square310x310Logo.scale-150.png" />
     <Content Include="Assets\Square310x310Logo.scale-200.png" />
     <Content Include="Assets\Square310x310Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-16.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-24.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-256.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-32.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-48.png" />
     <Content Include="Assets\Square44x44Logo.scale-100.png" />
     <Content Include="Assets\Square44x44Logo.scale-125.png" />
     <Content Include="Assets\Square44x44Logo.scale-150.png" />
@@ -685,6 +689,7 @@
     <Content Include="Assets\Square71x71Logo.scale-150.png" />
     <Content Include="Assets\Square71x71Logo.scale-200.png" />
     <Content Include="Assets\Square71x71Logo.scale-400.png" />
+    <Content Include="Assets\logo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
@@ -698,7 +703,6 @@
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>

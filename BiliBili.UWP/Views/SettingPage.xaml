@@ -737,7 +737,7 @@
                         
                         <TextBlock FontSize="18" Margin="0 10 0 0">感谢</TextBlock>
                         <TextBlock Foreground="Gray" VerticalAlignment="Center" Margin="0 10 0 0" TextWrapping="Wrap">感谢以下小伙伴在开发过程中给予的各种帮助(排名不分先后)</TextBlock>
-                        <TextBlock Foreground="Gray" VerticalAlignment="Center" Margin="0 10 0 0" TextWrapping="Wrap">旋风小伙(微页开发者)、Dearest匿爱、座子狮(酷狗音乐第三方UWP开发者)、Loyie King(Key4WiFi开发者)、CodeForCSharp、ThomasWFan</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" Margin="0 10 0 0" TextWrapping="Wrap">x¡aoyaomengo(LOGO绘制)、旋风小伙(微页开发者)、Dearest匿爱、座子狮(酷狗音乐第三方UWP开发者)、Loyie King(Key4WiFi开发者)、CodeForCSharp、ThomasWFan</TextBlock>
                         <TextBlock FontSize="18" Margin="0 10 0 0">引用及参考</TextBlock>
                         <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextSelectionEnabled="True"  TextWrapping="Wrap" Margin="0 10 0 0">UWPCommunityToolkit(https://github.com/Microsoft/UWPCommunityToolkit)</TextBlock>
                         <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextSelectionEnabled="True"  TextWrapping="Wrap">PullToRefresh.UWP(https://github.com/MS-UAP/PullToRefresh.UWP)</TextBlock>
@@ -747,6 +747,7 @@
                         <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextSelectionEnabled="True"  TextWrapping="Wrap">bilibili-service(https://github.com/WhiteBlue/bilibili-service)</TextBlock>
                         <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextSelectionEnabled="True"  TextWrapping="Wrap">BilibiliAPIDocs(https://github.com/fython/BilibiliAPIDocs)</TextBlock>
                         <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextSelectionEnabled="True"  TextWrapping="Wrap">biliroku/(https://github.com/zyzsdy/biliroku)</TextBlock>
+                        <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextSelectionEnabled="True"  TextWrapping="Wrap">BililiveRecorder(https://github.com/Bililive/BililiveRecorder)</TextBlock>
                         <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextScaleFactorEnabled="True" TextWrapping="Wrap">you-get(https://github.com/soimort/you-get)</TextBlock>
                         <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextScaleFactorEnabled="True" TextWrapping="Wrap">SYEngine(https://github.com/amamiya/SYEngine)</TextBlock>
                         <TextBlock Foreground="Gray" VerticalAlignment="Center" IsTextScaleFactorEnabled="True" TextWrapping="Wrap">VLC.MediaElement(https://github.com/kakone/VLC.MediaElement)</TextBlock>
