@@ -19,6 +19,9 @@ using Windows.Web.Http;
 
 namespace BiliBili.UWP.Helper
 {
+    //TODO 需要重写此类
+
+
     /// <summary>
     /// 视频地址解析类
     /// </summary>
@@ -189,27 +192,36 @@ namespace BiliBili.UWP.Helper
                 List<string> urls = new List<string>();
                 var playList = new SYEngine.Playlist(SYEngine.PlaylistTypes.NetworkHttp);
                 string url2 = string.Format(
-                    "https://bangumi.bilibili.com/player/web_api/v2/playurl?cid={1}&appkey={0}&otype=json&type=&quality={2}&module=bangumi&season_type={4}&qn={2}&ts={3}&fourk=1&fnver=0&fnval=16", ApiHelper.WebVideoKey.Appkey, model.Mid, qn, ApiHelper.GetTimeSpan_2, model.season_type);
+                    "https://api.bilibili.com/pgc/player/web/playurl?cid={1}&appkey={0}&otype=json&type=&quality={2}&module=bangumi&season_type={4}&qn={2}&ts={3}&fourk=1&fnver=0&fnval=16", ApiHelper.WebVideoKey.Appkey, model.Mid, qn, ApiHelper.GetTimeSpan_2, model.season_type);
+                if (ApiHelper.IsLogin())
+                {
+                    url2 += $"&access_key={ApiHelper.access_key}&mid={ApiHelper.GetUserId()}";
+                }
                 url2 += "&sign=" + ApiHelper.GetSign(url2, ApiHelper.WebVideoKey);
                 var re = await WebClientClass.GetResultsUTF8Encode(new Uri(url2));
                 var obj = JObject.Parse(re);
                 if (obj["code"].ToInt32() == 0)
                 {
-                    if (obj["dash"] != null)
+                    if (obj["result"]["dash"] != null)
                     {
                         int codecid = 7;
                         if (SettingHelper.Get_DASHUseHEVC())
                         {
                             codecid = 12;
                         }
-                        var videos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(obj["dash"]["video"].ToString());
-                        var audios = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(obj["dash"]["audio"].ToString());
+                        var videos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(obj["result"]["dash"]["video"].ToString());
+                        var audios = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(obj["result"]["dash"]["audio"].ToString());
                         var video = videos.FirstOrDefault(x => x.id == qn && x.codecid == codecid);
                         if (video == null && codecid == 12)
                         {
                             codecid = 7;
                             video = videos.FirstOrDefault(x => x.id == qn && x.codecid == codecid);
+                            if (video == null)
+                            {
+                                video = videos.FirstOrDefault(x => x.codecid == codecid);
+                            }
                         }
+
                         var audio = audios.FirstOrDefault();
 
                         return new ReturnPlayModel()
@@ -403,7 +415,7 @@ namespace BiliBili.UWP.Helper
                     //}
                     //else
                     //{
-                        return null;
+                    return null;
                     //}
                 }
                 else
@@ -497,7 +509,7 @@ namespace BiliBili.UWP.Helper
                     //}
                     //else
                     //{
-                        return null;
+                    return null;
                     //}
                 }
                 else
@@ -651,12 +663,15 @@ namespace BiliBili.UWP.Helper
             try
             {
                 List<string> urls = new List<string>();
-                string url = $"https://api.bilibili.com/x/player/playurl?appkey={ApiHelper.AndroidKey.Appkey}&avid={ aid}&cid={cid}&qn={qn}&type=&otype=json&fnver=0&fnval=16";
+                //string url = $"https://api.bilibili.com/x/player/playurl?appkey={ApiHelper.AndroidKey.Appkey}&avid={ aid}&cid={cid}&qn={qn}&type=&otype=json&fnver=0&fnval=16";
+
+                string url = $"https://api.bilibili.com/x/player/playurl?avid={aid}&cid={cid}&qn={qn}&type=&otype=json&fourk=1&fnver=0&fnval=16&appkey={ ApiHelper.WebVideoKey.Appkey}";
+                //url += "&sign=" + ApiHelper.GetSign(url, ApiHelper.WebVideoKey);
                 if (ApiHelper.IsLogin())
                 {
                     url += $"&access_key={ApiHelper.access_key}&mid={ApiHelper.GetUserId()}";
                 }
-                url = ApiHelper.GetSignWithUrl(url,ApiHelper.AndroidKey);
+                url = ApiHelper.GetSignWithUrl(url, ApiHelper.WebVideoKey);
                 string re = await WebClientClass.GetResults(new Uri(url));
                 JObject obj = JObject.Parse(re);
                 if (obj["code"].ToInt32() == 0)
@@ -676,9 +691,9 @@ namespace BiliBili.UWP.Helper
                             codecid = 7;
                             video = videos.FirstOrDefault(x => x.id == qn && x.codecid == codecid);
                         }
-                        if (video==null)
+                        if (video == null)
                         {
-                            video = videos.OrderByDescending(x=>x.id).FirstOrDefault(x=>x.codecid == 7);
+                            video = videos.OrderByDescending(x => x.id).FirstOrDefault(x => x.codecid == 7);
                         }
                         var audio = audios.FirstOrDefault();
 
@@ -880,6 +895,14 @@ namespace BiliBili.UWP.Helper
                 var qn = 64;
 
                 string url = $"https://api.bilibili.com/x/player/playurl?avid={model.Aid}&cid={model.Mid}&qn={qn}&type=&otype=json&appkey={ ApiHelper.WebVideoKey.Appkey}";
+                if (SettingHelper.Get_UseDASH())
+                {
+                    url += "&fourk=1&fnver=0&fnval=16";
+                }
+                if (ApiHelper.IsLogin())
+                {
+                    url += $"&access_key={ApiHelper.access_key}&mid={ApiHelper.GetUserId()}";
+                }
                 url += "&sign=" + ApiHelper.GetSign(url, ApiHelper.WebVideoKey);
                 string re = await WebClientClass.GetResults(new Uri(url));
 
@@ -895,17 +918,27 @@ namespace BiliBili.UWP.Helper
                     });
                 }
                 qualities = qualities.OrderBy(x => x.qn).ToList();
+                if (!ApiHelper.IsLogin())
+                {
+                    qualities = qualities.Where(x => x.qn <= 32).ToList();
+                    foreach (var item in qualities)
+                    {
+                        item.description += "(登录享受更多清晰度)";
+                    }
+                }
+                else
+                {
+                    if (!SettingHelper.Get_UserIsVip())
+                    {
+                        qualities = qualities.Where(x => x.qn != 74 && x.qn <= 80).ToList();
+                    }
+                }
                 return qualities;
             }
             catch (Exception ex)
             {
 
-                return new List<QualityModel>() {
-                     new QualityModel(){description="流畅", qn=32},
-                     new QualityModel(){description="清晰",qn=64},
-                     new QualityModel(){description="高清",qn=80},
-                     new QualityModel(){description="超清",qn=112},
-                };
+                return GetDefaultQualities();
             }
 
 
@@ -921,33 +954,50 @@ namespace BiliBili.UWP.Helper
                 List<string> urls = new List<string>();
 
                 string url2 = string.Format(
-                    "https://bangumi.bilibili.com/player/web_api/v2/playurl?cid={1}&appkey={0}&otype=json&type=&quality={2}&module=bangumi&season_type={4}&qn={2}&ts={3}", ApiHelper.WebVideoKey.Appkey, model.Mid, qn, ApiHelper.GetTimeSpan_2, model.season_type);
+                    "https://api.bilibili.com/pgc/player/web/playurl?cid={1}&appkey={0}&otype=json&type=&quality={2}&module=bangumi&season_type={4}&qn={2}&ts={3}", ApiHelper.WebVideoKey.Appkey, model.Mid, qn, ApiHelper.GetTimeSpan_2, model.season_type);
+                if (SettingHelper.Get_UseDASH())
+                {
+                    url2 += "&fourk=1&fnver=0&fnval=16";
+                }
+                if (ApiHelper.IsLogin())
+                {
+                    url2 += $"&access_key={ApiHelper.access_key}&mid={ApiHelper.GetUserId()}";
+                }
                 url2 += "&sign=" + ApiHelper.GetSign(url2, ApiHelper.WebVideoKey);
                 var re = await WebClientClass.GetResultsUTF8Encode(new Uri(url2));
-                FlvPlyaerUrlModel m = JsonConvert.DeserializeObject<FlvPlyaerUrlModel>(re);
-                if (m.code == 0 && !re.Contains("8986943"))
+                var jobj = JObject.Parse(re);
+                if (jobj["code"].ToInt32() == 0 && !re.Contains("8986943"))
                 {
-
-                    foreach (var item in m.accept_description)
+                    var dashModel = JsonConvert.DeserializeObject<DashModel>(jobj["result"].ToString());
+                    foreach (var item in dashModel.accept_description)
                     {
                         qualities.Add(new QualityModel()
                         {
                             description = item,
-                            qn = m.accept_quality[m.accept_description.IndexOf(item)]
+                            qn = dashModel.accept_quality[dashModel.accept_description.IndexOf(item)]
                         });
                     }
-
+                    if (!ApiHelper.IsLogin())
+                    {
+                        qualities = qualities.Where(x => x.qn <= 32).ToList();
+                        foreach (var item in qualities)
+                        {
+                            item.description += "(登录享受更多清晰度)";
+                        }
+                    }
+                    else
+                    {
+                        if (!SettingHelper.Get_UserIsVip())
+                        {
+                            qualities = qualities.Where(x => x.qn != 74 && x.qn <= 80).ToList();
+                        }
+                    }
                 }
                 else
                 {
                     if (SettingHelper.Get_PriorityBiliPlus())
                     {
-                        return new List<QualityModel>() {
-                             new QualityModel(){description="流畅", qn=32},
-                             new QualityModel(){description="清晰",qn=64},
-                             new QualityModel(){description="高清",qn=80},
-                             new QualityModel(){description="超清",qn=112},
-                        };
+                        return GetDefaultQualities();
                     }
                     else
                     {
@@ -963,12 +1013,7 @@ namespace BiliBili.UWP.Helper
                         }
                         else
                         {
-                            return new List<QualityModel>() {
-                                 new QualityModel(){description="流畅", qn=32},
-                                 new QualityModel(){description="清晰",qn=64},
-                                 new QualityModel(){description="高清",qn=80},
-                                 new QualityModel(){description="超清",qn=112},
-                            };
+                            return GetDefaultQualities();
                         }
                     }
                 }
@@ -978,12 +1023,7 @@ namespace BiliBili.UWP.Helper
             catch (Exception)
             {
 
-                return new List<QualityModel>() {
-                     new QualityModel(){description="流畅", qn=32},
-                     new QualityModel(){description="清晰",qn=64},
-                     new QualityModel(){description="高清",qn=80},
-                     new QualityModel(){description="超清",qn=112},
-                };
+                return GetDefaultQualities();
             }
 
 
@@ -991,12 +1031,23 @@ namespace BiliBili.UWP.Helper
 
         public static List<QualityModel> GetDefaultQualities()
         {
-            return new List<QualityModel>() {
-                     new QualityModel(){description="流畅", qn=1},
-                     new QualityModel(){description="清晰",qn=2},
-                     new QualityModel(){description="高清",qn=3},
-                     new QualityModel(){description="超清",qn=4},
-           };
+            if (ApiHelper.IsLogin())
+            {
+                return new List<QualityModel>() {
+                new QualityModel(){description="流畅", qn=16},
+                new QualityModel(){description="清晰", qn=32},
+                new QualityModel(){description="高清",qn=64},
+                new QualityModel(){description="超清",qn=80}
+            };
+            }
+            else
+            {
+                return new List<QualityModel>() {
+                new QualityModel(){description="流畅(登录享受更多清晰度)", qn=16},
+                new QualityModel(){description="清晰(登录享受更多清晰度)", qn=32},
+            };
+            }
+           
         }
 
         public static async Task<HasSubtitleModel> GetHasSubTitle(string aid, string cid)
@@ -1137,6 +1188,100 @@ namespace BiliBili.UWP.Helper
         public string[] backup_url { get; set; }
 
     }
+    public class DashModel
+    {
+        public string format { get; set; }
+        public List<string> accept_description { get; set; }
+        public List<int> accept_quality { get; set; }
+        /// <summary>
+        /// 时长，毫秒
+        /// </summary>
+        public int timelength { get; set; }
+        public int video_codecid { get; set; }
+        public DashDashModel dash { get; set; }
+    }
+    public class DashDashModel
+    {
+        public List<DashItemModel> video { get; set; }
+        public List<DashItemModel> audio { get; set; }
+        /// <summary>
+        /// 时长，秒
+        /// </summary>
+        public int duration { get; set; }
+
+    }
+    public class DashItemModel
+    {
+        public int id { get; set; }
+        public int bandwidth { get; set; }
+        public string baseUrl { get; set; }
+        public string base_url { get; set; }
+        public List<string> backupUrl { get; set; }
+        public List<string> backup_url { get; set; }
+        public string mime_type { get; set; }
+        public string mimeType { get; set; }
+        public string codecs { get; set; }
+        public int codecid { get; set; }
+        public int width { get; set; }
+        public int height { get; set; }
+        public string frameRate { get; set; }
+        public string frame_rate { get; set; }
+        /// <summary>
+        /// 计算平均帧数
+        /// </summary>
+        public string fps
+        {
+            get
+            {
+                try
+                {
+                    if (!string.IsNullOrEmpty(frameRate))
+                    {
+                        var values = frameRate.Split('/');
+                        if (values.Length == 1)
+                        {
+                            return frameRate;
+                        }
+                        double r = Convert.ToDouble(values[0]);
+                        double d = Convert.ToDouble(values[1]);
+                        return (r / d).ToString("0.0");
+                    }
+                    else if (!string.IsNullOrEmpty(frame_rate))
+                    {
+                        var values = frame_rate.Split('/');
+                        if (values.Length == 1)
+                        {
+                            return frame_rate;
+                        }
+                        double r = Convert.ToDouble(values[0]);
+                        double d = Convert.ToDouble(values[1]);
+                        return (r / d).ToString("0.0");
+                    }
+                    else
+                    {
+                        return "0";
+                    }
+                }
+                catch (Exception)
+                {
+                    return "0";
+                }
+
+            }
+        }
+
+        public SegmentBase SegmentBase { get; set; }
+        public SegmentBase segment_base { get; set; }
+    }
+
+    public class SegmentBase
+    {
+        public string Initialization { get; set; }
+        public string indexRange { get; set; }
+
+        public string initialization { get; set; }
+        public string index_range { get; set; }
+    }
 
     public class SetPlayMp4Model
     {
@@ -1228,11 +1373,7 @@ namespace BiliBili.UWP.Helper
         public string mimeType { get; set; }
         public SegmentBase SegmentBase { get; set; }
     }
-    public class SegmentBase
-    {
-        public string Initialization { get; set; }
-        public string indexRange { get; set; }
-    }
+
     public class HasSubtitleModel
     {
         public bool allow_submit { get; set; }

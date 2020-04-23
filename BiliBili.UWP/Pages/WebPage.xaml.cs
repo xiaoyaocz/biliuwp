@@ -45,8 +45,14 @@ namespace BiliBili.UWP.Pages
 
                 _biliapp.CloseBrowserEvent += _biliapp_CloseBrowserEvent;
                 _biliapp.ValidateLoginEvent += _biliapp_ValidateLoginEvent;
-
-                webView.Navigate(new Uri((e.Parameter as object[])[0].ToString()));
+                if (e.Parameter is object[])
+                {
+                    webView.Navigate(new Uri((e.Parameter as object[])[0].ToString()));
+                }
+                else
+                {
+                    webView.Navigate(new Uri(e.Parameter.ToString()));
+                }
 
             }
             

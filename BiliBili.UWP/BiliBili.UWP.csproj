@@ -215,6 +215,7 @@
     <Compile Include="Api\Home\HomeAPI.cs" />
     <Compile Include="Api\Home\HotAPI.cs" />
     <Compile Include="Api\Home\RecommendAPI.cs" />
+    <Compile Include="Api\PlayerAPI.cs" />
     <Compile Include="Api\SearchAPI.cs" />
     <Compile Include="Api\User\DynamicAPI.cs" />
     <Compile Include="Api\User\UserCenterAPI.cs" />
@@ -1168,7 +1169,7 @@
       <Version>4.7.0</Version>
     </PackageReference>
     <PackageReference Include="NSDanmaku">
-      <Version>1.4.3</Version>
+      <Version>1.5.0</Version>
     </PackageReference>
     <PackageReference Include="PullToRefresh.UWP">
       <Version>0.3.4</Version>

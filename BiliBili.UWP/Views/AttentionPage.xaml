@@ -15,7 +15,7 @@
         <Pivot x:Name="pivot" SelectionChanged="pivot_SelectionChanged">
             <Pivot.RightHeader>
                 <StackPanel x:Name="rightHeader" Orientation="Horizontal" Margin="8 0">
-                    <HyperlinkButton x:Name="btn_sendDynamic" Click="btn_sendDynamic_Click" Foreground="{ThemeResource Bili-ForeColor}">
+                    <HyperlinkButton x:Name="btn_sendDynamic" Click="btn_sendDynamic_Click" Foreground="{ThemeResource Bili-Highlight-TextColor}">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" VerticalAlignment="Center" FontSize="14" Margin="4 0"/>
                             <TextBlock FontSize="14" VerticalAlignment="Center">发表动态</TextBlock>

@@ -94,16 +94,17 @@ namespace BiliBili.UWP
         }
       
 
-        private async void MessageCenter_ShowError(object sender, Exception e)
+        private void MessageCenter_ShowError(object sender, Exception e)
         {
-            try
-            {
-                ErrorDialog errorDialog = new ErrorDialog(e);
-                await errorDialog.ShowAsync();
-            }
-            catch (Exception)
-            {
-            }
+            //弹窗体验太差
+            //try
+            //{
+            //    //ErrorDialog errorDialog = new ErrorDialog(e);
+            //    //await errorDialog.ShowAsync();
+            //}
+            //catch (Exception)
+            //{
+            //}
             
         }
 
@@ -421,7 +422,6 @@ namespace BiliBili.UWP
             {
                 if ((await account.CheckLoginState(ApiHelper.access_key)).success)
                 {
-
                     MessageCenter_Logined();
                     await account.SSO(ApiHelper.access_key);
                 }
@@ -430,6 +430,7 @@ namespace BiliBili.UWP
                     var data = await account.RefreshToken(SettingHelper.Get_Access_key(), SettingHelper.Get_Refresh_Token());
                     if (!data.success)
                     {
+                        UserManage.Logout();
                         Utils.ShowMessageToast("登录过期，请重新登录");
                         await Utils.ShowLoginDialog();
                     }
@@ -585,10 +586,12 @@ namespace BiliBili.UWP
                     if (m.vip != null && m.vip.type != 0)
                     {
                         img_VIP.Visibility = Visibility.Visible;
+                        SettingHelper.Set_UserIsVip(true);
                     }
                     else
                     {
                         img_VIP.Visibility = Visibility.Collapsed;
+                        SettingHelper.Set_UserIsVip(false);
                     }
                 }
                 else

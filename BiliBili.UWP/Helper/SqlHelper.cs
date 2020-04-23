@@ -138,7 +138,7 @@ namespace BiliBili.UWP
         #endregion
 
         #region 观看进度
-        public static List<ViewPostHelperClass> GetViewPostList()
+        public static List<ViewPostHelperClass> GetAllVideoWatchRecord()
         {
             List<ViewPostHelperClass> my = new List<ViewPostHelperClass>();
             using (var conn = GetDbConnection())
@@ -152,16 +152,14 @@ namespace BiliBili.UWP
             }
         }
 
-        public static ViewPostHelperClass GettViewPost(string id)
+        public static ViewPostHelperClass GetVideoWatchRecord(string id)
         {
             using (var conn = GetDbConnection())
             {
-                //var dbPerson = conn.Table<CommicHistoryClass>();
                 TableQuery<ViewPostHelperClass> t = conn.Table<ViewPostHelperClass>();
                 var q = from s in t.AsParallel<ViewPostHelperClass>()
                         where s.epId == id
                         select s;
-                // 绑定
                 if (q.ToList().Count != 0)
                 {
                     return q.ToList()[0];
@@ -172,11 +170,10 @@ namespace BiliBili.UWP
                 }
             }
         }
-        public static bool AddViewPost(ViewPostHelperClass mo)
+        public static bool AddVideoWatchRecord(ViewPostHelperClass mo)
         {
             using (var conn = GetDbConnection())
             {
-                // 受影响行数。
                 var count = conn.Insert(mo);
                 if (count == 1)
                 {
@@ -188,11 +185,10 @@ namespace BiliBili.UWP
                 }
             }
         }
-        public static bool GetPostIsViewPost(string Id)
+        public static bool GetVideoHasWatchRecord(string Id)
         {
             using (var conn = GetDbConnection())
             {
-                // 受影响行数。
                 var m = from p in conn.Table<ViewPostHelperClass>()
                         where p.epId == Id
                         select p;
@@ -206,7 +202,7 @@ namespace BiliBili.UWP
                 }
             }
         }
-        public static bool UpdateViewPost(ViewPostHelperClass mo)
+        public static bool UpdateVideoWatchRecord(ViewPostHelperClass mo)
         {
             using (var conn = GetDbConnection())
             {
@@ -221,7 +217,7 @@ namespace BiliBili.UWP
                 }
             }
         }
-        public static bool DeleteViewPost(string id)
+        public static bool DeleteVideoWatchRecord(string id)
         {
             using (var conn = GetDbConnection())
             {
@@ -239,7 +235,7 @@ namespace BiliBili.UWP
             }
         }
 
-        public static void ClearViewPost()
+        public static void ClearVideoWatchRecord()
         {
             using (var conn = GetDbConnection())
             {

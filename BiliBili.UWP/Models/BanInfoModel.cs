@@ -281,8 +281,9 @@ namespace BiliBili.UWP.Models
         public SolidColorBrush f
         {
             get
-            {
-                if (SqlHelper.GetPostIsViewPost(danmaku.ToString()))
+            { 
+                var record = SqlHelper.GetVideoWatchRecord(danmaku.ToString());
+                if (record!=null)
                 {
                     return new SolidColorBrush(Colors.Gray);
                 }

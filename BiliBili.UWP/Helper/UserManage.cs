@@ -197,6 +197,7 @@ namespace BiliBili.UWP.Helper
             SettingHelper.Set_UserID(0);
             SettingHelper.Set_LoginExpires(DateTime.Now);
             SettingHelper.Set_BiliplusCookie(string.Empty);
+            SettingHelper.Set_UserIsVip(false);
         }
 
 

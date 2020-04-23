@@ -270,7 +270,34 @@ namespace BiliBili.UWP.Pages
                             cb_Qu.SelectedIndex = 0;
                         }
                     }
-
+                    if (m.data.history != null)
+                    {
+                        var record = SqlHelper.GetVideoWatchRecord(m.data.history.cid.ToString());
+                        
+                        if (record == null)
+                        {
+                            SqlHelper.AddVideoWatchRecord(new ViewPostHelperClass()
+                            {
+                                epId = m.data.history.cid.ToString(),
+                                Post = m.data.history.progress,
+                                viewTime = DateTime.Now
+                            });
+                        }
+                        else
+                        {
+                            record.Post = m.data.history.progress;
+                            SqlHelper.UpdateVideoWatchRecord(record);
+                        }
+                        if (m.data.pages!=null&&m.data.pages.Count>1)
+                        {
+                            var episode = m.data.pages.FirstOrDefault(x => x.cid == m.data.history.cid);
+                            if (episode!=null)
+                            {
+                                last_view.Text = $"上次看到P{episode.page},点击继续播放";
+                                last_view.Tag = m.data.history.cid;
+                            }
+                        }
+                    }
                     if (SecondaryTile.Exists(_aid))
                     {
                         btn_unPin.Visibility = Visibility.Visible;
@@ -864,78 +891,78 @@ namespace BiliBili.UWP.Pages
         private void gv_Play_ItemClick(object sender, ItemClickEventArgs e)
         {
             var info = e.ClickedItem as pagesModel;
+            OpenPlayer(info);
+            //List<PlayerModel> ls = new List<PlayerModel>();
+            //int i = 1;
+            //foreach (pagesModel item in gv_Play.Items)
+            //{
+            //    var data = (this.DataContext as VideoInfoModels);
+            //    if (item.IsDowned == Visibility.Collapsed)
+            //    {
+            //        if (isMovie)
+            //        {
+            //            ls.Add(new PlayerModel()
+            //            {
+            //                Aid = _aid,
+            //                Mid = item.cid.ToString(),
+            //                ImageSrc = data.pic,
+            //                Mode = PlayMode.Movie,
+            //                No = "",
+            //                VideoTitle = item.View,
+            //                Title = data.title
+            //            });
+            //        }
+            //        else
+            //        {
+            //            switch (item.from)
+            //            {
+            //                case "sohu":
+            //                    ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), rich_vid = item.vid, ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Sohu, No = i.ToString(), VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title });
+            //                    break;
+            //                default:
+            //                    if (isSeason)
+            //                    {
+            //                        ls.Add(new PlayerModel()
+            //                        {
+            //                            Aid = _aid,
+            //                            Mid = item.cid.ToString(),
+            //                            ImageSrc = data.pic,
+            //                            Mode = PlayMode.Bangumi,
+            //                            No = i.ToString(),
+            //                            VideoTitle = item.View,
+            //                            Title = data.title,
+            //                            episode_id = data.season.newest_ep_id
+            //                        });
+            //                    }
+            //                    else
+            //                    {
+            //                        ls.Add(new PlayerModel()
+            //                        {
+            //                            Aid = _aid,
+            //                            Mid = item.cid.ToString(),
+            //                            isInteraction = data.interaction != null,
+            //                            graph_version = data.interaction?.graph_version,
+            //                            ImageSrc = data.pic,
+            //                            Mode = PlayMode.Video,
+            //                            No = i.ToString(),
+            //                            VideoTitle = item.View,
+            //                            Title = data.title
+            //                        });
+            //                    }
+            //                    break;
+            //            }
 
-            List<PlayerModel> ls = new List<PlayerModel>();
-            int i = 1;
-            foreach (pagesModel item in gv_Play.Items)
-            {
-                var data = (this.DataContext as VideoInfoModels);
-                if (item.IsDowned == Visibility.Collapsed)
-                {
-                    if (isMovie)
-                    {
-                        ls.Add(new PlayerModel()
-                        {
-                            Aid = _aid,
-                            Mid = item.cid.ToString(),
-                            ImageSrc = data.pic,
-                            Mode = PlayMode.Movie,
-                            No = "",
-                            VideoTitle = item.View,
-                            Title = data.title
-                        });
-                    }
-                    else
-                    {
-                        switch (item.from)
-                        {
-                            case "sohu":
-                                ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), rich_vid = item.vid, ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Sohu, No = i.ToString(), VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title });
-                                break;
-                            default:
-                                if (isSeason)
-                                {
-                                    ls.Add(new PlayerModel()
-                                    {
-                                        Aid = _aid,
-                                        Mid = item.cid.ToString(),
-                                        ImageSrc = data.pic,
-                                        Mode = PlayMode.Bangumi,
-                                        No = i.ToString(),
-                                        VideoTitle = item.View,
-                                        Title = data.title,
-                                        episode_id = data.season.newest_ep_id
-                                    });
-                                }
-                                else
-                                {
-                                    ls.Add(new PlayerModel()
-                                    {
-                                        Aid = _aid,
-                                        Mid = item.cid.ToString(),
-                                        isInteraction = data.interaction != null,
-                                        graph_version = data.interaction?.graph_version,
-                                        ImageSrc = data.pic,
-                                        Mode = PlayMode.Video,
-                                        No = i.ToString(),
-                                        VideoTitle = item.View,
-                                        Title = data.title
-                                    });
-                                }
-                                break;
-                        }
+            //        }
+            //    }
+            //    else
+            //    {
 
-                    }
-                }
-                else
-                {
+            //        ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Local, No = "", VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title, Path = DownloadHelper2.downloadeds[item.cid.ToString()] });
+            //    }
+            //}
 
-                    ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Local, No = "", VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title, Path = DownloadHelper2.downloadeds[item.cid.ToString()] });
-                }
-            }
-
-            MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(PlayerPage), new object[] { ls, (gv_Play.ItemsSource as List<pagesModel>).IndexOf(info) });
-            PostHistory();
+            //MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(PlayerPage), new object[] { ls, (gv_Play.ItemsSource as List<pagesModel>).IndexOf(info) });
+            //PostHistory();
 
         }
 
@@ -1291,6 +1318,86 @@ namespace BiliBili.UWP.Pages
         private void Btn_Like_Holding(object sender, HoldingRoutedEventArgs e)
         {
             Btn_Triple_Click(sender, null);
+        }
+
+        private void openLastWatch_Click(object sender, RoutedEventArgs e)
+        {
+            var info = (gv_Play.ItemsSource as List<pagesModel>).FirstOrDefault(x=>x.cid==(long)last_view.Tag);
+            OpenPlayer(info);
+        }
+        private void OpenPlayer(pagesModel info)
+        {
+            List<PlayerModel> ls = new List<PlayerModel>();
+            int i = 1;
+            foreach (pagesModel item in gv_Play.Items)
+            {
+                var data = (this.DataContext as VideoInfoModels);
+                if (item.IsDowned == Visibility.Collapsed)
+                {
+                    if (isMovie)
+                    {
+                        ls.Add(new PlayerModel()
+                        {
+                            Aid = _aid,
+                            Mid = item.cid.ToString(),
+                            ImageSrc = data.pic,
+                            Mode = PlayMode.Movie,
+                            No = "",
+                            VideoTitle = item.View,
+                            Title = data.title
+                        });
+                    }
+                    else
+                    {
+                        switch (item.from)
+                        {
+                            case "sohu":
+                                ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), rich_vid = item.vid, ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Sohu, No = i.ToString(), VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title });
+                                break;
+                            default:
+                                if (isSeason)
+                                {
+                                    ls.Add(new PlayerModel()
+                                    {
+                                        Aid = _aid,
+                                        Mid = item.cid.ToString(),
+                                        ImageSrc = data.pic,
+                                        Mode = PlayMode.Bangumi,
+                                        No = i.ToString(),
+                                        VideoTitle = item.View,
+                                        Title = data.title,
+                                        episode_id = data.season.newest_ep_id
+                                    });
+                                }
+                                else
+                                {
+                                    ls.Add(new PlayerModel()
+                                    {
+                                        Aid = _aid,
+                                        Mid = item.cid.ToString(),
+                                        isInteraction = data.interaction != null,
+                                        graph_version = data.interaction?.graph_version,
+                                        ImageSrc = data.pic,
+                                        Mode = PlayMode.Video,
+                                        No = i.ToString(),
+                                        VideoTitle = item.View,
+                                        Title = data.title
+                                    });
+                                }
+                                break;
+                        }
+
+                    }
+                }
+                else
+                {
+
+                    ls.Add(new PlayerModel() { Aid = _aid, Mid = item.cid.ToString(), ImageSrc = (this.DataContext as VideoInfoModels).pic, Mode = PlayMode.Local, No = "", VideoTitle = item.View, Title = (this.DataContext as VideoInfoModels).title, Path = DownloadHelper2.downloadeds[item.cid.ToString()] });
+                }
+            }
+
+            MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(PlayerPage), new object[] { ls, (gv_Play.ItemsSource as List<pagesModel>).IndexOf(info) });
+            PostHistory();
         }
     }
 }

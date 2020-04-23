@@ -724,6 +724,27 @@ namespace BiliBili.UWP
             container.Values["BackPlay"] = value;
         }
 
+        public static bool Get_SkipToHistory()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            if (container.Values["SkipToHistory"] != null)
+            {
+                return (bool)container.Values["SkipToHistory"];
+            }
+            else
+            {
+                Set_SkipToHistory(true);
+                return true;
+            }
+        }
+
+        public static void Set_SkipToHistory(bool value)
+        {
+            container = ApplicationData.Current.LocalSettings;
+            container.Values["SkipToHistory"] = value;
+        }
+
+
         public static bool Get_QZHP()
         {
             container = ApplicationData.Current.LocalSettings;
@@ -1857,6 +1878,25 @@ namespace BiliBili.UWP
             container = ApplicationData.Current.LocalSettings;
             container.Values["UserID"] = value;
         }
+
+        public static bool Get_UserIsVip()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            if (container.Values["UserIsVip"] != null)
+            {
+                return Convert.ToBoolean(container.Values["UserIsVip"]);
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public static void Set_UserIsVip(bool value)
+        {
+            container = ApplicationData.Current.LocalSettings;
+            container.Values["UserIsVip"] = value;
+        }
+
 
         #endregion
 

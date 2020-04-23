@@ -42,6 +42,7 @@ namespace BiliBili.UWP.Models
 
         public elecModel elec { get; set; }
         public audioModel audio { get; set; }
+        public historyModel history { get; set; }
         public List<staffModel> staff { get; set; }
         /// <summary>
         /// 互动视频
@@ -109,6 +110,13 @@ namespace BiliBili.UWP.Models
         public history_nodeModel history_node { get; set; }
 
     }
+    public class historyModel
+    {
+        public long cid { get; set; }
+        public int progress { get; set; }
+
+    }
+
     public class history_nodeModel
     {
         public int node_id { get; set; }
@@ -354,7 +362,7 @@ namespace BiliBili.UWP.Models
         {
             get
             {
-                if (SqlHelper.GetPostIsViewPost(cid.ToString()))
+                if (SqlHelper.GetVideoWatchRecord(cid.ToString())!=null)
                 {
                     return new SolidColorBrush(Colors.Gray);
                 }

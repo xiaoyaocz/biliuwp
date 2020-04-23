@@ -361,6 +361,7 @@
                               
 
                             </Grid>
+                           
                             <Grid Margin="0 10 0 0" Visibility="Collapsed">
                                 <TextBlock Foreground="Gray" VerticalAlignment="Center">番剧使用播放器</TextBlock>
 
@@ -370,6 +371,10 @@
                                     <ComboBoxItem Content="询问"/>
                                     
                                 </ComboBox>
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">自动跳转历史进度</TextBlock>
+                                <ToggleSwitch x:Name="sw_SkipToHistory" Toggled="sw_SkipToHistory_Toggled" HorizontalAlignment="Right"  Margin="10 0" Width="68"></ToggleSwitch>
                             </Grid>
                             <Grid Margin="0 10 0 0">
                                 <TextBlock Foreground="Gray" VerticalAlignment="Center">启用后台播放(重启生效)</TextBlock>
@@ -405,8 +410,8 @@
                                 <ToggleSwitch x:Name="sw_NewWidnows" Toggled="sw_NewWidnows_Toggled" HorizontalAlignment="Right"  Margin="10 0" Width="68"></ToggleSwitch>
 
                             </Grid>
-                            <TextBlock FontSize="16" Margin="0 10 0 0">直播</TextBlock>
-                            <Grid Margin="0 10 0 0" >
+                            <TextBlock FontSize="16" Margin="0 10 0 0" Visibility="Collapsed">直播</TextBlock>
+                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
                                 <TextBlock Foreground="Gray" VerticalAlignment="Center">互动区到达数量自动清除</TextBlock>
                                 <ComboBox x:Name="cb_ClaerLiveComment" SelectionChanged="cb_ClaerLiveComment_SelectionChanged" Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0"  >
                                     <ComboBoxItem Content="无限制"/>
@@ -422,7 +427,7 @@
                                     <ComboBoxItem Content="1000"/>
                                 </ComboBox>
                             </Grid>
-                            <Grid Margin="0 10 0 0" Visibility="Visible">
+                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
                                 <TextBlock Foreground="Gray" VerticalAlignment="Center">默认使用H5源</TextBlock>
                                 <ToggleSwitch x:Name="sw_H5" Toggled="sw_H5_Toggled" HorizontalAlignment="Right"  Margin="10 0" Width="68"></ToggleSwitch>
 

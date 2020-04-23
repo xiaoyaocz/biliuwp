@@ -208,7 +208,13 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <Grid  Margin="10">
-                                        <TextBlock VerticalAlignment="Center">正片 <Run x:Name="last_view"></Run></TextBlock>
+                                        <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">
+                                            <TextBlock VerticalAlignment="Center">正片</TextBlock>
+                                            <HyperlinkButton VerticalAlignment="Center" Foreground="{ThemeResource Bili-Highlight-TextColor}" x:Name="openLastWatch" Click="openLastWatch_Click" Margin="8 0">
+                                                <TextBlock x:Name="last_view"></TextBlock>
+                                            </HyperlinkButton>
+                                        </StackPanel>
+                                        
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                             <HyperlinkButton Margin="20 0" Foreground="{ThemeResource Main-ForeColor}" x:Name="btn_OrderByUp"  Visibility="Collapsed" Click="btn_OrderByUp_Click">
                                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE17D;"  ></FontIcon>

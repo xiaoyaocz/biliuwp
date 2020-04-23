@@ -96,6 +96,9 @@ namespace BiliBili.UWP.Views
 
                 sw_Play4G.IsOn = SettingHelper.Get_Use4GPlay();
                 sw_BackgroundPlay.IsOn = SettingHelper.Get_BackPlay();
+
+                sw_SkipToHistory.IsOn = SettingHelper.Get_SkipToHistory();
+
                 sw_HideCursor.IsOn = SettingHelper.Get_HideCursor();
 
                 sw_MouseBack.IsOn = SettingHelper.Get_MouseBack();
@@ -881,6 +884,11 @@ namespace BiliBili.UWP.Views
         private void sw_ColunmHome_Toggled(object sender, RoutedEventArgs e)
         {
             SettingHelper.Set_ColunmHome(sw_ColunmHome.IsOn);
+        }
+
+        private void sw_SkipToHistory_Toggled(object sender, RoutedEventArgs e)
+        {
+            SettingHelper.Set_SkipToHistory(sw_SkipToHistory.IsOn);
         }
     }
 }

@@ -276,15 +276,21 @@
 
                                     </Grid>
                                 </StackPanel>
-                            
 
+                             
                                 <Grid Grid.Row="1" Margin="0 10 0 0" Background="{ThemeResource Bili-List-Background}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <Grid  Margin="10 10 10 0">
-                                        <TextBlock >全部剧集 (共<Run Text="{Binding Path=pages.Count}"></Run>P)</TextBlock>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock VerticalAlignment="Center">全部剧集 (共<Run Text="{Binding Path=pages.Count}"></Run>P)</TextBlock>
+                                            <HyperlinkButton VerticalAlignment="Center" Foreground="{ThemeResource Bili-Highlight-TextColor}" x:Name="openLastWatch" Click="openLastWatch_Click" Margin="8 0">
+                                                <TextBlock x:Name="last_view"></TextBlock>
+                                            </HyperlinkButton>
+                                        </StackPanel>
+                                       
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                             <HyperlinkButton Margin="5 0" Foreground="{ThemeResource Main-ForeColor}" x:Name="btn_HideAll"  Click="btn_HideAll_Click" Visibility="Collapsed">
                                                 <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xE010;" />

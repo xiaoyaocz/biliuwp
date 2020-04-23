@@ -38,6 +38,7 @@ using Windows.Graphics.Imaging;
 using SYEngine;
 using System.Diagnostics;
 using BiliBili.UWP.Modules;
+using BiliBili.UWP.Api;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -65,11 +66,13 @@ namespace BiliBili.UWP.Pages
     /// </summary>
     public sealed partial class PlayerPage : Page
     {
+        PlayerAPI playerAPI;
         public PlayerPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Disabled;
             danmakuParse = new DanmakuParse();
+            playerAPI = new PlayerAPI();
             MTC.DanmuLoaded += MTC_DanmuLoaded;
             if (SettingHelper.Get_BackPlay())
             {
@@ -155,6 +158,7 @@ namespace BiliBili.UWP.Pages
                     break;
 
                 case Windows.System.VirtualKey.F11:
+                case Windows.System.VirtualKey.Enter:
                     if (!MTC.IsFullWindow)
                     {
                         MTC.ToFull();
@@ -211,8 +215,8 @@ namespace BiliBili.UWP.Pages
             }
         }
 
-     
 
+        
         SystemMediaTransportControls _systemMediaTransportControls;
         private DisplayRequest dispRequest = null;//保持屏幕常亮
         protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -252,27 +256,16 @@ namespace BiliBili.UWP.Pages
             }
 
         }
-        protected async override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             try
             {
-                ClosePLayer();
+                ClosePlayer();
                 //Debug.WriteLine("开始返回");
                 CoreWindow.GetForCurrentThread().KeyDown -= PlayerPage_KeyDown;
                 this.Frame.Visibility = Visibility.Collapsed;
                 mediaElement.Pause();
-                int i = 0;
-                while (true)
-                {
-                    i++;
-                    if (mediaElement.CurrentState != MediaElementState.Buffering && progress.Visibility == Visibility.Collapsed)
-                    {
-                        break;
-                    }
-                    //Debug.WriteLine($"判断{i}次");
-                    await Task.Delay(200);
-                }
-                //Debug.WriteLine($"缓冲完成返回");
+                
                 //mediaElement.Stop();
                 base.OnNavigatingFrom(e);
             }
@@ -348,13 +341,13 @@ namespace BiliBili.UWP.Pages
                 _systemMediaTransportControls.IsPauseEnabled = true;
                 _systemMediaTransportControls.ButtonPressed += _systemMediaTransportControls_ButtonPressed;
             }
-            if (timer == null)
-            {
-                timer = new DispatcherTimer();
-                timer.Interval = new TimeSpan(0, 0, 1);
-                timer.Tick += Timer_Tick;
-                timer.Start();
-            }
+            //if (timer == null)
+            //{
+            //    timer = new DispatcherTimer();
+            //    timer.Interval = new TimeSpan(0, 0, 1);
+            //    timer.Tick += Timer_Tick;
+            //    timer.Start();
+            //}
             if (timer_Date == null)
             {
                 timer_Date = new DispatcherTimer();
@@ -404,7 +397,7 @@ namespace BiliBili.UWP.Pages
 
         }
 
-        public void ClosePLayer()
+        public async void ClosePlayer()
         {
             try
             {
@@ -413,6 +406,7 @@ namespace BiliBili.UWP.Pages
                 {
                     dispRequest = null;
                 }
+                await ReportHistory(Convert.ToInt32(mediaElement.Position.TotalSeconds));
 
                 SettingHelper.Set_Volume(mediaElement.Volume);
                 SettingHelper.Set_Light(Brightness);
@@ -460,107 +454,59 @@ namespace BiliBili.UWP.Pages
             }
         }
 
-
-        private async void PostLocalHistory()
+        /// <summary>
+        /// 上传播放记录
+        /// </summary>
+        /// <param name="progress"></param>
+        /// <returns></returns>
+        private async Task ReportHistory(int progress)
         {
             try
             {
-                string url = string.Format("http://api.bilibili.com/x/history/add?_device=wp&_ulv=10000&access_key={0}&appkey={1}&build=5250000&platform=android", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey);
-                url += "&sign=" + ApiHelper.GetSign(url);
-                string result = await WebClientClass.PostResults(new Uri(url), "aid=" + playNow.Aid);
+                UpdateLocalHistory(progress);
+                var api = playerAPI.SeasonHistoryReport(playNow.Aid, playNow.Mid, progress, playNow.banId, playNow.episode_id, playNow.playMode == PlayMode.Video ? 3 : 4);
+                await api.Request();
+                Debug.WriteLine(progress);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                LogHelper.WriteLog("上传播放记录失败", LogType.ERROR, ex);
             }
         }
 
-
-        private async void PostWatch()
+        private void UpdateLocalHistory(int progress)
         {
-            try
+            if (playNow.isInteraction)
             {
-                if (!ApiHelper.IsLogin())
-                {
-                    return;
-                }
-                string url = "http://api.bilibili.com/x/v2/history/report";
-                string content = string.Format("access_key={0}&aid={1}&appkey={2}&build=5250000&cid={3}&epid={6}&platform=android&progress=1&realtime=1&sid={4}&ts={5}&type=4", ApiHelper.access_key, playNow.Aid, ApiHelper.AndroidKey.Appkey, playNow.Mid, playNow.banId, ApiHelper.GetTimeSpan_2, playNow.episode_id);
-                content += "&sign=" + ApiHelper.GetSign(content);
-
-                //string url = string.Format("http://bangumi.bilibili.com/api/report_watch?access_key={0}&appkey={1}&build=5250000&cid={2}&mobi_app=win&platform=android&scale=xhdpi&ts={3}&episode_id={4}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, playNow.Mid, ApiHelper.GetTimeSpan_2, playNow.episode_id);
-                //url += "&sign=" + ApiHelper.GetSign(url);
-                string result = await WebClientClass.PostResults(new Uri(url), content);
+                progress = 0;
             }
-            catch (Exception)
+            var id = playNow.Mid;
+            if (!string.IsNullOrEmpty(playNow.episode_id))
             {
+                //加EP是防止EPID与CID重复
+                id = "ep" + playNow.episode_id;
             }
-        }
-
-
-        private async void HeartBeat(HeartBeatType heartBeatType)
-        {
-            try
+            var record = SqlHelper.GetVideoWatchRecord(id);
+            if (record != null)
             {
-                if (!ApiHelper.IsLogin())
+                if (progress != 0)
                 {
-                    return;
+                    record.Post = progress;
                 }
-                int time = 0;
-                int play_type = 1;
-                switch (heartBeatType)
-                {
-                    case HeartBeatType.Start:
-                        play_type = 1;
-                        time = 0;
-                        break;
-                    case HeartBeatType.Play:
-                        play_type = 0;
-                        time = Convert.ToInt32(mediaElement.Position.TotalSeconds);
-                        break;
-                    case HeartBeatType.End:
-                        play_type = 4;
-                        time = -1;
-                        break;
-                    default:
-                        break;
-                }
-
-
-                string url = "http://api.bilibili.com/x/v2/history/report";
-
-                string content = $"access_key={ApiHelper.access_key}&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&platform=android&";
-                switch (playNow.Mode)
-                {
-                    case PlayMode.Bangumi:
-                    case PlayMode.VipBangumi:
-
-                        content += $"aid={playNow.Aid}&cid={playNow.Mid}&mid={ApiHelper.GetUserId()}&progress={time}&realtime={time}&ts={ApiHelper.GetTimeSpan}&type=4&sub_type=1&epid={playNow.episode_id}&sid={playNow.banId}";
-                        break;
-                    case PlayMode.Video:
-                    case PlayMode.Movie:
-                        content += $"aid={playNow.Aid}&cid={playNow.Mid}&mid={ApiHelper.GetUserId()}&progress={time}&realtime={time}&ts={ApiHelper.GetTimeSpan}&type=3";
-                        break;
-                    default:
-                        break;
-                }
-
-
-
-
-                // content = string.Format("access_key={0}&aid={1}&appkey={2}&build=5250000&cid={3}&epid={4}&from=0&mid={5}&mobi_app=android&platform=android&played_time={8}&playtype=2&sid={6}&start_ts={7}&sub_type=1&ts={7}&type=4",
-                //ApiHelper.access_key, playNow.Aid, ApiHelper.AndroidKey.Appkey, playNow.Mid, playNow.episode_id, ApiHelper.GetUserId(), playNow.banId, ApiHelper.GetTimeSpan, mediaElement.Position.TotalSeconds);
-
-
-                content += "&sign=" + ApiHelper.GetSign(content);
-
-                //string url = string.Format("http://bangumi.bilibili.com/api/report_watch?access_key={0}&appkey={1}&build=5250000&cid={2}&mobi_app=win&platform=android&scale=xhdpi&ts={3}&episode_id={4}", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, playNow.Mid, ApiHelper.GetTimeSpan_2, playNow.episode_id);
-                //url += "&sign=" + ApiHelper.GetSign(url);
-                string result = await WebClientClass.PostResults(new Uri(url), content);
+                record.viewTime = DateTime.Now;
+                SqlHelper.UpdateVideoWatchRecord(record);
             }
-            catch (Exception)
+            else
             {
+                SqlHelper.AddVideoWatchRecord(new ViewPostHelperClass()
+                {
+                    epId = id,
+                    Post = 0,
+                    viewTime = DateTime.Now
+                });
             }
         }
+
 
         public  void UpdateSetting()
         {
@@ -771,31 +717,18 @@ namespace BiliBili.UWP.Pages
 
 
 
-        int n = 0;
-        private async void Timer_Tick(object sender, object e)
-        {
-            n++;
-            await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                if (SqlHelper.GetPostIsViewPost(playNow.Mid))
-                {
-                    SqlHelper.UpdateViewPost(new ViewPostHelperClass() { epId = playNow.Mid, Post = Convert.ToInt32(mediaElement.Position.TotalSeconds) });
-                }
-                if (n == 10)
-                {
-                    if (mediaElement.CurrentState == MediaElementState.Playing)
-                    {
-                        HeartBeat(HeartBeatType.Play);
-                    }
-                    //if (mediaElement.NaturalDuration.TimeSpan.TotalSeconds>60*10)
-                    //{
-                    //    GC.Collect();
-                    //}
-                    n = 0;
-                }
-                //sql.UpdateValue(Cid, Convert.ToInt32(mediaElement.Position.TotalSeconds));
-            });
-        }
+        //private async void Timer_Tick(object sender, object e)
+        //{
+        //    await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+        //    {
+        //        if (SqlHelper.GetPostIsViewPost(playNow.Mid))
+        //        {
+        //            SqlHelper.UpdateViewPost(new ViewPostHelperClass() { epId = playNow.Mid, Post = Convert.ToInt32(mediaElement.Position.TotalSeconds) });
+        //        }
+                
+        //        //sql.UpdateValue(Cid, Convert.ToInt32(mediaElement.Position.TotalSeconds));
+        //    });
+        //}
 
         #region 弹幕设置
         /// <summary>
@@ -1038,26 +971,9 @@ namespace BiliBili.UWP.Pages
                 }
 
                 AddLog("准备开始播放...");
-                HeartBeat(HeartBeatType.Start);
                 MTC.HideLog();
                 MTC.timer2.Start();
-                if (SqlHelper.GetPostIsViewPost(playNow.Mid) && SqlHelper.GettViewPost(playNow.Mid).Post != 0)
-                {
-                    TimeSpan ts = new TimeSpan(0, 0, SqlHelper.GettViewPost(playNow.Mid).Post);
-                    LastPost = SqlHelper.GettViewPost(playNow.Mid).Post;
-                    btn_ViewPost.Content = "上次播放到" + ts.Hours.ToString("00") + ":" + ts.Minutes.ToString("00") + ":" + ts.Seconds.ToString("00");
-                    btn_ViewPost.Visibility = Visibility.Visible;
-                    _lastpost_in.Begin();
-                    await Task.Delay(5000);
-                    _lastpost_out.Begin();
-                }
-                else
-                {
-                    if (!SqlHelper.GetPostIsViewPost(playNow.Mid))
-                    {
-                        SqlHelper.AddViewPost(new ViewPostHelperClass() { epId = playNow.Mid, Post = 0, viewTime = DateTime.Now.ToLocalTime() });
-                    }
-                }
+                
 
 
             }
@@ -1068,12 +984,7 @@ namespace BiliBili.UWP.Pages
             }
             finally
             {
-
-                PostLocalHistory();
-                if (playNow.episode_id != null && playNow.episode_id.Length != 0)
-                {
-                    PostWatch();
-                }
+               await ReportHistory(0);
             }
         }
 
@@ -1656,7 +1567,6 @@ namespace BiliBili.UWP.Pages
         {
             try
             {
-                HeartBeat(HeartBeatType.End);
                 if (cb_setting_1.IsChecked.Value)
                 {
                     mediaElement.Play();
@@ -1715,6 +1625,7 @@ namespace BiliBili.UWP.Pages
 
             if (!QuityLoading && cb_Quity.SelectedItem != null)
             {
+                UpdateLocalHistory(Convert.ToInt32(mediaElement.Position.TotalSeconds));
                 SettingHelper.Set_NewQuality((cb_Quity.SelectedItem as QualityModel).qn);
                 mediaElement.Stop();
                 ChangeQuality();
@@ -1813,37 +1724,33 @@ namespace BiliBili.UWP.Pages
 
 
 
-        private void mediaElement_MediaOpened(object sender, RoutedEventArgs e)
+        private async void mediaElement_MediaOpened(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (_systemMediaTransportControls == null)
+                SetSystemMediaTransportControl();
+
+                var record = SqlHelper.GetVideoWatchRecord(string.IsNullOrEmpty(playNow.episode_id)? playNow.Mid : "ep" + playNow.episode_id);
+                if (record != null&& record.Post!=0)
                 {
-                    return;
+                    if (SettingHelper.Get_SkipToHistory())
+                    {
+                        mediaElement.Position = new TimeSpan(0, 0, record.Post);
+                    }
+                    else
+                    {
+                        TimeSpan ts = new TimeSpan(0, 0, record.Post);
+                        LastPost = record.Post;
+                        btn_ViewPost.Content = "上次播放到" + ts.Hours.ToString("00") + ":" + ts.Minutes.ToString("00") + ":" + ts.Seconds.ToString("00");
+                        btn_ViewPost.Visibility = Visibility.Visible;
+                        await Task.Delay(5000);
+                        btn_ViewPost.Visibility = Visibility.Collapsed;
+                    }
                 }
-                SystemMediaTransportControlsDisplayUpdater updater = _systemMediaTransportControls.DisplayUpdater;
-                updater.Type = MediaPlaybackType.Video;
-                // updater.MusicProperties.AlbumArtist = info.owner.name;
-                updater.VideoProperties.Subtitle = playNow.VideoTitle;
-                updater.VideoProperties.Title = playNow.Title;
+               
+                
+              
 
-                // Set the album art thumbnail.
-                // RandomAccessStreamReference is defined in Windows.Storage.Streams
-                updater.Thumbnail = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/Logo.png"));
-
-                // Update the system media transport controls.
-                updater.Update();
-                var timelineProperties = new SystemMediaTransportControlsTimelineProperties();
-
-                // Fill in the data, using the media elements properties 
-                timelineProperties.StartTime = TimeSpan.FromSeconds(0);
-                timelineProperties.MinSeekTime = TimeSpan.FromSeconds(0);
-                timelineProperties.Position = mediaElement.Position;
-                timelineProperties.MaxSeekTime = mediaElement.NaturalDuration.TimeSpan;
-                timelineProperties.EndTime = mediaElement.NaturalDuration.TimeSpan;
-
-                // Update the System Media transport Controls 
-                _systemMediaTransportControls.UpdateTimelineProperties(timelineProperties);
 
 
             }
@@ -1855,8 +1762,40 @@ namespace BiliBili.UWP.Pages
 
 
         }
+        /// <summary>
+        /// 设置系统播放控制器
+        /// </summary>
+        private void SetSystemMediaTransportControl()
+        {
+            try
+            {
+                if (_systemMediaTransportControls == null)
+                {
+                    return;
+                }
+                SystemMediaTransportControlsDisplayUpdater updater = _systemMediaTransportControls.DisplayUpdater;
+                updater.Type = MediaPlaybackType.Video;
+                updater.VideoProperties.Subtitle = playNow.VideoTitle;
+                updater.VideoProperties.Title = playNow.Title;
 
+                updater.Thumbnail = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/Logo.png"));
 
+                updater.Update();
+                var timelineProperties = new SystemMediaTransportControlsTimelineProperties();
+
+                timelineProperties.StartTime = TimeSpan.FromSeconds(0);
+                timelineProperties.MinSeekTime = TimeSpan.FromSeconds(0);
+                timelineProperties.Position = mediaElement.Position;
+                timelineProperties.MaxSeekTime = mediaElement.NaturalDuration.TimeSpan;
+                timelineProperties.EndTime = mediaElement.NaturalDuration.TimeSpan;
+
+                _systemMediaTransportControls.UpdateTimelineProperties(timelineProperties);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog("设置系统播放控件失败", LogType.ERROR, ex);
+            }
+        }
 
         private void menuitem_DM_Click(object sender, RoutedEventArgs e)
         {

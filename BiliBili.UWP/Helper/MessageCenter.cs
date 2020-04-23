@@ -415,6 +415,7 @@ namespace BiliBili.UWP
                 ApplicationView.GetForCurrentView().Consolidated += (sender, args) =>
                 {
                     frame.Navigate(typeof(BlankPage));
+                    CoreWindow.GetForCurrentThread().Close();
                 };
             });
 

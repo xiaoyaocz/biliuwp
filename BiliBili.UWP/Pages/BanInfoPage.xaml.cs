@@ -238,9 +238,25 @@ namespace BiliBili.UWP.Pages
                     {
                         btn_Like.Visibility = Visibility.Collapsed;
                         btn_CancelLike.Visibility = Visibility.Visible;
-                        if (model.result.user_status.watch_progress != null && model.result.user_status.watch_progress.last_ep_index != "")
+                        if (model.result.user_status.progress != null && model.result.user_status.progress.last_ep_index != "")
                         {
-                            last_view.Text = "(上次看到" + model.result.user_status.watch_progress.last_ep_index + "话)";
+                            var record = SqlHelper.GetVideoWatchRecord("ep"+model.result.user_status.progress.last_ep_id);
+                            if (record == null)
+                            {
+                                SqlHelper.AddVideoWatchRecord(new ViewPostHelperClass()
+                                {
+                                    epId = "ep" + model.result.user_status.progress.last_ep_id,
+                                    Post = model.result.user_status.progress.last_time,
+                                    viewTime = DateTime.Now
+                                });
+                            }
+                            else
+                            {
+                                record.Post = model.result.user_status.progress.last_time;
+                                SqlHelper.UpdateVideoWatchRecord(record);
+                            }
+                            last_view.Tag = model.result.user_status.progress.last_ep_id;
+                            last_view.Text = "(上次看到" + model.result.user_status.progress.last_ep_index + "话,点击继续播放)";
                         }
                         else
                         {
@@ -1007,58 +1023,7 @@ namespace BiliBili.UWP.Pages
         private void gv_Play_ItemClick(object sender, ItemClickEventArgs e)
         {
             var info = e.ClickedItem as episodesModel;
-            List<PlayerModel> ls = new List<PlayerModel>();
-            // int i = 1;
-            var items = (sender as GridView).ItemsSource as List<episodesModel>;
-
-            foreach (episodesModel item in items)
-            {
-                if (item.IsDowned == Visibility.Visible)
-                {
-
-                    ls.Add(new PlayerModel()
-                    {
-                        season_type = item.season_type,
-                        banId = _banId,
-                        Aid = item.av_id,
-                        Mid = item.danmaku.ToString(),
-                        Mode = PlayMode.Local,
-                        No = item.orderindex.ToString(),
-                        VideoTitle = item.title + " " + item.long_title,
-                        Title = txt_Name.Text,
-                        episode_id = item.episode_id,
-                        Path = DownloadHelper2.downloadeds[item.danmaku.ToString()],
-                        banInfo = item
-                    });
-                }
-                else
-                {
-                    ls.Add(new PlayerModel()
-                    {
-                        season_type = item.season_type,
-                        banId = _banId,
-                        banInfo = item,
-                        Aid = item.av_id,
-                        Mid = item.danmaku.ToString(),
-                        Mode = PlayMode.Bangumi,
-                        No = item.orderindex.ToString(),
-                        VideoTitle = item.title + " " + item.long_title,
-                        Title = txt_Name.Text,
-                        episode_id = item.episode_id,
-                        index = item.orderindex
-                    });
-                }
-                //  i++;
-            }
-
-
-            ls = ls.OrderBy(x => x.index).ToList();
-
-            int index = ls.IndexOf(ls.Find(x => x.Mid == info.danmaku.ToString()));
-
-            MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(PlayerPage), new object[] { ls, index });
-            PostHistory(ls[index].Aid, ls[index].VideoTitle);
-
+            openPlayer(info);
         }
 
         private async void Image_Tapped(object sender, TappedRoutedEventArgs e)
@@ -1278,6 +1243,70 @@ namespace BiliBili.UWP.Pages
             PostHistory(ls[index].Aid, ls[index].VideoTitle);
         }
 
+        private void openLastWatch_Click(object sender, RoutedEventArgs e)
+        {
+            var items = gv_Play.ItemsSource as List<episodesModel>;
+            var last_ep = last_view.Tag.ToString();
+            var info = items.FirstOrDefault(x => x.episode_id == last_ep);
+            if (info==null)
+            {
+                Utils.ShowMessageToast("尝试打开不存在的剧集");
+                return;
+            }
+            openPlayer(info);
+        }
+        private void openPlayer(episodesModel info)
+        {
+            List<PlayerModel> ls = new List<PlayerModel>();
+            var items = gv_Play.ItemsSource as List<episodesModel>;
+            
+            foreach (episodesModel item in items)
+            {
+                if (item.IsDowned == Visibility.Visible)
+                {
+                    ls.Add(new PlayerModel()
+                    {
+                        season_type = item.season_type,
+                        banId = _banId,
+                        Aid = item.av_id,
+                        Mid = item.danmaku.ToString(),
+                        Mode = PlayMode.Local,
+                        No = item.orderindex.ToString(),
+                        VideoTitle = item.title + " " + item.long_title,
+                        Title = txt_Name.Text,
+                        episode_id = item.episode_id,
+                        Path = DownloadHelper2.downloadeds[item.danmaku.ToString()],
+                        banInfo = item
+                    });
+                }
+                else
+                {
+                    ls.Add(new PlayerModel()
+                    {
+                        season_type = item.season_type,
+                        banId = _banId,
+                        banInfo = item,
+                        Aid = item.av_id,
+                        Mid = item.danmaku.ToString(),
+                        Mode = PlayMode.Bangumi,
+                        No = item.orderindex.ToString(),
+                        VideoTitle = item.title + " " + item.long_title,
+                        Title = txt_Name.Text,
+                        episode_id = item.episode_id,
+                        index = item.orderindex
+                    });
+                }
+                //  i++;
+            }
+
+
+            ls = ls.OrderBy(x => x.index).ToList();
+
+            int index = ls.IndexOf(ls.Find(x => x.Mid == info.danmaku.ToString()));
+
+            MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(PlayerPage), new object[] { ls, index });
+            PostHistory(ls[index].Aid, ls[index].VideoTitle);
+        }
         //private void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
 
@@ -1417,7 +1446,7 @@ namespace BiliBili.UWP.Pages
         public int pay { get; set; }
         public int pay_pack_paid { get; set; }
         public int sponsor { get; set; }
-        public Bangumiuser_statusModel watch_progress { get; set; }
+        public Bangumiuser_statusModel progress { get; set; }
         public int last_ep_id { get; set; }
         public string last_ep_index { get; set; }
         public int last_time { get; set; }

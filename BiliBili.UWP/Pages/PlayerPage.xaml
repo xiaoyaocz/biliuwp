@@ -11,13 +11,6 @@
     mc:Ignorable="d">
     <Page.Resources>
 
-        <Storyboard x:Name="_lastpost_in" Storyboard.TargetName="btn_ViewPost">
-            <PopInThemeAnimation />
-        </Storyboard>
-        <Storyboard x:Name="_lastpost_out" Storyboard.TargetName="btn_ViewPost" Completed="_lastpost_out_Completed">
-            <PopOutThemeAnimation />
-        </Storyboard>
-
         <MenuFlyout x:Name="menu">
             <MenuFlyoutItem >播放设置</MenuFlyoutItem>
             <MenuFlyoutItem >弹幕设置</MenuFlyoutItem>
