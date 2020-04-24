@@ -270,6 +270,7 @@ namespace BiliBili.UWP.Pages
                             cb_Qu.SelectedIndex = 0;
                         }
                     }
+                    last_view.Text = "";
                     if (m.data.history != null)
                     {
                         var record = SqlHelper.GetVideoWatchRecord(m.data.history.cid.ToString());

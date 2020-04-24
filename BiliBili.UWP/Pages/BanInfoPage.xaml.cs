@@ -233,7 +233,7 @@ namespace BiliBili.UWP.Pages
                     }
 
 
-
+                    last_view.Text = "";
                     if (model.result.user_status != null && model.result.user_status.follow != 0)
                     {
                         btn_Like.Visibility = Visibility.Collapsed;
@@ -257,10 +257,6 @@ namespace BiliBili.UWP.Pages
                             }
                             last_view.Tag = model.result.user_status.progress.last_ep_id;
                             last_view.Text = "(上次看到" + model.result.user_status.progress.last_ep_index + "话,点击继续播放)";
-                        }
-                        else
-                        {
-                            last_view.Text = "";
                         }
 
                     }
