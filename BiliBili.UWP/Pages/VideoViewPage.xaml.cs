@@ -829,7 +829,7 @@ namespace BiliBili.UWP.Pages
                     if (!downloadUrl.success)
                     {
                         await new MessageDialog($"{m.page} {m.part}读取下载地址失败,已跳过").ShowAsync();
-                        break;
+                        continue;
                     }
                     await DownloadHelper2.CreateDownload(new DownloadTaskModel()
                     {

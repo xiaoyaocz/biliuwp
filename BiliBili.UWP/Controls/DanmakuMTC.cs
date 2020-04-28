@@ -95,6 +95,7 @@ namespace BiliBili.UWP.Controls
         public event EventHandler ExitFullWindows;
         public event EventHandler Captured;
         public event EventHandler<double> FastForward;
+        public event EventHandler<bool> Video360Changed;
         public bool IsMiniWindow = false;
         public bool IsFullWindow = false;
 
@@ -120,7 +121,8 @@ namespace BiliBili.UWP.Controls
                 (GetTemplateChild("btn_send") as AppBarButton).Click += Btn_Send_Click;
                 (GetTemplateChild("MyFullWindowButton") as AppBarButton).Click += Btn_Full_Click;
                 (GetTemplateChild("CaptureBtn") as AppBarButton).Click += Btn_Capture_Click;
-
+                (GetTemplateChild("Video360Button") as AppBarToggleButton).Checked += DanmakuMTC_Checked;
+                (GetTemplateChild("Video360Button") as AppBarToggleButton).Unchecked += DanmakuMTC_Unchecked;
                 if (!SettingHelper.Get_DMStatus())
                 {
                     (GetTemplateChild("btn_danmaku") as AppBarButton).Icon = new BitmapIcon() {
@@ -157,6 +159,18 @@ namespace BiliBili.UWP.Controls
                 LogHelper.WriteLog("初始化播放控制器失败", LogType.ERROR, ex);
             }
            
+        }
+
+        private void DanmakuMTC_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Video360 = false;
+            Video360Changed?.Invoke(this, false);
+        }
+
+        private void DanmakuMTC_Checked(object sender, RoutedEventArgs e)
+        {
+            Video360 = true;
+            Video360Changed?.Invoke(this, true);
         }
 
         public void HideOrShowMTC()
@@ -744,5 +758,18 @@ namespace BiliBili.UWP.Controls
 
         public static readonly DependencyProperty SubTitleColorProperty =
             DependencyProperty.Register("SubTitleColor", typeof(Brush), typeof(MediaTransportControls), new PropertyMetadata(new SolidColorBrush(Colors.White)));
+
+
+
+        public bool Video360
+        {
+            get { return (bool)GetValue(Video360Property); }
+            set { SetValue(Video360Property, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ShowNextButton.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty Video360Property =
+            DependencyProperty.Register("Video360", typeof(bool), typeof(MediaTransportControls), new PropertyMetadata(false));
+
     }
 }

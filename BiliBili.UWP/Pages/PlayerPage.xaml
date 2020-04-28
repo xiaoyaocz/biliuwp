@@ -243,9 +243,9 @@
                                 <TextBlock Foreground="White"><Run>弹幕数量:</Run><Run x:Name="txt_Num"></Run></TextBlock>
                                 <TextBlock Foreground="White"><Run>AV号:</Run><Run x:Name="txt_sId"></Run></TextBlock>
                                 <TextBlock Foreground="White"><Run>视频CID:</Run><Run x:Name="txt_eId"></Run></TextBlock>
-                                <TextBlock Foreground="White"><Run>视频宽度:</Run><Run Text="{Binding ElementName=mediaElement,Path=NaturalVideoWidth}"></Run></TextBlock>
-                                <TextBlock Foreground="White"><Run>视频高度:</Run><Run Text="{Binding ElementName=mediaElement,Path=NaturalVideoHeight}"></Run></TextBlock>
-                                <TextBlock Foreground="White"><Run>缓冲进度:</Run><Run Text="{Binding ElementName=mediaElement,Path=DownloadProgress}"></Run></TextBlock>
+                                <TextBlock Foreground="White"><Run>视频宽度:</Run><Run Text="{Binding ElementName=mediaElement,Path=MediaPlayer.PlaybackSession.NaturalVideoWidth}"></Run></TextBlock>
+                                <TextBlock Foreground="White"><Run>视频高度:</Run><Run Text="{Binding ElementName=mediaElement,Path=MediaPlayer.PlaybackSession.NaturalVideoHeight}"></Run></TextBlock>
+                                <TextBlock Foreground="White"><Run>缓冲进度:</Run><Run Text="{Binding ElementName=mediaElement,Path=MediaPlayer.PlaybackSession.BufferingProgress}"></Run></TextBlock>
 
                                 <TextBlock Foreground="White"><Run>是否使用软解:</Run><Run x:Name="txt_fvideo"></Run></TextBlock>
                                 <TextBlock Foreground="White"><Run>视频源:</Run><Run x:Name="txt_site"></Run></TextBlock>
@@ -255,14 +255,8 @@
                 </SplitView.Pane>
                 <Grid Background="Black" >
 
-                    <MediaElement x:Name="mediaElement"  AreTransportControlsEnabled="True"  Stretch="Uniform" MinWidth="100" MinHeight="100" 
-                                  MediaEnded="mediaElement_MediaEnded"  
-                                  BufferingProgressChanged="mediaElement_BufferingProgressChanged" 
-                                  MediaFailed="mediaElement_MediaFailed" 
-                                  MediaOpened="mediaElement_MediaOpened" 
-                                  PointerMoved="mediaElement_PointerMoved"
-                                  CurrentStateChanged="mediaElement_CurrentStateChanged" >
-                        <MediaElement.TransportControls>
+                    <MediaPlayerElement x:Name="mediaElement"  AreTransportControlsEnabled="True"  Stretch="Uniform" MinWidth="100" MinHeight="100"  PointerMoved="mediaElement_PointerMoved">
+                        <MediaPlayerElement.TransportControls>
                             <c:DanmakuMTC x:Name="MTC"  
                                           ManipulationMode="TranslateX,TranslateRailsX,TranslateY,TranslateRailsY"
                                           ManipulationCompleted="Grid_ManipulationCompleted"
@@ -289,6 +283,7 @@
                                           OnMiniWindows="MTC_OnMiniWindows" 
                                           OnExitMiniWindows="MTC_OnExitMiniWindows" 
                                           ShareEvent="MTC_ShareEvent" 
+                                          Video360Changed="MTC_Video360Changed"
                                           CoinsEvent="MTC_CoinsEvent">
                                 <c:DanmakuMTC.QuityContent>
                                     <ComboBox x:Name="cb_Quity" DisplayMemberPath="description" BorderThickness="0"  SelectionChanged="cb_Quity_SelectionChanged" Background="#00000000" BorderBrush="#00000000">
@@ -313,8 +308,8 @@
                                     </MenuFlyout>
                                 </c:DanmakuMTC.CCSelectFlyout>
                             </c:DanmakuMTC>
-                        </MediaElement.TransportControls>
-                    </MediaElement>
+                        </MediaPlayerElement.TransportControls>
+                    </MediaPlayerElement>
                     <GridView x:Name="gridview_node" SelectionMode="None" IsItemClickEnabled="True" Visibility="Collapsed" ItemClick="Gridview_node_ItemClick" SizeChanged="Gridview_node_SizeChanged" VerticalAlignment="Bottom"  Margin="0 0 0 100" >
                         <GridView.ItemTemplate>
                             <DataTemplate>

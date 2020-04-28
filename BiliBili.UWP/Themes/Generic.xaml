@@ -901,13 +901,22 @@
                                                  Width="48" Height="48"
                                                   Style='{StaticResource AppBarButtonStyle}'
                                                  ToolTipService.ToolTip="打开/关闭画中画"
-                                                  
                                                 MediaTransportControlsHelper.DropoutOrder='17'
                                                 >
                                                     <AppBarButton.Icon>
                                                         <BitmapIcon  UriSource="ms-appx:///Assets/PlayerAssets/top.png"></BitmapIcon>
                                                     </AppBarButton.Icon>
                                                 </AppBarButton>
+                                                <AppBarToggleButton x:Name='Video360Button'
+                                                                    Width="48" Height="48"
+                                                                    Style='{StaticResource AppBarButtonStyle}'
+                                                                    IsChecked="{TemplateBinding Video360}"
+                                                                    MediaTransportControlsHelper.DropoutOrder='17'>
+                                                    <AppBarToggleButton.Icon>
+                                                        <FontIcon Glyph="&#xF131;"/>
+                                                    </AppBarToggleButton.Icon>
+                                                </AppBarToggleButton>
+                                                
                                                 <AppBarButton x:Name='FullWindowButton'
                                                 Style='{StaticResource AppBarButtonStyle}'
                                                 Visibility="Collapsed"
