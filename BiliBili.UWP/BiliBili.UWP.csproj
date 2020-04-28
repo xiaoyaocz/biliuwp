@@ -216,6 +216,7 @@
     <Compile Include="Api\Home\HotAPI.cs" />
     <Compile Include="Api\Home\RecommendAPI.cs" />
     <Compile Include="Api\PlayerAPI.cs" />
+    <Compile Include="Api\RankAPI.cs" />
     <Compile Include="Api\SearchAPI.cs" />
     <Compile Include="Api\User\DynamicAPI.cs" />
     <Compile Include="Api\User\UserCenterAPI.cs" />
@@ -277,6 +278,7 @@
     <Compile Include="Converters\ImageCompressionConvert.cs" />
     <Compile Include="Converters\ImageSourceConvert.cs" />
     <Compile Include="Converters\NumberToStringConvert.cs" />
+    <Compile Include="Converters\RankColorConvert.cs" />
     <Compile Include="Helper\ApiHelper.cs" />
     <Compile Include="Helper\AppHelper.cs" />
     <Compile Include="Helper\BiliLiveDanmu.cs" />
@@ -315,6 +317,7 @@
     <Compile Include="Modules\Home\TopicVM.cs" />
     <Compile Include="Modules\LiveArea.cs" />
     <Compile Include="Modules\LiveCommand.cs" />
+    <Compile Include="Modules\RankVM.cs" />
     <Compile Include="Modules\RelayCommand.cs" />
     <Compile Include="Modules\LiveHome.cs" />
     <Compile Include="Modules\SearchVM.cs" />
