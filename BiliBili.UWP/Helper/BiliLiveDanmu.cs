@@ -478,18 +478,19 @@ namespace BiliBili.UWP.Helper
 
 
         bool _StartState = false;
-        public async void Dispose()
+        public void Dispose()
         {
             _StartState = false;
             if (_timer != null)
             {
                 _timer.Stop();
+                _timer = null;
             }
             if (_clientSocket != null)
             {
-                await _clientSocket.CancelIOAsync();
+                _clientSocket.Dispose();
+                _clientSocket = null;
             }
-
         }
 
         public class LiveDanmuModel

@@ -1,4 +1,5 @@
-﻿using BiliBili.UWP.Models;
+﻿using BiliBili.UWP.Api;
+using BiliBili.UWP.Models;
 using BiliBili.UWP.Modules;
 using Newtonsoft.Json;
 using System;
@@ -149,9 +150,9 @@ namespace BiliBili.UWP.Pages
         {
             try
             {
-                string url = string.Format("http://live.bilibili.com/sign/doSign?rnd={0}", new Random().Next(1, 9999));
-                string results = await WebClientClass.GetResults(new Uri(url));
-                SignModel model = JsonConvert.DeserializeObject<SignModel>(results);
+                var api = new Api.Live.LiveCenterAPI();
+                var result =await api.DoSign().Request();
+                SignModel model = JsonConvert.DeserializeObject<SignModel>(result.results);
                 if (model.code == 0)
                 {
                     SignModel data = JsonConvert.DeserializeObject<SignModel>(model.data.ToString());
@@ -204,7 +205,7 @@ namespace BiliBili.UWP.Pages
 
         private void btn_Hjjv_Click(object sender, RoutedEventArgs e)
         {
-            MessageCenter.SendNavigateTo(NavigateMode.Info,typeof(WebPage), "http://live.bilibili.com/i/awards");
+            MessageCenter.SendNavigateTo(NavigateMode.Info,typeof(WebPage), "https://link.bilibili.com/p/center/index?#/user-center/my-info/award");
         }
 
         private void btn_buyGold_Click(object sender, RoutedEventArgs e)

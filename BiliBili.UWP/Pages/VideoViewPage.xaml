@@ -554,7 +554,7 @@
         </CommandBar>
         <CommandBar x:Name="Down_ComBar" Visibility="Collapsed" HorizontalAlignment="Right" Background="{ThemeResource Bili-ForeColor}" Foreground="White" >
             <CommandBar.Content>
-                <ComboBox x:Name="cb_Qu"  DisplayMemberPath="Description" Margin="8,4" BorderThickness="1">
+                <ComboBox x:Name="cb_Qu"  DisplayMemberPath="description" Margin="8,4" BorderThickness="1">
                   
                 </ComboBox>
             </CommandBar.Content>

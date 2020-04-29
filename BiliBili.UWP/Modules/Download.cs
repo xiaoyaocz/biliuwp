@@ -1,5 +1,7 @@
-﻿using BiliBili.UWP.Models;
+﻿using BiliBili.UWP.Helper;
+using BiliBili.UWP.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -147,12 +149,15 @@ namespace BiliBili.UWP.Modules
         /// <param name="access_key"></param>
         /// <param name="mid"></param>
         /// <returns></returns>
-        public async Task<ReturnModel<List<DownloadUrlInfo>>> GetSeasonDownloadUrl(string aid, string cid, int season_id, int season_type, QualityInfo quality, string access_key = "", string mid = "")
+        public async Task<ReturnModel<List<DownloadUrlInfo>>> GetSeasonDownloadUrl(string aid, string cid, int season_id, int season_type, QualityModel quality_model, string access_key = "", string mid = "")
         {
-
+            QualityInfo quality = new QualityInfo() { 
+                Qn=quality_model.qn,
+                Description= quality_model.description
+            };
             if (quality.Qn != 0)
             {
-                var andorid_api = await GetSeasonDownloadUrlAndroidApi(aid, cid, season_type, quality, access_key, mid);
+                var andorid_api = await GetSeasonDownloadUrlWebApi(aid, cid, season_type, quality_model);
                 if (andorid_api.success || andorid_api.message == "大会员专享限制")
                 {
                     return andorid_api;
@@ -236,6 +241,132 @@ namespace BiliBili.UWP.Modules
                 };
             }
         }
+        private async Task<ReturnModel<List<DownloadUrlInfo>>> GetSeasonDownloadUrlWebApi(string aid, string cid, int season_type, QualityModel quality)
+        {
+            try
+            {
+                string url = $"https://api.bilibili.com/pgc/player/web/playurl?cid={ cid}&appkey={ApiHelper.WebVideoKey.Appkey}&otype=json&type=&quality={quality.qn}&module=bangumi&season_type={season_type}&qn={quality.qn}&ts={Utils.GetTimestampS()}&fourk=1&fnver=0&fnval=16";
+                if (ApiHelper.IsLogin())
+                {
+                    url += $"&access_key={ApiHelper.access_key}&mid={ApiHelper.GetUserId()}";
+                }
+                url += "&sign=" + ApiHelper.GetSign(url, ApiHelper.WebVideoKey);
+
+                var results = await WebClientClass.GetResults(new Uri(url));
+                var jobj = JObject.Parse(results);
+                if (jobj["code"].ToInt32() == 0)
+                {
+                    Dictionary<string, string> headers = new Dictionary<string, string>();
+                    headers.Add("Referer", "https://www.bilibili.com");
+                    headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
+                    List<DownloadUrlInfo> downloadUrls = new List<DownloadUrlInfo>();
+
+                    if (jobj["result"]["format"].ToString() == "flv")
+                    {
+                        var data = JsonConvert.DeserializeObject<SeasonUrlInfo>(jobj["result"].ToString());
+                        foreach (var item in data.durl)
+                        {
+                            downloadUrls.Add(new DownloadUrlInfo()
+                            {
+                                Aid = aid,
+                                Cid = cid,
+                                Codecid = data.video_codecid,
+                                Format = data.format,
+                                From = "bilibili_web_api",
+                                Headers = headers,
+                                Length = item.length,
+                                Order = item.order,
+                                QualityInfo = new QualityInfo()
+                                {
+                                    Description = quality.description,
+                                    Qn = quality.qn
+                                },
+                                Size = item.size,
+                                Url = item.url
+                            });
+                        }
+                    }
+                    else
+                    {
+                        var length = jobj["result"]["dash"]["duration"].ToInt32();
+                        var videos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(jobj["result"]["dash"]["video"].ToString());
+                        var audios = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(jobj["result"]["dash"]["audio"].ToString());
+                        var video = videos.FirstOrDefault(x => x.id == quality.qn && x.codecid == 7);
+                        if (video == null)
+                        {
+                            video = videos.OrderByDescending(x => x.id).FirstOrDefault(x => x.codecid == 7);
+                        }
+                        var audio = audios.FirstOrDefault();
+
+                        downloadUrls.Add(new DownloadUrlInfo()
+                        {
+                            Aid = aid,
+                            Cid = cid,
+                            Codecid = 7,
+                            Format = "dash",
+                            From = "bilibili_web_api",
+                            Headers = headers,
+                            Length = length,
+                            Order = 0,
+                            QualityInfo = new QualityInfo()
+                            {
+                                Description = quality.description,
+                                Qn = quality.qn
+                            },
+                            DashFileType = "video",
+                            Size = 0,
+                            Url = video.baseUrl
+                        });
+                        downloadUrls.Add(new DownloadUrlInfo()
+                        {
+                            Aid = aid,
+                            Cid = cid,
+                            Codecid = 7,
+                            Format = "dash",
+                            From = "bilibili_web_api",
+                            Headers = headers,
+                            Length = length,
+                            Order = 0,
+                            QualityInfo = new QualityInfo()
+                            {
+                                Description = quality.description,
+                                Qn = quality.qn
+                            },
+                            Size = 0,
+                            DashFileType = "audio",
+                            Url = audio.baseUrl
+                        });
+
+
+                    }
+
+                    return new ReturnModel<List<DownloadUrlInfo>>() { 
+                        data= downloadUrls,
+                        success=true
+                    };
+                }
+                else
+                {
+                    return new ReturnModel<List<DownloadUrlInfo>>()
+                    {
+                        message=jobj["message"].ToString(),
+                        success = false
+                    };
+                }
+
+
+            }
+            catch (Exception)
+            {
+                return new ReturnModel<List<DownloadUrlInfo>>()
+                {
+                    success = false,
+                    message = "读取下载地址错误"
+                };
+            }
+        }
+
+
         private async Task<ReturnModel<List<DownloadUrlInfo>>> GetSeasonDownloadUrlMoeApi(int season_id, string cid, string aid, QualityInfo quality, string epid = "")
         {
             try
@@ -348,83 +479,10 @@ namespace BiliBili.UWP.Modules
             }
         }
 
-        /// <summary>
-        /// 读取视频可下载的清晰度
-        /// </summary>
-        /// <param name="aid"></param>
-        /// <param name="cid"></param>
-        /// <param name="season_type"></param>
-        /// <param name="access_key"></param>
-        /// <param name="mid"></param>
-        /// <returns></returns>
-        public async Task<ReturnModel<List<QualityInfo>>> GetVideoQualitys(string aid, string cid, string access_key = "", string mid = "")
+        public async Task<ReturnModel<List<DownloadUrlInfo>>> GetVideoDownloadUrl(string aid, string cid, QualityModel quality, string access_key = "", string mid = "")
         {
 
-            try
-            {
-                string url = ApiHelper.GetSignWithUrl($"https://app.bilibili.com/x/playurl?npcybs=0&mobi_app=android&fnval=0&fnver=0&platform=android&fourk=1&build={ ApiHelper.build }&actionkey=appkey&appkey={ApiHelper.AndroidVideoKey.Appkey }&otype=json&qn=0&device=android&aid={aid}&cid={cid}&force_host=0&ts={ApiHelper.GetTimeSpan_2}{ ((access_key == "") ? "" : $"&access_key={access_key}&mid={mid}")}", ApiHelper.AndroidVideoKey);
-                var results = await WebClientClass.GetResults(new Uri(url));
-                var model = JsonConvert.DeserializeObject<VideoUrlInfo>(results);
-                if (model.code == 0)
-                {
-                    //未登录只能下载480P视频
-                    if (access_key == "")
-                    {
-                        return new ReturnModel<List<QualityInfo>>()
-                        {
-                            success = true,
-                            message = "",
-                            data = new List<QualityInfo>() {
-                                new QualityInfo(){
-                                    Description="清晰 480P(登录下载更多清晰度)",
-                                    Qn=32
-                                }
-                            }
-                        };
-                    }
-
-                    List<QualityInfo> list = new List<QualityInfo>();
-
-                    for (int i = 0; i < model.data.accept_quality.Count; i++)
-                    {
-                        list.Add(new QualityInfo()
-                        {
-                            Description = model.data.accept_description[i],
-                            Qn = model.data.accept_quality[i]
-                        });
-                    }
-                    
-                    return new ReturnModel<List<QualityInfo>>()
-                    {
-                        success = true,
-                        message = "",
-                        data = list
-                    };
-                }
-                else
-                {
-                    return new ReturnModel<List<QualityInfo>>()
-                    {
-                        success = true,
-                        message = "",
-                        data = new List<QualityInfo>() { }
-                    };
-                }
-            }
-            catch (Exception ex)
-            {
-                return new ReturnModel<List<QualityInfo>>()
-                {
-                    success = true,
-                    message = "",
-                    data = new List<QualityInfo>() { }
-                };
-            }
-        }
-        public async Task<ReturnModel<List<DownloadUrlInfo>>> GetVideoDownloadUrl(string aid, string cid, QualityInfo quality, string access_key = "", string mid = "")
-        {
-
-            var andorid_api = await GetVideoDownloadUrlAndroidApi(aid, cid, quality, access_key, mid);
+            var andorid_api = await GetVideoDownloadUrlWebApi(aid, cid, quality);
             if (andorid_api != null)
             {
                 return new ReturnModel<List<DownloadUrlInfo>>()
@@ -442,11 +500,11 @@ namespace BiliBili.UWP.Modules
                 message = "无法读取下载地址"
             };
         }
-        private async Task<List<DownloadUrlInfo>> GetVideoDownloadUrlAndroidApi(string aid, string cid, QualityInfo quality, string access_key = "", string mid = "")
+        private async Task<List<DownloadUrlInfo>> GetVideoDownloadUrlAndroidApi(string aid, string cid, QualityModel quality, string access_key = "", string mid = "")
         {
             try
             {
-                string url = ApiHelper.GetSignWithUrl($"https://app.bilibili.com/x/playurl?npcybs=1&mobi_app=android&fnval=0&fnver=0&platform=android&fourk=1&build={ ApiHelper.build }&actionkey=appkey&appkey={ApiHelper.AndroidVideoKey.Appkey }&otype=json&qn={quality.Qn}&device=android&aid={aid}&cid={cid}&force_host=0&ts={ApiHelper.GetTimeSpan_2}{ ((access_key == "") ? "" : $"&access_key={access_key}&mid={mid}")}", ApiHelper.AndroidVideoKey);
+                string url = ApiHelper.GetSignWithUrl($"https://app.bilibili.com/x/playurl?npcybs=1&mobi_app=android&fnval=0&fnver=0&platform=android&fourk=1&build={ ApiHelper.build }&actionkey=appkey&appkey={ApiHelper.AndroidVideoKey.Appkey }&otype=json&qn={quality.qn}&device=android&aid={aid}&cid={cid}&force_host=0&ts={ApiHelper.GetTimeSpan_2}{ ((access_key == "") ? "" : $"&access_key={access_key}&mid={mid}")}", ApiHelper.AndroidVideoKey);
                 var results = await WebClientClass.GetResults(new Uri(url));
                 var model = JsonConvert.DeserializeObject<VideoUrlInfo>(results);
                 if (model.code == 0)
@@ -466,7 +524,10 @@ namespace BiliBili.UWP.Modules
                             Headers = headers,
                             Length = item.length,
                             Order = item.order,
-                            QualityInfo = quality,
+                            QualityInfo = new QualityInfo() { 
+                                Description=quality.description,
+                                Qn=quality.qn
+                            },
                             Size = item.size,
                             Url = item.url
                         });
@@ -484,7 +545,118 @@ namespace BiliBili.UWP.Modules
                 return null;
             }
         }
+        private async Task<List<DownloadUrlInfo>> GetVideoDownloadUrlWebApi(string aid, string cid, QualityModel quality)
+        {
+            try
+            {
+                string url = $"https://api.bilibili.com/x/player/playurl?avid={aid}&cid={cid}&qn={quality.qn}&type=&otype=json&fourk=1&fnver=0&fnval=16&appkey={ ApiHelper.WebVideoKey.Appkey}";
+                if (ApiHelper.IsLogin())
+                {
+                    url += $"&access_key={ApiHelper.access_key}&mid={ApiHelper.GetUserId()}";
+                }
+                url = ApiHelper.GetSignWithUrl(url, ApiHelper.WebVideoKey);
 
+                var results = await WebClientClass.GetResults(new Uri(url));
+                var jobj =JObject.Parse(results);
+                if (jobj["code"].ToInt32() == 0)
+                {
+                    Dictionary<string, string> headers = new Dictionary<string, string>();
+                    headers.Add("Referer", "https://www.bilibili.com");
+                    headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
+                    List<DownloadUrlInfo> downloadUrls = new List<DownloadUrlInfo>();
+
+                    if (jobj["data"]["format"].ToString()== "flv")
+                    {
+                        var data = JsonConvert.DeserializeObject<SeasonUrlInfo>(jobj["data"].ToString());
+                        foreach (var item in data.durl)
+                        {
+                            downloadUrls.Add(new DownloadUrlInfo()
+                            {
+                                Aid = aid,
+                                Cid = cid,
+                                Codecid = data.video_codecid,
+                                Format = data.format,
+                                From = "bilibili_web_api",
+                                Headers = headers,
+                                Length = item.length,
+                                Order = item.order,
+                                QualityInfo = new QualityInfo()
+                                {
+                                    Description = quality.description,
+                                    Qn = quality.qn
+                                },
+                                Size = item.size,
+                                Url = item.url
+                            });
+                        }
+                    }
+                    else
+                    {
+                        var length = jobj["data"]["dash"]["duration"].ToInt32();
+                        var videos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(jobj["data"]["dash"]["video"].ToString());
+                        var audios = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(jobj["data"]["dash"]["audio"].ToString());
+                        var video = videos.FirstOrDefault(x => x.id == quality.qn && x.codecid == 7);
+                        if (video == null)
+                        {
+                            video = videos.OrderByDescending(x => x.id).FirstOrDefault(x => x.codecid == 7);
+                        }
+                        var audio = audios.FirstOrDefault();
+
+                        downloadUrls.Add(new DownloadUrlInfo()
+                        {
+                            Aid = aid,
+                            Cid = cid,
+                            Codecid =7,
+                            Format = "dash",
+                            From = "bilibili_web_api",
+                            Headers = headers,
+                            Length = length,
+                            Order = 0,
+                            QualityInfo = new QualityInfo()
+                            {
+                                Description = quality.description,
+                                Qn = quality.qn
+                            },
+                            DashFileType="video",
+                            Size = 0,
+                            Url = video.baseUrl
+                        });
+                        downloadUrls.Add(new DownloadUrlInfo()
+                        {
+                            Aid = aid,
+                            Cid = cid,
+                            Codecid = 7,
+                            Format = "dash",
+                            From = "bilibili_web_api",
+                            Headers = headers,
+                            Length = length,
+                            Order = 0,
+                            QualityInfo = new QualityInfo()
+                            {
+                                Description = quality.description,
+                                Qn = quality.qn
+                            },
+                            Size = 0,
+                            DashFileType = "audio",
+                            Url = audio.baseUrl
+                        });
+
+
+                    }
+                   
+                    return downloadUrls;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 
     public class QualityInfo
@@ -505,6 +677,7 @@ namespace BiliBili.UWP.Modules
         public int Codecid { get; set; }
         public string Format { get; set; }
         public string From { get; set; }
+        public string DashFileType { get; set; }
         public IDictionary<string, string> Headers { get; set; }
     }
     public class VideoUrlInfo

@@ -147,7 +147,7 @@
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Image Height="130" Source="{Binding cover}"   Margin="0,0,10,0"  Tapped="Image_Tapped"/>
+                                    <Image Height="130" Source="{Binding Path=cover,Converter={StaticResource imageConvert},ConverterParameter='200w'}"   Margin="0,0,10,0"  Tapped="Image_Tapped"/>
                                     <Grid  Grid.Column="1"  Grid.Row="1" >
                                         <Grid.RowDefinitions>
                                             <RowDefinition/>
@@ -476,7 +476,7 @@
         </CommandBar>
         <CommandBar x:Name="Down_ComBar" Visibility="Collapsed" HorizontalAlignment="Right" Background="{ThemeResource Bili-ForeColor}" Foreground="White" >
             <CommandBar.Content>
-                <ComboBox x:Name="cb_Qu" DisplayMemberPath="Description"  Margin="8,4" BorderThickness="1">
+                <ComboBox x:Name="cb_Qu" DisplayMemberPath="description"  Margin="8,4" BorderThickness="1">
                   
                 </ComboBox>
             </CommandBar.Content>

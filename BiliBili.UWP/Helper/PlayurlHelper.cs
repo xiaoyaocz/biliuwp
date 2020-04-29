@@ -1359,6 +1359,8 @@ namespace BiliBili.UWP.Helper
         public int season_type { get; set; } = 1;
 
         public int? graph_version { get; set; } = 467;
+
+        public bool is_dash { get; set; } = false;
     }
 
     public class DashItem

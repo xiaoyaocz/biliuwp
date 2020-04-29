@@ -198,7 +198,7 @@ namespace BiliBili.UWP.Pages
                             if (await DownloadHelper2.ExistsFile(item1.Path + @"\info.json"))
                             {
                                 var flag = false;
-                                var files = (await item1.GetFilesAsync()).Where(x => x.FileType == ".mp4" || x.FileType == ".flv");
+                                var files = (await item1.GetFilesAsync()).Where(x => x.FileType == ".mp4" || x.FileType == ".flv" || x.FileType == ".m4s");
                                 if (files.Count()!=0)
                                 {
                                     //DownloadHelper2.GetFileSize(x.Path).Result
@@ -225,7 +225,8 @@ namespace BiliBili.UWP.Pages
                                         index = downloadPartnInfoModel.index,
                                         id = video.id,
                                         mode = video.mode,
-                                        title = video.title
+                                        title = video.title,
+                                        is_dash= downloadPartnInfoModel.is_dash
                                     };
                                     if (!valuePairs.ContainsKey(downloadPartnInfoModel.cid))
                                     {
@@ -532,7 +533,7 @@ namespace BiliBili.UWP.Pages
             var l = (sender as ListView).ItemsSource as List<PartDiaplayModel>;
 
             var data = e.ClickedItem as PartDiaplayModel;
-
+          
             StorageFolder storageFolder = await StorageFolder.GetFolderFromPathAsync(data.path);
             if ((await storageFolder.GetFilesAsync()).Count(x => x.FileType == ".flv")>1)
             {
@@ -559,7 +560,7 @@ namespace BiliBili.UWP.Pages
             foreach (var item in l)
             {
 
-                ls.Add(new PlayerModel() { Aid = item.id, Mid = item.cid, Mode = PlayMode.Local, No = "", VideoTitle = item.eptitle, Path = item.path, Title = item.title, episode_id = item.epid });
+                ls.Add(new PlayerModel() { Aid = item.id, is_dash= data.is_dash, Mid = item.cid, Mode = PlayMode.Local, No = "", VideoTitle = item.eptitle, Path = item.path, Title = item.title, episode_id = item.epid });
                 i++;
             }
 
@@ -764,7 +765,7 @@ namespace BiliBili.UWP.Pages
             var model = (sender as MenuFlyoutItem).DataContext as PartDiaplayModel;
             StorageFolder storageFolder =await StorageFolder.GetFolderFromPathAsync(model.path);
 
-            if ((await storageFolder.GetFilesAsync()).Any(x=>x.FileType==".flv"))
+            if ((await storageFolder.GetFilesAsync()).Any(x=>x.FileType==".flv"|| x.FileType == ".m4s"))
             {
                 var dialog = DownloadHelper2.videoProcessingDialogs.FirstOrDefault(x => x.ID == model.cid);
                 if (dialog==null)
@@ -993,6 +994,7 @@ namespace BiliBili.UWP.Pages
         public string path { get; set; }
         public string epid { get; set; }
         public string mode { get; set; }
+        public bool is_dash { get; set; }
     }
 
 

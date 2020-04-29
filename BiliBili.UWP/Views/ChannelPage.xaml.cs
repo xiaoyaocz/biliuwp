@@ -125,7 +125,9 @@ namespace BiliBili.UWP.Views
             var item = e.ClickedItem as RegionModel;
             if (item.name == "放映厅")
             {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), "https://www.bilibili.com/cinema/");
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(Pages.Season.SeasonIndexPage),new Modules.Season.SeasonIndexParameter() { 
+                    type= Modules.Season.IndexSeasonType.Movie
+                });
                 return;
             }
             if (item.name == "相簿")

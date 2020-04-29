@@ -263,9 +263,12 @@ namespace BiliBili.UWP.Pages
                     }
                     if (m.data.pages != null && m.data.pages.Count != 0)
                     {
-                        var qualitys = await download.GetVideoQualitys(_aid, m.data.pages[0].cid.ToString(), ApiHelper.access_key, ApiHelper.GetUserId());
-                        cb_Qu.ItemsSource = qualitys.data;
-                        if (qualitys.data.Count != 0)
+                        var qualitys = await PlayurlHelper.GetVideoQualities(new PlayerModel() { 
+                            Aid= _aid,
+                            Mid= m.data.pages[0].cid.ToString()
+                        });
+                        cb_Qu.ItemsSource = qualitys.OrderByDescending(x=>x.qn).ToList();
+                        if (qualitys.Count != 0)
                         {
                             cb_Qu.SelectedIndex = 0;
                         }
@@ -404,72 +407,6 @@ namespace BiliBili.UWP.Pages
             //}
         }
 
-        //private async void GetPlayUrl(string cid)
-        //{
-        //    string url = "http://interface.bilibili.com/playurl?_device=uwp&cid=" + cid + "&otype=xml&quality=" + 2 + "&appkey=" + ApiHelper.AndroidKey.Appkey + "&access_key=" + ApiHelper.access_key + "&type=mp4&mid=" + "" + "&_buvid="+ApiHelper._buvid+"&_hwid=" + ApiHelper._hwid+"&platform=uwp_desktop" + "&ts=" + ApiHelper.GetTimeSpan;
-        //    url += "&sign=" + ApiHelper.GetSign(url);
-        //    string re =await WebClientClass.GetResults_Phone(new Uri(url));
-        //    re = await WebClientClass.GetResults_Phone(new Uri(url));
-        //    string  playUrl = Regex.Match(re, "<url>(.*?)</url>").Groups[1].Value;
-        //    playUrl = playUrl.Replace("<![CDATA[", "");
-        //    playUrl = playUrl.Replace("]]>", "");
-        //    mediaElement.Source = new Uri(playUrl);
-        //}
-
-        //private void mediaElement_CurrentStateChanged(object sender, RoutedEventArgs e)
-        //{
-        //    switch (mediaElement.CurrentState)
-        //    {
-        //        case MediaElementState.Playing:
-        //            _systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Playing;
-        //            break;
-        //        case MediaElementState.Paused:
-        //            _systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Paused;
-        //            break;
-        //        case MediaElementState.Stopped:
-        //            _systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Stopped;
-        //            break;
-        //        case MediaElementState.Closed:
-        //            _systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Closed;
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
-
-        //private  void mediaElement_MediaOpened(object sender, RoutedEventArgs e)
-        //{
-
-        //    var info= this.DataContext as VideoInfoModels;
-        //    // Music metadata.
-        //    if (info==null)
-        //    {
-        //        return;
-        //    }
-        //    SystemMediaTransportControlsDisplayUpdater updater = _systemMediaTransportControls.DisplayUpdater;
-        //    updater.Type = MediaPlaybackType.Video;
-        //    // updater.MusicProperties.AlbumArtist = info.owner.name;
-        //    updater.VideoProperties.Subtitle = info.owner.name;
-        //    updater.VideoProperties.Title = info.title;
-
-        //    // Set the album art thumbnail.
-        //    // RandomAccessStreamReference is defined in Windows.Storage.Streams
-        //    updater.Thumbnail = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/Logo.png"));
-
-        //    // Update the system media transport controls.
-        //    updater.Update();
-        //    var timelineProperties = new SystemMediaTransportControlsTimelineProperties();
-
-        //    // Fill in the data, using the media elements properties 
-        //    timelineProperties.StartTime = TimeSpan.FromSeconds(0);
-        //    timelineProperties.MinSeekTime = TimeSpan.FromSeconds(0);
-        //    timelineProperties.Position = mediaElement.Position;
-        //    timelineProperties.MaxSeekTime = mediaElement.NaturalDuration.TimeSpan;
-        //    timelineProperties.EndTime = mediaElement.NaturalDuration.TimeSpan;
-
-        //    // Update the System Media transport Controls 
-        //    _systemMediaTransportControls.UpdateTimelineProperties(timelineProperties);
-        //}
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -825,7 +762,7 @@ namespace BiliBili.UWP.Pages
                 if (item.IsDowned == Visibility.Collapsed)
                 {
                     var m = item;
-                    var downloadUrl = await download.GetVideoDownloadUrl(_aid, item.cid.ToString(), cb_Qu.SelectedItem as QualityInfo, ApiHelper.access_key, ApiHelper.GetUserId());
+                    var downloadUrl = await download.GetVideoDownloadUrl(_aid, item.cid.ToString(), cb_Qu.SelectedItem as QualityModel, ApiHelper.access_key, ApiHelper.GetUserId());
                     if (!downloadUrl.success)
                     {
                         await new MessageDialog($"{m.page} {m.part}读取下载地址失败,已跳过").ShowAsync();
@@ -840,7 +777,8 @@ namespace BiliBili.UWP.Pages
                         epTitle = m.page + " " + m.part,
                         thumb = (this.DataContext as VideoInfoModels).pic,
                         quality = cb_Qu.SelectedIndex + 1,
-                        title = (this.DataContext as VideoInfoModels).title
+                        title = (this.DataContext as VideoInfoModels).title,
+                        is_dash= downloadUrl.data[0].Format== "dash"
                     }, downloadUrl.data);
                 }
                 i++;

@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using BiliBili.UWP.Pages;
 using System.Text.RegularExpressions;
+using BiliBili.UWP.Pages.Season;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -191,7 +192,9 @@ namespace BiliBili.UWP.Views
 
         private void btn_tag_Click(object sender, RoutedEventArgs e)
         {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanTagPage));
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(SeasonIndexPage),new Modules.Season.SeasonIndexParameter() { 
+                type= Modules.Season.IndexSeasonType.Anime
+            });
         }
 
         private void btn_jp_Click(object sender, RoutedEventArgs e)

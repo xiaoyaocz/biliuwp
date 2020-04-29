@@ -119,7 +119,7 @@
                                     <ToggleSwitch x:Name="sw_MergeDanmu" Foreground="White" Toggled="sw_MergeDanmu_Toggled" HorizontalAlignment="Right" Width="68" Margin="10 0"></ToggleSwitch>
                                 </Grid>
                                 <Grid Margin="0 10 0 0">
-                                    <TextBlock Foreground="White" VerticalAlignment="Center">防挡字幕</TextBlock>
+                                    <TextBlock Foreground="White" VerticalAlignment="Center">半屏显示</TextBlock>
                                     <ToggleSwitch x:Name="sw_DanmuNotSubtitle" Foreground="White" Toggled="sw_DanmuNotSubtitle_Toggled" HorizontalAlignment="Right" Width="68" Margin="10 0"></ToggleSwitch>
                                 </Grid>
                                 <StackPanel Margin="0 10 0 0" >

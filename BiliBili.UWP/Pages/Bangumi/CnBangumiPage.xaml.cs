@@ -214,7 +214,11 @@ namespace BiliBili.UWP.Pages
 
         private void btn_10Ban_Click(object sender, RoutedEventArgs e)
         {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanTagPage));
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(Season.SeasonIndexPage), new Modules.Season.SeasonIndexParameter()
+            {
+                type = Modules.Season.IndexSeasonType.Guochuang
+            });
+            //MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanTagPage));
         }
 
         private void list_ban_jp_foot_ItemClick(object sender, ItemClickEventArgs e)

@@ -70,13 +70,16 @@ namespace BiliBili.UWP.Pages
     public sealed partial class PlayerPage : Page
     {
         MediaPlayer mediaPlayer;
+        MediaPlayer mediaPlayer_audio;
         PlayerAPI playerAPI;
         public PlayerPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Disabled;
             mediaPlayer = new MediaPlayer();
+            mediaPlayer.PlaybackSession.PositionChanged += PlaybackSession_PositionChanged;
             mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
+            mediaPlayer.VolumeChanged += MediaPlayer_VolumeChanged;
             mediaPlayer.PlaybackSession.BufferingProgressChanged += PlaybackSession_BufferingProgressChanged;
             mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
             mediaPlayer.MediaFailed += MediaPlayer_MediaFailed;
@@ -94,7 +97,24 @@ namespace BiliBili.UWP.Pages
             }
         }
 
-    
+        private void MediaPlayer_VolumeChanged(MediaPlayer sender, object args)
+        {
+            if (mediaPlayer_audio != null )
+            {
+                mediaPlayer_audio.Volume = sender.Volume;
+            }
+        }
+
+        private void PlaybackSession_PositionChanged(MediaPlaybackSession sender, object args)
+        {
+            if (mediaPlayer_audio!=null&&Math.Abs( sender.Position.TotalSeconds- mediaPlayer_audio.PlaybackSession.Position.TotalSeconds)>1)
+            {
+                mediaPlayer_audio.PlaybackSession.Position = sender.Position;
+            }
+            
+        }
+
+
 
 
         #region MediaPlayer事件
@@ -107,7 +127,7 @@ namespace BiliBili.UWP.Pages
                 try
                 {
                     SetSystemMediaTransportControl();
-
+                    MTC_Video360Changed(this, MTC.Video360);
                     var record = SqlHelper.GetVideoWatchRecord(string.IsNullOrEmpty(playNow.episode_id) ? playNow.Mid : "ep" + playNow.episode_id);
                     if (record != null && record.Post != 0)
                     {
@@ -157,6 +177,7 @@ namespace BiliBili.UWP.Pages
                     case MediaPlaybackState.Buffering:
                         buffering = true;
                         progress.Visibility = Visibility.Visible;
+                        mediaPlayer_audio?.Pause();
                         danmu.PauseDanmaku();
                         break;
                     case MediaPlaybackState.Playing:
@@ -164,7 +185,7 @@ namespace BiliBili.UWP.Pages
                         {
                             _systemMediaTransportControls.PlaybackStatus = MediaPlaybackStatus.Playing;
                         }
-
+                        mediaPlayer_audio?.Play();
                         progress.Visibility = Visibility.Collapsed;
                         danmu.ResumeDanmaku();
 
@@ -187,6 +208,7 @@ namespace BiliBili.UWP.Pages
                         {
                             timer.Stop();
                         }
+                        mediaPlayer_audio?.Pause();
                         break;
                     //case MediaPlaybackState.Stopped:
                     //    if (_systemMediaTransportControls != null)
@@ -357,14 +379,7 @@ namespace BiliBili.UWP.Pages
                 case Windows.System.VirtualKey.Up:
                     {
                         var volume = mediaElement.MediaPlayer.Volume + 0.1;
-                        if (volume >= 1)
-                        {
-                            mediaElement.MediaPlayer.Volume = 1;
-                        }
-                        else
-                        {
-                            mediaElement.MediaPlayer.Volume = volume;
-                        }
+                        SetVolume(volume);
                         Utils.ShowMessageToast("音量:" + mediaElement.MediaPlayer.Volume.ToString("P"), 3000);
                     }
                     break;
@@ -376,14 +391,7 @@ namespace BiliBili.UWP.Pages
                 case Windows.System.VirtualKey.Down:
                     {
                         var volume = mediaElement.MediaPlayer.Volume-0.1;
-                        if (volume <= 0)
-                        {
-                            mediaElement.MediaPlayer.Volume = 0;
-                        }
-                        else
-                        {
-                            mediaElement.MediaPlayer.Volume = volume;
-                        }
+                        SetVolume(volume);
                         Utils.ShowMessageToast("音量:" + mediaElement.MediaPlayer.Volume.ToString("P"), 3000);
                     }
                     break;
@@ -534,7 +542,7 @@ namespace BiliBili.UWP.Pages
         InteractionVideo interactionVideo;
         NodeInfo nodeInfo;
         //int _index = 0;
-        bool playLocal = false;
+       
         bool LoadDanmu = true;
         int LastPost = 0;
         bool settingFlag = true;
@@ -680,6 +688,7 @@ namespace BiliBili.UWP.Pages
                 // mediaElement.Source = null;
 
                 mediaPlayer = null;
+                mediaPlayer_audio = null;
                 //danmu.ClearAll();
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
 
@@ -818,8 +827,8 @@ namespace BiliBili.UWP.Pages
             slider_SubtitleTran.Value = SettingHelper.Get_SubtitleBgTran();
             slider_SubtitleSize.Value = SettingHelper.Get_SubtitleSize();
 
-            mediaElement.MediaPlayer.Volume = SettingHelper.Get_Volume();
-
+            //mediaElement.MediaPlayer.Volume = SettingHelper.Get_Volume();
+            SetVolume(SettingHelper.Get_Volume());
             bo = BrightnessOverride.GetForCurrentView();
             if (bo.IsSupported)
             {
@@ -1083,15 +1092,15 @@ namespace BiliBili.UWP.Pages
                 MTC.ShowDanmakuBtn = Visibility.Visible;
                 //btn_Open_CloseDanmu.Visibility = Visibility.Visible;
                 cb_Quity.Visibility = Visibility.Visible;
-
+                mediaPlayer_audio = null;
                 pr.Text = "正在初始化播放器...";
                 AddLog("正在初始化播放器...");
                 await LoadQualities();
                 txt_fvideo.Text = SettingHelper.Get_ForceVideo().ToString();
                 AddLog("强制软解视频：" + txt_fvideo.Text);
 
-                if (!playLocal)
-                {
+                //if (playNow.Mode!= PlayMode.Local&&)
+                //{
 
                     cb_Quity.IsEnabled = true;
                     switch (playNow.Mode)
@@ -1202,20 +1211,20 @@ namespace BiliBili.UWP.Pages
                     var hasSub = await PlayurlHelper.GetHasSubTitle(playNow.Aid, playNow.Mid);
                     LaodSubTitleMenu(hasSub);
 
-                }
-                else
-                {
-                    AddLog("读取本地视频...");
-                    MTC.ShowDanmakuBtn = Visibility.Collapsed;
-                    cb_Quity.Visibility = Visibility.Collapsed;
-                    MTC.ShowSendDanmuBtn = false;
-                    StorageFile file = await StorageFile.GetFileFromPathAsync(playNow.Mid);
-                    IRandomAccessStream readStream = await file.OpenAsync(FileAccessMode.Read);
-                    // var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
-                    mediaPlayer.Source = MediaSource.CreateFromStream(readStream, file.ContentType);
-                    //mediaElement.SetSource(readStream, file.ContentType);
+                //}
+                //else
+                //{
+                //    AddLog("读取本地视频...");
+                //    MTC.ShowDanmakuBtn = Visibility.Collapsed;
+                //    cb_Quity.Visibility = Visibility.Collapsed;
+                //    MTC.ShowSendDanmuBtn = false;
+                //    StorageFile file = await StorageFile.GetFileFromPathAsync(playNow.Mid);
+                //    IRandomAccessStream readStream = await file.OpenAsync(FileAccessMode.Read);
+                //    // var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+                //    mediaPlayer.Source = MediaSource.CreateFromStream(readStream, file.ContentType);
+                //    //mediaElement.SetSource(readStream, file.ContentType);
 
-                }
+                //}
 
                 AddLog("准备开始播放...");
                 MTC.HideLog();
@@ -1508,38 +1517,40 @@ namespace BiliBili.UWP.Pages
             AddLog("开始读取本地视频...");
             StorageFolder f = await StorageFolder.GetFolderFromPathAsync(playNow.Path);
             var ls = await f.GetFilesAsync();
-            var paths = new List<string>();
-            foreach (var item in ls)
+            var danmakuFile = ls.FirstOrDefault(x => x.FileType == ".xml");
+            if (danmakuFile!=null)
             {
-                if (item.FileType == ".xml")
-                {
-                    pr.Text = "填充弹幕中...";
-                    AddLog("填充弹幕中...");
-                    DanMuPool = await danmakuParse.ParseBiliBili(item);
-                }
-
-                if (item.FileType == ".mp4" || item.FileType == ".flv")
-                {
-                    paths.Add(item.Path);
-                    playNow.Parameter = item;
-                    // IRandomAccessStream readStream = await item.OpenAsync(FileAccessMode.Read);
-                    // var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
-                    // mediaElement.SetSource(readStream, item.ContentType);
-
-                }
-
+                pr.Text = "填充弹幕中...";
+                AddLog("填充弹幕中...");
+                DanMuPool = await danmakuParse.ParseBiliBili(danmakuFile);
             }
-            if (paths.Count == 1)
+            var video = ls.FirstOrDefault(x => x.Name == "video.m4s");
+            if (video!=null)
             {
-                var file = await StorageFile.GetFileFromPathAsync(paths[0]);
-                mediaElement.MediaPlayer.Source = MediaSource.CreateFromStream(await file.OpenReadAsync(), file.ContentType);
-                //mediaElement.SetSource(await file.OpenReadAsync(), file.ContentType);
+               
+                var audio = ls.FirstOrDefault(x => x.Name == "audio.m4s");
+                if (mediaPlayer_audio ==null)
+                {
+                    mediaPlayer_audio = new MediaPlayer();
+                    mediaPlayer_audio.Volume = mediaPlayer.Volume;
+                    mediaPlayer_audio.Source = MediaSource.CreateFromStream(await audio.OpenReadAsync(), audio.ContentType);
+                }
+                mediaElement.MediaPlayer.Source = MediaSource.CreateFromStream(await video.OpenReadAsync(), video.ContentType);
+            
             }
             else
             {
-                var s = await PlayLocalVideo(paths);
-                mediaElement.MediaPlayer.Source = MediaSource.CreateFromMediaStreamSource(s);
-                //mediaElement.SetMediaStreamSource(s);
+                var paths = ls.Where(x => x.FileType == ".mp4" || x.FileType == ".flv").Select(x => x.Path).ToList();
+                if (paths.Count == 1)
+                {
+                    var file = await StorageFile.GetFileFromPathAsync(paths[0]);
+                    mediaElement.MediaPlayer.Source = MediaSource.CreateFromStream(await file.OpenReadAsync(), file.ContentType);
+                }
+                else
+                {
+                    var s = await PlayLocalVideo(paths);
+                    mediaElement.MediaPlayer.Source = MediaSource.CreateFromMediaStreamSource(s);
+                }
             }
             MTC.HideLog();
             //playNow.Path
@@ -1665,28 +1676,14 @@ namespace BiliBili.UWP.Pages
 
                 //slider_V.Value -= d;
                 var volume = mediaElement.MediaPlayer.Volume-dd;
-                if (volume <= 0)
-                {
-                    mediaElement.MediaPlayer.Volume = 0;
-                }
-                else
-                {
-                    mediaElement.MediaPlayer.Volume = volume;
-                }
+                SetVolume(volume);
 
             }
             else
             {
                 double dd = Math.Abs(delta) / (this.ActualHeight * 0.8);
                 var volume = mediaElement.MediaPlayer.Volume+dd;
-                if (volume >= 1)
-                {
-                    mediaElement.MediaPlayer.Volume = 1;
-                }
-                else
-                {
-                    mediaElement.MediaPlayer.Volume = dd;
-                }
+                SetVolume(volume);
                 //slider_V.Value += d;
             }
             txt_SSPosition.Text = "音量:" + mediaElement.MediaPlayer.Volume.ToString("P");
@@ -2878,5 +2875,19 @@ namespace BiliBili.UWP.Pages
             }
            
         }
+
+        private void SetVolume(double volume)
+        {
+            if (volume >= 1)
+                volume = 1;
+            if (volume <= 0)
+                volume = 0;
+            mediaElement.MediaPlayer.Volume = volume;
+            if (mediaPlayer_audio!=null)
+            {
+                mediaPlayer_audio.Volume = volume;
+            }
+        }
+
     }
 }

@@ -26,6 +26,7 @@ namespace BiliBili.UWP.Controls
 
             this.DefaultStyleKey = typeof(DanmakuMTC);
             VideoTitle = "";
+            Video360 = false;
             ShowDanmakuBtn = Visibility.Visible;
             ShowSendDanmaku = Visibility.Visible;
             ShowCoinsBtn = Visibility.Visible;

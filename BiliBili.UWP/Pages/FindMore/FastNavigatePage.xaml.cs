@@ -153,7 +153,11 @@ namespace BiliBili.UWP.Pages
                     MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(TimelinePage));
                     break;
                 case "sy":
-                    MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanTagPage));
+                    MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(Season.SeasonIndexPage), new Modules.Season.SeasonIndexParameter()
+                    {
+                        type = Modules.Season.IndexSeasonType.Anime
+                    });
+                    //MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanTagPage));
                     break;
                 case "rank":
                     MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(RankPage));

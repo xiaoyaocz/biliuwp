@@ -124,5 +124,50 @@ namespace BiliBili.UWP.Helper
 
             return saveOperation;
         }
+
+        public async Task<IAsyncOperationWithProgress<TranscodeFailureReason, double>> StartCompositionDashMedia(IList<StorageFile> inputFiles, StorageFile outFile, MediaEncodingProfile profile = null)
+        {
+            MediaComposition composition = new MediaComposition();
+
+            var clip = await MediaClip.CreateFromFileAsync(inputFiles.FirstOrDefault(x => x.Name == "video.m4s"));
+            composition.Clips.Add(clip);
+
+            var backgroundTrack = await BackgroundAudioTrack.CreateFromFileAsync(inputFiles.FirstOrDefault(x => x.Name == "audio.m4s"));
+            composition.BackgroundAudioTracks.Add(backgroundTrack);
+
+            IAsyncOperationWithProgress<TranscodeFailureReason, double> saveOperation = null;
+            if (profile != null)
+            {
+                saveOperation = composition.RenderToFileAsync(outFile, MediaTrimmingPreference.Fast, profile);
+            }
+            else
+            {
+                saveOperation = composition.RenderToFileAsync(outFile, MediaTrimmingPreference.Fast);
+            }
+            saveOperation.Progress = new AsyncOperationProgressHandler<TranscodeFailureReason, double>((info, progress) =>
+            {
+                ProcessingProgressChanged?.Invoke(this, progress);
+            });
+            saveOperation.Completed = new AsyncOperationWithProgressCompletedHandler<TranscodeFailureReason, double>((info, status) =>
+            {
+                if (status == AsyncStatus.Canceled)
+                {
+                    ProcessingCanceled?.Invoke(this, new EventArgs());
+                    return;
+                }
+                var results = info.GetResults();
+                if (results != TranscodeFailureReason.None || status != AsyncStatus.Completed)
+                {
+                    ProcessingError?.Invoke(this, "合并失败:未知错误");
+                }
+                else
+                {
+                    ProcessingCompleted?.Invoke(this, new EventArgs());
+                }
+            });
+
+            return saveOperation;
+        }
+
     }
 }

@@ -204,9 +204,12 @@ namespace BiliBili.UWP.Pages
                         //设置下载清晰度
                         if (model.result.episodes.Count != 0)
                         {
-
-                            var q = await download.GetSeasonQualitys(model.result.episodes[0].av_id.ToString(), model.result.episodes[0].danmaku.ToString(), model.result.episodes[0].season_type, ApiHelper.access_key, ApiHelper.GetUserId());
-                            cb_Qu.ItemsSource = q.data;
+                            var data = await PlayurlHelper.GetAnimeQualities(new PlayerModel() {
+                               Aid= model.result.episodes[0].av_id.ToString(), 
+                               Mid= model.result.episodes[0].danmaku.ToString(), 
+                               season_type= model.result.episodes[0].season_type
+                            });
+                            cb_Qu.ItemsSource = data.OrderByDescending(x=>x.qn).ToList();
                             cb_Qu.SelectedIndex = 0;
                         }
 
@@ -790,7 +793,7 @@ namespace BiliBili.UWP.Pages
             {
                 if (item.IsDowned == Visibility.Collapsed)
                 {
-                    var downloadUrl = await download.GetSeasonDownloadUrl(item.av_id.ToString(), item.danmaku.ToString(), _banId.ToInt32(), item.season_type, cb_Qu.SelectedItem as QualityInfo, ApiHelper.access_key, ApiHelper.GetUserId());
+                    var downloadUrl = await download.GetSeasonDownloadUrl(item.av_id.ToString(), item.danmaku.ToString(), _banId.ToInt32(), item.season_type, cb_Qu.SelectedItem as QualityModel, ApiHelper.access_key, ApiHelper.GetUserId());
                     if (!downloadUrl.success)
                     {
                         await new MessageDialog($"{item.index} {item.index_title}下载失败:{downloadUrl.message}").ShowAsync();

@@ -144,13 +144,13 @@
                                     <TextBlock FontSize="14" TextAlignment="Center">我的头衔</TextBlock>
                                 </StackPanel>
                             </Button>
-                            <Button x:Name="btn_Capsuletoy" Click="btn_Capsuletoy_Click" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#00000000" >
+                            <Button x:Name="btn_Capsuletoy" Click="btn_Capsuletoy_Click" Grid.Column="2" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#00000000" >
                                 <StackPanel>
                                     <Image Source="ms-appx:///Assets/LiveIcon/ic_live_center_gashapon.png" Width="36" Height="36"></Image>
                                     <TextBlock FontSize="14" TextAlignment="Center">扭蛋机</TextBlock>
                                 </StackPanel>
                             </Button>
-                            <Button x:Name="btn_Hjjv" Click="btn_Hjjv_Click" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#00000000" >
+                            <Button x:Name="btn_Hjjv" Click="btn_Hjjv_Click" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#00000000" >
                                 <StackPanel>
                                     <Image Source="ms-appx:///Assets/LiveIcon/ic_live_center_awards.png" Width="36" Height="36"></Image>
                                     <TextBlock FontSize="14" TextAlignment="Center">获奖记录</TextBlock>

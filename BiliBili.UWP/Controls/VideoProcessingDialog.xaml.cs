@@ -28,7 +28,7 @@ namespace BiliBili.UWP.Controls
         public StorageFolder storageFolder { get; set; }
         public StorageFile outFile { get; set; }
         public string ID { get; set; }
-        public VideoProcessingDialog(string id, string title, Windows.Storage.StorageFolder folder)
+        public VideoProcessingDialog(string id, string title,Windows.Storage.StorageFolder folder)
         {
             this.InitializeComponent();
             ID = id;
@@ -69,7 +69,7 @@ namespace BiliBili.UWP.Controls
                 try
                 {
                     var files = await storageFolder.GetFilesAsync();
-                    foreach (var item in files.Where(x => x.FileType == ".flv"))
+                    foreach (var item in files.Where(x => x.FileType == ".flv"||x.FileType==".m4s"))
                     {
                         try
                         {
@@ -116,7 +116,14 @@ namespace BiliBili.UWP.Controls
             var files = await storageFolder.GetFilesAsync();
             outFile = await storageFolder.CreateFileAsync("000.mp4", CreationCollisionOption.ReplaceExisting);
             statusText.Text = "正在合并视频...";
-            operationWithProgress = await mediaProcessing.StartCompositionMedia(files.Where(x => x.FileType == ".flv").OrderBy(x=>x.DisplayName).ToList(), outFile);
+            if (files.FirstOrDefault(x=>x.FileType==".m4s")!=null)
+            {
+                operationWithProgress = await mediaProcessing.StartCompositionDashMedia(files.Where(x => x.FileType == ".m4s").OrderBy(x => x.DisplayName).ToList(), outFile);
+            }
+            else
+            {
+                operationWithProgress = await mediaProcessing.StartCompositionMedia(files.Where(x => x.FileType == ".flv").OrderBy(x => x.DisplayName).ToList(), outFile);
+            }
 
         }
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

@@ -13,6 +13,7 @@
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="ms-appx:///Controls/Carousel/Carousel.xaml"/>
                 <ResourceDictionary Source="ms-appx:///Controls/RoundButton/RoundButton.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Controls/ScrollGridView/ScrollGridView.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
             <ResourceDictionary.ThemeDictionaries >

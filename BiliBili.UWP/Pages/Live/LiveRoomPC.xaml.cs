@@ -147,8 +147,7 @@ namespace BiliBili.UWP.Pages.Live
             }
         }
 
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             if (e.NavigationMode == NavigationMode.Back)
             {
@@ -162,8 +161,9 @@ namespace BiliBili.UWP.Pages.Live
                 {
                     dispRequest = null;
                 }
+                media.Stop();
             }
-            base.OnNavigatedFrom(e);
+            base.OnNavigatingFrom(e);
         }
 
         /// <summary>
@@ -605,7 +605,7 @@ namespace BiliBili.UWP.Pages.Live
         /// <summary>
         /// 读取最近10条弹幕
         /// </summary>
-        private async void LoadLastMsg()
+        private void LoadLastMsg()
         {
             //var last = await liveRoom.GetLastLiveMsg(roomId);
             //if (last.success)
@@ -1364,6 +1364,9 @@ namespace BiliBili.UWP.Pages.Live
         private async void btn_Refresh_Click(object sender, RoutedEventArgs e)
         {
             media.Stop();
+            _biliLiveDanmu.Dispose();
+            _biliLiveDanmu = new BiliLiveDanmu();
+            _biliLiveDanmu.HasDanmu += _biliLiveDanmu_HasDanmu;
             await LoadRoomInfo();
         }
         /// <summary>
@@ -1446,7 +1449,12 @@ namespace BiliBili.UWP.Pages.Live
         /// <param name="e"></param>
         private void media_MediaEnded(object sender, RoutedEventArgs e)
         {
-
+            if (playUrls==null)
+            {
+                Utils.ShowMessageToast("直播已结束，感谢收看");
+                grid_isStop.Visibility = Visibility.Visible;
+                return;
+            }
             var now = playUrls.FindIndex(x => x.url == media.Source);
             if (now == playUrls.Count - 1)
             {

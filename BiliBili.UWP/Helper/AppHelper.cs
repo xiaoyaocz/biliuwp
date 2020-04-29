@@ -84,7 +84,14 @@ namespace BiliBili.UWP.Helper
         {
             return verStr.Split('/')[0];
         }
-        public static string verStr = string.Format(@"Ver {0} 2020-04-23
+        public static string verStr = string.Format(@"Ver {0} 2020-04-29
+01、支持4K视频下载
+02、支持360°视频播放
+03、优化排行榜
+04、优化番剧索引
+05、修复直播的一些问题
+
+/Ver 3.9.77&3.9.78 2020-04-23
 01、支持4K(需要大会员及设置中打开使用DASH播放)
 02、更新LOGO
 03、支持自动跳转历史播放进度

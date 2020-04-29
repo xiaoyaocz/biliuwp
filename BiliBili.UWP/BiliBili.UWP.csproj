@@ -19,7 +19,7 @@
     <PackageCertificateKeyFile>BiliBili3_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <PackageCertificateThumbprint>AC8B442A2D5F51F15E53940F02E3B701D4C37FF7</PackageCertificateThumbprint>
     <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
@@ -212,13 +212,17 @@
   <ItemGroup>
     <Compile Include="Api\ApiRequest.cs" />
     <Compile Include="Api\ApiUtils.cs" />
+    <Compile Include="Api\Home\CinemaAPI.cs" />
     <Compile Include="Api\Home\HomeAPI.cs" />
     <Compile Include="Api\Home\HotAPI.cs" />
     <Compile Include="Api\Home\RecommendAPI.cs" />
+    <Compile Include="Api\Live\LiveCenterAPI.cs" />
     <Compile Include="Api\PlayerAPI.cs" />
     <Compile Include="Api\RankAPI.cs" />
     <Compile Include="Api\SearchAPI.cs" />
+    <Compile Include="Api\Season\SeasonIndexAPI.cs" />
     <Compile Include="Api\User\DynamicAPI.cs" />
+    <Compile Include="Api\User\FollowAPI.cs" />
     <Compile Include="Api\User\UserCenterAPI.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -265,6 +269,7 @@
       <DependentUpon>RepostDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RoundButton\RoundButton.cs" />
+    <Compile Include="Controls\ScrollGridView\ScrollGridView.cs" />
     <Compile Include="Controls\SendDanmakuDialog.xaml.cs">
       <DependentUpon>SendDanmakuDialog.xaml</DependentUpon>
     </Compile>
@@ -316,6 +321,8 @@
     <Compile Include="Modules\Home\RecommendVM.cs" />
     <Compile Include="Modules\Home\TopicVM.cs" />
     <Compile Include="Modules\LiveArea.cs" />
+    <Compile Include="Modules\Live\LiveCenterVM.cs" />
+    <Compile Include="Modules\Live\LiveWatchHistoryVM.cs" />
     <Compile Include="Modules\LiveCommand.cs" />
     <Compile Include="Modules\RankVM.cs" />
     <Compile Include="Modules\RelayCommand.cs" />
@@ -328,6 +335,7 @@
     <Compile Include="Modules\InteractionVideo.cs" />
     <Compile Include="Modules\LiveCenter.cs" />
     <Compile Include="Modules\LiveRoom.cs" />
+    <Compile Include="Modules\Season\SeasonIndexVM.cs" />
     <Compile Include="Modules\ToView.cs" />
     <Compile Include="Modules\UserCenterVM.cs" />
     <Compile Include="Pages\AddTagPage.xaml.cs">
@@ -362,6 +370,9 @@
     </Compile>
     <Compile Include="Pages\FindMore\FeedbackPage.xaml.cs">
       <DependentUpon>FeedbackPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Home\CinemaPage.xaml.cs">
+      <DependentUpon>CinemaPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Home\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -456,6 +467,9 @@
     <Compile Include="Pages\SearchV2Page.xaml.cs">
       <DependentUpon>SearchV2Page.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Season\SeasonIndexPage.xaml.cs">
+      <DependentUpon>SeasonIndexPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SubjectPage.xaml.cs">
       <DependentUpon>SubjectPage.xaml</DependentUpon>
     </Compile>
@@ -482,9 +496,6 @@
     </Compile>
     <Compile Include="Pages\BanInfoPage.xaml.cs">
       <DependentUpon>BanInfoPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Bangumi\BanTagPage.xaml.cs">
-      <DependentUpon>BanTagPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\BlankPage.xaml.cs">
       <DependentUpon>BlankPage.xaml</DependentUpon>
@@ -762,6 +773,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\ScrollGridView\ScrollGridView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SendDanmakuDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -815,6 +830,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\FindMore\FeedbackPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Home\CinemaPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -942,6 +961,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Season\SeasonIndexPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\SubjectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -975,10 +998,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\BanInfoPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Bangumi\BanTagPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

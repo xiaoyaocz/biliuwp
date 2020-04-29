@@ -106,13 +106,19 @@ namespace BiliBili.UWP.Helper
             }
             downloader.TransferGroup = group;
             //创建视频文件
+            var fileName = index.ToString("000");
             var filetype = ".flv";
             if (url.Url.Contains(".mp4"))
             {
                 filetype = ".mp4";
             }
-            StorageFile file = await folder.CreateFileAsync(index.ToString("000") + filetype, CreationCollisionOption.OpenIfExists);
-
+            if (url.Format=="dash")
+            {
+                filetype = ".m4s";
+                fileName = url.DashFileType;
+            }
+         
+            StorageFile file = await folder.CreateFileAsync(fileName + filetype, CreationCollisionOption.OpenIfExists);
             DownloadOperation downloadOp = downloader.CreateDownload(new Uri(url.Url), file);
             //设置下载策略
             if (SettingHelper.Get_Use4GDown())
@@ -333,7 +339,8 @@ namespace BiliBili.UWP.Helper
                     title = m.epTitle,
                     cid = m.cid,
                     path = folder.Path,
-                    epid = m.epid
+                    epid = m.epid,
+                    is_dash=m.is_dash
                 };
 
                 var infoJson = JsonConvert.SerializeObject(downloadVideonInfoModel);
@@ -477,7 +484,7 @@ namespace BiliBili.UWP.Helper
                             {
 
                                 var flag = false;
-                                var files = (await item1.GetFilesAsync()).Where(x => x.FileType == ".mp4" || x.FileType == ".flv");
+                                var files = (await item1.GetFilesAsync()).Where(x => x.FileType == ".mp4" || x.FileType == ".flv" || x.FileType == ".m4s");
                                 if (files.Count() != 0)
                                 {
                                     //DownloadHelper2.GetFileSize(x.Path).Result
@@ -549,6 +556,7 @@ namespace BiliBili.UWP.Helper
         public int epIndex { get; set; }
         public string epTitle { get; set; }
         public int quality { get; set; }
+        public bool is_dash { get; set; }
     }
     public class DownloadVideonInfoModel
     {
@@ -564,6 +572,7 @@ namespace BiliBili.UWP.Helper
         public string path { get; set; }
         public string epid { get; set; }
         public int index { get; set; }
+        public bool is_dash { get; set; } = false;
     }
 
 }
