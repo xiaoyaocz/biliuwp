@@ -17,6 +17,9 @@ using Newtonsoft.Json.Linq;
 using Windows.UI.Xaml.Media.Imaging;
 using BiliBili.UWP.Helper;
 using System.Text.RegularExpressions;
+using BiliBili.UWP.Modules.AccountModels;
+using System.Threading.Tasks;
+using System.Timers;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“内容对话框”项模板
 
@@ -52,7 +55,7 @@ namespace BiliBili.UWP.Controls
             UserManage.Logout();
             this.Hide();
         }
-       
+
         private async void _biliapp_ValidateLoginEvent(object sender, string e)
         {
             try
@@ -66,8 +69,8 @@ namespace BiliBili.UWP.Controls
                         this.Hide();
                         if (cb_AuthBP.IsChecked.Value)
                         {
-                            var auth=await Account.AuthBiliPlus();
-                            if (auth=="")
+                            var auth = await Account.AuthBiliPlus();
+                            if (auth == "")
                             {
                                 Utils.ShowMessageToast("登录成功,但BiliPlus授权失败");
                             }
@@ -151,7 +154,7 @@ namespace BiliBili.UWP.Controls
                 case Modules.LoginStatus.NeedValidate:
                     Title = "安全验证";
                     webView.Visibility = Visibility.Visible;
-                    webView.Source = new Uri(results.url.Replace("&ticket=1",""));
+                    webView.Source = new Uri(results.url.Replace("&ticket=1", ""));
                     break;
                 default:
                     break;
@@ -213,7 +216,7 @@ namespace BiliBili.UWP.Controls
             {
                 LogHelper.WriteLog("登录WebView设置JSBridge失败", LogType.ERROR, ex);
             }
-          
+
         }
 
         private void webView_ScriptNotify(object sender, NotifyEventArgs e)
@@ -234,11 +237,11 @@ namespace BiliBili.UWP.Controls
 
         private async void WebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
         {
-            if (args.Uri.AbsoluteUri== "https://passport.bilibili.com/ajax/miniLogin/redirect")
+            if (args.Uri.AbsoluteUri == "https://passport.bilibili.com/ajax/miniLogin/redirect")
             {
-                var results= await WebClientClass.GetResults(new Uri("https://passport.bilibili.com/login/app/third?appkey=27eb53fc9058f8c3&api=http%3A%2F%2Flink.acg.tv%2Fforum.php&sign=67ec798004373253d60114caaad89a8c"));
+                var results = await WebClientClass.GetResults(new Uri("https://passport.bilibili.com/login/app/third?appkey=27eb53fc9058f8c3&api=http%3A%2F%2Flink.acg.tv%2Fforum.php&sign=67ec798004373253d60114caaad89a8c"));
                 var obj = JObject.Parse(results);
-                if (obj["code"].ToInt32()==0)
+                if (obj["code"].ToInt32() == 0)
                 {
                     webView.Navigate(new Uri(obj["data"]["confirm_uri"].ToString()));
                 }
@@ -248,11 +251,90 @@ namespace BiliBili.UWP.Controls
                 }
                 return;
             }
-            
+
 
 
         }
-   
-    
+
+        private async void btnQRLogin_Click(object sender, RoutedEventArgs e)
+        {
+            pwdLogin.Visibility = Visibility.Collapsed;
+            qrLogin.Visibility = Visibility.Visible;
+            await GetQRAuthInfo();
+        }
+        bool qr_loading = false;
+        QRAuthInfo authInfo;
+        Timer timer;
+        private async Task GetQRAuthInfo()
+        {
+            try
+            {
+                qr_loading = true;
+                if (timer != null)
+                {
+                    timer.Stop();
+                    timer.Dispose();
+                }
+                var result = await account.GetQRAuthInfo();
+                if (result.success)
+                {
+                    authInfo = result.data;
+                    ZXing.BarcodeWriter barcodeWriter = new ZXing.BarcodeWriter();
+                    barcodeWriter.Format = ZXing.BarcodeFormat.QR_CODE;
+                    barcodeWriter.Options = new ZXing.Common.EncodingOptions()
+                    {
+                        Margin = 1,
+                        Height = 200,
+                        Width = 200
+                    };
+                    var img = barcodeWriter.Write(authInfo.url);
+                    imgQR.Source = img;
+                    timer = new Timer();
+                    timer.Interval = 3000;
+                    timer.Elapsed += Timer_Elapsed;
+                    timer.Start();
+                }
+                else
+                {
+                    Utils.ShowMessageToast(result.message);
+                }
+                qr_loading = false;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog("读取和加载登录二维码失败", LogType.ERROR, ex);
+                Utils.ShowMessageToast("加载二维码失败");
+            }
+
+        }
+
+        private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+
+            await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
+               async () =>
+                {
+                    var result = await account.PollQRAuthInfo(authInfo.auth_code);
+                    if (result.status == Modules.LoginStatus.Success)
+                    {
+                        timer.Stop();
+                        this.Hide();
+                    }
+                });
+
+        }
+
+        private void btnPasswordLogin_Click(object sender, RoutedEventArgs e)
+        {
+            pwdLogin.Visibility = Visibility.Visible;
+            qrLogin.Visibility = Visibility.Collapsed;
+        }
+
+        private async void btnRefreshQR_Click(object sender, RoutedEventArgs e)
+        {
+            if (qr_loading)
+                return;
+            await GetQRAuthInfo();
+        }
     }
 }

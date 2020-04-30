@@ -22,9 +22,13 @@ namespace BiliBili.UWP.Modules
     public class Account : IModules
     {
         readonly UserCenterAPI userCenterAPI;
+        readonly LoginAPI loginAPI;
+        string guid = "";
         public Account()
         {
             userCenterAPI = new UserCenterAPI();
+            loginAPI = new LoginAPI();
+            guid = Guid.NewGuid().ToString();
         }
         public static MyInfoModel myInfo;
 
@@ -555,7 +559,101 @@ namespace BiliBili.UWP.Modules
             }
 
         }
+        /// <summary>
+        /// 获取二维码登录信息
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ReturnModel<QRAuthInfo>> GetQRAuthInfo()
+        {
+            try
+            {
+                var result =await loginAPI.QRLoginAuthCode(guid).Request();
+                if (result.status)
+                {
+                    var data =await result.GetData<QRAuthInfo>();
+                    if (data.success)
+                    {
+                        return new ReturnModel<QRAuthInfo>()
+                        {
+                            success=true,
+                            data= data.data
+                        };
+                    }
+                    else
+                    {
+                        return new ReturnModel<QRAuthInfo>()
+                        {
+                            success = false,
+                            message = data.message
+                        };
 
+                    }
+                }
+                else
+                {
+                    return new ReturnModel<QRAuthInfo>()
+                    {
+                        success = false,
+                        message = result.message
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return HandelError<QRAuthInfo>(ex);
+            }
+        }
+        /// <summary>
+        /// 轮询二维码扫描信息
+        /// </summary>
+        /// <returns></returns>
+        public async Task<LoginCallbackModel> PollQRAuthInfo(string auth_code)
+        {
+            try
+            {
+                var result = await loginAPI.QRLoginPoll(auth_code,guid).Request();
+                if (result.status)
+                {
+                    var data = await result.GetData<Token_info>();
+                    if (data.success)
+                    {
+                        SettingHelper.Set_Access_key(data.data.access_token);
+                        SettingHelper.Set_Refresh_Token(data.data.refresh_token);
+                        SettingHelper.Set_LoginExpires(DateTime.Now.AddSeconds(data.data.expires_in));
+                        SettingHelper.Set_UserID(data.data.expires_in);
+                        await SSO(data.data.access_token);
+                        MessageCenter.SendLogined();
+                        return new LoginCallbackModel() { 
+                            status= LoginStatus.Success,
+                            message= ""
+                        };
+                    }
+                    else
+                    {
+                        return new LoginCallbackModel()
+                        {
+                            status = LoginStatus.Fail,
+                            message = data.message
+                        };
+
+                    }
+                }
+                else
+                {
+                    return new LoginCallbackModel() { 
+                        status= LoginStatus.Fail,
+                        message= result.message
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new LoginCallbackModel() { 
+                    status= LoginStatus.Fail,
+                    message=ex.Message
+                };
+            }
+        }
     }
     public enum LoginStatus
     {
@@ -825,5 +923,11 @@ namespace BiliBili.UWP.Modules
         }
 
 
+        public class QRAuthInfo
+        {
+            public string url { get; set; }
+            public string auth_code { get; set; }
+        }
+      
     }
 }

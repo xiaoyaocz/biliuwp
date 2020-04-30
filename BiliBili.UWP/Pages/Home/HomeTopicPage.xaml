@@ -234,7 +234,7 @@
     </Page.Resources>
     <Grid >
         <ScrollViewer VerticalScrollBarVisibility="Auto" >
-            <ItemsControl  MaxWidth="800"  HorizontalAlignment="Center" ItemTemplateSelector="{StaticResource selector}" 
+            <ItemsControl  MaxWidth="1080"  HorizontalAlignment="Center" ItemTemplateSelector="{StaticResource selector}" 
                           ItemsSource="{x:Bind Path=topicVM.Detail.item,Mode=OneWay}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

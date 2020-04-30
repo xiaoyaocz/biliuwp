@@ -223,6 +223,7 @@
     <Compile Include="Api\Season\SeasonIndexAPI.cs" />
     <Compile Include="Api\User\DynamicAPI.cs" />
     <Compile Include="Api\User\FollowAPI.cs" />
+    <Compile Include="Api\User\LoginAPI.cs" />
     <Compile Include="Api\User\UserCenterAPI.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
