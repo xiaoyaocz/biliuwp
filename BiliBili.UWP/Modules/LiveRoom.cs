@@ -513,7 +513,7 @@ namespace BiliBili.UWP.Modules
 
                 string sendText = $"cid={roomid}&mid={ApiHelper.GetUserId()}&msg={text}&rnd={ApiHelper.GetTimeSpan}&mode=1&pool=0&type=json&color=16777215&fontsize=25&playTime=0.0";
 
-                var url = $" https://api.live.bilibili.com/api/sendmsg?access_key={ApiHelper.access_key}&actionKey=appkey&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&device=android&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
+                var url = $"https://api.live.bilibili.com/api/sendmsg?access_key={ApiHelper.access_key}&actionKey=appkey&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&device=android&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
                 url += "&sign=" + ApiHelper.GetSign(url);
                 string result = await WebClientClass.PostResults(new Uri(url), sendText);
                 JObject jb = JObject.Parse(result);

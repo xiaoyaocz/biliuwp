@@ -159,7 +159,7 @@ namespace BiliBili.UWP.Modules
                 string url = "https://passport.bilibili.com/api/v3/oauth2/login";
                 var pwd = Uri.EscapeDataString(await EncryptedPassword(password));
 
-                string data = $"username={username}&password={pwd}&gee_type=10&appkey={ApiHelper.AndroidKey.Appkey}&mobi_app=android_comic&platform=android&ts={ApiHelper.GetTimeSpan}";
+                string data = $"username={Uri.EscapeDataString(username)}&password={pwd}&gee_type=10&appkey={ApiHelper.AndroidKey.Appkey}&mobi_app=android&platform=android&ts={ApiHelper.GetTimeSpan}";
                 data += "&sign=" + ApiHelper.GetSign(data);
                 var results = await WebClientClass.PostResults(new Uri(url), data);
                 var m = JsonConvert.DeserializeObject<AccountLoginModel>(results);
