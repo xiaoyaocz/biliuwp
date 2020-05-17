@@ -10,7 +10,7 @@
 * [最新版本](https://github.com/xiaoyaocz/biliuwp/releases)
 
 ### 注意
-* 弹幕使用的我的另一个项目[NSDanmaku](https://github.com/xiaoyaocz/NSDanmaku)，需要单独引用
+* 弹幕使用的我的另一个项目[NSDanmaku](https://github.com/xiaoyaocz/NSDanmaku)，~~需要单独引用~~
 * 该项目现在不能很好兼容Win10 Mobile(~~额..应该没人用了吧~~)
 
 ### 引用及参考
