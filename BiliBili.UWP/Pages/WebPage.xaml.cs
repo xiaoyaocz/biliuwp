@@ -413,7 +413,7 @@ namespace BiliBili.UWP.Pages
         {
             try
             {
-                if (args.Uri.AbsoluteUri.Contains("23344273.aspx"))
+                if (args.Uri!=null&&args.Uri.AbsoluteUri.Contains("23344273.aspx"))
                 {
                     string appVer = SettingHelper.GetVersion();
                  

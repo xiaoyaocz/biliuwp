@@ -42,6 +42,15 @@
                 </Grid>
                 
                 <TextBlock TextAlignment="Center" FontWeight="Bold" Margin="0 2 0 0" Text="{x:Bind Path=userCenterVM.UserCenterDetail.card.name,Mode=OneWay}"></TextBlock>
+                <Grid Visibility="{x:Bind Path=userCenterVM.UserCenterDetail.card.showPrInfo,Mode=OneWay}" HorizontalAlignment="Center" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE814;"  Foreground="Orange"/>
+                    <TextBlock Text="{x:Bind Path=userCenterVM.UserCenterDetail.card.pr_info.content,Mode=OneWay}" Margin="4 0 0 0" VerticalAlignment="Center" Grid.Column="1" Foreground="Orange"></TextBlock>
+                </Grid>
+                
                 <StackPanel Margin="0 2 0 0" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Border Visibility="{x:Bind Path=userCenterVM.UserCenterDetail.card.isVip,Mode=OneWay}" Margin="4,0"  CornerRadius="4"  Background="#FFFFC937">
                         <TextBlock  Foreground="White" Margin="4,2" FontSize="12" Text="{x:Bind Path=userCenterVM.UserCenterDetail.card.vip.vipText,Mode=OneWay}"></TextBlock>

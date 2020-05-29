@@ -1161,7 +1161,7 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <Viewbox x:Name="ContentViewbox"  AutomationProperties.AccessibilityView="Raw" HorizontalAlignment="Stretch" Height="{ThemeResource AppBarButtonContentHeight}" Margin="0,16,0,4">
+                                    <Viewbox x:Name="ContentViewbox"  AutomationProperties.AccessibilityView="Raw" HorizontalAlignment="Stretch" Height="16" Margin="0,16,0,4">
                                         <ContentPresenter x:Name="Content" Content="{TemplateBinding Icon}" Foreground="{TemplateBinding Foreground}"/>
                                     </Viewbox>
                                     <TextBlock x:Name="TextLabel" AutomationProperties.AccessibilityView="Raw" FontFamily="{TemplateBinding FontFamily}" Foreground="{TemplateBinding Foreground}" FontSize="12" Margin="{ThemeResource AppBarButtonTextLabelMargin}" Grid.Row="1" Text="{TemplateBinding Label}" TextWrapping="Wrap" TextAlignment="Center"/>

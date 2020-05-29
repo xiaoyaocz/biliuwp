@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -31,20 +32,19 @@ namespace BiliBili.UWP.Pages.User
         public UserCenterPage()
         {
             this.InitializeComponent();
-            NavigationCacheMode = NavigationCacheMode.Required;
+            NavigationCacheMode = NavigationCacheMode.Enabled;
             account = new Modules.Account();
         }
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (e.NavigationMode == NavigationMode.New|| userCenterVM==null)
+            if (e.NavigationMode == NavigationMode.New|| e.NavigationMode == NavigationMode.Back)
             {
-                if (e.Parameter==null)
+                if (e.Parameter == null)
                 {
                     mid = ApiHelper.GetUserId();
-                   
                 }
-                else if(e.Parameter is object[])
+                else if (e.Parameter is object[])
                 {
                     mid = (e.Parameter as object[])[0].ToString();
                 }
@@ -52,10 +52,19 @@ namespace BiliBili.UWP.Pages.User
                 {
                     mid = e.Parameter.ToString();
                 }
-                userCenterVM = new Modules.UserCenterVM(mid);
-                this.DataContext = userCenterVM;
-                await userCenterVM.GetUserDetail();
-               
+                if (userCenterVM == null)
+                {
+                    userCenterVM = new Modules.UserCenterVM(mid);
+                    await userCenterVM.GetUserDetail();
+                }
+                else if (userCenterVM.mid != mid)
+                {
+                    userCenterVM.mid = mid;
+                    userCenterVM.is_self = mid == ApiHelper.GetUserId();
+                    userCenterVM.UserCenterDetail = null;
+                    userCenterVM.SubmitVideos.Clear();
+                    await userCenterVM.GetUserDetail();
+                }
             }
         }
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -78,7 +87,7 @@ namespace BiliBili.UWP.Pages.User
 
         private async void btnAddFollow_Click(object sender, RoutedEventArgs e)
         {
-            var result=await account.Follow(mid);
+            var result = await account.Follow(mid);
             if (result.success)
             {
                 userCenterVM.UserCenterDetail.relation = 1;
@@ -100,7 +109,7 @@ namespace BiliBili.UWP.Pages.User
             {
                 Utils.ShowMessageToast(result.message);
             }
-           
+
         }
 
         private void btnEditProfile_Click(object sender, RoutedEventArgs e)

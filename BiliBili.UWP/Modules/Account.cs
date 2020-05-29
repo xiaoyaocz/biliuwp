@@ -620,7 +620,7 @@ namespace BiliBili.UWP.Modules
                         SettingHelper.Set_Access_key(data.data.access_token);
                         SettingHelper.Set_Refresh_Token(data.data.refresh_token);
                         SettingHelper.Set_LoginExpires(DateTime.Now.AddSeconds(data.data.expires_in));
-                        SettingHelper.Set_UserID(data.data.expires_in);
+                        SettingHelper.Set_UserID(data.data.mid);
                         await SSO(data.data.access_token);
                         MessageCenter.SendLogined();
                         return new LoginCallbackModel() { 

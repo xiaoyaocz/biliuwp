@@ -74,7 +74,7 @@ namespace BiliBili.UWP.Pages
 
             error.Visibility = Visibility.Collapsed;
             var _id = (e.Parameter as object[])[0].ToString();
-            if (int.TryParse(_id,out var aid))
+            if (int.TryParse(_id, out var aid))
             {
                 txt_Header.Text = $"AV{_id}";
                 _aid = _id;
@@ -82,7 +82,7 @@ namespace BiliBili.UWP.Pages
             }
             else
             {
-                if (_id.Substring(0,2).ToUpper()!="BV")
+                if (_id.Substring(0, 2).ToUpper() != "BV")
                 {
                     _id = "BV" + _id;
                 }
@@ -94,7 +94,7 @@ namespace BiliBili.UWP.Pages
             await GetFavBox();
             await LoadVideo();
 
-            
+
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -115,7 +115,7 @@ namespace BiliBili.UWP.Pages
                 isMovie = false;
                 tag.Children.Clear();
                 pr_Load.Visibility = Visibility.Visible;
-                string uri = $"https://app.bilibili.com/x/v2/view?access_key={ ApiHelper.access_key }&{(isBVID? $"bvid={_bvid}": $"aid={_aid}") }&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&plat=0&platform=android&ts={ApiHelper.GetTimeSpan}";
+                string uri = $"https://app.bilibili.com/x/v2/view?access_key={ ApiHelper.access_key }&{(isBVID ? $"bvid={_bvid}" : $"aid={_aid}") }&appkey={ApiHelper.AndroidKey.Appkey}&build={ApiHelper.build}&mobi_app=android&plat=0&platform=android&ts={ApiHelper.GetTimeSpan}";
                 uri += "&sign=" + ApiHelper.GetSign(uri);
                 string results = await WebClientClass.GetResults(new Uri(uri));
 
@@ -180,10 +180,18 @@ namespace BiliBili.UWP.Pages
                     {
                         Utils.ShowMessageToast("这是一个互动视频，你的选项会决定剧情走向哦", 5000);
                     }
-
+                    if (!string.IsNullOrEmpty(m.data.argue_msg))
+                    {
+                        Argue_msg.Visibility = Visibility.Visible;
+                        txtArgue_msg.Text = m.data.argue_msg;
+                    }
+                    else
+                    {
+                        Argue_msg.Visibility = Visibility.Collapsed;
+                    }
                     //m.data.pages
                     gv_Play.SelectedIndex = 0;
-                    if (m.data.req_user.attention != 1)
+                    if (m.data.req_user!=null&&m.data.req_user.attention != 1)
                     {
                         btn_AttUp.Visibility = Visibility.Visible;
                         btn_CancelAttUp.Visibility = Visibility.Collapsed;
@@ -263,11 +271,12 @@ namespace BiliBili.UWP.Pages
                     }
                     if (m.data.pages != null && m.data.pages.Count != 0)
                     {
-                        var qualitys = await PlayurlHelper.GetVideoQualities(new PlayerModel() { 
-                            Aid= _aid,
-                            Mid= m.data.pages[0].cid.ToString()
+                        var qualitys = await PlayurlHelper.GetVideoQualities(new PlayerModel()
+                        {
+                            Aid = _aid,
+                            Mid = m.data.pages[0].cid.ToString()
                         });
-                        cb_Qu.ItemsSource = qualitys.OrderByDescending(x=>x.qn).ToList();
+                        cb_Qu.ItemsSource = qualitys.OrderByDescending(x => x.qn).ToList();
                         if (qualitys.Count != 0)
                         {
                             cb_Qu.SelectedIndex = 0;
@@ -277,7 +286,7 @@ namespace BiliBili.UWP.Pages
                     if (m.data.history != null)
                     {
                         var record = SqlHelper.GetVideoWatchRecord(m.data.history.cid.ToString());
-                        
+
                         if (record == null)
                         {
                             SqlHelper.AddVideoWatchRecord(new ViewPostHelperClass()
@@ -292,10 +301,10 @@ namespace BiliBili.UWP.Pages
                             record.Post = m.data.history.progress;
                             SqlHelper.UpdateVideoWatchRecord(record);
                         }
-                        if (m.data.pages!=null&&m.data.pages.Count>1)
+                        if (m.data.pages != null && m.data.pages.Count > 1)
                         {
                             var episode = m.data.pages.FirstOrDefault(x => x.cid == m.data.history.cid);
-                            if (episode!=null)
+                            if (episode != null)
                             {
                                 last_view.Text = $"上次看到P{episode.page},点击继续播放";
                                 last_view.Tag = m.data.history.cid;
@@ -420,13 +429,13 @@ namespace BiliBili.UWP.Pages
 
         private void comment_OpenUser(string id)
         {
-            this.Frame.Navigate(typeof(UserCenterPage), id );
+            this.Frame.Navigate(typeof(UserCenterPage), id);
         }
 
         private void btn_UP_Click(object sender, RoutedEventArgs e)
         {
             VideoInfoModels info = (sender as HyperlinkButton).DataContext as VideoInfoModels;
-            this.Frame.Navigate(typeof(UserCenterPage),  info.owner.mid );
+            this.Frame.Navigate(typeof(UserCenterPage), info.owner.mid);
         }
 
         private async void btn_AttUp_Click(object sender, RoutedEventArgs e)
@@ -778,7 +787,7 @@ namespace BiliBili.UWP.Pages
                         thumb = (this.DataContext as VideoInfoModels).pic,
                         quality = cb_Qu.SelectedIndex + 1,
                         title = (this.DataContext as VideoInfoModels).title,
-                        is_dash= downloadUrl.data[0].Format== "dash"
+                        is_dash = downloadUrl.data[0].Format == "dash"
                     }, downloadUrl.data);
                 }
                 i++;
@@ -1187,7 +1196,7 @@ namespace BiliBili.UWP.Pages
         private void Gv_Staff_ItemClick(object sender, ItemClickEventArgs e)
         {
             var data = e.ClickedItem as staffModel;
-            this.Frame.Navigate(typeof(UserCenterPage),data.mid );
+            this.Frame.Navigate(typeof(UserCenterPage), data.mid);
         }
 
         private void Txt_desc_RightTapped(object sender, RightTappedRoutedEventArgs e)
@@ -1261,7 +1270,7 @@ namespace BiliBili.UWP.Pages
 
         private void openLastWatch_Click(object sender, RoutedEventArgs e)
         {
-            var info = (gv_Play.ItemsSource as List<pagesModel>).FirstOrDefault(x=>x.cid==(long)last_view.Tag);
+            var info = (gv_Play.ItemsSource as List<pagesModel>).FirstOrDefault(x => x.cid == (long)last_view.Tag);
             OpenPlayer(info);
         }
         private void OpenPlayer(pagesModel info)

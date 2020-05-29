@@ -31,7 +31,7 @@
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">离线缓存</TextBlock>
-           
+
         </Grid>
         <Pivot Grid.Row="1">
             <PivotItem Margin="0">
@@ -185,47 +185,76 @@
                         <ItemsControl x:Name="list_Downed" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <ListView  SelectionMode="None" ItemClick="ListView_ItemClick" ItemsSource="{Binding videolist}" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                                        <ListView.Header>
-
-                                            <Grid  Margin="12 4">
+                                    <Grid Background="{ThemeResource  Bili-List-Background}" Margin="0 0 0 8">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition  Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid>
+                                            <Grid  Margin="8 4">
                                                 <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
                                                     <ColumnDefinition/>
                                                     <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition Width="auto"/>
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock VerticalAlignment="Center"  TextWrapping="Wrap" Text="{Binding title}"></TextBlock>
-                                                <HyperlinkButton x:Name="hy_UpdateDM" Click="hy_UpdateDM_Click" Grid.Column="1" Margin="8 0">更新弹幕</HyperlinkButton>
-                                                <HyperlinkButton x:Name="hy_View" Click="hy_View_Click" Grid.Column="2" Margin="8 0">查看</HyperlinkButton>
-                                                <HyperlinkButton x:Name="hy_Delete" Click="hy_Delete_Click" Grid.Column="3">删除</HyperlinkButton>
+                                                <Image Width="80" Source="{Binding thumb_img}" Margin="0 0 8 0"></Image>
+
+                                                <StackPanel Grid.Column="1" >
+                                                    <TextBlock TextWrapping="Wrap" MaxLines="2" Text="{Binding title}"></TextBlock>
+                                                    <TextBlock TextWrapping="Wrap" Foreground="Gray" Margin="0 4 0 0">视频数量:<Run Text="{Binding Path=videolist.Count}"></Run></TextBlock>
+                                                </StackPanel>
+
+                                                <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                                    <AppBarButton Width="48" Height="48" Icon="More">
+                                                        <AppBarButton.Flyout>
+                                                            <MenuFlyout>
+                                                                <MenuFlyoutItem Click="hy_UpdateDM_Click" >更新弹幕</MenuFlyoutItem>
+                                                                <MenuFlyoutItem  Click="hy_View_Click">查看</MenuFlyoutItem>
+                                                                <MenuFlyoutItem Click="hy_Delete_Click">删除</MenuFlyoutItem>
+                                                            </MenuFlyout>
+                                                        </AppBarButton.Flyout>
+                                                    </AppBarButton>
+                                                    <AppBarButton Visibility="{Binding Path=expand,Mode=OneWay,Converter={StaticResource display}}" Width="48" Height="48" x:Name="btnExpand" Click="btnExpand_Click">
+                                                        <AppBarButton.Icon>
+                                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE011;" />
+                                                        </AppBarButton.Icon>
+                                                    </AppBarButton>
+                                                    <AppBarButton Visibility="{Binding Path=expand,Mode=OneWay}" Width="48" Height="48"  Click="btnExpand_Click">
+                                                        <AppBarButton.Icon>
+                                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE010;" />
+                                                        </AppBarButton.Icon>
+                                                    </AppBarButton>
+                                                </StackPanel>
+
                                             </Grid>
+                                        </Grid>
 
-                                        </ListView.Header>
-                                        <ListView.ItemContainerStyle>
-                                            <Style TargetType="ListViewItem">
+                                        <ListView SelectionMode="None" MaxHeight="{Binding Path=maxheight,Mode=OneWay}" Grid.Row="1" ItemClick="ListView_ItemClick" ItemsSource="{Binding videolist}" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
 
-                                                <Setter Property="BorderBrush" Value="#FFCBCBCB"/>
-                                                <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"/>
-                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                                <Setter Property="Padding" Value="0"/>
-                                                <Setter Property="Margin" Value="8 4"/>
-                                            </Style>
-                                        </ListView.ItemContainerStyle>
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid Holding="Grid_Holding" RightTapped="Grid_RightTapped">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Padding="8 0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="{Binding eptitle}"></TextBlock>
-                                                    <AppBarButton Grid.Column="1"  Width="48" Height="48" Icon="More" Flyout="{StaticResource menu}"></AppBarButton>
-                                                </Grid>
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
 
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
+                                                    <Setter Property="BorderBrush" Value="#FFCBCBCB"/>
+                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                                    <Setter Property="Padding" Value="0"/>
+                                                    <Setter Property="Margin" Value="8 0"/>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Holding="Grid_Holding" RightTapped="Grid_RightTapped">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Padding="8 0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="{Binding eptitle}"></TextBlock>
+                                                        <AppBarButton Grid.Column="1"  Width="48" Height="48" Icon="More" Flyout="{StaticResource menu}"></AppBarButton>
+                                                    </Grid>
+
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -238,7 +267,7 @@
                     <CommandBar Grid.Row="1"  Foreground="White" Background="{ThemeResource Bili-ForeColor}" >
                         <AppBarButton Icon="Refresh" x:Name="btn_Refresh" Click="btn_Refresh_Click" Foreground="White" Label="刷新"></AppBarButton>
                         <AppBarButton Icon="CellPhone" x:Name="btn_SendToPhone" Visibility="Collapsed" Click="btn_SendToPhone_Click" Foreground="White" Label="发送到手机"></AppBarButton>
-                      
+
                     </CommandBar>
                 </Grid>
 

@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="BiliBili.UWP.Pages.VideoDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource Bili-Background}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="grid_top" Background="{ThemeResource Bili-ForeColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <AppBarButton x:Name="btn_Back"  Icon="Back" Foreground="White" Width="48" Height="48">
+            </AppBarButton>
+            <TextBlock x:Name="txt_Header" Grid.Column="1" Margin="8 0" VerticalAlignment="Center" Foreground="White">AV</TextBlock>
+            <StackPanel Grid.Column="1">
+                <AppBarButton></AppBarButton>
+            </StackPanel>
+        </Grid>
+        <Pivot Grid.Row="1">
+            <PivotItem Header="视频"></PivotItem>
+            <PivotItem Header="评论"></PivotItem>
+            <PivotItem Header="充电"></PivotItem>
+            <PivotItem Header="推荐"></PivotItem>
+        </Pivot>
+       
+    </Grid>
+</Page>

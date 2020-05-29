@@ -28,6 +28,7 @@ namespace BiliBili.UWP.Models
         public int tid { get; set; }
         public string tname { get; set; }
         public string redirect_url { get; set; }
+        public string argue_msg { get; set; }
         public ownerModel owner { get; set; }
         public owner_extModel owner_ext { get; set; }
         public List<pagesModel> pages { get; set; }
@@ -55,7 +56,7 @@ namespace BiliBili.UWP.Models
         {
             get
             {
-                DateTime dtStart = new DateTime(1970, 1, 1,0,0,0);
+                DateTime dtStart = new DateTime(1970, 1, 1, 0, 0, 0);
                 long lTime = long.Parse(pubdate + "0000000");
                 //long lTime = long.Parse(textBox1.Text);
                 TimeSpan toNow = new TimeSpan(lTime);
@@ -129,7 +130,7 @@ namespace BiliBili.UWP.Models
         private string _face;
         public string face
         {
-            get { return _face+"@100w.jpg"; }
+            get { return _face + "@100w.jpg"; }
             set { _face = value; }
         }
         public string name { get; set; }
@@ -159,14 +160,14 @@ namespace BiliBili.UWP.Models
             }
         }
 
-       
+
 
     }
     public class official_verify
     {
         public string desc { get; set; }
         public int type { get; set; }
-        
+
     }
     public class ActorModel
     {
@@ -326,20 +327,22 @@ namespace BiliBili.UWP.Models
         public string link { get; set; }
         public string page { get; set; }
         public string part { get; set; }
-       public int duration { get; set; }
+        public int duration { get; set; }
         public string View
         {
-            get {
-                if (part.Length==0)
+            get
+            {
+                if (part.Length == 0)
                 {
                     return page;
                 }
                 else
                 {
-                    return page+" "+part;
+                    return page + " " + part;
                 }
-               
-            } }
+
+            }
+        }
         public string rich_vid { get; set; }
         public string vid { get; set; }
         public string weblink { get; set; }
@@ -347,7 +350,7 @@ namespace BiliBili.UWP.Models
         {
             get
             {
-               
+
                 if (DownloadHelper2.downloadeds.ContainsKey(cid.ToString()))
                 {
                     return Visibility.Visible;
@@ -362,7 +365,7 @@ namespace BiliBili.UWP.Models
         {
             get
             {
-                if (SqlHelper.GetVideoWatchRecord(cid.ToString())!=null)
+                if (SqlHelper.GetVideoWatchRecord(cid.ToString()) != null)
                 {
                     return new SolidColorBrush(Colors.Gray);
                 }
@@ -380,8 +383,8 @@ namespace BiliBili.UWP.Models
         public long coin { get; set; }
         public long danmaku { get; set; }
         public long favorite { get; set; }
-       // public int his_rank { get; set; }
-       // public int now_rank { get; set; }
+        // public int his_rank { get; set; }
+        // public int now_rank { get; set; }
         public long reply { get; set; }
         public long share { get; set; }
         public long view { get; set; }
@@ -446,15 +449,18 @@ namespace BiliBili.UWP.Models
             }
         }
     }
-   
+
     public class req_userModel
     {
-       public int attention { get; set; }
+        public int attention { get; set; }
         public int favorite { get; set; }
+        public int like { get; set; }
+        public int coin { get; set; }
+        public int dislike { get; set; }
     }
     public class rightsModel
     {
-       public int bp { get; set; }
+        public int bp { get; set; }
         public int download { get; set; }
         public int elec { get; set; }
         public int hd5 { get; set; }

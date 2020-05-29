@@ -80,6 +80,8 @@ namespace BiliBili.UWP.Views
                 //{
                 //    btnOpenInstallHEVC.Visibility = Visibility.Collapsed;
                 //}
+                sw_DownFLV.IsOn= SettingHelper.Get_DownFLV();
+
                 btnOpenInstallHEVC.Visibility = Visibility.Visible;
                 sw_DASHUseHEVC.IsOn = SettingHelper.Get_DASHUseHEVC();
                 sw_PriorityBiliPlus.IsOn = SettingHelper.Get_PriorityBiliPlus();
@@ -650,7 +652,7 @@ namespace BiliBili.UWP.Views
 
         }
 
-        private async void sw_CustomPath_Toggled(object sender, RoutedEventArgs e)
+        private  void sw_CustomPath_Toggled(object sender, RoutedEventArgs e)
         {
             SettingHelper.Set_CustomDownPath(sw_CustomPath.IsOn);
         }
@@ -889,6 +891,11 @@ namespace BiliBili.UWP.Views
         private void sw_SkipToHistory_Toggled(object sender, RoutedEventArgs e)
         {
             SettingHelper.Set_SkipToHistory(sw_SkipToHistory.IsOn);
+        }
+
+        private void sw_DownFLV_Toggled(object sender, RoutedEventArgs e)
+        {
+            SettingHelper.Set_DownFLV(sw_DownFLV.IsOn);
         }
     }
 }

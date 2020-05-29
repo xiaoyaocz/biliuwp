@@ -84,7 +84,15 @@ namespace BiliBili.UWP.Helper
         {
             return verStr.Split('/')[0];
         }
-        public static string verStr = string.Format(@"Ver {0} 2020-05-17
+        public static string verStr = string.Format(@"Ver {0} 2020-05-29
+01、支持优先下载FLV格式视频(设置-下载中设置)
+02、修复视频无法打开问题
+03、优化下载的视频列表显示
+04、优化我的收藏
+05、视频增加争议内容提醒
+06、修复其他一些问题
+
+/Ver 3.9.83&3.9.84 2020-05-17
 01、优化登录(用户名无法登录请使用手机号登录)
 02、修复其他一些小问题
 

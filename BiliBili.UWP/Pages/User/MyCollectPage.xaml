@@ -4,12 +4,42 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BiliBili.UWP.Pages"
      xmlns:my="using:BiliBili.UWP"
+    xmlns:model="using:BiliBili.UWP.Modules.User"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    SizeChanged="Page_SizeChanged"
+    xmlns:convert="using:BiliBili.UWP.Converters"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     >
-
+    <Page.Resources>
+        <Style x:Key="ItemStyle" TargetType="GridViewItem">
+            <Setter Property="Margin" Value="8"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+        </Style>
+        <convert:NumberToStringConvert x:Key="numberToStringConvert"></convert:NumberToStringConvert>
+        <DataTemplate x:Key="VideoDataTemplate" x:DataType="model:FavoriteInfoVideoItemModel">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="取消收藏" x:Name="btnRemove" Click="btnRemove_Click"></MenuFlyoutItem>
+                    </MenuFlyout>
+                </Grid.ContextFlyout>
+                <Grid>
+                    <toolkit:ImageEx IsCacheEnabled="True" Height="80" Width="120" PlaceholderSource="ms-appx:///Assets/Thumbnails/Placeholde.png" Stretch="UniformToFill" Source="{x:Bind Path=cover,Converter={StaticResource imageConvert},ConverterParameter='160w'}"></toolkit:ImageEx>
+                </Grid>
+                <StackPanel Grid.Column="1" Margin="8 0 0 0">
+                    <TextBlock MaxLines="2" Margin="0 0 0 4" TextTrimming="CharacterEllipsis" Text="{x:Bind title}"></TextBlock>
+                    <TextBlock Margin="0 4" FontSize="14" Foreground="Gray" >UP:<Run Text="{x:Bind Path=upper.name}"/></TextBlock>
+                    <TextBlock Margin="0 4" FontSize="14" Foreground="Gray">播放:<Run Text="{x:Bind Path=cnt_info.play,Converter={StaticResource numberToStringConvert}}"></Run> 弹幕:<Run Text="{x:Bind Path=cnt_info.danmaku,Converter={StaticResource numberToStringConvert}}"></Run></TextBlock>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
@@ -23,60 +53,38 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="btn_back" Click="btn_Back_Click" Icon="Back" Width="48" Height="48" Foreground="White"/>
-            <TextBlock  Text="我的收藏" Margin="5 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
-            <ComboBox x:Name="cb_favbox" Grid.Column="3" Margin="5 0"  VerticalAlignment="Center" BorderThickness="0" Foreground="White" SelectionChanged="cb_favbox_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding name}"></TextBlock>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
+            <TextBlock  Text="我的收藏" Margin="4 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
+            <ComboBox x:Name="cb_favbox" Grid.Column="3" SelectedItem="{x:Bind Path=myFollowVideoVM.CurrentFavorite,Mode=TwoWay}"  SelectionChanged="cb_favbox_SelectionChanged" ItemsSource="{x:Bind Path=myFollowVideoVM.MyFavorite,Mode=OneWay}" DisplayMemberPath="title" Margin="4 0"  VerticalAlignment="Center" BorderThickness="0" Foreground="White" >
+              
             </ComboBox>
         </Grid>
-        <ScrollViewer Grid.Row="1" x:Name="sv" ViewChanged="sv_ViewChanged" >
-            <StackPanel>
-                <Border x:Name="bor_Width" Background="Gray" Width="120"></Border>
-                <GridView  x:Name="User_ListView_FavouriteVideo" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionMode="None" IsItemClickEnabled="True"  ItemClick="User_ListView_FavouriteVideo_ItemClick">
-                    <GridView.ItemContainerStyle>
-                        <Style TargetType="GridViewItem">
-                            <!--<Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
-                                    <Setter Property="BorderBrush" Value="#FFCBCBCB"></Setter>-->
-                            <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"></Setter>
-                            <Setter Property="Margin" Value="5"></Setter>
-                        </Style>
-                    </GridView.ItemContainerStyle>
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <Border Width="{Binding ElementName=bor_Width,Path=Width}" Margin="5">
-                                <Grid  Height="80">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="120"></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"></RowDefinition>
-                                        <RowDefinition ></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Image Source="{Binding pic}" Height="75" Width="120" Grid.RowSpan="4" Stretch="UniformToFill"></Image>
-                                    <TextBlock Text="{Binding title}" FontSize="14" Grid.Column="1" TextWrapping="Wrap" MaxLines="2" Margin="10,0" ></TextBlock>
-                                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="10,0" VerticalAlignment="Center">
+        <Grid Grid.Row="1">
 
-                                        <TextBlock  FontSize="12" Foreground="Gray" TextWrapping="Wrap" MaxLines="2"   VerticalAlignment="Center">UP:<Run Text="{Binding Path=owner.name}"></Run></TextBlock>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Margin="10,0" VerticalAlignment="Center">
+            <toolkit:AdaptiveGridView SelectionMode="None" 
+                                          IsItemClickEnabled="True"
+                                          DesiredWidth="450"
+                                          x:Name="User_ListView_FavouriteVideo"
+                                          ItemClick="Video_ItemClick"
+                                          StretchContentForSingleRow="False"
+                                          ItemContainerStyle="{StaticResource ItemStyle}"
+                                          ItemTemplate="{StaticResource VideoDataTemplate}"
+                                          ItemsSource="{x:Bind Path=myFollowVideoVM.Videos,Mode=OneWay}"
+                                          ItemHeight="80" Grid.ColumnSpan="2">
 
-                                        <TextBlock  FontSize="12"  TextWrapping="Wrap" MaxLines="2"  Foreground="Gray">分区:<Run  Text="{Binding tname}"></Run></TextBlock>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
+                <toolkit:AdaptiveGridView.Footer>
+                    <StackPanel>
+                        <HyperlinkButton Command="{x:Bind Path=myFollowVideoVM.LoadMoreCommand}" Visibility="{x:Bind Path=myFollowVideoVM.ShowLoadMore,Mode=OneWay}" Foreground="Gray" HorizontalAlignment="Center" x:Name="btnLoadMore">
+                            <TextBlock>加载更多</TextBlock>
+                        </HyperlinkButton>
+                        <ProgressRing IsActive="True" HorizontalAlignment="Center" Visibility="{x:Bind Path=myFollowVideoVM.Loading,Mode=OneWay}"></ProgressRing>
+                    </StackPanel>
+                </toolkit:AdaptiveGridView.Footer>
+            </toolkit:AdaptiveGridView>
+            <TextBlock Visibility="{x:Bind Path=myFollowVideoVM.Nothing,Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="Gray" Margin="444,0,0,0">这里还什么都没有呢~</TextBlock>
 
-                </GridView>
-                <Button x:Name="btn_LoadMore" Background="#00DF85A0" FontSize="14" Padding="20 5" Foreground="Gray" HorizontalAlignment="Center" Click="btn_LoadMore_Click">点我加载更多</Button>
-            </StackPanel>
-        </ScrollViewer>
+        </Grid>
         <CommandBar Grid.Row="2" Background="{ThemeResource Bili-ForeColor}" Foreground="White">
+            <AppBarButton Icon="Refresh" Command="{x:Bind Path=myFollowVideoVM.RefreshCommand,Mode=OneWay}" Label="刷新" Foreground="White"></AppBarButton>
             <AppBarToggleButton x:Name="sw_Select" Icon="List" Foreground="White" Label="选择" Checked="sw_Select_Checked" Unchecked="sw_Select_Unchecked"></AppBarToggleButton>
             <AppBarButton x:Name="btn_Delete" Click="btn_Delete_Click" Icon="Delete" Foreground="White" Label="删除" IsEnabled="{Binding ElementName=sw_Select,Path=IsChecked}"></AppBarButton>
         </CommandBar>

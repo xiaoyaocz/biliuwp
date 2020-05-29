@@ -162,13 +162,10 @@ namespace BiliBili.UWP.Modules
                 {
                     return andorid_api;
                 }
-                if (SettingHelper.Get_PriorityBiliPlus())
+                var biliplus = await GetSeasonDownloadUrlBiliplusApi(cid, aid, quality, season_type, access_key, mid);
+                if (biliplus.success)
                 {
-                    var biliplus = await GetSeasonDownloadUrlBiliplusApi(cid, aid, quality, season_type, access_key, mid);
-                    if (biliplus.success)
-                    {
-                        return biliplus;
-                    }
+                    return biliplus;
                 }
             }
            
@@ -245,10 +242,14 @@ namespace BiliBili.UWP.Modules
         {
             try
             {
-                string url = $"https://api.bilibili.com/pgc/player/web/playurl?cid={ cid}&appkey={ApiHelper.WebVideoKey.Appkey}&otype=json&type=&quality={quality.qn}&module=bangumi&season_type={season_type}&qn={quality.qn}&ts={Utils.GetTimestampS()}&fourk=1&fnver=0&fnval=16";
+                string url = $"https://api.bilibili.com/pgc/player/web/playurl?cid={ cid}&appkey={ApiHelper.WebVideoKey.Appkey}&otype=json&type=&quality={quality.qn}&module=bangumi&season_type={season_type}&qn={quality.qn}&ts={Utils.GetTimestampS()}";
                 if (ApiHelper.IsLogin())
                 {
                     url += $"&access_key={ApiHelper.access_key}&mid={ApiHelper.GetUserId()}";
+                }
+                if (!SettingHelper.Get_DownFLV())
+                {
+                    url += "&fourk=1&fnver=0&fnval=16";
                 }
                 url += "&sign=" + ApiHelper.GetSign(url, ApiHelper.WebVideoKey);
 
@@ -260,8 +261,8 @@ namespace BiliBili.UWP.Modules
                     headers.Add("Referer", "https://www.bilibili.com");
                     headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
                     List<DownloadUrlInfo> downloadUrls = new List<DownloadUrlInfo>();
-
-                    if (jobj["result"]["format"].ToString() == "flv")
+                    var format = jobj["result"]["type"]?.ToString()?.ToLower()??"";
+                    if (format.Contains("flv") || format.Contains("mp4"))
                     {
                         var data = JsonConvert.DeserializeObject<SeasonUrlInfo>(jobj["result"].ToString());
                         foreach (var item in data.durl)
@@ -427,30 +428,96 @@ namespace BiliBili.UWP.Modules
         {
             try
             {
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                headers.Add("Referer", "https://www.bilibili.com");
+                headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
+
                 string url = $"https://www.biliplus.com/BPplayurl.php?avid={ aid}&cid={cid}&qn={quality.Qn}&type=&otype=json&module=bangumi{ ((access_key == "") ? "" : $"&access_key={access_key}&mid={mid}")}&season_type={season_type}&ts={ApiHelper.GetTimeSpan}";
-                var results = await WebClientClass.GetResults(new Uri(url));
-                var model = JsonConvert.DeserializeObject<SeasonUrlInfo>(results);
-                if (model.code == 0)
+                if (!SettingHelper.Get_DownFLV())
                 {
-                    Dictionary<string, string> headers = new Dictionary<string, string>();
-                    headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3891.0 Safari/537.36 Edg/78.0.268.3");
-                    List<DownloadUrlInfo> downloadUrls = new List<DownloadUrlInfo>();
-                    foreach (var item in model.durl)
+                    url += "&fourk=1&fnver=0&fnval=16";
+                }
+                var results = await WebClientClass.GetResults(new Uri(url));
+                var jobj = JObject.Parse(results);
+                List<DownloadUrlInfo> downloadUrls = new List<DownloadUrlInfo>();
+                if (jobj["code"].ToInt32()==0)
+                {
+                    var isFlv = jobj.ContainsKey("durl");
+                    if (isFlv)
                     {
+                        var model = JsonConvert.DeserializeObject<SeasonUrlInfo>(results);
+
+                        foreach (var item in model.durl)
+                        {
+                            downloadUrls.Add(new DownloadUrlInfo()
+                            {
+                                Aid = aid,
+                                Cid = cid,
+                                Codecid = model.video_codecid,
+                                Format = model.format,
+                                From = "biliplus_season",
+                                Headers = headers,
+                                Length = item.length,
+                                Order = item.order,
+                                QualityInfo = quality,
+                                Size = item.size,
+                                Url = item.url
+                            });
+                        }
+                       
+                    }
+                    else
+                    {
+                      
+                        var length = jobj["dash"]["duration"].ToInt32();
+                        var videos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(jobj["dash"]["video"].ToString());
+                        var audios = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DashItem>>(jobj["dash"]["audio"].ToString());
+                        var video = videos.FirstOrDefault(x => x.id == quality.Qn && x.codecid == 7);
+                        if (video == null)
+                        {
+                            video = videos.OrderByDescending(x => x.id).FirstOrDefault(x => x.codecid == 7);
+                        }
+                        var audio = audios.FirstOrDefault();
+
                         downloadUrls.Add(new DownloadUrlInfo()
                         {
                             Aid = aid,
                             Cid = cid,
-                            Codecid = model.video_codecid,
-                            Format = model.format,
-                            From = "biliplus_season",
+                            Codecid = 7,
+                            Format = "dash",
+                            From = "bilibili_web_api",
                             Headers = headers,
-                            Length = item.length,
-                            Order = item.order,
-                            QualityInfo = quality,
-                            Size = item.size,
-                            Url = item.url
+                            Length = length,
+                            Order = 0,
+                            QualityInfo = new QualityInfo()
+                            {
+                                Description = quality.Description,
+                                Qn = quality.Qn
+                            },
+                            DashFileType = "video",
+                            Size = 0,
+                            Url = video.baseUrl
                         });
+                        downloadUrls.Add(new DownloadUrlInfo()
+                        {
+                            Aid = aid,
+                            Cid = cid,
+                            Codecid = 7,
+                            Format = "dash",
+                            From = "bilibili_web_api",
+                            Headers = headers,
+                            Length = length,
+                            Order = 0,
+                            QualityInfo = new QualityInfo()
+                            {
+                                Description = quality.Description,
+                                Qn = quality.Qn
+                            },
+                            Size = 0,
+                            DashFileType = "audio",
+                            Url = audio.baseUrl
+                        });
+                       
                     }
                     return new ReturnModel<List<DownloadUrlInfo>>()
                     {
@@ -464,7 +531,7 @@ namespace BiliBili.UWP.Modules
                     return new ReturnModel<List<DownloadUrlInfo>>()
                     {
                         success = false,
-                        message = model.message
+                        message =jobj["message"]?.ToString()??""
                     };
                 }
 
@@ -549,11 +616,17 @@ namespace BiliBili.UWP.Modules
         {
             try
             {
-                string url = $"https://api.bilibili.com/x/player/playurl?avid={aid}&cid={cid}&qn={quality.qn}&type=&otype=json&fourk=1&fnver=0&fnval=16&appkey={ ApiHelper.WebVideoKey.Appkey}";
+
+                string url = $"https://api.bilibili.com/x/player/playurl?avid={aid}&cid={cid}&qn={quality.qn}&type=&otype=json&appkey={ ApiHelper.WebVideoKey.Appkey}";
                 if (ApiHelper.IsLogin())
                 {
                     url += $"&access_key={ApiHelper.access_key}&mid={ApiHelper.GetUserId()}";
                 }
+                if (!SettingHelper.Get_DownFLV())
+                {
+                    url += "&fourk=1&fnver=0&fnval=16";
+                }
+
                 url = ApiHelper.GetSignWithUrl(url, ApiHelper.WebVideoKey);
 
                 var results = await WebClientClass.GetResults(new Uri(url));
@@ -565,7 +638,7 @@ namespace BiliBili.UWP.Modules
                     headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
                     List<DownloadUrlInfo> downloadUrls = new List<DownloadUrlInfo>();
 
-                    if (jobj["data"]["format"].ToString().Contains("flv"))
+                    if (jobj["data"]["format"].ToString().Contains("flv")|| jobj["data"]["format"].ToString().Contains("mp4"))
                     {
                         var data = JsonConvert.DeserializeObject<SeasonUrlInfo>(jobj["data"].ToString());
                         foreach (var item in data.durl)

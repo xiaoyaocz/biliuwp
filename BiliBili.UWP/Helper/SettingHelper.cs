@@ -1483,6 +1483,25 @@ namespace BiliBili.UWP
         }
 
 
+        public static void Set_DownFLV(bool value)
+        {
+            container = ApplicationData.Current.LocalSettings;
+            container.Values["DownFLV"] = value;
+        }
+
+        public static bool Get_DownFLV()
+        {
+            container = ApplicationData.Current.LocalSettings;
+            if (container.Values["DownFLV"] != null)
+            {
+                return (bool)container.Values["DownFLV"];
+            }
+            else
+            {
+                Set_DownFLV(false);
+                return false;
+            }
+        }
 
 
 

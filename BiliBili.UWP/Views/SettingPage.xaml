@@ -567,6 +567,7 @@
                                 </ComboBox>
 
                             </Grid>
+                            
                             <Grid Margin="0 10 0 0">
                                 <TextBlock Foreground="Gray" VerticalAlignment="Center">下载方式</TextBlock>
                                 <ComboBox x:Name="cb_DownMode" SelectionChanged="cb_DownMode_SelectionChanged" Margin="2 0" HorizontalAlignment="Right"  Grid.Column="0"  VerticalAlignment="Center" Background="#00424959"  BorderThickness="0"  >
@@ -574,6 +575,10 @@
                                     <ComboBoxItem Content="同时下载"/>
                                 </ComboBox>
 
+                            </Grid>
+                            <Grid Margin="0 10 0 0">
+                                <TextBlock Foreground="Gray" VerticalAlignment="Center">优先下载FLV格式的视频(开启后无法下载4K视频)</TextBlock>
+                                <ToggleSwitch x:Name="sw_DownFLV" Toggled="sw_DownFLV_Toggled" HorizontalAlignment="Right"  Margin="10 0" Width="68"></ToggleSwitch>
                             </Grid>
                             <Grid Margin="0 10 0 0">
                                 <TextBlock Foreground="Gray" VerticalAlignment="Center">自定义下载路径</TextBlock>

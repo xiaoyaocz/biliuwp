@@ -164,7 +164,7 @@ namespace BiliBili.UWP.Api.User
 
 
         /// <summary>
-        /// 收藏夹信息，不含视频
+        /// 收藏夹信息，含视频
         /// </summary>
         /// <returns></returns>
         public ApiModel FavoriteInfo(string fid, string keyword, int page = 1)
@@ -180,7 +180,21 @@ namespace BiliBili.UWP.Api.User
         }
 
 
-
+        /// <summary>
+        /// 收藏夹移除视频
+        /// </summary>
+        /// <returns></returns>
+        public ApiModel RemoveFavorite(string fid, string avid)
+        {
+            ApiModel api = new ApiModel()
+            {
+                method = HttpMethod.POST,
+                baseUrl = "https://api.bilibili.com/x/v2/fav/video/del",
+                body = ApiUtils.MustParameter(ApiUtils.AndroidKey, true) + $"&fid={fid}&aid={avid}"
+            };
+            api.body += ApiUtils.GetSign(api.body, ApiUtils.AndroidKey);
+            return api;
+        }
 
     }
 }

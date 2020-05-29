@@ -16,11 +16,12 @@
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>BiliBili.UWP_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>
+    </PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>arm</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>EBEEFFC84BB528A37C5C7B32021882CA6B66F1FE</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>73114B51657012E3E1A02AF9EE7A7BE5B54E6E7B</PackageCertificateThumbprint>
     <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppInstallerUpdateFrequency>0</AppInstallerUpdateFrequency>
@@ -105,51 +106,6 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <Content Include="Assets\avatar\qrmodel.png" />
-    <Content Include="Assets\Bili\主要\2233\bhl.png" />
-    <Content Include="Assets\Bili\主要\2233\bie.png" />
-    <Content Include="Assets\Bili\主要\2233\bif.png" />
-    <Content Include="Assets\Bili\主要\2233\big.png" />
-    <Content Include="Assets\Bili\主要\2233\bih.png" />
-    <Content Include="Assets\Bili\主要\2233\bij.png" />
-    <Content Include="Assets\Bili\主要\2233\bit.png" />
-    <Content Include="Assets\Bili\主要\2233\bu6.png" />
-    <Content Include="Assets\Bili\主要\2233\buh.png" />
-    <Content Include="Assets\Bili\主要\2233\bui.png" />
-    <Content Include="Assets\Bili\主要\2233\buj.png" />
-    <Content Include="Assets\Bili\主要\2233\buk.png" />
-    <Content Include="Assets\Bili\主要\2233\bul.png" />
-    <Content Include="Assets\Bili\主要\2233\bum.png" />
-    <Content Include="Assets\Bili\主要\2233\bun.png" />
-    <Content Include="Assets\Bili\主要\2233\buo.png" />
-    <Content Include="Assets\Bili\主要\2233\bx6.png" />
-    <Content Include="Assets\Bili\主要\2233\bxl.png" />
-    <Content Include="Assets\Bili\主要\2233\c6i.png" />
-    <Content Include="Assets\Bili\主要\2233\c6k.png" />
-    <Content Include="Assets\Bili\主要\2233\c8a.png" />
-    <Content Include="Assets\Bili\主要\2233\c8x.png" />
-    <Content Include="Assets\Bili\主要\2233\c8y.png" />
-    <Content Include="Assets\Bili\主要\2233\caa.png" />
-    <Content Include="Assets\Bili\主要\2233\cab.png" />
-    <Content Include="Assets\Bili\主要\2233\cac.png" />
-    <Content Include="Assets\Bili\主要\2233\cm1.png" />
-    <Content Include="Assets\Bili\主要\2233\cm2.png" />
-    <Content Include="Assets\Bili\主要\2233\cm3.png" />
-    <Content Include="Assets\Bili\主要\2233\cm4.png" />
-    <Content Include="Assets\Bili\主要\2233\csf.png" />
-    <Content Include="Assets\Bili\主要\2233\cut.png" />
-    <Content Include="Assets\Bili\主要\2233\d23.png" />
-    <Content Include="Assets\Bili\主要\2233\d24.png" />
-    <Content Include="Assets\Bili\主要\2233\d29.png" />
-    <Content Include="Assets\Bili\主要\2233\d2a.png" />
-    <Content Include="Assets\Bili\主要\2233\d2b.png" />
-    <Content Include="Assets\Bili\主要\2233\d2o.png" />
-    <Content Include="Assets\Bili\主要\2233\d2p.png" />
-    <Content Include="Assets\Bili\主要\2233\d2q.png" />
-    <Content Include="Assets\Bili\主要\2233\d2_.png" />
-    <Content Include="Assets\Bili\主要\2233\d4i.png" />
-    <Content Include="Assets\Bili\主要\2233\dar.png" />
-    <Content Include="Assets\Bili\主要\2233\dd9.png" />
-    <Content Include="Assets\Bili\主要\2233\ddi.png" />
     <Content Include="Assets\Bili\主要\coin\cn7.png" />
     <Content Include="Assets\Bili\主要\coin\dby.png" />
     <Content Include="Assets\Bili\主要\coin\dbz.png" />
@@ -218,93 +174,6 @@
     <Content Include="Assets\Bili\主要\store\ddv.png" />
     <Content Include="Assets\Bili\主要\store\dee.png" />
     <Content Include="Assets\Bili\主要\store\def.png" />
-    <Content Include="Assets\Bili\分區\ic_category_album.png" />
-    <Content Include="Assets\Bili\分區\ic_category_audio.png" />
-    <Content Include="Assets\Bili\分區\ic_category_cinema.png" />
-    <Content Include="Assets\Bili\分區\ic_category_clip_video.png" />
-    <Content Include="Assets\Bili\分區\ic_category_column.png" />
-    <Content Include="Assets\Bili\分區\ic_category_game_center.png" />
-    <Content Include="Assets\Bili\分區\ic_category_game_center2.png" />
-    <Content Include="Assets\Bili\分區\ic_category_live.png" />
-    <Content Include="Assets\Bili\分區\ic_category_mall.png" />
-    <Content Include="Assets\Bili\分區\ic_category_promo.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t1.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t11.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t119.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t121.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t122.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t124.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t126.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t127.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t128.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t129.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t13.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t130.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t131.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t136.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t137.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t138.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t145.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t146.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t147.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t15.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t152.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t153.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t154.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t155.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t156.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t157.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t158.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t159.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t160.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t161.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t162.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t163.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t164.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t165.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t167.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t17.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t181.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t19.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t20.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t21.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t22.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t23.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t24.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t25.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t26.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t27.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t28.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t29.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t3.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t30.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t31.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t32.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t33.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t34.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t36.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t37.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t39.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t4.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t47.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t5.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t51.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t54.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t59.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t60.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t65.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t71.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t75.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t76.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t82.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t83.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t85.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t86.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t95.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t96.png" />
-    <Content Include="Assets\Bili\分區\ic_category_t98.png" />
-    <Content Include="Assets\Bili\分區\ic_category_unknown.png" />
-    <Content Include="Assets\Bili\分區\ic_save_screen_shot.png" />
     <Content Include="Assets\Img\233.png" />
     <Content Include="Assets\Img\666.png" />
     <Content Include="Assets\Img\danmaku.png" />
@@ -426,6 +295,7 @@
     <Compile Include="Api\User\FollowAPI.cs" />
     <Compile Include="Api\User\LoginAPI.cs" />
     <Compile Include="Api\User\UserCenterAPI.cs" />
+    <Compile Include="Api\VideoAPI.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -517,6 +387,7 @@
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Models\VideoInfoModels.cs" />
     <Compile Include="Modules\Account.cs" />
+    <Compile Include="Modules\Detail\VideoDetailVM.cs" />
     <Compile Include="Modules\Download.cs" />
     <Compile Include="Modules\Emote.cs" />
     <Compile Include="Modules\Home\HotVM.cs" />
@@ -540,6 +411,7 @@
     <Compile Include="Modules\Season\SeasonIndexVM.cs" />
     <Compile Include="Modules\ToView.cs" />
     <Compile Include="Modules\UserCenterVM.cs" />
+    <Compile Include="Modules\User\MyFollowVideoVM.cs" />
     <Compile Include="Pages\AddTagPage.xaml.cs">
       <DependentUpon>AddTagPage.xaml</DependentUpon>
     </Compile>
@@ -747,6 +619,9 @@
     <Compile Include="Pages\User\UserCenterPage.xaml.cs">
       <DependentUpon>UserCenterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\VideoDetailPage.xaml.cs">
+      <DependentUpon>VideoDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\VideoViewPage.xaml.cs">
       <DependentUpon>VideoViewPage.xaml</DependentUpon>
     </Compile>
@@ -910,9 +785,9 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <None Include="BiliBili.UWP_TemporaryKey.pfx" />
     <None Include="Package.xml" />
     <Content Include="Assets\page.png" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -1263,6 +1138,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\User\UserCenterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\VideoDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

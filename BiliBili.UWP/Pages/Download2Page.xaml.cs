@@ -22,6 +22,7 @@ using Windows.Storage;
 using BiliBili.UWP.Controls;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Media.Imaging;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -187,11 +188,17 @@ namespace BiliBili.UWP.Pages
                         };
                         if (await DownloadHelper2.ExistsFile(item.Path + @"\thumb.jpg"))
                         {
-                            video.thumb = item.Path + "/thumb.jpg";
+                            video.thumb = item.Path + @"\thumb.jpg";
+                            var thumbFile =await StorageFile.GetFileFromPathAsync(video.thumb);
+                            var thumb=await thumbFile.GetThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.VideosView);
+                            BitmapImage bitmapImage = new BitmapImage();
+                            bitmapImage.SetSource(thumb);
+                            video.thumb_img = bitmapImage;
                         }
                         else
                         {
                             video.thumb = downloadVideonInfoModel.thumb;
+                            video.thumb_img = new BitmapImage();
                         }
                         foreach (var item1 in await item.GetFoldersAsync())
                         {
@@ -596,7 +603,7 @@ namespace BiliBili.UWP.Pages
         private void hy_View_Click(object sender, RoutedEventArgs e)
         {
 
-            var m = (sender as HyperlinkButton).DataContext as VideoDiaplayModel;
+            var m = (sender as MenuFlyoutItem).DataContext as VideoDiaplayModel;
             if (m.mode == "video")
             {
                 MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), m.id);
@@ -610,7 +617,7 @@ namespace BiliBili.UWP.Pages
 
         private async void hy_Delete_Click(object sender, RoutedEventArgs e)
         {
-            var m = (sender as HyperlinkButton).DataContext as VideoDiaplayModel;
+            var m = (sender as MenuFlyoutItem).DataContext as VideoDiaplayModel;
 
             MessageDialog md = new MessageDialog("确定要删除全部视频吗?");
             md.Commands.Add(new UICommand("确定")
@@ -633,7 +640,7 @@ namespace BiliBili.UWP.Pages
 
         private async void hy_UpdateDM_Click(object sender, RoutedEventArgs e)
         {
-            var m = (sender as HyperlinkButton).DataContext as VideoDiaplayModel;
+            var m = (sender as MenuFlyoutItem).DataContext as VideoDiaplayModel;
             foreach (var item in m.videolist)
             {
                 var path = item.path + @"\" + item.cid + ".xml";
@@ -786,9 +793,25 @@ namespace BiliBili.UWP.Pages
             var model = (sender as MenuFlyoutItem).DataContext as PartDiaplayModel;
             await Windows.System.Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(model.path));
         }
+
+        private void btnExpand_Click(object sender, RoutedEventArgs e)
+        {
+            var data=(sender as AppBarButton).DataContext as VideoDiaplayModel;
+            if (data.expand)
+            {
+                data.expand = false;
+                data.maxheight = 88;
+            }
+            else
+            {
+                data.expand = true;
+                data.maxheight = double.PositiveInfinity;
+            }
+        }
     }
     public class DownloadDisplayInfo
     {
+       
         public string id { get; set; }
         public string mode { get; set; }
         public string cid { get; set; }
@@ -974,13 +997,32 @@ namespace BiliBili.UWP.Pages
 
     }
 
-    public class VideoDiaplayModel
+    public class VideoDiaplayModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        public virtual void DoPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
         public string id { get; set; }
         public string title { get; set; }
         public string thumb { get; set; }
         public string mode { get; set; }
+        public BitmapImage thumb_img { get; set; }
         public List<PartDiaplayModel> videolist { get; set; }
+        private bool _expand = false;
+        public bool expand
+        {
+            get { return _expand; }
+            set { _expand = value; PropertyChanged(this, new PropertyChangedEventArgs("expand")); }
+        }
+
+        private double _maxheight = 88;
+        public double maxheight
+        {
+            get { return _maxheight; }
+            set { _maxheight = value; PropertyChanged(this, new PropertyChangedEventArgs("maxheight")); }
+        }
     }
 
     public class PartDiaplayModel

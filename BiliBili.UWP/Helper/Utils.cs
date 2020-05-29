@@ -337,6 +337,15 @@ namespace BiliBili.UWP
             }
         }
 
+        public static async Task<T> DeserializeJson<T>(this string results)
+        {
+            return await Task.Run<T>(() =>
+            {
+                return JsonConvert.DeserializeObject<T>(results);
+            });
+        }
+
+
     }
 
 

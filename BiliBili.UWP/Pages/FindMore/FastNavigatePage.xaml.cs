@@ -105,7 +105,7 @@ namespace BiliBili.UWP.Pages
             {
                 return;
             }
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(SearchPage), new object[] { txt_auto_Find.Text });
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(SearchV2Page), new object[] { txt_auto_Find.Text });
 
         }
 

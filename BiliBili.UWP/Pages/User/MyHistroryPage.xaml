@@ -27,7 +27,7 @@
         <ScrollViewer Grid.Row="1" x:Name="sv" ViewChanged="sv_ViewChanged" >
             <StackPanel>
 
-                <ListView  x:Name="User_ListView_History" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  SelectionMode="None" IsItemClickEnabled="True" ItemClick="User_ListView_History_ItemClick" >
+                <ListView  x:Name="User_ListView_History"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"  SelectionMode="None" IsItemClickEnabled="True" ItemClick="User_ListView_History_ItemClick" >
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>

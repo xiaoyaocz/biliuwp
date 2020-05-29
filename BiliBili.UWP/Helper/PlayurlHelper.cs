@@ -887,7 +887,7 @@ namespace BiliBili.UWP.Helper
         }
 
 
-        public static async Task<List<QualityModel>> GetVideoQualities(PlayerModel model)
+        public static async Task<List<QualityModel>> GetVideoQualities(PlayerModel model,bool down=false)
         {
             List<QualityModel> qualities = new List<QualityModel>();
             try
@@ -895,7 +895,7 @@ namespace BiliBili.UWP.Helper
                 var qn = 64;
 
                 string url = $"https://api.bilibili.com/x/player/playurl?avid={model.Aid}&cid={model.Mid}&qn={qn}&type=&otype=json&appkey={ ApiHelper.WebVideoKey.Appkey}";
-                if (SettingHelper.Get_UseDASH())
+                if ((!down&&SettingHelper.Get_UseDASH())||(down && !SettingHelper.Get_DownFLV()))
                 {
                     url += "&fourk=1&fnver=0&fnval=16";
                 }

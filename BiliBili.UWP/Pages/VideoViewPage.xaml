@@ -1,4 +1,6 @@
-﻿<Page xmlns:my2="using:AppArrange.WrapPanel"  xmlns:my1="using:BiliBili.UWP.Controls"  xmlns:my="using:BiliBili.UWP"
+﻿<Page xmlns:my2="using:AppArrange.WrapPanel"  
+      xmlns:my1="using:BiliBili.UWP.Controls"  
+      xmlns:my="using:BiliBili.UWP"
     x:Class="BiliBili.UWP.Pages.VideoViewPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,8 +8,7 @@
       xmlns:c="using:BiliBili.UWP.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-      SizeChanged="Page_SizeChanged">
+    mc:Ignorable="d">
     <Page.Resources>
         <Style x:Key="GridViewItemStyle" TargetType="ListViewItem">
             <Setter Property="Background" Value="{ThemeResource Bili-ForeColor}"></Setter>
@@ -154,6 +155,14 @@
                                         </StackPanel>
                                     </Grid>
                                 </Grid>
+                                <Grid x:Name="Argue_msg" Visibility="Collapsed" Margin="0 10 0 0" Padding="10" Background="{ThemeResource Bili-List-Background}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE814;"  Foreground="Orange"/>
+                                    <TextBlock x:Name="txtArgue_msg" Margin="8 0 0 0" VerticalAlignment="Center" Grid.Column="1" Foreground="Orange"></TextBlock>
+                                </Grid>
                                 <Grid x:Name="Video_UP" Padding="10" Margin="0 10 0 0" Background="{ThemeResource Bili-List-Background}">
                                     <HyperlinkButton x:Name="btn_UP" Foreground="{ThemeResource Bili-FontColor}" HorizontalContentAlignment="Stretch" Click="btn_UP_Click">
                                         <Grid>
@@ -227,7 +236,8 @@
                                         </GridView>
                                     </StackPanel>
                                 </Grid>
-
+                               
+                                
                                 <Grid    Margin="0 10 0 0" Padding="10" Background="{ThemeResource Bili-List-Background}">
                                     <StackPanel>
                                         <TextBlock>简介</TextBlock>
@@ -486,7 +496,7 @@
                 </ListView>
             </PivotItem>
         </Pivot>
-        <CommandBar x:Name="com_bar"   HorizontalAlignment="Right"   Foreground="White"  Background="{ThemeResource Bili-ForeColor}">
+        <CommandBar x:Name="com_bar"   HorizontalAlignment="Right"  Foreground="White"  Background="{ThemeResource Bili-ForeColor}">
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Name="Video_Refresh" Icon="Refresh"  Label="刷新" Click="Video_Refresh_Click" />
                 <AppBarButton Icon="Play" Label="播放" x:Name="btn_Play" Click="btn_Play_Click"></AppBarButton>

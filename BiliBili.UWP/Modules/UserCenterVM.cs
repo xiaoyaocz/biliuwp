@@ -19,7 +19,7 @@ namespace BiliBili.UWP.Modules
     public class UserCenterVM : IModules
     {
         readonly Api.User.UserCenterAPI userCenterAPI;
-        readonly string mid;
+        public string mid { get; set; }
         public bool is_self { get; set; } = false;
         public UserCenterVM(string mid)
         {
@@ -232,6 +232,14 @@ namespace BiliBili.UWP.Modules
             public UserCenterDetailCardNameplate nameplate { get; set; }
             public UserCenterDetailCardOfficialVerify official_verify { get; set; }
             public UserCenterDetailCardVip vip { get; set; }
+            public UserCenterDetailPrInfo pr_info { get; set; }
+            public bool showPrInfo
+            {
+                get
+                {
+                    return pr_info != null && !string.IsNullOrEmpty( pr_info.content) ;
+                }
+            }
 
             public bool isVip
             {
@@ -250,6 +258,11 @@ namespace BiliBili.UWP.Modules
             public string pendant_title { get; set; }
 
             public UserCenterDetailCardRelation relation { get; set; }
+        }
+
+        public class UserCenterDetailPrInfo
+        {
+            public string content { get; set; }
         }
         public class UserCenterDetailCardLevelInfo
         {

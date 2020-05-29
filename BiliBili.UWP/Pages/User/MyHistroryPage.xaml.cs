@@ -129,20 +129,27 @@ namespace BiliBili.UWP.Pages
 
         private async void btn_ClearHistory_Click(object sender, RoutedEventArgs e)
         {
-            //http://api.bilibili.com/x/v2/history/clear?_device=android&_hwid=bd2e7034b953cffe&_ulv=10000&access_key=1a8cd71c9830c73819989dade872ff55&appkey=1d8b6e7d45233436&build=421000&mobi_app=android&platform=android&sign=69e2689cd0b82f9b67aef4624360ae1b
-            try
+            MessageDialog messageDialog = new MessageDialog("确定要清除全部历史记录吗？");
+            messageDialog.Commands.Add(new UICommand("确认", async (value) =>
             {
-                string url = string.Format("http://api.bilibili.com/x/v2/history/clear?_device=android&access_key={0}&appkey={1}&build=421000&mobi_app=android&platform=android", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey);
-                url += "&sign=" + ApiHelper.GetSign(url);
-                string results = await WebClientClass.PostResults(new Uri(url), "");
-                User_ListView_History.Items.Clear();
-                pageNum_His = 1;
-                Utils.ShowMessageToast("清除完成", 3000);
-            }
-            catch (Exception)
-            {
-                Utils.ShowMessageToast("清除失败", 3000);
-            }
+                try
+                {
+                    string url = string.Format("http://api.bilibili.com/x/v2/history/clear?_device=android&access_key={0}&appkey={1}&build=421000&mobi_app=android&platform=android", ApiHelper.access_key, ApiHelper.AndroidKey.Appkey);
+                    url += "&sign=" + ApiHelper.GetSign(url);
+                    string results = await WebClientClass.PostResults(new Uri(url), "");
+                    User_ListView_History.Items.Clear();
+                    pageNum_His = 1;
+                    Utils.ShowMessageToast("清除完成", 3000);
+                }
+                catch (Exception)
+                {
+                    Utils.ShowMessageToast("清除失败", 3000);
+                }
+            }));
+            messageDialog.Commands.Add(new UICommand("取消"));
+            await messageDialog.ShowAsync();
+
+            
 
         }
 
