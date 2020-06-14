@@ -2751,9 +2751,8 @@ namespace BiliBili.UWP.Pages
                 {
                     //mediaElement.MediaPlayer.PlaybackSession.();
                     Utils.ShowMessageToast("3秒后播放下一集", 3000);
-                    await Task.Delay(3000);
-                    if(this.Frame.Visibility == Visibility.Visible)
-                        gv_play.SelectedIndex += 1;
+                    await Task.Delay(3000, m_TaskDelayCancellation.Token); // throws
+                    gv_play.SelectedIndex += 1;
                 }
             }
             catch (Exception)
