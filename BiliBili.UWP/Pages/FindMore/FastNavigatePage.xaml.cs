@@ -124,7 +124,7 @@ namespace BiliBili.UWP.Pages
             switch (info.Tag.ToString())
             {
                 case "yh":
-                    MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage));
+                    MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage),ApiHelper.GetUserId());
                     break;
                 case "dt":
                     MessageCenter.SendNavigateTo(NavigateMode.Home, typeof(AttentionPage));
@@ -255,20 +255,7 @@ namespace BiliBili.UWP.Pages
             var results= await msg.ShowAsync();
 
         }
-      
-        private void AdControl_AdRefreshed(object sender, RoutedEventArgs e)
-        {
-            btnCloseAd.Visibility = Visibility.Visible;
-            try
-            {
-                var ADWebView = MyFindListBoxChildOfType<WebView>(adControl);
-                ADWebView.NewWindowRequested += ADWebView_NewWindowRequested;
-            }
-            catch (Exception)
-            {
-            }
-           
-        }
+       
         bool clickAd = false;
         private void ADWebView_NewWindowRequested(WebView sender, WebViewNewWindowRequestedEventArgs args)
         {
@@ -298,6 +285,40 @@ namespace BiliBili.UWP.Pages
             return null;
         }
 
+        private void BannerAd_OnAdRefreshed(object sender, RoutedEventArgs e)
+        {
+            btnCloseAd.Visibility = Visibility.Visible;
+        }
+
+        private void adControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            btnCloseAd.Visibility = Visibility.Visible;
+            try
+            {
+                
+                foreach (var item in (adControl.Content as Grid).Children)
+                {
+                    if (item is WebView)
+                    {
+                        var web = item as WebView;
+                        web.NewWindowRequested += ADWebView_NewWindowRequested;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void adControl_OnAdError(object sender, RoutedEventArgs e)
+        {
+            btnCloseAd.Visibility = Visibility.Collapsed;
+        }
+
+        private void adControl_OnAdErrorNoAds(object sender, RoutedEventArgs e)
+        {
+            btnCloseAd.Visibility = Visibility.Collapsed;
+        }
     }
 
 }

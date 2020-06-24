@@ -452,6 +452,7 @@ namespace BiliBili.UWP.Pages
                     }
                     gv_play.SelectedIndex += 1;
                     break;
+                case Windows.System.VirtualKey.F8:
                 case Windows.System.VirtualKey.F10:
                     CaptureVideo();
                     break;

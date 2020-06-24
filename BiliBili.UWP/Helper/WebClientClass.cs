@@ -35,8 +35,8 @@ namespace BiliBili.UWP
                     hc.DefaultRequestHeaders.Add("device-id", deviceInfo.Id.ToString());
                 }
 
-                hc.DefaultRequestHeaders.Add("user-agent", $"Mozilla/5.0 BiliDroid/6.1.0 (bbcallen@gmail.com)");
-                hc.DefaultRequestHeaders.Referer = new Uri("http://www.bilibili.com/");
+                //hc.DefaultRequestHeaders.Add("user-agent", $"Mozilla/5.0 BiliDroid/6.1.0 (bbcallen@gmail.com)");
+                //hc.DefaultRequestHeaders.Referer = new Uri("http://www.bilibili.com/");
                 HttpResponseMessage hr = await hc.GetAsync(url);
                 hr.EnsureSuccessStatusCode();
                 var encodeResults = await hr.Content.ReadAsBufferAsync();

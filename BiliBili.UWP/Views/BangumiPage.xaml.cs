@@ -18,6 +18,9 @@ using Newtonsoft.Json;
 using BiliBili.UWP.Pages;
 using System.Text.RegularExpressions;
 using BiliBili.UWP.Pages.Season;
+using BiliBili.UWP.Api.User;
+using BiliBili.UWP.Api;
+using Newtonsoft.Json.Linq;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -74,18 +77,25 @@ namespace BiliBili.UWP.Views
             try
             {
                 pr_Load.Visibility = Visibility.Visible;
-                string url = string.Format("http://bangumi.bilibili.com/api/get_concerned_season?build=520001&platform=android&appkey={0}&access_key={1}&page={2}&pagesize=9&ts={3}", ApiHelper.AndroidKey.Appkey, ApiHelper.access_key, 1, ApiHelper.GetTimeSpan_2);
-                url += "&sign=" + ApiHelper.GetSign(url);
-                string results = await WebClientClass.GetResultsUTF8Encode(new Uri(url));
-                MyBangumiModel m = JsonConvert.DeserializeObject<MyBangumiModel>(results);
-                if (m.code == 0)
+                var result =await new FollowAPI().MyFollowBangumi().Request();
+
+                if (result.status)
                 {
-                    list_ban_mine.ItemsSource = m.result;
+                    var data = await result.GetJson<ApiResultModel<JObject>>();
+                    if (data.success)
+                    {
+                        list_ban_mine.ItemsSource  = (await data.result["follow_list"].ToString().DeserializeJson<List<FollowSeasonModel>>()).Take(9).ToList();
+                    }
+                    else
+                    {
+                        Utils.ShowMessageToast(data.message);
+                    }
                 }
                 else
                 {
-                    Utils.ShowMessageToast(m.message, 3000);
+                    Utils.ShowMessageToast(result.message);
                 }
+                
             }
             catch (Exception ex)
             {
@@ -151,7 +161,7 @@ namespace BiliBili.UWP.Views
 
         private void list_ban_mine_ItemClick(object sender, ItemClickEventArgs e)
         {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), (e.ClickedItem as MyBangumiModel).season_id.ToString());
+            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), (e.ClickedItem as FollowSeasonModel).season_id.ToString());
         }
 
         private void list_ban_jp_ItemClick(object sender, ItemClickEventArgs e)

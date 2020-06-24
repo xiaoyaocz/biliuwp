@@ -149,19 +149,29 @@ namespace BiliBili.UWP.Pages.Live
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            if (e.NavigationMode == NavigationMode.Back)
+            if (e.NavigationMode == NavigationMode.Back||e.SourcePageType==typeof(BlankPage))
             {
-                Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().ExitFullScreenMode();
-                if (freeSilverTimer != null && freeSilverTimer.IsEnabled)
+                try
                 {
-                    freeSilverTimer.Stop();
+                    Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().ExitFullScreenMode();
+                    if (dispRequest != null)
+                    {
+                        dispRequest = null;
+                    }
+                    if (freeSilverTimer != null && freeSilverTimer.IsEnabled)
+                    {
+                        freeSilverTimer.Stop();
+                    }
+                    media.Stop();
+                    list_chat.ItemsSource = null;
+                    _biliLiveDanmu.HasDanmu-= _biliLiveDanmu_HasDanmu;
+                    _biliLiveDanmu.Dispose();
+                    _biliLiveDanmu = null;
                 }
-                _biliLiveDanmu.Dispose();
-                if (dispRequest != null)
+                catch (Exception)
                 {
-                    dispRequest = null;
                 }
-                media.Stop();
+               
             }
             base.OnNavigatingFrom(e);
         }

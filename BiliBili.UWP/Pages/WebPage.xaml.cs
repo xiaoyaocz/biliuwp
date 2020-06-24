@@ -413,6 +413,14 @@ namespace BiliBili.UWP.Pages
         {
             try
             {
+                if (args.Uri != null && args.Uri.AbsoluteUri.Contains("bilibili.com"))
+                {
+                    //微软商店的审核都是傻逼
+                    await webView.InvokeScriptAsync("eval", new string[] {
+                        "document.getElementById('internationalHeader').style.display='none';document.getElementsByClassName('international-footer')[0].style.display='none';" ,
+                    });
+                }
+
                 if (args.Uri!=null&&args.Uri.AbsoluteUri.Contains("23344273.aspx"))
                 {
                     string appVer = SettingHelper.GetVersion();
@@ -421,6 +429,8 @@ namespace BiliBili.UWP.Pages
                     string js = $"document.getElementById('q2').value='{appVer}';document.getElementById('q3').value='{systemVer}';";
                     await webView.InvokeScriptAsync("eval", new string[] { js });
                 }
+
+
             }
             catch (Exception)
             {

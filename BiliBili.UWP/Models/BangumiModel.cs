@@ -126,62 +126,30 @@ namespace BiliBili.UWP.Models
     }
 
 
-    public class MyBangumiModel
+    public class FollowSeasonModel
     {
-        public int code { get; set; }
-        public string message { get; set; }
-        public string count { get; set; }
 
-        public List<MyBangumiModel> result { get; set; }
-
-        public string badge { get; set; }
-        public string brief { get; set; }
-        // public string cover { get; set; }
-
-        private string _cover;
-        public string cover
-        {
-            get { return _cover + "@300w.jpg"; }
-            set { _cover = value; }
-        }
-
-        public string is_finish { get; set; }
-        public int is_started { get; set; }
-        public string title { get; set; }
-        public int season_id { get; set; }
-        public string newest_ep_index { get; set; }
-        public string total_count { get; set; }
-
-        public MyBangumiModel user_season { get; set; }
-        public string last_ep_index { get; set; }
-        public string weekday { get; set; }
-
-        public Visibility vis
+        public int status { get; set; }
+        public bool show_badge
         {
             get
             {
-                if (badge != null && badge.Length != 0)
-                {
-                    return Visibility.Visible;
-                }
-                else
-                {
-                    return Visibility.Collapsed;
-                }
+                return !string.IsNullOrEmpty(badge);
             }
         }
-
-        public string ViewAt
+        public string badge { get; set; }
+        public string square_cover { get; set; }
+        public string cover { get; set; }
+        public string title { get; set; }
+        public int season_id { get; set; }
+        public string url { get; set; }
+        public string progress_text
         {
             get
             {
-                if (ApiHelper.access_key.Length == 0)
+                if (progress != null)
                 {
-                    return "尚未登录";
-                }
-                if (user_season.last_ep_index.Length != 0)
-                {
-                    return "看到第" + user_season.last_ep_index + "话";
+                    return progress.index_show;
                 }
                 else
                 {
@@ -189,48 +157,25 @@ namespace BiliBili.UWP.Models
                 }
             }
         }
-        public string New
-        {
-            get
-            {
-                if (is_finish == "0")
-                {
-                    if (newest_ep_index == "-1")
-                    {
-                        return "尚未开播";
-                    }
-                    else
-                    {
-                        return "更新至第" + newest_ep_index + "话";
-                    }
 
-                }
-                else
-                {
-                    return total_count + "话全";
-                }
-            }
-        }
-
-        public string favorites { get; set; }
-
-        public string favouritesCount
-        {
-            get
-            {
-                double i = double.Parse(favorites);
-                double d = i / 10000;
-                if (d >= 1)
-                {
-                    return d.ToString("0.0") + "万";
-                }
-                else
-                {
-                    return favorites;
-                }
-            }
-        }
+        public FollowSeasonNewEpModel new_ep { get; set; }
+        public FollowSeasonProgressModel progress { get; set; }
     }
+    public class FollowSeasonNewEpModel
+    {
+
+        public string cover { get; set; }
+        public int duration { get; set; }
+        public int id { get; set; }
+        public string index_show { get; set; }
+    }
+    public class FollowSeasonProgressModel
+    {
+        public int last_ep_id { get; set; }
+        public string index_show { get; set; }
+    }
+
+
 
     public class TimeLineModel
     {

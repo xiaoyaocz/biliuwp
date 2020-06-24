@@ -638,7 +638,7 @@ namespace BiliBili.UWP.Modules
                     headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
                     List<DownloadUrlInfo> downloadUrls = new List<DownloadUrlInfo>();
 
-                    if (jobj["data"]["format"].ToString().Contains("flv")|| jobj["data"]["format"].ToString().Contains("mp4"))
+                    if (jobj["data"]["durl"]!=null)
                     {
                         var data = JsonConvert.DeserializeObject<SeasonUrlInfo>(jobj["data"].ToString());
                         foreach (var item in data.durl)

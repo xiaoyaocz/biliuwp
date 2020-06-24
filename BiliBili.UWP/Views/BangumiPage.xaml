@@ -46,27 +46,24 @@
        
         </DataTemplate>
         <DataTemplate  x:Name="MyItemTemplate">
-            <Border  Width="{Binding ElementName=ViewBox2_num,Path=Width}" >
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="42"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Image   Stretch="UniformToFill" Source="ms-appx:///Assets/Logo/PI640_480.png"></Image>
-                        <Image Source="{Binding cover}" Stretch="UniformToFill"></Image>
-                        <Border VerticalAlignment="Top" Padding="5 2"  Visibility="{Binding vis}" HorizontalAlignment="Right" Background="#FFFFAE00" >
-                            <TextBlock FontSize="12" Foreground="White" Text="{Binding badge}"></TextBlock>
-                        </Border>
-                    </Grid>
-
-                    <TextBlock Grid.Row="1" MaxLines="2" TextWrapping="Wrap" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Foreground="{ThemeResource Bili-FontColor}" FontSize="14" Text="{Binding title}"></TextBlock>
-                    <TextBlock Grid.Row="2" Foreground="Gray"  FontSize="12" Text="{Binding ViewAt}"></TextBlock>
-                    <TextBlock Grid.Row="3" Foreground="Gray"  FontSize="12" Text="{Binding New}"></TextBlock>
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <c:ImageEx IsCacheEnabled="True" PlaceholderSource="ms-appx:///Assets/Logo/PI640_480.png" MaxHeight="180" Stretch="UniformToFill" Source="{Binding Path=cover,Converter={StaticResource imageConvert},ConverterParameter='320w_428h_1c'}"></c:ImageEx>
+                    <Border VerticalAlignment="Top" Padding="5 2"  Visibility="{Binding show_badge}" HorizontalAlignment="Right" Background="#FFFFAE00" >
+                        <TextBlock FontSize="12" Foreground="White" Text="{Binding badge}"></TextBlock>
+                    </Border>
                 </Grid>
-            </Border>
+
+                <TextBlock Grid.Row="1" MaxLines="2" TextWrapping="Wrap" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Foreground="{ThemeResource Bili-FontColor}" FontSize="14" Text="{Binding title}"></TextBlock>
+                <TextBlock Grid.Row="2" Foreground="Gray"  FontSize="12"  Text="{Binding Path=new_ep.index_show}" ></TextBlock>
+                <TextBlock Grid.Row="3" Foreground="Gray"  FontSize="12" Text="{Binding progress_text}"></TextBlock>
+            </Grid>
 
         </DataTemplate>
         <DataTemplate  x:Name="FootItemTemplate">
@@ -150,7 +147,20 @@
                                     </StackPanel>
                                 </HyperlinkButton>
                             </Grid>
-                            <GridView x:Name="list_ban_mine" ItemClick="list_ban_mine_ItemClick" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center"  ItemTemplate="{StaticResource MyItemTemplate}" ItemContainerStyle="{StaticResource GridViewItemStyle}" Margin="10 0" SelectionMode="None" IsItemClickEnabled="True" ></GridView>
+                            <c:AdaptiveGridView x:Name="list_ban_mine" 
+                                                ItemClick="list_ban_mine_ItemClick"
+                                                DesiredWidth="160"
+                                                StretchContentForSingleRow="False"
+                                                ScrollViewer.VerticalScrollMode="Disabled" 
+                                                ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+                                                ItemTemplate="{StaticResource MyItemTemplate}" 
+                                                ItemContainerStyle="{StaticResource GridViewItemStyle}" 
+                                                Margin="10 0" 
+                                                SelectionMode="None" 
+                                                IsItemClickEnabled="True" >
+                                
+                            </c:AdaptiveGridView>
+                           
                         </StackPanel>
 
                         <StackPanel Grid.Row="1">

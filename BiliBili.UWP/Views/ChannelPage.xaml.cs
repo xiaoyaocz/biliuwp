@@ -170,11 +170,11 @@ namespace BiliBili.UWP.Views
                 MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(ActivityPage));
                 return;
             }
-            if (item.name == "漫画")
-            {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), "https://manga.bilibili.com");
-                return;
-            }
+            //if (item.name == "漫画")
+            //{
+            //    MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), "https://manga.bilibili.com");
+            //    return;
+            //}
             if (item.uri!=null&&item.uri.Contains("https://"))
             {
                 MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), item.uri);
