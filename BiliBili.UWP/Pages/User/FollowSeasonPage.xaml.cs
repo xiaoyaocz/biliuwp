@@ -74,7 +74,7 @@ namespace BiliBili.UWP.Pages
                     },
                 };
                 pivot.ItemsSource = tabs;
-                Utils.ShowMessageToast("右键或长按可以进行更多操作");
+                //Utils.ShowMessageToast("右键或长按可以进行更多操作");
             }
         }
         protected override void OnNavigatedFrom(NavigationEventArgs e)

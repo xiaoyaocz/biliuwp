@@ -386,13 +386,20 @@ namespace BiliBili.UWP
         }
 
 
-        public static async Task<string> GetResultsUTF8Encode(Uri url)
+        public static async Task<string> GetResultsUTF8Encode(Uri url, IDictionary<string, string> header=null)
         {
             HttpBaseProtocolFilter fiter = new HttpBaseProtocolFilter();
             fiter.IgnorableServerCertificateErrors.Add(Windows.Security.Cryptography.Certificates.ChainValidationResult.Expired);
 
             using (HttpClient hc = new HttpClient(fiter))
             {
+                if (header != null)
+                {
+                    foreach (var item in header)
+                    {
+                        hc.DefaultRequestHeaders.Add(item.Key, item.Value);
+                    }
+                }
                 HttpResponseMessage hr = await hc.GetAsync(url);
                 hr.EnsureSuccessStatusCode();
                 var encodeResults = await hr.Content.ReadAsBufferAsync();

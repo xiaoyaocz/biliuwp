@@ -127,12 +127,14 @@ namespace BiliBili.UWP.Pages
 
                 if (model.code == 0 || model.code == -404)
                 {
+                    Dictionary<string, string> header = new Dictionary<string, string>();
+                    header.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36");
                     if (model.code == -404)
                     {
-                        string eresults = await WebClientClass.GetResultsUTF8Encode(new Uri("https://bangumi.bilibili.com/view/web_api/season?season_id=" + _banId));
-                        eresults = eresults.Replace("ep_id", "episode_id");
-                        eresults = eresults.Replace("cid", "danmaku");
-                        eresults = eresults.Replace("aid", "av_id");
+                        string eresults = await WebClientClass.GetResultsUTF8Encode(new Uri("https://www.biliplus.com/api/bangumi?season=" + _banId), header);
+                        //eresults = eresults.Replace("ep_id", "episode_id");
+                        //eresults = eresults.Replace("cid", "danmaku");
+                        //eresults = eresults.Replace("aid", "av_id");
                         model = JsonConvert.DeserializeObject<BangumiDataModel>(eresults);
 
                         if (model.code != 0)
@@ -149,10 +151,10 @@ namespace BiliBili.UWP.Pages
 
                             //results = results.Replace("seasonListCallback(", "");
                             //results = results.Remove(results.Length-2,2);
-                            string eresults = await WebClientClass.GetResultsUTF8Encode(new Uri("https://bangumi.bilibili.com/view/web_api/season?season_id=" + _banId));
-                            eresults = eresults.Replace("ep_id", "episode_id");
-                            eresults = eresults.Replace("cid", "danmaku");
-                            eresults = eresults.Replace("aid", "av_id");
+                            string eresults = await WebClientClass.GetResultsUTF8Encode(new Uri("https://www.biliplus.com/api/bangumi?season=" + _banId), header);
+                            //eresults = eresults.Replace("ep_id", "episode_id");
+                            //eresults = eresults.Replace("cid", "danmaku");
+                            //eresults = eresults.Replace("aid", "av_id");
                             eresults = eresults.Replace("index_title", "long_title");
                             eresults = eresults.Replace("index", "title");
 
