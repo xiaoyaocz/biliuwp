@@ -222,7 +222,7 @@ namespace BiliBili.UWP.Helper
                             }
                         }
 
-                        var audio = audios.FirstOrDefault();
+                        var audio = audios.Where(x=>x.mimeType == "audio/mp4").FirstOrDefault();
 
                         return new ReturnPlayModel()
                         {
@@ -471,7 +471,7 @@ namespace BiliBili.UWP.Helper
                             codecid = 7;
                             video = videos.FirstOrDefault(x => x.id == qn && x.codecid == codecid);
                         }
-                        var audio = audios.FirstOrDefault();
+                        var audio = audios.Where(x => x.mimeType == "audio/mp4").FirstOrDefault();
 
                         return new ReturnPlayModel()
                         {
@@ -695,7 +695,7 @@ namespace BiliBili.UWP.Helper
                         {
                             video = videos.OrderByDescending(x => x.id).FirstOrDefault(x => x.codecid == 7);
                         }
-                        var audio = audios.FirstOrDefault();
+                        var audio = audios.Where(x => x.mimeType == "audio/mp4").FirstOrDefault();
 
                         return new ReturnPlayModel()
                         {
