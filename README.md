@@ -6,11 +6,10 @@
 ![biliuwp](https://i.loli.net/2018/12/20/5c1bb55577b8e.png)
 
 ### 体验
-* [应用商店体验(旧版本)](https://www.microsoft.com/zh-cn/store/p/%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9uwp/9n7c87236453)
-* [最新版本](https://github.com/xiaoyaocz/biliuwp/releases)
+* [应用商店](https://www.microsoft.com/zh-cn/store/p/%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9uwp/9n7c87236453)
 
 ### 注意
-* 弹幕使用的我的另一个项目[NSDanmaku](https://github.com/xiaoyaocz/NSDanmaku)，~~需要单独引用~~
+* 弹幕使用的我的另一个项目[NSDanmaku](https://github.com/xiaoyaocz/NSDanmaku)
 * 该项目现在不能很好兼容Win10 Mobile(~~额..应该没人用了吧~~)
 
 ### 引用及参考
