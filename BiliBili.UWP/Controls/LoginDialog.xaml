@@ -13,7 +13,7 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
     <Grid>
-        <StackPanel x:Name="pwdLogin" Visibility="Visible">
+        <StackPanel x:Name="pwdLogin" Visibility="Collapsed">
             <Grid>
                 <Grid x:Name="show" VerticalAlignment="Top" >
                     <Grid.ColumnDefinitions>
@@ -55,10 +55,10 @@
                 <TextBlock>切换至网页登录</TextBlock>
             </HyperlinkButton>
             <HyperlinkButton x:Name="btnQRLogin" Click="btnQRLogin_Click">
-                <TextBlock>切换至扫码登录</TextBlock>
+                <TextBlock>切换至扫码登录(推荐)</TextBlock>
             </HyperlinkButton>
         </StackPanel>
-        <StackPanel x:Name="qrLogin" Visibility="Collapsed">
+        <StackPanel x:Name="qrLogin" Visibility="Visible">
             <Image x:Name="imgQR" Width="200" Height="200"></Image>
 
             

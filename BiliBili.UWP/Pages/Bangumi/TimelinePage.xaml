@@ -199,13 +199,13 @@
                         <GridView.Header>
                             <Grid Margin="5">
                                 <StackPanel Orientation="Horizontal">
-                                    <Border Background="{ThemeResource Bili-ForeColor}" Width="24" Height="24">
+                                    <Border Background="{ThemeResource Bili-Highlight-TextColor}" Width="24" Height="24">
                                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource Bili-Background}" Text="{Binding Path=today.WeekStr}"></TextBlock>
                                     </Border>
-                                    <TextBlock FontSize="18" Foreground="{ThemeResource Bili-ForeColor}"  Margin="5 0" Text="{Binding Path=today.Week}"></TextBlock>
+                                    <TextBlock FontSize="18" Foreground="{ThemeResource Bili-Highlight-TextColor}"  Margin="5 0" Text="{Binding Path=today.Week}"></TextBlock>
                                 </StackPanel>
 
-                                <TextBlock Foreground="{ThemeResource Bili-ForeColor}" HorizontalAlignment="Right" FontSize="14" VerticalAlignment="Center"  Text="{Binding Path=today.Date}"></TextBlock>
+                                <TextBlock Foreground="{ThemeResource Bili-Highlight-TextColor}" HorizontalAlignment="Right" FontSize="14" VerticalAlignment="Center"  Text="{Binding Path=today.Date}"></TextBlock>
                             </Grid>
                         </GridView.Header>
 

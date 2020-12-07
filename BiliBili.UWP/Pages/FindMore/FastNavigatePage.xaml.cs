@@ -41,19 +41,12 @@ namespace BiliBili.UWP.Pages
 
         private void MessageCenter_HideAdEvent(object sender, EventArgs e)
         {
-            gridAd.Visibility = Visibility.Collapsed;
+           
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (SettingHelper.Get_HideAD())
-            {
-                gridAd.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                gridAd.Visibility = Visibility.Visible;
-            }
+           
         }
         private void autoSug_Box_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
@@ -232,93 +225,6 @@ namespace BiliBili.UWP.Pages
             }
         }
 
-        private async void BtnCloseAd_Click(object sender, RoutedEventArgs e)
-        {
-            var msg = new MessageDialog("开发不易，整个APP就这一条广告，如果不影响你使用的话，求求你不要关啊(ಥ _ ಥ)", "确定要关闭广告吗？");
-            msg.Commands.Add(new UICommand("关这一次", (i) => {
-                gridAd.Visibility = Visibility.Collapsed;
-            }));
-            msg.Commands.Add(new UICommand("永久关闭", (i) => {
-                if (clickAd)
-                {
-                    gridAd.Visibility = Visibility.Collapsed;
-                    SettingHelper.Set_HideAD(true);
-                }
-                else
-                {
-                    Utils.ShowMessageToast("请先点击一次广告，点完再回来这里就能关闭了");
-                }
-            }));
-            msg.Commands.Add(new UICommand("不关了", (i) => {
-                Utils.ShowMessageToast("感谢您的支持");
-            }));
-            var results= await msg.ShowAsync();
-
-        }
-       
-        bool clickAd = false;
-        private void ADWebView_NewWindowRequested(WebView sender, WebViewNewWindowRequestedEventArgs args)
-        {
-            clickAd = true;
-            //Utils.ShowMessageToast("点击了广告");
-            System.Diagnostics.Debug.WriteLine("点击了广告");
-        }
-
-        public static T MyFindListBoxChildOfType<T>(DependencyObject root) where T : class
-        {
-            var MyQueue = new Queue<DependencyObject>();
-            MyQueue.Enqueue(root);
-            while (MyQueue.Count > 0)
-            {
-                DependencyObject current = MyQueue.Dequeue();
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(current); i++)
-                {
-                    var child = VisualTreeHelper.GetChild(current, i);
-                    var typedChild = child as T;
-                    if (typedChild != null)
-                    {
-                        return typedChild;
-                    }
-                    MyQueue.Enqueue(child);
-                }
-            }
-            return null;
-        }
-
-        private void BannerAd_OnAdRefreshed(object sender, RoutedEventArgs e)
-        {
-            btnCloseAd.Visibility = Visibility.Visible;
-        }
-
-        private void adControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            btnCloseAd.Visibility = Visibility.Visible;
-            try
-            {
-                
-                foreach (var item in (adControl.Content as Grid).Children)
-                {
-                    if (item is WebView)
-                    {
-                        var web = item as WebView;
-                        web.NewWindowRequested += ADWebView_NewWindowRequested;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        private void adControl_OnAdError(object sender, RoutedEventArgs e)
-        {
-            btnCloseAd.Visibility = Visibility.Collapsed;
-        }
-
-        private void adControl_OnAdErrorNoAds(object sender, RoutedEventArgs e)
-        {
-            btnCloseAd.Visibility = Visibility.Collapsed;
-        }
     }
 
 }

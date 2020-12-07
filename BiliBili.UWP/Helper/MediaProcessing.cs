@@ -134,7 +134,7 @@ namespace BiliBili.UWP.Helper
 
             var backgroundTrack = await BackgroundAudioTrack.CreateFromFileAsync(inputFiles.FirstOrDefault(x => x.Name == "audio.m4s"));
             composition.BackgroundAudioTracks.Add(backgroundTrack);
-
+           
             IAsyncOperationWithProgress<TranscodeFailureReason, double> saveOperation = null;
             if (profile != null)
             {

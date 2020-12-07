@@ -37,7 +37,11 @@ namespace BiliBili.UWP.Controls
             _secure.CloseCaptchaEvent += _biliapp_CloseCaptchaEvent;
             _secure.CaptchaEvent += _biliapp_CaptchaEvent;
         }
-
+        protected async override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            await GetQRAuthInfo();
+        }
         private void _biliapp_CaptchaEvent(object sender, string e)
         {
             //throw new NotImplementedException();

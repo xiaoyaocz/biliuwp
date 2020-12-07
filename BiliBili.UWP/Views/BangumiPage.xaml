@@ -140,7 +140,7 @@
                                     <Image Source="ms-appx:///Assets/Icon/bangumi_follow_ic_mine.png" Width="24" Height="24" ></Image>
                                     <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="{ThemeResource Bili-FontColor}">我的追番</TextBlock>
                                 </StackPanel>
-                                <HyperlinkButton x:Name="btn_MyBan" Click="btn_MyBan_Click" HorizontalAlignment="Right" Margin="5 0" Foreground="{ThemeResource Bili-ForeColor}">
+                                <HyperlinkButton x:Name="btn_MyBan" Click="btn_MyBan_Click" HorizontalAlignment="Right" Margin="5 0" Foreground="{ThemeResource Bili-Highlight-TextColor}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock VerticalAlignment="Center" FontSize="14">更多追番</TextBlock>
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" Margin="5" FontSize="12"/>
@@ -170,7 +170,7 @@
                                     <Image Source="ms-appx:///Assets/Icon/bangumi_follow_ic_recommend.png" Width="24" Height="24" ></Image>
                                     <TextBlock Margin="5 0" VerticalAlignment="Center"  Foreground="{ThemeResource Bili-FontColor}">番剧推荐</TextBlock>
                                 </StackPanel>
-                                <HyperlinkButton Tag="HOT" HorizontalAlignment="Right" Click="btn_jp_Click" Margin="5 0" Foreground="{ThemeResource Bili-ForeColor}">
+                                <HyperlinkButton Tag="HOT" HorizontalAlignment="Right" Click="btn_jp_Click" Margin="5 0" Foreground="{ThemeResource Bili-Highlight-TextColor}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock VerticalAlignment="Center" FontSize="14">更多番剧</TextBlock>
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" Margin="5" FontSize="12"/>
@@ -186,7 +186,7 @@
                                     <Image Source="ms-appx:///Assets/Icon/bangumi_follow_ic_domestic_recommend.png" Width="24" Height="24" ></Image>
                                     <TextBlock Margin="5 0" VerticalAlignment="Center" Foreground="{ThemeResource Bili-FontColor}" >国漫推荐</TextBlock>
                                 </StackPanel>
-                                <HyperlinkButton Tag="HOT" HorizontalAlignment="Right" Click="btn_cn_Click" Margin="5 0" Foreground="{ThemeResource Bili-ForeColor}">
+                                <HyperlinkButton Tag="HOT" HorizontalAlignment="Right" Click="btn_cn_Click" Margin="5 0" Foreground="{ThemeResource Bili-Highlight-TextColor}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock VerticalAlignment="Center" FontSize="14">更多国漫</TextBlock>
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" Margin="5" FontSize="12"/>

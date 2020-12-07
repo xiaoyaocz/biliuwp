@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BiliBili.UWP.Helper;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -65,9 +66,30 @@ namespace BiliBili.UWP.Pages
                 female.Visibility = Visibility.Visible;
                 gay.Visibility = Visibility.Collapsed;
             }
-            
+            CreateQR(par.qr);
         }
+        private void CreateQR(string url)
+        {
+            try
+            {
+                ZXing.BarcodeWriter barcodeWriter = new ZXing.BarcodeWriter();
+                barcodeWriter.Format = ZXing.BarcodeFormat.QR_CODE;
+                barcodeWriter.Options = new ZXing.Common.EncodingOptions()
+                {
+                    Margin = 1,
+                    Height = 200,
+                    Width = 200
+                };
+                var data = barcodeWriter.Write(url);
+                imgQR.Source = data;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog("创建二维码失败" + url, LogType.ERROR, ex);
+                Utils.ShowMessageToast("创建二维码失败");
+            }
 
+        }
         private async void btn_Save_Click(object sender, RoutedEventArgs e)
         {
             try

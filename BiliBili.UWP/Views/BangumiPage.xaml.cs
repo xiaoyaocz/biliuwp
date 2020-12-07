@@ -169,30 +169,14 @@ namespace BiliBili.UWP.Views
             MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), (e.ClickedItem as BangumiHomeModel).season_id.ToString());
         }
 
-        private void list_ban_cn_foot_ItemClick(object sender, ItemClickEventArgs e)
+        private async void list_ban_cn_foot_ItemClick(object sender, ItemClickEventArgs e)
         {
             //妈蛋，B站就一定要返回个链接么,就不能返回个类型加参数吗
-            string tag = Regex.Match((e.ClickedItem as BangumiHomeModel).link, @"^http://bangumi.bilibili.com/anime/category/(.*?)$").Groups[1].Value;
-            if (tag.Length != 0)
+            var link = (e.ClickedItem as BangumiHomeModel).link;
+            if(!await MessageCenter.HandelUrl(link))
             {
-               // MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), (e.ClickedItem as BangumiHomeModel).season_id.ToString());
-                //NavigatedTo(typeof(BanByTagPage), new string[] { tag, (e.ClickedItem as BanTJModel).title });
-                return;
+                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), link);
             }
-            string ban = Regex.Match((e.ClickedItem as BangumiHomeModel).link, @"^http://bangumi.bilibili.com/anime/(.*?)$").Groups[1].Value;
-            if (ban.Length != 0)
-            {
-
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), ban);
-                return;
-            }
-            string aid = Regex.Match((e.ClickedItem as BangumiHomeModel).link, @"^http://www.bilibili.com/video/av(.*?)/$").Groups[1].Value;
-            if (aid.Length != 0)
-            {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage),aid);
-                return;
-            }
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), (e.ClickedItem as BangumiHomeModel).link);
         }
 
         private void btn_Timeline_Click(object sender, RoutedEventArgs e)

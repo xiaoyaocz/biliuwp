@@ -1,0 +1,39 @@
+﻿<ContentDialog
+    x:Class="BiliBili.UWP.Controls.DownloadDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BiliBili.UWP.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+   
+    PrimaryButtonText="确定"
+    SecondaryButtonText="取消"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <StackPanel>
+        <TextBlock  Margin="0,8">选集</TextBlock>
+        <ListView SelectionMode="Multiple" MaxHeight="240" BorderThickness="1" BorderBrush="LightGray">
+            <ListViewItem>第一集</ListViewItem>
+            <ListViewItem>第一集</ListViewItem>
+            <ListViewItem>第一集</ListViewItem>
+            <ListViewItem>第一集</ListViewItem>
+            <ListViewItem>第一集</ListViewItem>
+            <ListViewItem>第一集</ListViewItem>
+            <ListViewItem>第一集</ListViewItem>
+        </ListView>
+        <CheckBox Margin="0,8,0,0">全选/取消全选</CheckBox>
+        <TextBlock Margin="0,8">清晰度</TextBlock>
+        <ComboBox HorizontalAlignment="Stretch" SelectedIndex="0">
+            <ComboBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>超清 1080P+</TextBlock>
+                    <Border Margin="8 0" VerticalAlignment="Center" Padding="4,2" CornerRadius="4" Background="HotPink">
+                        <TextBlock FontSize="10" Foreground="White">会员</TextBlock>
+                    </Border>
+                </StackPanel>
+            </ComboBoxItem>
+        </ComboBox>
+    </StackPanel>
+</ContentDialog>

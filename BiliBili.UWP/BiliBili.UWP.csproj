@@ -314,6 +314,9 @@
       <DependentUpon>CommentV2Control.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DanmakuMTC.cs" />
+    <Compile Include="Controls\DownloadDialog.xaml.cs">
+      <DependentUpon>DownloadDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DynamicControls.xaml.cs">
       <DependentUpon>DynamicControls.xaml</DependentUpon>
     </Compile>
@@ -810,6 +813,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\CommentV2Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DownloadDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

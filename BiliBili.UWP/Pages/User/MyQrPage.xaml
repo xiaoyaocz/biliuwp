@@ -28,7 +28,7 @@
 
             <StackPanel x:Name="qr" VerticalAlignment="Center" MaxWidth="500" Background="White" Padding="20">
 
-                <Image Width="300" Height="300" HorizontalAlignment="Center" Source="{Binding qr}"></Image>
+                <Image x:Name="imgQR" Width="300" Height="300" HorizontalAlignment="Center"></Image>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                     <Ellipse Height="36" Width="36">

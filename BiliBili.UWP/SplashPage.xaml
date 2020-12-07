@@ -20,11 +20,6 @@
                 <TextBlock HorizontalAlignment="Center"  Foreground="Gray" Text="加载中..."></TextBlock>
             </StackPanel>
         </Grid>
-        <Grid x:Name="grid_Load" >
-            <Image x:Name="img_bg"  Stretch="Fill" Tapped="grid_Load_Tapped"  />
-            <Canvas x:Name="GlassHost" Grid.ColumnSpan="2" />
-            <Image x:Name="img"  Stretch="Uniform" Tapped="grid_Load_Tapped"  />
-            
-        </Grid>
+        
     </Grid>
 </Page>

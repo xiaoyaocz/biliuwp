@@ -235,46 +235,51 @@ namespace BiliBili.UWP.Pages
                 {
 
                     Debug.WriteLine(@"[INFO]扫描到二维码:{result}   ->" + _result.Text);
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,async () =>
                     {
-                        string ban = Regex.Match(_result.Text, @"^http://bangumi.bilibili.com/anime/(.*?)$").Groups[1].Value;
-                        if (ban.Length != 0)
+                        if(await MessageCenter.HandelUrl(_result.Text))
                         {
-                            //args.Handled = true;
-                            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), ban.Replace("/", ""));
-                            this.Frame.GoBack();
-                            return;
-                        }
-                        string ban2 = Regex.Match(_result.Text, @"^http://www.bilibili.com/bangumi/i/(.*?)$").Groups[1].Value;
-                        if (ban2.Length != 0)
-                        {
-                            //args.Handled = true;
-                            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), ban2.Replace("/", ""));
-                            this.Frame.GoBack();
-                            // this.Frame.Navigate(typeof(BanInfoPage), ban2.Replace("/", ""));
-                            return;
-                        }
-                        //bilibili://?av=4284663
-                        string ban3 = Regex.Match(_result.Text, @"^bilibili://?av=(.*?)$").Groups[1].Value;
-                        if (ban3.Length != 0)
-                        {
-                            //args.Handled = true;
-                            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), ban3.Replace("/", ""));
-                            this.Frame.GoBack();
-                            //this.Frame.Navigate(typeof(VideoViewPage), ban3.Replace("/", ""));
                             return;
                         }
 
+                        //string ban = Regex.Match(_result.Text, @"^http://bangumi.bilibili.com/anime/(.*?)$").Groups[1].Value;
+                        //if (ban.Length != 0)
+                        //{
+                        //    //args.Handled = true;
+                        //    MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), ban.Replace("/", ""));
+                        //    this.Frame.GoBack();
+                        //    return;
+                        //}
+                        //string ban2 = Regex.Match(_result.Text, @"^http://www.bilibili.com/bangumi/i/(.*?)$").Groups[1].Value;
+                        //if (ban2.Length != 0)
+                        //{
+                        //    //args.Handled = true;
+                        //    MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), ban2.Replace("/", ""));
+                        //    this.Frame.GoBack();
+                        //    // this.Frame.Navigate(typeof(BanInfoPage), ban2.Replace("/", ""));
+                        //    return;
+                        //}
+                        ////bilibili://?av=4284663
+                        //string ban3 = Regex.Match(_result.Text, @"^bilibili://?av=(.*?)$").Groups[1].Value;
+                        //if (ban3.Length != 0)
+                        //{
+                        //    //args.Handled = true;
+                        //    MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), ban3.Replace("/", ""));
+                        //    this.Frame.GoBack();
+                        //    //this.Frame.Navigate(typeof(VideoViewPage), ban3.Replace("/", ""));
+                        //    return;
+                        //}
 
-                        string ban4 = Regex.Match(_result.Text + "/", @"space.bilibili.com/(.*?)/").Groups[1].Value;
-                        if (ban4.Length != 0)
-                        {
-                            //args.Handled = true;
-                            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage), ban4.Replace("/", ""));
-                            this.Frame.GoBack();
-                            //this.Frame.Navigate(typeof(VideoViewPage), ban3.Replace("/", ""));
-                            return;
-                        }
+
+                        //string ban4 = Regex.Match(_result.Text + "/", @"space.bilibili.com/(.*?)/").Groups[1].Value;
+                        //if (ban4.Length != 0)
+                        //{
+                        //    //args.Handled = true;
+                        //    MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(UserCenterPage), ban4.Replace("/", ""));
+                        //    this.Frame.GoBack();
+                        //    //this.Frame.Navigate(typeof(VideoViewPage), ban3.Replace("/", ""));
+                        //    return;
+                        //}
 
                         string ban5 = Regex.Match(_result.Text + "/", @"oauthKey=(.*?)/").Groups[1].Value;
                         if (ban5.Length != 0)
@@ -304,31 +309,31 @@ namespace BiliBili.UWP.Pages
                         }
                         //text .Text= args.Uri.AbsoluteUri;
 
-                        string live = Regex.Match(_result.Text, @"^bilibili://live/(.*?)$").Groups[1].Value;
-                        if (live.Length != 0)
-                        {
-                            MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(LiveRoomPage), live);
+                        //string live = Regex.Match(_result.Text, @"^bilibili://live/(.*?)$").Groups[1].Value;
+                        //if (live.Length != 0)
+                        //{
+                        //    MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(LiveRoomPage), live);
 
-                            return;
-                        }
+                        //    return;
+                        //}
 
-                        string live2 = Regex.Match(_result.Text + "a", @"live.bilibili.com/(.*?)a").Groups[1].Value;
-                        if (live2.Length != 0)
-                        {
-                            MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(LiveRoomPage), live2.Replace("a", ""));
+                        //string live2 = Regex.Match(_result.Text + "a", @"live.bilibili.com/(.*?)a").Groups[1].Value;
+                        //if (live2.Length != 0)
+                        //{
+                        //    MessageCenter.SendNavigateTo(NavigateMode.Play, typeof(LiveRoomPage), live2.Replace("a", ""));
 
-                            return;
-                        }
+                        //    return;
+                        //}
 
-                        if (Regex.IsMatch(_result.Text, "/video/av(.*)?[/|+](.*)?"))
-                        {
+                        //if (Regex.IsMatch(_result.Text, "/video/av(.*)?[/|+](.*)?"))
+                        //{
 
-                            string a = Regex.Match(_result.Text, "/video/av(.*)?[/|+](.*)?").Groups[1].Value;
-                            //this.Frame.Navigate(typeof(VideoViewPage), a);
-                            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), a);
-                            this.Frame.GoBack();
-                            return;
-                        }
+                        //    string a = Regex.Match(_result.Text, "/video/av(.*)?[/|+](.*)?").Groups[1].Value;
+                        //    //this.Frame.Navigate(typeof(VideoViewPage), a);
+                        //    MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), a);
+                        //    this.Frame.GoBack();
+                        //    return;
+                        //}
 
 
                         tbkResult.Text = "无法识别的类型";

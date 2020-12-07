@@ -5,7 +5,6 @@
     xmlns:local="using:BiliBili.UWP.Pages"
         xmlns:my="using:BiliBili.UWP"
         xmlns:c="using:BiliBili.UWP.Controls"
-    xmlns:vlc="using:VLC"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -292,6 +291,7 @@
                                 </c:DanmakuMTC.QuityContent>
                                 <c:DanmakuMTC.MoreMenuFlyout>
                                     <MenuFlyout>
+                                        <MenuFlyoutItem x:Uid="menuitem_QR" Click="MenuFlyoutItem_Click">手机上看</MenuFlyoutItem>
                                         <MenuFlyoutItem  Click="btn_VideoInfo_Click">播放设置</MenuFlyoutItem>
                                         <MenuFlyoutItem x:Name="menuitem_DM" Visibility="Collapsed" Click="menuitem_DM_Click">弹幕设置</MenuFlyoutItem>
                                         <MenuFlyoutItem x:Name="menuitem_PB" Click="menuitem_PB_Click">弹幕屏蔽</MenuFlyoutItem>

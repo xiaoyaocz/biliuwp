@@ -6,7 +6,6 @@
       xmlns:m="using:BiliBili.UWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:adsjumbo="using:AdsJumbo"
     mc:Ignorable="d">
 
     <Grid Background="#00E9E9E9">
@@ -141,19 +140,7 @@
 
             </GridView>
         </Grid>
-        <Grid x:Name="gridAd" Grid.RowSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <adsjumbo:BannerAd 
-                x:Name="adControl"
-                ApplicationId='zvubh8c1f2z2'
-                WidthAd='728'
-                HeightAd='90'
-                OnAdRefreshed="BannerAd_OnAdRefreshed"
-                OnAdError="adControl_OnAdError"
-                OnAdErrorNoAds="adControl_OnAdErrorNoAds"
-                Loaded="adControl_Loaded"
-                Position='Bottom' />
-            <HyperlinkButton x:Name="btnCloseAd"  Click="BtnCloseAd_Click" Width="24" Padding="0" Height="24" HorizontalAlignment="Right" VerticalAlignment="Bottom">x</HyperlinkButton>
-        </Grid>
+      
         
     </Grid>
 </Page>

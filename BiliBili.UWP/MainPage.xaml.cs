@@ -1110,7 +1110,7 @@ namespace BiliBili.UWP
             frame.Navigate(typeof(MyQrPage), new object[] { new MyqrModel() {
                   name=Account.myInfo.name,
                   photo=Account.myInfo.face,
-                  qr=string.Format("http://qr.liantu.com/api.php?w=500&text={0}&inpt=00AAF0&logo={1}",Uri.EscapeDataString("http://space.bilibili.com/"+ApiHelper.GetUserId()),Uri.EscapeDataString(Account.myInfo.face)),
+                  qr="http://space.bilibili.com/"+ApiHelper.GetUserId(),
                   sex=Account.myInfo.Sex
             } });
             fy.Hide();

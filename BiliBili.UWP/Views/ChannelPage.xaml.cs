@@ -160,7 +160,7 @@ namespace BiliBili.UWP.Views
                 MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(RankPage));
                 return;
             }
-            if (item.name== "话题中心")
+            if (item.name== "专题中心")
             {
                 MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(TopicPage));
                 return;

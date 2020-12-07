@@ -11,7 +11,7 @@
     xmlns:models="using:BiliBili.UWP.Modules.SearchModels"
     xmlns:control="using:BiliBili.UWP.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource Bili-Background}">
+    >
 
     <Page.Resources>
         <convert:DatetimeConvert x:Key="ts"/>
@@ -385,7 +385,7 @@
                                           TopicTemplate="{StaticResource TopicTpl}"
                                           TestTemplate="{StaticResource TestTpl}"/>
     </Page.Resources>
-    <Grid>
+    <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>

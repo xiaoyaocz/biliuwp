@@ -13,10 +13,12 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
 		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
@@ -27,6 +29,7 @@ Global
 		{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}.Debug|ARM.ActiveCfg = Debug|ARM
 		{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}.Debug|ARM.Build.0 = Debug|ARM
 		{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}.Debug|ARM.Deploy.0 = Debug|ARM
+		{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}.Debug|ARM64.ActiveCfg = Debug|x86
 		{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}.Debug|x64.ActiveCfg = Debug|x64
 		{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}.Debug|x64.Build.0 = Debug|x64
 		{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}.Debug|x64.Deploy.0 = Debug|x64
@@ -37,6 +40,7 @@ Global
 		{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}.Release|ARM.ActiveCfg = Release|ARM
 		{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}.Release|ARM.Build.0 = Release|ARM
 		{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}.Release|ARM.Deploy.0 = Release|ARM
+		{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}.Release|ARM64.ActiveCfg = Release|x86
 		{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}.Release|x64.ActiveCfg = Release|x64
 		{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}.Release|x64.Build.0 = Release|x64
 		{B6506127-B7E6-4C7E-9FFA-73B90F5E8623}.Release|x64.Deploy.0 = Release|x64
@@ -47,6 +51,8 @@ Global
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Debug|ARM.ActiveCfg = Debug|ARM
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Debug|ARM.Build.0 = Debug|ARM
+		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Debug|ARM64.Build.0 = Debug|Any CPU
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Debug|x64.ActiveCfg = Debug|x64
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Debug|x64.Build.0 = Debug|x64
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Debug|x86.ActiveCfg = Debug|x86
@@ -55,6 +61,8 @@ Global
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Release|ARM.ActiveCfg = Release|ARM
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Release|ARM.Build.0 = Release|ARM
+		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Release|ARM64.Build.0 = Release|Any CPU
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Release|x64.ActiveCfg = Release|x64
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Release|x64.Build.0 = Release|x64
 		{E3691422-CBFD-4DF9-827B-77D195731EEC}.Release|x86.ActiveCfg = Release|x86
@@ -63,6 +71,8 @@ Global
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Debug|ARM.ActiveCfg = Debug|ARM
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Debug|ARM.Build.0 = Debug|ARM
+		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Debug|ARM64.Build.0 = Debug|Any CPU
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Debug|x64.ActiveCfg = Debug|x64
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Debug|x64.Build.0 = Debug|x64
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Debug|x86.ActiveCfg = Debug|x86
@@ -71,6 +81,8 @@ Global
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Release|ARM.ActiveCfg = Release|ARM
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Release|ARM.Build.0 = Release|ARM
+		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Release|ARM64.Build.0 = Release|Any CPU
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Release|x64.ActiveCfg = Release|x64
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Release|x64.Build.0 = Release|x64
 		{0839991C-F5EB-4181-98E0-AE81A5F5BE1A}.Release|x86.ActiveCfg = Release|x86
@@ -80,7 +92,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {631FAB1A-4EBB-4E8E-AF78-E6162C32A50F}
 		VisualSVNWorkingCopyRoot = .
+		SolutionGuid = {631FAB1A-4EBB-4E8E-AF78-E6162C32A50F}
 	EndGlobalSection
 EndGlobal

@@ -99,7 +99,7 @@ namespace BiliBili.UWP.Pages
 
         private void MediaPlayer_VolumeChanged(MediaPlayer sender, object args)
         {
-            if (mediaPlayer_audio != null )
+            if (mediaPlayer_audio != null)
             {
                 mediaPlayer_audio.Volume = sender.Volume;
             }
@@ -107,11 +107,11 @@ namespace BiliBili.UWP.Pages
 
         private void PlaybackSession_PositionChanged(MediaPlaybackSession sender, object args)
         {
-            if (mediaPlayer_audio!=null&&Math.Abs( sender.Position.TotalSeconds- mediaPlayer_audio.PlaybackSession.Position.TotalSeconds)>1)
+            if (mediaPlayer_audio != null && Math.Abs(sender.Position.TotalSeconds - mediaPlayer_audio.PlaybackSession.Position.TotalSeconds) > 1)
             {
                 mediaPlayer_audio.PlaybackSession.Position = sender.Position;
             }
-            
+
         }
 
 
@@ -120,7 +120,7 @@ namespace BiliBili.UWP.Pages
         #region MediaPlayer事件
         private async void MediaPlayer_MediaOpened(MediaPlayer sender, object args)
         {
-           
+
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
 
@@ -350,11 +350,11 @@ namespace BiliBili.UWP.Pages
                     break;
                 case Windows.System.VirtualKey.S:
                     if (MTC.Video360)
-                        mediaPlayer.PlaybackSession.SphericalVideoProjection.ViewOrientation *= Quaternion.CreateFromYawPitchRoll(0,0, .05f);
+                        mediaPlayer.PlaybackSession.SphericalVideoProjection.ViewOrientation *= Quaternion.CreateFromYawPitchRoll(0, 0, .05f);
                     break;
                 case Windows.System.VirtualKey.W:
                     if (MTC.Video360)
-                        mediaPlayer.PlaybackSession.SphericalVideoProjection.ViewOrientation *= Quaternion.CreateFromYawPitchRoll(0,0, -.05f);
+                        mediaPlayer.PlaybackSession.SphericalVideoProjection.ViewOrientation *= Quaternion.CreateFromYawPitchRoll(0, 0, -.05f);
                     break;
                 case Windows.System.VirtualKey.D:
                     if (MTC.Video360)
@@ -390,7 +390,7 @@ namespace BiliBili.UWP.Pages
                     break;
                 case Windows.System.VirtualKey.Down:
                     {
-                        var volume = mediaElement.MediaPlayer.Volume-0.1;
+                        var volume = mediaElement.MediaPlayer.Volume - 0.1;
                         SetVolume(volume);
                         Utils.ShowMessageToast("音量:" + mediaElement.MediaPlayer.Volume.ToString("P"), 3000);
                     }
@@ -543,7 +543,7 @@ namespace BiliBili.UWP.Pages
         InteractionVideo interactionVideo;
         NodeInfo nodeInfo;
         //int _index = 0;
-       
+
         bool LoadDanmu = true;
         int LastPost = 0;
         bool settingFlag = true;
@@ -1103,114 +1103,114 @@ namespace BiliBili.UWP.Pages
                 //if (playNow.Mode!= PlayMode.Local&&)
                 //{
 
-                    cb_Quity.IsEnabled = true;
-                    switch (playNow.Mode)
-                    {
-                        case PlayMode.Bangumi:
-                        case PlayMode.Movie:
-                        case PlayMode.VipBangumi:
-                            pr.Text = "填充弹幕中...";
-                            AddLog("开始填充弹幕...");
+                cb_Quity.IsEnabled = true;
+                switch (playNow.Mode)
+                {
+                    case PlayMode.Bangumi:
+                    case PlayMode.Movie:
+                    case PlayMode.VipBangumi:
+                        pr.Text = "填充弹幕中...";
+                        AddLog("开始填充弹幕...");
 
-                            DanMuPool = await danmakuParse.ParseBiliBili(Convert.ToInt64(playNow.Mid));
+                        DanMuPool = await danmakuParse.ParseBiliBili(Convert.ToInt64(playNow.Mid));
 
-                            pr.Text = "开始读取视频...";
-                            AddLog(string.Format("开始读取视频{0}-{1}-{2}...", "anime", playNow.banId, playNow.Mid));
-                            //string url = await ApiHelper.GetBiliUrl_Ban(playNow, cb_Quity.SelectedIndex + 1);
-                            //playNow.Path = url;
-                            //mediaElement.Source = new Uri(url);
+                        pr.Text = "开始读取视频...";
+                        AddLog(string.Format("开始读取视频{0}-{1}-{2}...", "anime", playNow.banId, playNow.Mid));
+                        //string url = await ApiHelper.GetBiliUrl_Ban(playNow, cb_Quity.SelectedIndex + 1);
+                        //playNow.Path = url;
+                        //mediaElement.Source = new Uri(url);
 
-                            var ban = await PlayurlHelper.GetBangumiUrl(playNow, (cb_Quity.SelectedItem as QualityModel).qn);
-                            txt_site.Text = ban.from;
-                            if (ban.usePlayMode == UsePlayMode.System)
-                            {
-                                mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(ban.url));
-                                //mediaElement.Source = new Uri(ban.url);
-                            }
-                            else if (ban.usePlayMode == UsePlayMode.Dash)
-                            {
-                                mediaPlayer.Source = MediaSource.CreateFromAdaptiveMediaSource((AdaptiveMediaSource)ban.mediaSource);
-                                //mediaPlayer.Source = MediaSource.CreateFromIMediaSource(ban.mediaSource);
-                                //mediaElement.SetMediaStreamSource(ban.mediaSource);
-                            }
-                            else
-                            {
-                                mediaPlayer.Source = MediaSource.CreateFromUri(await ban.playlist.SaveAndGetFileUriAsync());
-                                //mediaElement.Source = await ban.playlist.SaveAndGetFileUriAsync();
-                            }
-                            AddLog("播放器类型:" + ban.usePlayMode.ToString());
-                            break;
+                        var ban = await PlayurlHelper.GetBangumiUrl(playNow, (cb_Quity.SelectedItem as QualityModel).qn);
+                        txt_site.Text = ban.from;
+                        if (ban.usePlayMode == UsePlayMode.System)
+                        {
+                            mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(ban.url));
+                            //mediaElement.Source = new Uri(ban.url);
+                        }
+                        else if (ban.usePlayMode == UsePlayMode.Dash)
+                        {
+                            mediaPlayer.Source = MediaSource.CreateFromAdaptiveMediaSource((AdaptiveMediaSource)ban.mediaSource);
+                            //mediaPlayer.Source = MediaSource.CreateFromIMediaSource(ban.mediaSource);
+                            //mediaElement.SetMediaStreamSource(ban.mediaSource);
+                        }
+                        else
+                        {
+                            mediaPlayer.Source = MediaSource.CreateFromUri(await ban.playlist.SaveAndGetFileUriAsync());
+                            //mediaElement.Source = await ban.playlist.SaveAndGetFileUriAsync();
+                        }
+                        AddLog("播放器类型:" + ban.usePlayMode.ToString());
+                        break;
 
 
-                        case PlayMode.Video:
+                    case PlayMode.Video:
 
-                            pr.Text = "填充弹幕中...";
-                            AddLog("开始填充弹幕...");
-                            DanMuPool = await danmakuParse.ParseBiliBili(Convert.ToInt64(playNow.Mid));
-                            pr.Text = "加载视频中...";
-                            AddLog(string.Format("开始读取视频{0}-{1}-{2}...", "video", playNow.Aid, playNow.Mid));
-                            var ss = await PlayurlHelper.GetVideoUrl(playNow.Aid, playNow.Mid, (cb_Quity.SelectedItem as QualityModel).qn);
-                            txt_site.Text = ss.from;
+                        pr.Text = "填充弹幕中...";
+                        AddLog("开始填充弹幕...");
+                        DanMuPool = await danmakuParse.ParseBiliBili(Convert.ToInt64(playNow.Mid));
+                        pr.Text = "加载视频中...";
+                        AddLog(string.Format("开始读取视频{0}-{1}-{2}...", "video", playNow.Aid, playNow.Mid));
+                        var ss = await PlayurlHelper.GetVideoUrl(playNow.Aid, playNow.Mid, (cb_Quity.SelectedItem as QualityModel).qn);
+                        txt_site.Text = ss.from;
 
-                            if (ss.usePlayMode == UsePlayMode.System)
-                            {
-                                mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(ss.url));
-                                //mediaElement.Source = new Uri(ss.url);
-                            }
-                            else if (ss.usePlayMode == UsePlayMode.Dash)
-                            {
-                                mediaPlayer.Source = MediaSource.CreateFromAdaptiveMediaSource((AdaptiveMediaSource)ss.mediaSource);
-                                //mediaElement.SetMediaStreamSource(ss.mediaSource);
-                            }
-                            else
-                            {
-                                mediaPlayer.Source = MediaSource.CreateFromUri(await ss.playlist.SaveAndGetFileUriAsync());
-                                //mediaElement.Source = await ss.playlist.SaveAndGetFileUriAsync();
-                            }
+                        if (ss.usePlayMode == UsePlayMode.System)
+                        {
+                            mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(ss.url));
+                            //mediaElement.Source = new Uri(ss.url);
+                        }
+                        else if (ss.usePlayMode == UsePlayMode.Dash)
+                        {
+                            mediaPlayer.Source = MediaSource.CreateFromAdaptiveMediaSource((AdaptiveMediaSource)ss.mediaSource);
+                            //mediaElement.SetMediaStreamSource(ss.mediaSource);
+                        }
+                        else
+                        {
+                            mediaPlayer.Source = MediaSource.CreateFromUri(await ss.playlist.SaveAndGetFileUriAsync());
+                            //mediaElement.Source = await ss.playlist.SaveAndGetFileUriAsync();
+                        }
 
-                            break;
-                        case PlayMode.QQ:
-                            AddLog("不支持播放的源:腾讯");
-                            break;
-                        case PlayMode.Sohu:
+                        break;
+                    case PlayMode.QQ:
+                        AddLog("不支持播放的源:腾讯");
+                        break;
+                    case PlayMode.Sohu:
 
-                            pr.Text = "填充弹幕中...";
-                            AddLog("开始填充弹幕...");
-                            DanMuPool = await danmakuParse.ParseBiliBili(Convert.ToInt64(playNow.Mid));
-                            pr.Text = "加载视频中...";
-                            AddLog(string.Format("开始读取视频{0}-{1}...", "sohu", playNow.Mid));
-                            mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(await PlayurlHelper.GetSoHuPlayInfo(playNow.rich_vid, cb_Quity.SelectedIndex + 1)));
-                            //mediaElement.Source = new Uri(await PlayurlHelper.GetSoHuPlayInfo(playNow.rich_vid, cb_Quity.SelectedIndex + 1));
-                            txt_site.Text = "sohu";
-                            break;
-                        case PlayMode.Local:
+                        pr.Text = "填充弹幕中...";
+                        AddLog("开始填充弹幕...");
+                        DanMuPool = await danmakuParse.ParseBiliBili(Convert.ToInt64(playNow.Mid));
+                        pr.Text = "加载视频中...";
+                        AddLog(string.Format("开始读取视频{0}-{1}...", "sohu", playNow.Mid));
+                        mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(await PlayurlHelper.GetSoHuPlayInfo(playNow.rich_vid, cb_Quity.SelectedIndex + 1)));
+                        //mediaElement.Source = new Uri(await PlayurlHelper.GetSoHuPlayInfo(playNow.rich_vid, cb_Quity.SelectedIndex + 1));
+                        txt_site.Text = "sohu";
+                        break;
+                    case PlayMode.Local:
 
-                            pr.Text = "加载视频中...";
+                        pr.Text = "加载视频中...";
 
-                            MTC.ShowShareBtn = Visibility.Collapsed;
-                            MTC.ShowCoinsBtn = Visibility.Collapsed;
-                            cb_Quity.Visibility = Visibility.Collapsed;
-                            await PlayLocal();
-                            txt_site.Text = "本地";
-                            break;
-                        case PlayMode.FormLocal:
-                            pr.Text = "加载视频中...";
-                            AddLog("读取本地视频...");
-                            MTC.ShowSendDanmuBtn = false;
+                        MTC.ShowShareBtn = Visibility.Collapsed;
+                        MTC.ShowCoinsBtn = Visibility.Collapsed;
+                        cb_Quity.Visibility = Visibility.Collapsed;
+                        await PlayLocal();
+                        txt_site.Text = "本地";
+                        break;
+                    case PlayMode.FormLocal:
+                        pr.Text = "加载视频中...";
+                        AddLog("读取本地视频...");
+                        MTC.ShowSendDanmuBtn = false;
 
-                            MTC.ShowDanmakuBtn = Visibility.Collapsed;
-                            cb_Quity.Visibility = Visibility.Collapsed;
-                            txt_site.Text = "本地";
-                            PlayFromLocal();
-                            break;
-                        default:
-                            break;
-                    }
+                        MTC.ShowDanmakuBtn = Visibility.Collapsed;
+                        cb_Quity.Visibility = Visibility.Collapsed;
+                        txt_site.Text = "本地";
+                        PlayFromLocal();
+                        break;
+                    default:
+                        break;
+                }
 
-                    AddLog("读取是否包含字幕");
-                    MTC.HideLog();
-                    var hasSub = await PlayurlHelper.GetHasSubTitle(playNow.Aid, playNow.Mid);
-                    LaodSubTitleMenu(hasSub);
+                AddLog("读取是否包含字幕");
+                MTC.HideLog();
+                var hasSub = await PlayurlHelper.GetHasSubTitle(playNow.Aid, playNow.Mid);
+                LaodSubTitleMenu(hasSub);
 
                 //}
                 //else
@@ -1519,25 +1519,25 @@ namespace BiliBili.UWP.Pages
             StorageFolder f = await StorageFolder.GetFolderFromPathAsync(playNow.Path);
             var ls = await f.GetFilesAsync();
             var danmakuFile = ls.FirstOrDefault(x => x.FileType == ".xml");
-            if (danmakuFile!=null)
+            if (danmakuFile != null)
             {
                 pr.Text = "填充弹幕中...";
                 AddLog("填充弹幕中...");
                 DanMuPool = await danmakuParse.ParseBiliBili(danmakuFile);
             }
             var video = ls.FirstOrDefault(x => x.Name == "video.m4s");
-            if (video!=null)
+            if (video != null)
             {
-               
+
                 var audio = ls.FirstOrDefault(x => x.Name == "audio.m4s");
-                if (mediaPlayer_audio ==null)
+                if (mediaPlayer_audio == null)
                 {
                     mediaPlayer_audio = new MediaPlayer();
                     mediaPlayer_audio.Volume = mediaPlayer.Volume;
                     mediaPlayer_audio.Source = MediaSource.CreateFromStream(await audio.OpenReadAsync(), audio.ContentType);
                 }
                 mediaElement.MediaPlayer.Source = MediaSource.CreateFromStream(await video.OpenReadAsync(), video.ContentType);
-            
+
             }
             else
             {
@@ -1613,13 +1613,13 @@ namespace BiliBili.UWP.Pages
             {
                 if (MTC.Video360)
                 {
-                    mediaPlayer.PlaybackSession.SphericalVideoProjection.ViewOrientation *= Quaternion.CreateFromYawPitchRoll(e.Delta.Translation.X>0? -.01f: .01f, 0, 0);
+                    mediaPlayer.PlaybackSession.SphericalVideoProjection.ViewOrientation *= Quaternion.CreateFromYawPitchRoll(e.Delta.Translation.X > 0 ? -.01f : .01f, 0, 0);
                 }
                 else
                 {
                     HandleSlideProgressDelta(e.Delta.Translation.X);
                 }
-                
+
             }
             else
             {
@@ -1676,14 +1676,14 @@ namespace BiliBili.UWP.Pages
                 double dd = delta / (this.ActualHeight * 0.8);
 
                 //slider_V.Value -= d;
-                var volume = mediaElement.MediaPlayer.Volume-dd;
+                var volume = mediaElement.MediaPlayer.Volume - dd;
                 SetVolume(volume);
 
             }
             else
             {
                 double dd = Math.Abs(delta) / (this.ActualHeight * 0.8);
-                var volume = mediaElement.MediaPlayer.Volume+dd;
+                var volume = mediaElement.MediaPlayer.Volume + dd;
                 SetVolume(volume);
                 //slider_V.Value += d;
             }
@@ -2864,7 +2864,7 @@ namespace BiliBili.UWP.Pages
 
         private void MTC_Video360Changed(object sender, bool e)
         {
-            if (mediaPlayer.PlaybackSession.SphericalVideoProjection.FrameFormat== SphericalVideoFrameFormat.None)
+            if (mediaPlayer.PlaybackSession.SphericalVideoProjection.FrameFormat == SphericalVideoFrameFormat.None)
             {
                 mediaPlayer.PlaybackSession.SphericalVideoProjection.FrameFormat = SphericalVideoFrameFormat.Equirectangular;
             }
@@ -2874,7 +2874,7 @@ namespace BiliBili.UWP.Pages
                 mediaPlayer.PlaybackSession.SphericalVideoProjection.ProjectionMode = SphericalVideoProjectionMode.Spherical;
                 mediaPlayer.PlaybackSession.SphericalVideoProjection.HorizontalFieldOfViewInDegrees = 90;
             }
-           
+
         }
 
         private void SetVolume(double volume)
@@ -2884,11 +2884,45 @@ namespace BiliBili.UWP.Pages
             if (volume <= 0)
                 volume = 0;
             mediaElement.MediaPlayer.Volume = volume;
-            if (mediaPlayer_audio!=null)
+            if (mediaPlayer_audio != null)
             {
                 mediaPlayer_audio.Volume = volume;
             }
         }
 
+        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ZXing.BarcodeWriter barcodeWriter = new ZXing.BarcodeWriter();
+                barcodeWriter.Format = ZXing.BarcodeFormat.QR_CODE;
+                barcodeWriter.Options = new ZXing.Common.EncodingOptions()
+                {
+                    Margin = 1,
+                    Height = 200,
+                    Width = 200
+                };
+                var data = barcodeWriter.Write("http://b23.tv/av" + playNow.Aid);
+                Image imgQR = new Image()
+                {
+                    Width = 200
+                };
+                imgQR.Source = data;
+                ContentDialog contentDialog = new ContentDialog()
+                {
+                    Title="手机续看",
+                    Content = imgQR,
+                    CloseButtonText = "关闭"
+                };
+
+                ReportHistory(Convert.ToInt32(mediaElement.MediaPlayer.PlaybackSession.Position.TotalSeconds));
+                await contentDialog.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog("创建二维码失败", LogType.ERROR, ex);
+                Utils.ShowMessageToast("创建二维码失败");
+            }
+        }
     }
 }

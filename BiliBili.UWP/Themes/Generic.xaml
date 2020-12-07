@@ -877,18 +877,11 @@
                                                         <FontIcon Glyph="&#xE799;"/>
                                                     </AppBarButton.Icon>
                                                 </AppBarButton>
-                                                <!--<AppBarButton x:Name='CastButton'
-                                                Style='{StaticResource AppBarButtonStyle}'
-                                                Visibility="Collapsed"
-                                                MediaTransportControlsHelper.DropoutOrder='11'>
-                                                    <AppBarButton.Icon>
-                                                        <FontIcon Glyph="&#xEC15;"/>
-                                                    </AppBarButton.Icon>
-                                                </AppBarButton>-->
+                                                
 
                                                 <AppBarButton x:Name='ListButton'
                                                               Style='{StaticResource AppBarButtonStyle}'
-                                                 MediaTransportControlsHelper.DropoutOrder='9'
+                                                 MediaTransportControlsHelper.DropoutOrder='17'
                                                   IsEnabled="{TemplateBinding ShowPlayListBtn}"
                                                Width="48" Height="48"
                                                >
@@ -915,7 +908,14 @@
                                                         <FontIcon Glyph="&#xF131;"/>
                                                     </AppBarToggleButton.Icon>
                                                 </AppBarToggleButton>
-                                                
+                                                <AppBarButton x:Name='CastButton'
+                                                Style='{StaticResource AppBarButtonStyle}'
+                                                ToolTipService.ToolTip="投屏"
+                                                MediaTransportControlsHelper.DropoutOrder='17'>
+                                                    <AppBarButton.Icon>
+                                                        <FontIcon Glyph="&#xEC15;"/>
+                                                    </AppBarButton.Icon>
+                                                </AppBarButton>
                                                 <AppBarButton x:Name='FullWindowButton'
                                                 Style='{StaticResource AppBarButtonStyle}'
                                                 Visibility="Collapsed"

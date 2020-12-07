@@ -116,14 +116,6 @@ namespace BiliBili.UWP.Views
                 sw_CustomPath.IsOn = SettingHelper.Get_CustomDownPath();
                 sw_FFmpeg.IsOn = SettingHelper.Get_FFmpeg();
 
-                sw_NewFeed.IsOn = SettingHelper.Get_NewFeed();
-
-                tw_MNGA.IsOn = SettingHelper.Get_UseHK();
-                tw_MNTW.IsOn = SettingHelper.Get_UseTW();
-                tw_MNDL.IsOn = SettingHelper.Get_UseCN();
-                tw_PlayerMode.IsOn = SettingHelper.Get_PlayerMode();
-                tw_VipMode.IsOn = SettingHelper.Get_UseVIP();
-                tw_OtherSiteMode.IsOn = SettingHelper.Get_UseOtherSite();
 
                 sw_QZHP.IsOn = SettingHelper.Get_QZHP();
                 sw_AutoFull.SelectedIndex = SettingHelper.Get_AutoFullIndex();
@@ -275,7 +267,7 @@ namespace BiliBili.UWP.Views
 
         }
 
-        private async void cb_Theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cb_Theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cb_Theme.SelectedIndex != -1 && !get_ing)
             {
@@ -309,17 +301,17 @@ namespace BiliBili.UWP.Views
                         break;
                 }
                 MessageCenter.SendChanageThemeEvent(null);
-                MessageDialog messageDialog = new MessageDialog("重启应用一下，效果更好，是否立即重启应用?", "是否重启应用");
-                messageDialog.Commands.Add(new UICommand("确定", async (x) =>
-                {
-                    var result = await CoreApplication.RequestRestartAsync(string.Empty);
-                    if (result == AppRestartFailureReason.NotInForeground || result == AppRestartFailureReason.Other)
-                    {
-                        Utils.ShowMessageToast("请收到重启应用");
-                    }
-                }));
-                messageDialog.Commands.Add(new UICommand("取消", (x) => { }));
-                await messageDialog.ShowAsync();
+                //MessageDialog messageDialog = new MessageDialog("重启应用一下，效果更好，是否立即重启应用?", "是否重启应用");
+                //messageDialog.Commands.Add(new UICommand("确定", async (x) =>
+                //{
+                //    var result = await CoreApplication.RequestRestartAsync(string.Empty);
+                //    if (result == AppRestartFailureReason.NotInForeground || result == AppRestartFailureReason.Other)
+                //    {
+                //        Utils.ShowMessageToast("请收到重启应用");
+                //    }
+                //}));
+                //messageDialog.Commands.Add(new UICommand("取消", (x) => { }));
+                //await messageDialog.ShowAsync();
             }
             //MessageCenter.SendChanageThemeEvent(null);
             //await CoreApplication.RequestRestartAsync(string.Empty);
@@ -453,36 +445,6 @@ namespace BiliBili.UWP.Views
         private void sw_FJ_Toggled(object sender, RoutedEventArgs e)
         {
             SettingHelper.Set_FJ(sw_FJ.IsOn);
-        }
-
-        private void tw_MNGA_Toggled(object sender, RoutedEventArgs e)
-        {
-            SettingHelper.Set_UseHK(tw_MNGA.IsOn);
-            if (tw_MNGA.IsOn)
-            {
-                tw_MNTW.IsOn = false;
-                tw_MNDL.IsOn = false;
-            }
-        }
-
-        private void tw_MNTW_Toggled(object sender, RoutedEventArgs e)
-        {
-            SettingHelper.Set_UseTW(tw_MNTW.IsOn);
-            if (tw_MNTW.IsOn)
-            {
-                tw_MNGA.IsOn = false;
-                tw_MNDL.IsOn = false;
-            }
-        }
-
-        private void tw_MNDL_Toggled(object sender, RoutedEventArgs e)
-        {
-            SettingHelper.Set_UseCN(tw_MNDL.IsOn);
-            if (tw_MNDL.IsOn)
-            {
-                tw_MNGA.IsOn = false;
-                tw_MNTW.IsOn = false;
-            }
         }
 
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
@@ -683,11 +645,6 @@ namespace BiliBili.UWP.Views
             MessageCenter.SendChangedBg();
         }
 
-        private void tw_PlayerMode_Toggled(object sender, RoutedEventArgs e)
-        {
-            SettingHelper.Set_PlayerMode(tw_PlayerMode.IsOn);
-        }
-
         private void sw_FFmpeg_Toggled(object sender, RoutedEventArgs e)
         {
             SettingHelper.Set_FFmpeg(sw_FFmpeg.IsOn);
@@ -726,11 +683,6 @@ namespace BiliBili.UWP.Views
         private void sw_HideCursor_Toggled(object sender, RoutedEventArgs e)
         {
             SettingHelper.Set_HideCursor(sw_HideCursor.IsOn);
-        }
-
-        private void sw_NewFeed_Toggled(object sender, RoutedEventArgs e)
-        {
-            SettingHelper.Set_NewFeed(sw_NewFeed.IsOn);
         }
 
         private void sw_NewWidnows_Toggled(object sender, RoutedEventArgs e)
@@ -821,16 +773,6 @@ namespace BiliBili.UWP.Views
         private void sw_BoldDanmu_Toggled(object sender, RoutedEventArgs e)
         {
             SettingHelper.Set_BoldDanmu(sw_BoldDanmu.IsOn);
-        }
-
-        private void tw_VipMode_Toggled(object sender, RoutedEventArgs e)
-        {
-            SettingHelper.Set_UseVIP(tw_VipMode.IsOn);
-        }
-
-        private void tw_OtherSiteMode_Toggled(object sender, RoutedEventArgs e)
-        {
-            SettingHelper.Set_UseOtherSite(tw_OtherSiteMode.IsOn);
         }
 
         private async void BrnAuthBiliPlus_Click(object sender, RoutedEventArgs e)

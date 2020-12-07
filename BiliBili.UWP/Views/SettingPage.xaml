@@ -32,10 +32,9 @@
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">设置</TextBlock>
-           
+
             <StackPanel Orientation="Horizontal" Grid.Column="2">
-                <Button x:Name="btn_Feedback" Click="btn_Feedback_Click"  Background="#00000000" BorderBrush="White" Foreground="White" Margin="4 0">反馈</Button>
-                <Button x:Name="btn_Help" Click="btn_Help_Click"  Background="#00000000" BorderBrush="White" Foreground="White" Margin="4 0">帮助</Button>
+                <Button x:Name="btn_Help" Click="btn_Help_Click"  Background="#00000000" BorderBrush="White" Foreground="White" Margin="4 0">常见问题</Button>
             </StackPanel>
         </Grid>
         <Pivot Grid.Row="1">
@@ -247,10 +246,7 @@
                                 </ComboBox>
 
                             </Grid>
-                            <Grid Margin="0 10 0 0" Visibility="Collapsed">
-                                <TextBlock Foreground="Gray" VerticalAlignment="Center">首页使用新版首页推荐(重启生效)</TextBlock>
-                                <ToggleSwitch x:Name="sw_NewFeed" Toggled="sw_NewFeed_Toggled" HorizontalAlignment="Right"  Margin="10 0" Width="68"></ToggleSwitch>
-                            </Grid>
+                           
                             <Grid Margin="0 10 0 0" Visibility="Collapsed">
                                 <TextBlock Foreground="Gray" VerticalAlignment="Center">播放页面直接播放视频(测试)</TextBlock>
                                 <ToggleSwitch x:Name="sw_PlayPage"  HorizontalAlignment="Right"  Margin="10 0" Width="68"></ToggleSwitch>
@@ -628,53 +624,24 @@
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
-            <PivotItem Margin="0" >
+            <PivotItem Margin="0" Visibility="Collapsed">
                 <PivotItem.Header>
                     <TextBlock FontSize="16">其它</TextBlock>
                 </PivotItem.Header>
                 <ScrollViewer  VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="10">
-                        <StackPanel Margin="0 0 0 10" Visibility="Collapsed">
-                            <TextBlock FontSize="16">黑科技</TextBlock>
-                           
-                            <Grid Margin="0 10 0 0">
-                                <TextBlock Foreground="Gray" VerticalAlignment="Center">伪装香港用户(看港澳专供番)</TextBlock>
-                                <ToggleSwitch  x:Name="tw_MNGA" Toggled="tw_MNGA_Toggled" HorizontalAlignment="Right"  Margin="10 0" Width="68"></ToggleSwitch>
-
-                            </Grid>
-                            <Grid Margin="0 10 0 0">
-                                <TextBlock Foreground="Gray" VerticalAlignment="Center">伪装台湾用户(看台湾专供番)</TextBlock>
-                                <ToggleSwitch  x:Name="tw_MNTW" Toggled="tw_MNTW_Toggled" HorizontalAlignment="Right"  Margin="10 0" Width="68"></ToggleSwitch>
-
-                            </Grid>
-                            <Grid Margin="0 10 0 0">
-                                <TextBlock Foreground="Gray" VerticalAlignment="Center">伪装大陆用户(海外用户专享)</TextBlock>
-                                <ToggleSwitch  x:Name="tw_MNDL" Toggled="tw_MNDL_Toggled" HorizontalAlignment="Right"  Margin="10 0" Width="68"></ToggleSwitch>
-
-                            </Grid>
-                        </StackPanel>
+                       
                         <TextBlock FontSize="16">其他选项</TextBlock>
                         <HyperlinkButton x:Name="brnAuthBiliPlus" Visibility="Collapsed" Click="BrnAuthBiliPlus_Click" Foreground="{ThemeResource Bili-ForeColor}">
                             <TextBlock>
                                   <Run x:Name="txtBPState"/> 授权BiliPlus(可以解除部分地区限制视频)
                             </TextBlock>
                           </HyperlinkButton>
-                        <Grid Margin="0 10 0 0">
+                        <Grid Margin="0 10 0 10">
                             <TextBlock Foreground="Gray" VerticalAlignment="Center">优先使用BiliPlus</TextBlock>
                             <ToggleSwitch  x:Name="sw_PriorityBiliPlus" Toggled="Sw_PriorityBiliPlus_Toggled" HorizontalAlignment="Right"  Margin="10 0" Width="68"></ToggleSwitch>
                         </Grid>
-                        <Grid Margin="0 10 0 0" Visibility="Collapsed">
-                            <TextBlock Foreground="Gray" VerticalAlignment="Center">本地播放器模式(重启生效)</TextBlock>
-                            <ToggleSwitch  x:Name="tw_PlayerMode" Toggled="tw_PlayerMode_Toggled" HorizontalAlignment="Right"  Margin="10 0" Width="68"></ToggleSwitch>
-                        </Grid>
-                        <Grid Margin="0 10 0 0" Visibility="Collapsed">
-                            <TextBlock Foreground="Gray" VerticalAlignment="Center">无法播放时使用其他网站源</TextBlock>
-                            <ToggleSwitch  x:Name="tw_OtherSiteMode" Toggled="tw_OtherSiteMode_Toggled" HorizontalAlignment="Right"  Margin="10 0" Width="68"></ToggleSwitch>
-                        </Grid>
-                        <Grid Margin="0 10 0 0" Visibility="Collapsed">
-                            <TextBlock Foreground="Gray" VerticalAlignment="Center">一个不知道有什么用的选项</TextBlock>
-                            <ToggleSwitch  x:Name="tw_VipMode" Toggled="tw_VipMode_Toggled" HorizontalAlignment="Right"  Margin="10 0" Width="68"></ToggleSwitch>
-                        </Grid>
+                      
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
