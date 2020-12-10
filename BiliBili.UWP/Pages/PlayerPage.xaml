@@ -291,7 +291,6 @@
                                 </c:DanmakuMTC.QuityContent>
                                 <c:DanmakuMTC.MoreMenuFlyout>
                                     <MenuFlyout>
-                                        <MenuFlyoutItem x:Uid="menuitem_QR" Click="MenuFlyoutItem_Click">手机上看</MenuFlyoutItem>
                                         <MenuFlyoutItem  Click="btn_VideoInfo_Click">播放设置</MenuFlyoutItem>
                                         <MenuFlyoutItem x:Name="menuitem_DM" Visibility="Collapsed" Click="menuitem_DM_Click">弹幕设置</MenuFlyoutItem>
                                         <MenuFlyoutItem x:Name="menuitem_PB" Click="menuitem_PB_Click">弹幕屏蔽</MenuFlyoutItem>
@@ -300,6 +299,7 @@
                                         <MenuFlyoutItem x:Name="menuitem_UpdateDanmu" Click="menuitem_UpdateDanmu_Click">更新弹幕</MenuFlyoutItem>
                                         <MenuFlyoutItem x:Name="menuitem_SubtitleSetting" Click="Menuitem_SubtitleSetting_Click">字幕设置</MenuFlyoutItem>
                                         <!--<MenuFlyoutItem x:Name="menuitem_Capture" Click="menuitem_Capture_Click">视频截图</MenuFlyoutItem>-->
+                                        <MenuFlyoutItem x:Uid="menuitem_QR" Click="MenuFlyoutItem_Click">手机上看</MenuFlyoutItem>
                                         <MenuFlyoutItem x:Name="menuitem_Info" Click="menuitem_Info_Click">视频信息</MenuFlyoutItem>
                                     </MenuFlyout>
                                 </c:DanmakuMTC.MoreMenuFlyout>

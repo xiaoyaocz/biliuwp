@@ -158,7 +158,7 @@ namespace BiliBili.UWP.Helper
                 var re = await WebClientClass.GetResultsUTF8Encode(new Uri(url2));
                 FlvPlyaerUrlModel m = JsonConvert.DeserializeObject<FlvPlyaerUrlModel>(re);
                 //是否遇到了地区限制
-                if (m.code == 0 && !re.Contains("8986943"))
+                if (m.code == 0 && !re.Contains("8986943") && !re.Contains("9947622"))
                 {
                     foreach (var item in m.durl)
                     {
@@ -222,7 +222,7 @@ namespace BiliBili.UWP.Helper
                             }
                         }
 
-                        var audio = audios.Where(x=>x.mimeType == "audio/mp4").FirstOrDefault();
+                        var audio = audios.Where(x => x.mimeType == "audio/mp4").FirstOrDefault();
 
                         return new ReturnPlayModel()
                         {
@@ -441,7 +441,7 @@ namespace BiliBili.UWP.Helper
                 {
                     season = $"&module=bangumi&season_type={ season_type}";
                 }
-                string url = "https://www.biliplus.com/BPplayurl.php?cid=" + cid + $"&otype=json&type=&quality={qn}&qn={qn}{season}&access_key={ApiHelper.access_key}&fourk=1&fnver=0&fnval=16";
+                string url = "https://www.biliplus.com/BPplayurl.php?cid=" + cid + $"&otype=json&type=&quality={qn}&qn={qn}{season}&access_key={ApiHelper.access_key}&fourk=1&fnver=0&fnval=16&platfrom=android";
                 Dictionary<string, string> header = new Dictionary<string, string>();
                 if (SettingHelper.Get_BiliplusCookie() != "")
                 {
@@ -449,10 +449,10 @@ namespace BiliBili.UWP.Helper
                     {
                         cookie = SettingHelper.Get_BiliplusCookie();
                     }
-                    header.Add("Cookie", cookie);
+                    header.Add("Cookie", cookie.Replace("secure;", ""));
                 }
-
-                string re = await WebClientClass.GetResults(new Uri(url));
+                header.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.57");
+                string re = await WebClientClass.GetResults(new Uri(url), header);
                 var obj = JObject.Parse(re);
                 if (obj["code"].ToInt32() == 0)
                 {
@@ -887,7 +887,7 @@ namespace BiliBili.UWP.Helper
         }
 
 
-        public static async Task<List<QualityModel>> GetVideoQualities(PlayerModel model,bool down=false)
+        public static async Task<List<QualityModel>> GetVideoQualities(PlayerModel model, bool down = false)
         {
             List<QualityModel> qualities = new List<QualityModel>();
             try
@@ -895,7 +895,7 @@ namespace BiliBili.UWP.Helper
                 var qn = 64;
 
                 string url = $"https://api.bilibili.com/x/player/playurl?avid={model.Aid}&cid={model.Mid}&qn={qn}&type=&otype=json&appkey={ ApiHelper.WebVideoKey.Appkey}";
-                if ((!down&&SettingHelper.Get_UseDASH())||(down && !SettingHelper.Get_DownFLV()))
+                if ((!down && SettingHelper.Get_UseDASH()) || (down && !SettingHelper.Get_DownFLV()))
                 {
                     url += "&fourk=1&fnver=0&fnval=16";
                 }
@@ -1047,7 +1047,7 @@ namespace BiliBili.UWP.Helper
                 new QualityModel(){description="清晰(登录享受更多清晰度)", qn=32},
             };
             }
-           
+
         }
 
         public static async Task<HasSubtitleModel> GetHasSubTitle(string aid, string cid)

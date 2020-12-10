@@ -1125,6 +1125,10 @@ namespace BiliBili.UWP.Pages
                         if (ban.usePlayMode == UsePlayMode.System)
                         {
                             mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(ban.url));
+                            if(ban.from== "server")
+                            {
+                                Utils.ShowMessageToast("当前视频可能非哔哩哔哩提供，请勿轻信视频内广告",10*1000);
+                            }
                             //mediaElement.Source = new Uri(ban.url);
                         }
                         else if (ban.usePlayMode == UsePlayMode.Dash)
@@ -1237,7 +1241,7 @@ namespace BiliBili.UWP.Pages
             catch (Exception ex)
             {
                 AddLog("视频播放失败了" + ex.HResult);
-                await new MessageDialog("无法读取到播放地址 ＞﹏＜ \r\n请尝试登录、更换清晰度、开通大会员或FQ后再试\r\n如果是地区限制番可能无法第一时间观看，请过段时间重试").ShowAsync();
+                await new MessageDialog("无法读取到播放地址 ＞﹏＜ \r\n请尝试登录、更换清晰度、开通大会员后再试").ShowAsync();
             }
             finally
             {

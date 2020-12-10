@@ -624,7 +624,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
-            <PivotItem Margin="0" Visibility="Collapsed">
+            <PivotItem Margin="0" >
                 <PivotItem.Header>
                     <TextBlock FontSize="16">其它</TextBlock>
                 </PivotItem.Header>
@@ -632,7 +632,7 @@
                     <StackPanel Margin="10">
                        
                         <TextBlock FontSize="16">其他选项</TextBlock>
-                        <HyperlinkButton x:Name="brnAuthBiliPlus" Visibility="Collapsed" Click="BrnAuthBiliPlus_Click" Foreground="{ThemeResource Bili-ForeColor}">
+                        <HyperlinkButton x:Name="brnAuthBiliPlus" Visibility="Visible" Click="BrnAuthBiliPlus_Click" Foreground="{ThemeResource Bili-ForeColor}">
                             <TextBlock>
                                   <Run x:Name="txtBPState"/> 授权BiliPlus(可以解除部分地区限制视频)
                             </TextBlock>

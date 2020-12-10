@@ -297,7 +297,7 @@ namespace BiliBili.UWP.Modules
                         {
                             video = videos.OrderByDescending(x => x.id).FirstOrDefault(x => x.codecid == 7);
                         }
-                        var audio = audios.FirstOrDefault();
+                        var audio = audios.Where(x => x.mimeType == "audio/mp4").FirstOrDefault();
 
                         downloadUrls.Add(new DownloadUrlInfo()
                         {
@@ -430,14 +430,19 @@ namespace BiliBili.UWP.Modules
             {
                 Dictionary<string, string> headers = new Dictionary<string, string>();
                 headers.Add("Referer", "https://www.bilibili.com");
-                headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
+                headers.Add("UserAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.57");
+                if (SettingHelper.Get_BiliplusCookie() != "")
+                {
+                    headers.Add("Cookie", SettingHelper.Get_BiliplusCookie().Replace("secure;",""));
+                }
 
-                string url = $"https://www.biliplus.com/BPplayurl.php?avid={ aid}&cid={cid}&qn={quality.Qn}&type=&otype=json&module=bangumi{ ((access_key == "") ? "" : $"&access_key={access_key}&mid={mid}")}&season_type={season_type}&ts={ApiHelper.GetTimeSpan}";
+                string url = $"https://www.biliplus.com/BPplayurl.php?cid={cid}&qn={quality.Qn}&type=&otype=json&module=bangumi{ ((access_key == "") ? "" : $"&access_key={access_key}&mid={mid}")}&season_type={season_type}&ts={ApiHelper.GetTimeSpan}&platfrom=android";
                 if (!SettingHelper.Get_DownFLV())
                 {
                     url += "&fourk=1&fnver=0&fnval=16";
                 }
-                var results = await WebClientClass.GetResults(new Uri(url));
+
+                var results = await WebClientClass.GetResults(new Uri(url),headers);
                 var jobj = JObject.Parse(results);
                 List<DownloadUrlInfo> downloadUrls = new List<DownloadUrlInfo>();
                 if (jobj["code"].ToInt32()==0)
@@ -477,7 +482,7 @@ namespace BiliBili.UWP.Modules
                         {
                             video = videos.OrderByDescending(x => x.id).FirstOrDefault(x => x.codecid == 7);
                         }
-                        var audio = audios.FirstOrDefault();
+                        var audio = audios.Where(x => x.mimeType == "audio/mp4").FirstOrDefault();
 
                         downloadUrls.Add(new DownloadUrlInfo()
                         {
@@ -673,7 +678,7 @@ namespace BiliBili.UWP.Modules
                         {
                             video = videos.OrderByDescending(x => x.id).FirstOrDefault(x => x.codecid == 7);
                         }
-                        var audio = audios.FirstOrDefault();
+                        var audio = audios.Where(x => x.mimeType == "audio/mp4").FirstOrDefault();
 
                         downloadUrls.Add(new DownloadUrlInfo()
                         {
