@@ -1127,7 +1127,7 @@ namespace BiliBili.UWP.Pages
                             mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(ban.url));
                             if(ban.from== "server")
                             {
-                                Utils.ShowMessageToast("当前视频可能非哔哩哔哩提供，请勿轻信视频内广告",10*1000);
+                                Utils.ShowMessageToast("当前视频可能非哔哩哔哩提供，请勿轻信视频内广告",5000);
                             }
                             //mediaElement.Source = new Uri(ban.url);
                         }

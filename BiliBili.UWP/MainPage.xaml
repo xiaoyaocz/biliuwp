@@ -1226,7 +1226,6 @@
                             <ListViewItem Visibility="Collapsed" Style="{StaticResource SelectItem}" Height="48" >
                                 <StackPanel Orientation="Horizontal" Tag="Test">
                                     <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xe633;" Foreground="White"/>
-                                 
                                     <TextBlock Text="测试" VerticalAlignment="Center" Margin="18 -2 18 0" Foreground="White" />
                                 </StackPanel>
                             </ListViewItem>

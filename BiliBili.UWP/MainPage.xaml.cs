@@ -1141,36 +1141,7 @@ namespace BiliBili.UWP
             }
             else if (item == "Test")
             {
-                string result;
-
-                try
-                {
-                    var url = new Uri($"https://www.biliplus.com/login?act=savekey&mid={UserManage.Uid}&access_key={ApiHelper.access_key}&expire=");
-                    using (HttpClient httpClient = new HttpClient())
-                    {
-                        var rq = await httpClient.GetAsync(url);
-                        var setCookie = rq.Headers["set-cookie"];
-                        StringBuilder stringBuilder = new StringBuilder();
-                        var matches = Regex.Matches(setCookie, "(.*?)=(.*?); ", RegexOptions.Singleline);
-                        foreach (Match match in matches)
-                        {
-                            var key = match.Groups[1].Value.Replace("HttpOnly, ", "");
-                            var value = match.Groups[2].Value;
-                            if (key != "expires"&&key!= "Max-Age"&&key!= "path" && key != "domain")
-                            {
-                                stringBuilder.Append(match.Groups[0].Value.Replace("HttpOnly, ",""));
-                            }
-                        }
-                    }
-                    
-                }
-                catch (Exception ex)
-                {
-                    // Authentication failed. Handle parameter, SSL/TLS, and Network Unavailable errors here. 
-                    result = ex.Message;
-                    throw;
-                }
-
+               
             }
             else
             {
