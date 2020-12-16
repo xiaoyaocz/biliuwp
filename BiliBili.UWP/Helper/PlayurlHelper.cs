@@ -296,10 +296,7 @@ namespace BiliBili.UWP.Helper
                 var playList = new SYEngine.Playlist(SYEngine.PlaylistTypes.NetworkHttp);
                 List<string> urls = new List<string>();
                 string rnd = ApiHelper.GetTimeSpan.ToString();
-                if (SettingHelper.Get_UseVIP())
-                {
-                    rnd = "true" + rnd;
-                }
+               
                 var re3 = await WebClientClass.GetResults(new Uri(string.Format("https://moe.nsapps.cn/api/v1/BiliAnimeUrl?animeid={0}&cid={1}&epid={2}&rnd={3}", model.banId, model.Mid, model.banInfo.episode_id, rnd)));
                 JObject obj = JObject.Parse(re3);
                 if (Convert.ToInt32(obj["code"].ToString()) == 0)

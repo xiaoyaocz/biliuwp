@@ -629,7 +629,7 @@
                     <TextBlock FontSize="16">其它</TextBlock>
                 </PivotItem.Header>
                 <ScrollViewer  VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="10">
+                    <StackPanel Margin="10" >
                        
                         <TextBlock FontSize="16">其他选项</TextBlock>
                         <HyperlinkButton x:Name="brnAuthBiliPlus" Visibility="Visible" Click="BrnAuthBiliPlus_Click" Foreground="{ThemeResource Bili-ForeColor}">

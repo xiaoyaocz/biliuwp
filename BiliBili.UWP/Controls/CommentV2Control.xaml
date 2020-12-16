@@ -158,7 +158,7 @@
                   
                 </StackPanel>
                 <AppBarButton Grid.Column="1" Flyout="{StaticResource ResourceKey=menu}" HorizontalAlignment="Right" Icon="More" Grid.RowSpan="2" Width="48" Height="48"></AppBarButton>
-                <TextBlock Grid.Column="1" Grid.Row="1"  FontSize="14" Foreground="Gray" Margin="4 0" VerticalAlignment="Top"><!--#<Run Text="{Binding Path=floor}"></Run>--> <Run Text="{Binding Path=time}"></Run> <Run Text="{Binding Path=content.plat_str}"></Run></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="1" ToolTipService.ToolTip="{Binding Path=time_str}" FontSize="14" Foreground="Gray" Margin="4 0" VerticalAlignment="Top"><!--#<Run Text="{Binding Path=floor}"></Run>--> <Run Text="{Binding Path=time}"></Run> <Run Text="{Binding Path=content.plat_str}"></Run></TextBlock>
 
                 <ContentControl  Grid.Row="2" Grid.Column="1" Margin="4 0" Content="{Binding Path=content.text}">
                    

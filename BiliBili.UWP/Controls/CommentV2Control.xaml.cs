@@ -878,10 +878,18 @@ namespace BiliBili.UWP.Controls
         public int floor { get; set; }
         public int state { get; set; }
         public long ctime { get; set; }
+        public string time_str
+        {
+            get
+            {
+                return Utils.TimestampToDatetime(ctime).ToString();
+            }
+        }
         public string time
         {
             get
             {
+              
                 //DateTime dtStart = new DateTime(1970, 1, 1);
                 //long lTime = long.Parse(ctime + "0000000");
                 ////long lTime = long.Parse(textBox1.Text);

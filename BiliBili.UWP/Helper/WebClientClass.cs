@@ -24,17 +24,6 @@ namespace BiliBili.UWP
             fiter.IgnorableServerCertificateErrors.Add(Windows.Security.Cryptography.Certificates.ChainValidationResult.Expired);
             using (HttpClient hc = new HttpClient(fiter))
             {
-                if (url.AbsoluteUri.Contains("23moe"))
-                {
-                    var ts = ApiHelper.GetTimeSpan.ToString();
-                    EasClientDeviceInformation deviceInfo = new EasClientDeviceInformation();
-                    hc.DefaultRequestHeaders.Add("client", "bilibili-uwp");
-                    hc.DefaultRequestHeaders.Add("ts", ts);
-                    hc.DefaultRequestHeaders.Add("appsign", Utils.ToMD5("biliUwpXycz0423" + ts + "bilibili-uwp" + SettingHelper.GetVersion() + "0BJSDAHDUAHGAI5D45ADS5" + deviceInfo.Id.ToString()));
-                    hc.DefaultRequestHeaders.Add("version", SettingHelper.GetVersion());
-                    hc.DefaultRequestHeaders.Add("device-id", deviceInfo.Id.ToString());
-                }
-
                 //hc.DefaultRequestHeaders.Add("user-agent", $"Mozilla/5.0 BiliDroid/6.1.0 (bbcallen@gmail.com)");
                 //hc.DefaultRequestHeaders.Referer = new Uri("http://www.bilibili.com/");
                 HttpResponseMessage hr = await hc.GetAsync(url);
