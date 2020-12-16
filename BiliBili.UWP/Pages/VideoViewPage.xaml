@@ -25,8 +25,8 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid Width="170">
-                            <TextBlock Text="{Binding name}" />
-                            <TextBlock Text="{Binding Count}" HorizontalAlignment="Right" Foreground="#FF898989" />
+                            <TextBlock Text="{Binding title}" />
+                            <TextBlock  HorizontalAlignment="Right" Foreground="#FF898989" ><Run Text="{Binding media_count}"/>/<Run Text="{Binding privacy_str}"/></TextBlock>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -441,13 +441,7 @@
                                 </TextBlock>
                             </StackPanel>
 
-                            <HyperlinkButton x:Name="btn_CD" Visibility="Collapsed" Click="btn_CD_Click"  Grid.Column="2" Margin="5 0" Foreground="White" Background="#00000000">
-                                <HyperlinkButton.Content>
-                                    <Border Background="{ThemeResource Bili-ForeColor}" CornerRadius="5">
-                                        <TextBlock Margin="10 5">充电</TextBlock>
-                                    </Border>
-                                </HyperlinkButton.Content>
-                            </HyperlinkButton>
+                           
                         </Grid>
                         <Image  Grid.Row="1" Width="72" Margin="15 0 10 10" HorizontalAlignment="Left" Source="http://static.hdslb.com/images/elec_mobile/new_year_elec_figure.png" ></Image>
                     </Grid>

@@ -35,6 +35,8 @@ using Windows.UI.StartScreen;
 using BiliBili.UWP.Modules;
 using BiliBili.UWP.Pages.FindMore;
 using BiliBili.UWP.Pages.User;
+using BiliBili.UWP.Api.User;
+using BiliBili.UWP.Api;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -45,12 +47,14 @@ namespace BiliBili.UWP.Pages
     /// </summary>
     public sealed partial class VideoViewPage : Page
     {
+        readonly FollowAPI followAPI;
         Download download;
         public VideoViewPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
             download = new Download();
+            followAPI = new FollowAPI();
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += DataTransferManager_DataRequested;
         }
@@ -191,7 +195,7 @@ namespace BiliBili.UWP.Pages
                     }
                     //m.data.pages
                     gv_Play.SelectedIndex = 0;
-                    if (m.data.req_user!=null&&m.data.req_user.attention != 1)
+                    if (m.data.req_user != null && m.data.req_user.attention != 1)
                     {
                         btn_AttUp.Visibility = Visibility.Visible;
                         btn_CancelAttUp.Visibility = Visibility.Collapsed;
@@ -356,9 +360,10 @@ namespace BiliBili.UWP.Pages
                 }
                 else
                 {
-
-                    Utils.ShowMessageToast("更新数据失败了", 3000);
+                    LogHelper.WriteLog($"加载视频失败{_aid}", LogType.FATAL, ex);
+                    Utils.ShowMessageToast("加载视频失败", 3000);
                 }
+
             }
             finally
             {
@@ -629,6 +634,7 @@ namespace BiliBili.UWP.Pages
                 Utils.ShowMessageToast("请先登录", 3000);
             }
         }
+
         private async Task GetFavBox()
         {
 
@@ -636,10 +642,24 @@ namespace BiliBili.UWP.Pages
             {
                 try
                 {
-                    string results = await WebClientClass.GetResults(new Uri("http://api.bilibili.com/x/favourite/folder?jsonp=jsonp&&rnd=" + new Random().Next(1, 9999)));
-                    FavboxModel model = JsonConvert.DeserializeObject<FavboxModel>(results);
-                    List<FavboxModel> ban = JsonConvert.DeserializeObject<List<FavboxModel>>(model.data.ToString());
-                    Video_ListView_Favbox.ItemsSource = ban;
+                    var result = await followAPI.MyCreatedFavorite(_aid).Request();
+                    if (result.status)
+                    {
+                        var data = await result.GetJson<ApiDataModel<JObject>>();
+                        if (data.success)
+                        {
+                            Video_ListView_Favbox.ItemsSource = await data.data["list"].ToString().DeserializeJson<List<FavboxModel>>();
+                        }
+                        else
+                        {
+                            FavBox_Header.Text = data.message;
+                        }
+                    }
+                    else
+                    {
+                        FavBox_Header.Text = result.message;
+                    }
+
                 }
                 catch (Exception ex)
                 {
@@ -663,36 +683,36 @@ namespace BiliBili.UWP.Pages
                     //((FavboxModel)e.ClickedItem).fid
 
 
+                    //Uri ReUri = new Uri("http://api.bilibili.com/x/v2/fav/video/add");
 
-                    Uri ReUri = new Uri("http://api.bilibili.com/x/v2/fav/video/add");
-
-                    string content = string.Format(
-                        "access_key={0}&aid={2}&appkey={1}&build=520001&fid={3}&mobi_app=android&platform=android&re_src=90&ts={4}",
-                        ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _aid, ((FavboxModel)e.ClickedItem).fid, ApiHelper.GetTimeSpan_2
-                        );
-                    content += "&sign=" + ApiHelper.GetSign(content);
-                    string result = await WebClientClass.PostResults(ReUri,
-                        content
-                     );
-                    JObject json = JObject.Parse(result);
-                    if ((int)json["code"] == 0)
+                    //string content = string.Format(
+                    //    "access_key={0}&aid={2}&appkey={1}&build=520001&fid={3}&mobi_app=android&platform=android&re_src=90&ts={4}",
+                    //    ApiHelper.access_key, ApiHelper.AndroidKey.Appkey, _aid, ((FavboxModel)e.ClickedItem).fid, ApiHelper.GetTimeSpan_2
+                    //    );
+                    //content += "&sign=" + ApiHelper.GetSign(content);
+                    //string result = await WebClientClass.PostResults(ReUri,
+                    //    content
+                    // );
+                    var results = await followAPI.AddFavorite(new List<string>() { ((FavboxModel)e.ClickedItem).id }, _aid).Request();
+                    if (results.status)
                     {
-                        Utils.ShowMessageToast("收藏成功！", 2000);
-                        GetFavBox();
-                    }
-                    else
-                    {
-                        if ((int)json["code"] == 11007)
+                        var data = await results.GetJson<ApiDataModel<JObject>>();
+                        if (data.success)
                         {
-                            Utils.ShowMessageToast("视频已经收藏！", 2000);
-                            //MessageDialog md = new MessageDialog("视频已经收藏！");
-                            //await md.ShowAsync();
+                            Utils.ShowMessageToast("收藏成功！", 2000);
+                            GetFavBox();
                         }
                         else
                         {
-                            Utils.ShowMessageToast("收藏失败！\r\n" + result, 2000);
+                            Utils.ShowMessageToast(data.message);
                         }
                     }
+                    else
+                    {
+                        Utils.ShowMessageToast(results.message, 2000);
+
+                    }
+                   
                 }
                 catch (Exception ex)
                 {
@@ -705,10 +725,7 @@ namespace BiliBili.UWP.Pages
             }
         }
 
-        private void btn_CD_Click(object sender, RoutedEventArgs e)
-        {
-            Utils.ShowMessageToast("帅气的橙子说充电功能还在开发中\r\n请使用打开为UP充电！", 2000);
-        }
+
 
         private void list_About_ItemClick(object sender, ItemClickEventArgs e)
         {

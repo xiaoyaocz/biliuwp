@@ -1244,9 +1244,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AdsJumbo">
-      <Version>5.9.1</Version>
-    </PackageReference>
     <PackageReference Include="FubarCoder.RestSharp.Portable">
       <Version>3.3.0</Version>
     </PackageReference>

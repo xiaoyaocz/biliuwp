@@ -300,23 +300,37 @@ namespace BiliBili.UWP.Models
     }
     public class FavboxModel
     {
-        public object data { get; set; }
-
-        public int code { get; set; }
-
-        public string fid { get; set; }
-        public string mid { get; set; }
-        public string name { get; set; }
-        public int max_count { get; set; }//总数
-        public int cur_count { get; set; }//现存
-
-        public string Count
+        public string cover { get; set; }
+        public int attr { get; set; }
+        public bool privacy
         {
             get
             {
-                return cur_count + "/" + max_count;
+                //attr单数为私密，双数为公开
+                return attr % 2 != 0;
             }
         }
+        public string privacy_str
+        {
+            get
+            {
+                //attr单数为私密，双数为公开
+                return attr % 2 != 0?"私密":"公开";
+            }
+        }
+        public string intro { get; set; }
+        public string fid { get; set; }
+        public string id { get; set; }
+        public int like_state { get; set; }
+
+        public string mid { get; set; }
+        public string title { get; set; }
+        public int type { get; set; }
+
+
+        public int media_count { get; set; }
+       
+        public int fav_state { get; set; }
     }
 
     public class pagesModel
