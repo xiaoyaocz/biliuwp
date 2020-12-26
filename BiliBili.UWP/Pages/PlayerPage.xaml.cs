@@ -42,6 +42,7 @@ using BiliBili.UWP.Api;
 using Windows.Media.Streaming.Adaptive;
 using Windows.Media.MediaProperties;
 using System.Numerics;
+using System.Threading;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -293,7 +294,8 @@ namespace BiliBili.UWP.Pages
                     {
                         //mediaElement.MediaPlayer.PlaybackSession.();
                         Utils.ShowMessageToast("3秒后播放下一集", 3000);
-                        await Task.Delay(3000);
+                        await Task.Delay(3000, m_TaskDelayCancellation.Token); // throws
+                        
                         gv_play.SelectedIndex += 1;
                     }
                 }
@@ -303,6 +305,8 @@ namespace BiliBili.UWP.Pages
             });
 
         }
+
+        private CancellationTokenSource m_TaskDelayCancellation = new CancellationTokenSource();
 
         #endregion
         private void MTC_DanmuLoaded(object sender, NSDanmaku.Controls.Danmaku e)
@@ -692,6 +696,9 @@ namespace BiliBili.UWP.Pages
                 mediaPlayer_audio = null;
                 //danmu.ClearAll();
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.None;
+
+                if (m_TaskDelayCancellation != null)
+                    m_TaskDelayCancellation.Cancel();
 
                 GC.Collect();
 
@@ -2749,7 +2756,7 @@ namespace BiliBili.UWP.Pages
                 {
                     //mediaElement.MediaPlayer.PlaybackSession.();
                     Utils.ShowMessageToast("3秒后播放下一集", 3000);
-                    await Task.Delay(3000);
+                    await Task.Delay(3000, m_TaskDelayCancellation.Token); // throws
                     gv_play.SelectedIndex += 1;
                 }
             }
