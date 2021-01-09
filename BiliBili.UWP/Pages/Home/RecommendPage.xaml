@@ -16,20 +16,20 @@
     </Page.Resources>
 
     <Grid>
-        <toolkit:AdaptiveGridView x:Name="ls_feed" 
+        <toolkit:AdaptiveGridView x:Name="ls_feed"
                                                   ItemsSource="{x:Bind Path=recommendVM.Items,Mode=OneWay}"
-                                                  ItemClick="ls_feed_ItemClick" 
+                                                  ItemClick="ls_feed_ItemClick"
                                                   Padding="8 0"
-                                                  HorizontalContentAlignment="Center" 
-                                                  SelectionMode="None" 
+                                                  HorizontalContentAlignment="Center"
+                                                  SelectionMode="None"
                                                   ItemHeight="220"
                                                   DesiredWidth="260"
-                                                  IsItemClickEnabled="True" >
+                                                  IsItemClickEnabled="True">
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                     <Setter Property="Margin" Value="8"></Setter>
-                  
+
                     <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"></Setter>
                 </Style>
             </GridView.ItemContainerStyle>
@@ -52,9 +52,9 @@
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="recommendmodels:RecommendItemModel">
 
-                    <Grid >
+                    <Grid>
                         <Grid.ContextFlyout>
-                            <Flyout >
+                            <Flyout>
                                 <ListView  ItemClick="ListMenu_ItemClick" ItemsSource="{x:Bind Path=three_point_v2}" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="True">
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="recommendmodels:RecommendThreePointV2ItemModel">
@@ -82,17 +82,17 @@
                             </Flyout>
                         </Grid.ContextFlyout>
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="48"/>
-                            <RowDefinition Height="24"/>
+                            <RowDefinition />
+                            <RowDefinition Height="48" />
+                            <RowDefinition Height="24" />
                         </Grid.RowDefinitions>
                         <Grid>
                             <toolkit:ImageEx IsCacheEnabled="True"  PlaceholderSource="ms-appx:///Assets/Logo/PI160_100.png"   Stretch="UniformToFill" Source="{x:Bind Path=cover,Converter={StaticResource imageConvert},ConverterParameter='320w_200h_1e_1c'}"></toolkit:ImageEx>
                             <Grid VerticalAlignment="Bottom" Padding="8" Visibility="{x:Bind showCoverText}">
                                 <Grid.Background>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#CC000005" Offset="0.993"/>
-                                        <GradientStop Color="#00000000" Offset="0"/>
+                                        <GradientStop Color="#CC000005" Offset="0.993" />
+                                        <GradientStop Color="#00000000" Offset="0" />
                                     </LinearGradientBrush>
                                 </Grid.Background>
                                 <StackPanel Orientation="Horizontal">
@@ -103,7 +103,6 @@
                                 </StackPanel>
                             </Grid>
                         </Grid>
-
 
                         <TextBlock Grid.Row="1" Margin="8 4 8 0"  MaxLines="2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Text="{x:Bind title}"></TextBlock>
                         <StackPanel  Grid.Row="2" Margin="8 0 8 4" Orientation="Horizontal">
@@ -118,15 +117,11 @@
                             </Border>
                             <TextBlock  TextWrapping="Wrap" VerticalAlignment="Center" FontSize="12" Foreground="Gray" TextTrimming="CharacterEllipsis" Text="{x:Bind bottomText}"></TextBlock>
                         </StackPanel>
-
                     </Grid>
-
                 </DataTemplate>
-
             </GridView.ItemTemplate>
         </toolkit:AdaptiveGridView>
         <AppBarButton x:Name="b_btn_Refresh" Command="{x:Bind Path=recommendVM.RefreshCommand}" Width="48" Grid.RowSpan="2" Visibility="{x:Bind Path=recommendVM.Loading,Mode=OneWay,Converter={StaticResource display}}" Height="48" Margin="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Icon="Refresh" Background="{ThemeResource Bili-ForeColor}" Opacity="0.6" Foreground="White"></AppBarButton>
         <ProgressRing Width="56" Height="56" Grid.RowSpan="2" IsActive="True"  Visibility="{x:Bind Path=recommendVM.Loading,Mode=OneWay}"></ProgressRing>
-
     </Grid>
 </Page>

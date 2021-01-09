@@ -10,28 +10,28 @@
     mc:Ignorable="d">
     <Page.Resources>
         <Style x:Key="ListViewItemStyle1" TargetType="ListViewItem">
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-            <Setter Property="Background" Value="{ThemeResource ListViewItemBackground}"/>
-            <Setter Property="Foreground" Value="{ThemeResource ListViewItemForeground}"/>
-            <Setter Property="TabNavigation" Value="Local"/>
-            <Setter Property="IsHoldingEnabled" Value="True"/>
-            <Setter Property="Padding" Value="12,0,12,0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}"/>
-            <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}"/>
-            <Setter Property="AllowDrop" Value="False"/>
-            <Setter Property="UseSystemFocusVisuals" Value="True"/>
-            <Setter Property="FocusVisualMargin" Value="0"/>
-            <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource ListViewItemFocusVisualPrimaryBrush}"/>
-            <Setter Property="FocusVisualPrimaryThickness" Value="2"/>
-            <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}"/>
-            <Setter Property="FocusVisualSecondaryThickness" Value="1"/>
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="Background" Value="{ThemeResource ListViewItemBackground}" />
+            <Setter Property="Foreground" Value="{ThemeResource ListViewItemForeground}" />
+            <Setter Property="TabNavigation" Value="Local" />
+            <Setter Property="IsHoldingEnabled" Value="True" />
+            <Setter Property="Padding" Value="12,0,12,0" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}" />
+            <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}" />
+            <Setter Property="AllowDrop" Value="False" />
+            <Setter Property="UseSystemFocusVisuals" Value="True" />
+            <Setter Property="FocusVisualMargin" Value="0" />
+            <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource ListViewItemFocusVisualPrimaryBrush}" />
+            <Setter Property="FocusVisualPrimaryThickness" Value="2" />
+            <Setter Property="FocusVisualSecondaryBrush" Value="{ThemeResource ListViewItemFocusVisualSecondaryBrush}" />
+            <Setter Property="FocusVisualSecondaryThickness" Value="1" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListViewItem">
-                        <ListViewItemPresenter CheckBrush="{ThemeResource ListViewItemCheckBrush}" ContentMargin="{TemplateBinding Padding}" CheckMode="{ThemeResource ListViewItemCheckMode}" ContentTransitions="{TemplateBinding ContentTransitions}" CheckBoxBrush="{ThemeResource ListViewItemCheckBoxBrush}" DragForeground="{ThemeResource ListViewItemDragForeground}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackground}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}" FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}" FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}" FocusVisualMargin="{TemplateBinding FocusVisualMargin}" FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}" FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}" FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Control.IsTemplateFocusTarget="True" PointerOverForeground="{ThemeResource ListViewItemForegroundPointerOver}" PressedBackground="{ThemeResource ListViewItemBackgroundPressed}" PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackground}" PointerOverBackground="{ThemeResource ListViewItemBackgroundPointerOver}" ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectedPressedBackground="{ThemeResource Bili-Background}" SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}" SelectedForeground="{ThemeResource ListViewItemForegroundSelected}" SelectedPointerOverBackground="{ThemeResource Bili-Background}" SelectedBackground="{ThemeResource Bili-Background}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <ListViewItemPresenter CheckBrush="{ThemeResource ListViewItemCheckBrush}" ContentMargin="{TemplateBinding Padding}" CheckMode="{ThemeResource ListViewItemCheckMode}" ContentTransitions="{TemplateBinding ContentTransitions}" CheckBoxBrush="{ThemeResource ListViewItemCheckBoxBrush}" DragForeground="{ThemeResource ListViewItemDragForeground}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackground}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusVisualPrimaryBrush="{TemplateBinding FocusVisualPrimaryBrush}" FocusVisualSecondaryThickness="{TemplateBinding FocusVisualSecondaryThickness}" FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}" FocusVisualMargin="{TemplateBinding FocusVisualMargin}" FocusVisualPrimaryThickness="{TemplateBinding FocusVisualPrimaryThickness}" FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}" FocusVisualSecondaryBrush="{TemplateBinding FocusVisualSecondaryBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Control.IsTemplateFocusTarget="True" PointerOverForeground="{ThemeResource ListViewItemForegroundPointerOver}" PressedBackground="{ThemeResource ListViewItemBackgroundPressed}" PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackground}" PointerOverBackground="{ThemeResource ListViewItemBackgroundPointerOver}" ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectedPressedBackground="{ThemeResource Bili-Background}" SelectionCheckMarkVisualEnabled="{ThemeResource ListViewItemSelectionCheckMarkVisualEnabled}" SelectedForeground="{ThemeResource ListViewItemForegroundSelected}" SelectedPointerOverBackground="{ThemeResource Bili-Background}" SelectedBackground="{ThemeResource Bili-Background}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -39,29 +39,29 @@
     </Page.Resources>
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">标签订阅</TextBlock>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid Background="{ThemeResource Bili-List-Background}">
-                <ListView x:Name="ls_tag"  Width="120" SelectionChanged="ls_tag_SelectionChanged"  ItemContainerStyle="{StaticResource  ListViewItemStyle1}"  >
+                <ListView x:Name="ls_tag"  Width="120" SelectionChanged="ls_tag_SelectionChanged"  ItemContainerStyle="{StaticResource  ListViewItemStyle1}">
                     <ListViewItem HorizontalContentAlignment="Stretch">
                         <TextBlock MaxLines="2" HorizontalAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" >我的</TextBlock>
                     </ListViewItem>
@@ -106,14 +106,14 @@
                     </ListViewItem>
                 </ListView>
             </Grid>
-            <ScrollViewer x:Name="my"  Visibility="Visible" Grid.Column="1" >
-                <StackPanel >
+            <ScrollViewer x:Name="my"  Visibility="Visible" Grid.Column="1">
+                <StackPanel>
 
                     <TextBlock Margin="10">我的关注 <Run Foreground="Gray" >(点击取消订阅)</Run></TextBlock>
                     <GridView x:Name="gv" Grid.Row="1" ScrollViewer.VerticalScrollMode="Disabled"  IsItemClickEnabled="True" SelectionMode="None" ItemClick="gv_ItemClick">
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <w:WrapPanel/>
+                                <w:WrapPanel />
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                         <GridView.ItemContainerStyle>
@@ -130,15 +130,13 @@
                                 </Border>
                             </DataTemplate>
                         </GridView.ItemTemplate>
-
-
                     </GridView>
                     <Grid Margin="10" Visibility="Collapsed">
                         <TextBlock VerticalAlignment="Center">猜你喜欢</TextBlock>
-                        <HyperlinkButton x:Name="btn_refresh" Margin="5 0" Click="btn_refresh_Click_1" Foreground="{ThemeResource Bili-FontColor}" HorizontalAlignment="Right" >
+                        <HyperlinkButton x:Name="btn_refresh" Margin="5 0" Click="btn_refresh_Click_1" Foreground="{ThemeResource Bili-FontColor}" HorizontalAlignment="Right">
                             <Grid>
                                 <Ellipse Fill="{ThemeResource Bili-ForeColor}"></Ellipse>
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" Margin="5" FontSize="12" Foreground="White"/>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" Margin="5" FontSize="12" Foreground="White" />
                             </Grid>
                         </HyperlinkButton>
                     </Grid>
@@ -146,7 +144,7 @@
                     <GridView x:Name="gv_like" Visibility="Collapsed" ScrollViewer.VerticalScrollMode="Disabled"  Grid.Row="1"  IsItemClickEnabled="True" SelectionMode="None" ItemClick="gv_like_ItemClick">
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <w:WrapPanel/>
+                                <w:WrapPanel />
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                         <GridView.ItemContainerStyle>
@@ -163,20 +161,16 @@
                                 </Border>
                             </DataTemplate>
                         </GridView.ItemTemplate>
-
-
                     </GridView>
                 </StackPanel>
-                
             </ScrollViewer>
-            <ScrollViewer x:Name="not_my" Visibility="Collapsed" Grid.Column="1" >
-                <StackPanel >
-
+            <ScrollViewer x:Name="not_my" Visibility="Collapsed" Grid.Column="1">
+                <StackPanel>
 
                     <GridView x:Name="gv_Tags" ScrollViewer.VerticalScrollMode="Disabled"  Grid.Row="1"  IsItemClickEnabled="True" SelectionMode="None" ItemClick="gv_Tags_ItemClick">
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <w:WrapPanel/>
+                                <w:WrapPanel />
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                         <GridView.ItemContainerStyle>
@@ -193,16 +187,10 @@
                                 </Border>
                             </DataTemplate>
                         </GridView.ItemTemplate>
-
-
                     </GridView>
-
                 </StackPanel>
-
             </ScrollViewer>
-
         </Grid>
         <ProgressRing Width="56" Height="56" Grid.RowSpan="2" IsActive="True" x:Name="pr_Load" Visibility="Collapsed"></ProgressRing>
-      
     </Grid>
 </Page>

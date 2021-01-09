@@ -1,4 +1,4 @@
-﻿<Page xmlns:my="using:BiliBili.UWP.Controls" 
+﻿<Page xmlns:my="using:BiliBili.UWP.Controls"
     x:Class="BiliBili.UWP.Pages.MusicInfoPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,24 +9,23 @@
 
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">歌曲</TextBlock>
-          
         </Grid>
-      
+
             <Grid Grid.Row="1">
             <Pivot>
                 <PivotItem>
@@ -37,16 +36,15 @@
                         <StackPanel>
                             <Grid Background="{ThemeResource Bili-List-Background}" Padding="8">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Grid Height="100" Width="100" >
+                                <Grid Height="100" Width="100">
                                     <Border Background="{ThemeResource Bili-List-Background}"></Border>
                                     <Image  Source="{Binding cover_url}"  Stretch="UniformToFill"></Image>
                                     <Border Visibility="{Binding vip}" Padding="8 2"  Background="Orange" VerticalAlignment="Top" HorizontalAlignment="Right">
                                         <TextBlock FontSize="12" Foreground="White">付费</TextBlock>
                                     </Border>
-
                                 </Grid>
                                 <StackPanel Grid.Column="1" Margin="8 0 0 0">
                                     <TextBlock VerticalAlignment="Top" TextWrapping="Wrap" Text="{Binding title}"></TextBlock>
@@ -70,19 +68,18 @@
                             </Grid>
                             <Grid Margin="0 12 0 0" x:Name="user" Background="{ThemeResource Bili-List-Background}" Padding="8">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition  Width="auto"/>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition  Width="auto" />
                                 </Grid.ColumnDefinitions>
                                 <HyperlinkButton Padding="0" x:Name="btn_OpenUser" Click="btn_OpenUser_Click">
                                     <Ellipse Width="48" Height="48">
                                         <Ellipse.Fill>
-                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding up_img}"/>
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding up_img}" />
                                         </Ellipse.Fill>
-
                                     </Ellipse>
                                 </HyperlinkButton>
-                                
+
                                 <StackPanel Margin="8 0" Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding up_name}"></TextBlock>
                                     <TextBlock FontSize="14" Foreground="Gray">发表于 <Run Text="{Binding ctime_str}"></Run></TextBlock>
@@ -101,60 +98,46 @@
                             <HyperlinkButton Margin="0 12 0 0" x:Name="btn_OpenPcMenu" DataContext="{Binding Path=pgc_info.pgc_menu}" Click="btn_OpenPcMenu_Click" Foreground="{ThemeResource TextControlButtonForeground}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0">
                                 <Grid  x:Name="pcmenu"  Background="{ThemeResource Bili-List-Background}" Padding="8">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.ColumnSpan="2" Margin="0 0 0 4">所属专辑</TextBlock>
                                     <Image Grid.RowSpan="2" Grid.Row="1" Width="56" Height="56" Margin="0 0 8 0" Source="{Binding coverUrl}"></Image>
                                     <TextBlock Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="{Binding title}" MaxLines="2" TextTrimming="CharacterEllipsis"></TextBlock>
                                     <TextBlock Grid.Row="2" Grid.Column="1" FontSize="14" Foreground="Gray"><Run Text="{Binding mbnames}"></Run></TextBlock>
-     
                                 </Grid>
                             </HyperlinkButton>
-                        
                         </StackPanel>
                     </ScrollViewer>
-                  
                 </PivotItem>
-                <PivotItem >
+                <PivotItem>
                     <PivotItem.Header>
                         <TextBlock FontSize="16">评论</TextBlock>
                     </PivotItem.Header>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition />
+                            <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
                         <ScrollViewer x:Name="sv" ViewChanged="sv_ViewChanged">
                             <StackPanel Background="{ThemeResource Bili-List-Background}">
-                                <my:CommentV2Control x:Name="comment"/>
+                                <my:CommentV2Control x:Name="comment" />
                             </StackPanel>
-
                         </ScrollViewer>
                         <Button x:Name="btn_ShowComment"  Click="btn_ShowComment_Click" Grid.Row="1" Margin="0 4" Background="{ThemeResource Bili-ForeColor}" Foreground="White" HorizontalAlignment="Stretch">我要评论</Button>
                     </Grid>
-
                 </PivotItem>
             </Pivot>
-
-                
-             
-
-
             </Grid>
-
-
-
-
 
         <CommandBar Grid.RowSpan="2" HorizontalAlignment="Right" Grid.Column="3" Foreground="White" Background="{ThemeResource Bili-ForeColor}">
             <CommandBar.SecondaryCommands>
-                <AppBarButton x:Name="btn_Share" Click="btn_Share_Click" Label="分享" >
+                <AppBarButton x:Name="btn_Share" Click="btn_Share_Click" Label="分享">
                     <AppBarButton.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
                     </AppBarButton.Icon>
@@ -172,7 +155,6 @@
                                     <HyperlinkButton HorizontalAlignment="Right" x:Name="btn_CreateCollect" Click="btn_CreateCollect_Click">新建收藏夹</HyperlinkButton>
                                     <ProgressBar x:Name="pr_loadCollect" VerticalAlignment="Bottom" Background="#00000000" IsIndeterminate="True"></ProgressBar>
                                 </Grid>
-                               
                             </ListView.Header>
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">

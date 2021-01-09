@@ -8,8 +8,7 @@
     mc:Ignorable="d"
          xmlns:c="using:Microsoft.Toolkit.Uwp.UI.Controls"
      xmlns:pr="using:PullToRefresh.UWP"
-    Tag="Music"
-    >
+    Tag="Music">
     <Page.Resources>
         <DataTemplate x:Name="musicMenu">
             <StackPanel Width="{Binding ElementName=ViewBox_num,Path=Width}">
@@ -19,8 +18,8 @@
                     <Grid VerticalAlignment="Bottom" Padding="4">
                         <Grid.Background>
                             <LinearGradientBrush EndPoint="0,0.5" StartPoint="0,0">
-                                <GradientStop Color="#33000000" Offset="1.3"/>
-                                <GradientStop Color="Transparent"/>
+                                <GradientStop Color="#33000000" Offset="1.3" />
+                                <GradientStop Color="Transparent" />
                             </LinearGradientBrush>
                         </Grid.Background>
                         <StackPanel Orientation="Horizontal">
@@ -44,8 +43,8 @@
                     <Grid VerticalAlignment="Bottom" Padding="4">
                         <Grid.Background>
                             <LinearGradientBrush EndPoint="0,0.5" StartPoint="0,0">
-                                <GradientStop Color="#33000000" Offset="1.3"/>
-                                <GradientStop Color="Transparent"/>
+                                <GradientStop Color="#33000000" Offset="1.3" />
+                                <GradientStop Color="Transparent" />
                             </LinearGradientBrush>
                         </Grid.Background>
                         <StackPanel Orientation="Horizontal">
@@ -59,18 +58,18 @@
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
-    <Grid >
+    <Grid>
         <pr:PullToRefreshBox RefreshInvoked="PullToRefreshBox_RefreshInvoked">
             <ScrollViewer x:Name="sv"   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel>
                     <Border x:Name="ViewBox_num" Background="Gray" Width="100"></Border>
-                    <Viewbox MaxWidth="960"  Grid.Column="1" >
-                        <FlipView  x:Name="home_flipView" ItemsSource="{Binding Path=banner.bannerList}" Height="280" Width="960" Grid.Column="1"   VerticalAlignment="Top" >
+                    <Viewbox MaxWidth="960"  Grid.Column="1">
+                        <FlipView  x:Name="home_flipView" ItemsSource="{Binding Path=banner.bannerList}" Height="280" Width="960" Grid.Column="1"   VerticalAlignment="Top">
                             <FlipView.ItemTemplate>
                                 <DataTemplate>
                                     <HyperlinkButton Padding="0"  Click="HyperlinkButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                         <Grid>
-                                            <c:ImageEx  Source="{Binding bannerImgUrl}"  Height="280" PlaceholderSource="ms-appx:///Assets/Logo/PI900_300.png"/>
+                                            <c:ImageEx  Source="{Binding bannerImgUrl}"  Height="280" PlaceholderSource="ms-appx:///Assets/Logo/PI900_300.png" />
                                         </Grid>
                                     </HyperlinkButton>
                                 </DataTemplate>
@@ -80,10 +79,10 @@
 
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Button BorderThickness="0" HorizontalAlignment="Stretch" Foreground="{ThemeResource TextControlForeground}" Background="#00000000">
                             <StackPanel>
@@ -99,7 +98,7 @@
                                 </MenuFlyout>
                             </Button.Flyout>
                         </Button>
-                        <Button x:Name="btn_OpenMenu" BorderThickness="0" Click="btn_OpenMenu_Click" Grid.Column="1" Background="#00000000" HorizontalAlignment="Stretch" >
+                        <Button x:Name="btn_OpenMenu" BorderThickness="0" Click="btn_OpenMenu_Click" Grid.Column="1" Background="#00000000" HorizontalAlignment="Stretch">
                             <StackPanel>
                                 <Image Width="36" Height="36" Source="ms-appx:///Assets/PartIcon/music_ic_menus.png"></Image>
                                 <TextBlock HorizontalAlignment="Center">歌单</TextBlock>
@@ -132,19 +131,15 @@
                                     </StackPanel>
                                 </HyperlinkButton>
                             </Grid>
-
                         </GridView.Header>
                         <GridView.Footer>
                             <HyperlinkButton Tag="sharkMenus" Click="btn_RefreshMenu_Click" HorizontalAlignment="Center">
                                 <Border BorderThickness="1" Padding="16 4" CornerRadius="4" BorderBrush="{ThemeResource HyperlinkButtonForeground}">
-                                  
+
                                         <TextBlock VerticalAlignment="Center" >换一批</TextBlock>
-                                
-                                 
                                 </Border>
                             </HyperlinkButton>
                         </GridView.Footer>
-                       
                     </GridView>
                     <GridView Margin="8 4" ItemsSource="{Binding pmenu}" ItemTemplate="{StaticResource musicMenu}" ItemClick="GridView_ItemClick"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
@@ -160,15 +155,12 @@
                                     </StackPanel>
                                 </HyperlinkButton>
                             </Grid>
-
                         </GridView.Header>
                         <GridView.Footer>
                             <HyperlinkButton Tag="shark-pgc-menus" Click="btn_RefreshMenu_Click"  HorizontalAlignment="Center">
                                 <Border BorderThickness="1" Padding="16 4" CornerRadius="4" BorderBrush="{ThemeResource HyperlinkButtonForeground}">
 
                                     <TextBlock VerticalAlignment="Center" >换一批</TextBlock>
-
-
                                 </Border>
                             </HyperlinkButton>
                         </GridView.Footer>
@@ -180,17 +172,13 @@
                                     <Image Source="ms-appx:///Assets/PartIcon/music_ic_recommend_single.png" Width="24" Height="24"></Image>
                                     <TextBlock Margin="8 0" VerticalAlignment="Center">单曲推荐</TextBlock>
                                 </StackPanel>
-                                
                             </Grid>
-
                         </GridView.Header>
                         <GridView.Footer>
                             <HyperlinkButton  Tag="sharkHitSongs" Click="btn_RefreshMenu_Click" HorizontalAlignment="Center">
                                 <Border BorderThickness="1" Padding="16 4" CornerRadius="4" BorderBrush="{ThemeResource HyperlinkButtonForeground}">
 
                                     <TextBlock VerticalAlignment="Center" >换一批</TextBlock>
-
-
                                 </Border>
                             </HyperlinkButton>
                         </GridView.Footer>
@@ -198,8 +186,8 @@
 
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <HyperlinkButton x:Name="btn_HotRank" DataContext="{Binding hitMenus}" Click="btn_HotRank_Click" HorizontalAlignment="Center" Margin="8 0">
                             <Image Source="ms-appx:///Assets/PartIcon/music_bg_hit_list.png"  ></Image>
@@ -209,7 +197,6 @@
                         </HyperlinkButton>
                     </Grid>
 
-
                     <GridView Margin="8 4" ItemsSource="{Binding categories}" ItemTemplate="{StaticResource musicMenu}" ItemClick="GridView_ItemClick"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
                             <Grid Margin="0 4 0 0">
@@ -217,11 +204,8 @@
                                     <Image Source="ms-appx:///Assets/PartIcon/music_ic_recommend_classify.png" Width="24" Height="24"></Image>
                                     <TextBlock Margin="8 0" VerticalAlignment="Center">分类榜单</TextBlock>
                                 </StackPanel>
-
                             </Grid>
-
                         </GridView.Header>
-                       
                     </GridView>
                     <GridView Margin="8 4" ItemsSource="{Binding missEvan}" ItemTemplate="{StaticResource musicMenu}" ItemClick="GridView_ItemClick"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
@@ -237,15 +221,12 @@
                                     </StackPanel>
                                 </HyperlinkButton>
                             </Grid>
-
                         </GridView.Header>
                         <GridView.Footer>
                             <HyperlinkButton Tag="shark-missevan" Click="btn_RefreshMenu_Click" HorizontalAlignment="Center">
                                 <Border BorderThickness="1" Padding="16 4" CornerRadius="4" BorderBrush="{ThemeResource HyperlinkButtonForeground}">
 
                                     <TextBlock VerticalAlignment="Center" >换一批</TextBlock>
-
-
                                 </Border>
                             </HyperlinkButton>
                         </GridView.Footer>
@@ -268,15 +249,12 @@
                                                 </StackPanel>
                                             </HyperlinkButton>
                                         </Grid>
-
                                     </GridView.Header>
                                     <GridView.Footer>
                                         <HyperlinkButton Tag="{Binding cate_type}" Click="btn_RefreshMenu_Click" HorizontalAlignment="Center">
                                             <Border BorderThickness="1" Padding="16 4" CornerRadius="4" BorderBrush="{ThemeResource HyperlinkButtonForeground}">
 
                                                 <TextBlock VerticalAlignment="Center" >换一批</TextBlock>
-
-
                                             </Border>
                                         </HyperlinkButton>
                                     </GridView.Footer>
@@ -284,8 +262,6 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    
-                   
                 </StackPanel>
             </ScrollViewer>
         </pr:PullToRefreshBox>

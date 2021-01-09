@@ -10,21 +10,20 @@
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Grid Background="{ThemeResource Bili-ForeColor}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
-                <AppBarButton x:Name="btn_back" Click="btn_back_Click" Icon="Back" Width="48" Height="48" Foreground="White"/>
-                <TextBlock x:Name="text_Title" Visibility="Collapsed" Text="搜索" Margin="5 0" HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center"  FontSize="16" Foreground="White"/>
+                <AppBarButton x:Name="btn_back" Click="btn_back_Click" Icon="Back" Width="48" Height="48" Foreground="White" />
+                <TextBlock x:Name="text_Title" Visibility="Collapsed" Text="搜索" Margin="5 0" HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center"  FontSize="16" Foreground="White" />
                 <AutoSuggestBox x:Name="autoSug_Box" BorderBrush="#00808080" BorderThickness="1" Margin="5 0" Grid.Column="1" PlaceholderText="输入单曲/歌单/音乐人/AU号" QueryIcon="Find" VerticalAlignment="Center" QuerySubmitted="autoSug_Box_QuerySubmitted"   ></AutoSuggestBox>
             </Grid>
-
 
             <Pivot Grid.Row="1" x:Name="pivot" SelectionChanged="pivot_SelectionChanged">
                 <PivotItem Margin="0">
@@ -44,15 +43,15 @@
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid >
+                                        <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition />
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto"/>
-                                                <RowDefinition Height="auto"/>
-                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto" />
+                                                <RowDefinition Height="auto" />
+                                                <RowDefinition Height="auto" />
                                             </Grid.RowDefinitions>
                                             <Image Width="86" Grid.RowSpan="3" Height="86" Margin="0 0 8 0" Source="{Binding Cover}"></Image>
                                             <TextBlock MaxLines="2" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" FontSize="14" Grid.Column="1" Text="{Binding title}"></TextBlock>
@@ -68,7 +67,6 @@
                                             </StackPanel>
                                         </Grid>
                                     </DataTemplate>
-                                
                                 </ListView.ItemTemplate>
                             </ListView>
                             <HyperlinkButton HorizontalAlignment="Center" Click="btn_LoadMoreSongs_Click" x:Name="btn_LoadMoreSongs" Visibility="Collapsed" Foreground="Gray">
@@ -76,8 +74,6 @@
                             </HyperlinkButton>
                         </StackPanel>
                     </ScrollViewer>
-               
-                    
                 </PivotItem>
                 <PivotItem  Margin="0">
                     <PivotItem.Header>
@@ -97,15 +93,15 @@
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid >
+                                        <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition />
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto"/>
-                                                <RowDefinition Height="auto"/>
-                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto" />
+                                                <RowDefinition Height="auto" />
+                                                <RowDefinition Height="auto" />
                                             </Grid.RowDefinitions>
                                             <Image Width="86" Grid.RowSpan="3" Height="86" Margin="0 0 8 0" Source="{Binding Cover}"></Image>
                                             <TextBlock MaxLines="2" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" FontSize="14" Grid.Column="1" Text="{Binding title}"></TextBlock>
@@ -121,10 +117,8 @@
                                             </StackPanel>
                                         </Grid>
                                     </DataTemplate>
-
                                 </ListView.ItemTemplate>
                             </ListView>
-
 
                             <HyperlinkButton HorizontalAlignment="Center" x:Name="btn_LoadMoreMenus" Click="btn_LoadMoreMenus_Click" Foreground="Gray">
                                 <TextBlock>加载更多</TextBlock>
@@ -149,15 +143,14 @@
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid >
+                                        <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition />
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto"/>
-                                                <RowDefinition Height="auto"/>
-                                            
+                                                <RowDefinition Height="auto" />
+                                                <RowDefinition Height="auto" />
                                             </Grid.RowDefinitions>
                                             <Image Width="56" Grid.RowSpan="2" Height="56" Margin="0 0 8 0" Source="{Binding Cover}"></Image>
                                             <TextBlock  TextTrimming="CharacterEllipsis"  FontSize="14" Grid.Column="1" Text="{Binding uname}"></TextBlock>
@@ -165,13 +158,10 @@
 
                                                 <TextBlock FontSize="12" Foreground="Gray" Margin="4 0" >粉丝:<Run Text="{Binding fansStr}"></Run>  音频播放:<Run Text="{Binding playStr}"></Run></TextBlock>
                                             </StackPanel>
-                                          
                                         </Grid>
                                     </DataTemplate>
-
                                 </ListView.ItemTemplate>
                             </ListView>
-
 
                             <HyperlinkButton HorizontalAlignment="Center" x:Name="btn_LoadMoreUsers" Click="btn_LoadMoreUsers_Click" Foreground="Gray">
                                 <TextBlock>加载更多</TextBlock>
@@ -180,8 +170,6 @@
                     </ScrollViewer>
                 </PivotItem>
             </Pivot>
-
-
         </Grid>
         <ProgressRing Grid.RowSpan="2" x:Name="pr_Load" Visibility="Collapsed"  Width="56" Height="56" IsActive="True"></ProgressRing>
     </Grid>

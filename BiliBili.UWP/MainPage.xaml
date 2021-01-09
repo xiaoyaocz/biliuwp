@@ -209,7 +209,7 @@
                                                     Margin="{ThemeResource SliderHeaderThemeMargin}"
                                                     Content="{TemplateBinding Header}"
                                                     ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                    FontWeight="{ThemeResource SliderHeaderThemeFontWeight}" 
+                                                    FontWeight="{ThemeResource SliderHeaderThemeFontWeight}"
                                                     TextWrapping="Wrap" />
                                                     <Grid x:Name="SliderContainer"
                                                     Background="{ThemeResource SliderContainerBackground}"
@@ -275,9 +275,9 @@
                                                                 </ToolTipService.ToolTip>
                                                                 <Thumb.DataContext>
                                                                     <Grid Height="112" Width="192">
-                                                                        <Image x:Name="ThumbnailImage"/>
-                                                                        <Border Background="{ThemeResource SystemControlBackgroundBaseMediumBrush}" 
-                                                                      VerticalAlignment="Bottom" 
+                                                                        <Image x:Name="ThumbnailImage" />
+                                                                        <Border Background="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
+                                                                      VerticalAlignment="Bottom"
                                                                       HorizontalAlignment="Left">
                                                                             <TextBlock x:Name="TimeElapsedPreview"
                                                                       Margin="6,1,6,3"
@@ -362,7 +362,7 @@
                                                 <EasingDoubleKeyFrame KeyTime="0" Value="0" />
                                                 <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1" />
                                             </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimation Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateVertical" From="50" To ="0.5" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateVertical" From="50" To ="0.5" Duration="0:0:0.3" />
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="ControlPanelFadeOut">
@@ -374,7 +374,7 @@
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsHitTestVisible" Storyboard.TargetName="ControlPanel_ControlPanelVisibilityStates_Border">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="False" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <DoubleAnimation Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateVertical" From="0.5" To ="50" Duration="0:0:0.7"/>
+                                            <DoubleAnimation Storyboard.TargetProperty="Y" Storyboard.TargetName="TranslateVertical" From="0.5" To ="50" Duration="0:0:0.7" />
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
@@ -553,7 +553,7 @@
                                 VerticalAlignment="Bottom"
                                 RenderTransformOrigin="0.5,0.5">
                                     <Grid.RenderTransform>
-                                        <TranslateTransform x:Name="TranslateVertical"/>
+                                        <TranslateTransform x:Name="TranslateVertical" />
                                     </Grid.RenderTransform>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -608,8 +608,8 @@
                                                 Style="{StaticResource MediaTextBlockStyle}"
                                                 Margin="0"
                                                 Text="00:00"
-                                                HorizontalAlignment="Left" 
-                                                VerticalAlignment="Bottom"/>
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Bottom" />
                                                 <TextBlock x:Name="TimeRemainingElement"
                                                 Style="{StaticResource MediaTextBlockStyle}"
                                                 Text="00:00"
@@ -641,7 +641,7 @@
                                                 MediaTransportControlsHelper.DropoutOrder='19'>
                                                     <AppBarButton.Flyout>
                                                         <Flyout x:Name='VolumeFlyout' FlyoutPresenterStyle="{StaticResource FlyoutStyle}">
-                                                            <StackPanel Orientation="Horizontal" >
+                                                            <StackPanel Orientation="Horizontal">
                                                                 <AppBarButton x:Name='AudioMuteButton'
                                                                     Style='{StaticResource AppBarButtonStyle}'
                                                                     VerticalAlignment='Center'
@@ -657,14 +657,14 @@
                                                           Width='{ThemeResource MTCHorizontalVolumeSliderWidth}'
                                                           VerticalAlignment='Center'
                                                           HorizontalAlignment='Center'
-                                                          Margin='0'/>
+                                                          Margin='0' />
                                                                 <TextBlock x:Name='VolumeValue'
                                                             Style='{StaticResource MediaTextBlockStyle}'
                                                             Text="{Binding ElementName=VolumeSlider,Path=Value}"
                                                             HorizontalAlignment='Center'
                                                             VerticalAlignment='Center'
                                                             Width='24'
-                                                            Margin='12'/>
+                                                            Margin='12' />
                                                             </StackPanel>
                                                         </Flyout>
                                                     </AppBarButton.Flyout>
@@ -677,7 +677,7 @@
                                               MediaTransportControlsHelper.DropoutOrder='15'
                                               Visibility='Collapsed'>
                                                     <AppBarButton.Icon>
-                                                        <FontIcon Glyph="&#xED1E;"/>
+                                                        <FontIcon Glyph="&#xED1E;" />
                                                     </AppBarButton.Icon>
                                                 </AppBarButton>
                                                 <AppBarButton x:Name='AudioTracksSelectionButton'
@@ -685,7 +685,7 @@
                                                 MediaTransportControlsHelper.DropoutOrder='13'
                                                 Visibility='Collapsed'>
                                                     <AppBarButton.Icon>
-                                                        <FontIcon Glyph="&#xED1F;"/>
+                                                        <FontIcon Glyph="&#xED1F;" />
                                                     </AppBarButton.Icon>
                                                 </AppBarButton>
                                                 <AppBarSeparator x:Name='LeftSeparator'
@@ -696,26 +696,26 @@
                                                 Icon='Stop'
                                                 Style='{StaticResource AppBarButtonStyle}'
                                                 MediaTransportControlsHelper.DropoutOrder='7'
-                                                Visibility='Collapsed'/>
+                                                Visibility='Collapsed' />
                                                 <AppBarButton x:Name='SkipBackwardButton'
                                                 Style='{StaticResource AppBarButtonStyle}'
                                                 MediaTransportControlsHelper.DropoutOrder='5'
                                                 Visibility='Collapsed'>
                                                     <AppBarButton.Icon>
-                                                        <FontIcon Glyph="&#xED3C;"/>
+                                                        <FontIcon Glyph="&#xED3C;" />
                                                     </AppBarButton.Icon>
                                                 </AppBarButton>
                                                 <AppBarButton x:Name='PreviousTrackButton'
                                                 Icon='Previous'
                                                 Style='{StaticResource AppBarButtonStyle}'
                                                 MediaTransportControlsHelper.DropoutOrder='3'
-                                                Visibility='Collapsed'/>
+                                                Visibility='Collapsed' />
                                                 <AppBarButton x:Name='RewindButton'
                                               Style='{StaticResource AppBarButtonStyle}'
                                               MediaTransportControlsHelper.DropoutOrder='1'
                                               Visibility='Collapsed'>
                                                     <AppBarButton.Icon>
-                                                        <FontIcon Glyph="&#xEB9E;"/>
+                                                        <FontIcon Glyph="&#xEB9E;" />
                                                     </AppBarButton.Icon>
                                                 </AppBarButton>
                                                 <AppBarButton x:Name='PlayPauseButton'
@@ -730,20 +730,20 @@
                                               MediaTransportControlsHelper.DropoutOrder='1'
                                               Visibility='Collapsed'>
                                                     <AppBarButton.Icon>
-                                                        <FontIcon Glyph="&#xEB9D;"/>
+                                                        <FontIcon Glyph="&#xEB9D;" />
                                                     </AppBarButton.Icon>
                                                 </AppBarButton>
                                                 <AppBarButton x:Name='NextTrackButton'
                                                 Icon='Next'
                                                 Style='{StaticResource AppBarButtonStyle}'
                                                 MediaTransportControlsHelper.DropoutOrder='3'
-                                                Visibility='Collapsed'/>
+                                                Visibility='Collapsed' />
                                                 <AppBarButton x:Name='SkipForwardButton'
                                                 Style='{StaticResource AppBarButtonStyle}'
                                                 MediaTransportControlsHelper.DropoutOrder='5'
                                                 Visibility='Collapsed'>
                                                     <AppBarButton.Icon>
-                                                        <FontIcon Glyph="&#xED3D;"/>
+                                                        <FontIcon Glyph="&#xED3D;" />
                                                     </AppBarButton.Icon>
                                                 </AppBarButton>
                                                 <AppBarButton x:Name='PlaybackRateButton'
@@ -751,7 +751,7 @@
                                                 MediaTransportControlsHelper.DropoutOrder='10'
                                                 Visibility='Collapsed'>
                                                     <AppBarButton.Icon>
-                                                        <FontIcon Glyph="&#xEC57;"/>
+                                                        <FontIcon Glyph="&#xEC57;" />
                                                     </AppBarButton.Icon>
                                                 </AppBarButton>
                                                 <AppBarSeparator x:Name='RightSeparator'
@@ -762,14 +762,14 @@
                                                 Style='{StaticResource AppBarButtonStyle}'
                                                 MediaTransportControlsHelper.DropoutOrder='9'>
                                                     <AppBarButton.Icon>
-                                                        <FontIcon Glyph="&#xE799;"/>
+                                                        <FontIcon Glyph="&#xE799;" />
                                                     </AppBarButton.Icon>
                                                 </AppBarButton>
                                                 <AppBarButton x:Name='CastButton'
                                                 Style='{StaticResource AppBarButtonStyle}'
                                                 MediaTransportControlsHelper.DropoutOrder='11'>
                                                     <AppBarButton.Icon>
-                                                        <FontIcon Glyph="&#xEC15;"/>
+                                                        <FontIcon Glyph="&#xEC15;" />
                                                     </AppBarButton.Icon>
                                                 </AppBarButton>
                                                 <AppBarButton x:Name='FullWindowButton'
@@ -790,41 +790,41 @@
             </Setter>
         </Style>
         <Style x:Key="OpenMenuButton" TargetType="AppBarToggleButton">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-            <Setter Property="FontWeight" Value="Normal"/>
-            <Setter Property="Width" Value="68"/>
-            <Setter Property="UseSystemFocusVisuals" Value="True"/>
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="Width" Value="68" />
+            <Setter Property="UseSystemFocusVisuals" Value="True" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="AppBarToggleButton">
                         <Grid x:Name="Root" Background="{TemplateBinding Background}" MaxWidth="{TemplateBinding MaxWidth}" MinWidth="{TemplateBinding MinWidth}">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="ApplicationViewStates">
-                                    <VisualState x:Name="FullSize"/>
+                                    <VisualState x:Name="FullSize" />
                                     <VisualState x:Name="Compact">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="TextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Overflow">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="ContentRoot">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="CheckedHighlightBackground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="OverflowCheckGlyph">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="OverflowTextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -832,179 +832,179 @@
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal">
                                         <Storyboard>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="OverflowContentRoot"/>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="OverflowContentRoot" />
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="PointerOver">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="AccentOverlayBackground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="TextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="OverflowCheckGlyph">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="OverflowTextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="OverflowContentRoot"/>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="OverflowContentRoot" />
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Pressed">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="AccentOverlayBackground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListMediumBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListMediumBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="TextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="OverflowCheckGlyph">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="OverflowTextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <PointerDownThemeAnimation Storyboard.TargetName="OverflowContentRoot"/>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="OverflowContentRoot" />
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Disabled">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="TextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="OverflowCheckGlyph">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="OverflowTextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Checked">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckedHighlightBackground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="OverflowCheckGlyph">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="TextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="OverflowContentRoot"/>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="OverflowContentRoot" />
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="CheckedPointerOver">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckedHighlightBackground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="OverflowCheckGlyph">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="AccentOverlayBackground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="TextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="OverflowCheckGlyph">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="OverflowTextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="OverflowContentRoot"/>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="OverflowContentRoot" />
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="CheckedPressed">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckedHighlightBackground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="OverflowCheckGlyph">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="AccentOverlayBackground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListMediumBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListMediumBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="TextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="OverflowCheckGlyph">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="OverflowTextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <PointerDownThemeAnimation Storyboard.TargetName="OverflowContentRoot"/>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="OverflowContentRoot" />
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="CheckedDisabled">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="CheckedHighlightBackground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledAccentBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledAccentBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckedHighlightBackground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="OverflowCheckGlyph">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="TextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="OverflowCheckGlyph">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="OverflowTextLabel">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
                                 <VisualStateGroup x:Name="InputModeStates">
-                                    <VisualState x:Name="InputModeDefault"/>
+                                    <VisualState x:Name="InputModeDefault" />
                                     <VisualState x:Name="TouchInputMode">
                                         <VisualState.Setters>
-                                            <Setter Target="OverflowTextLabel.Padding" Value="0,11,0,13"/>
-                                            <Setter Target="OverflowCheckGlyph.Margin" Value="12,12,12,12"/>
+                                            <Setter Target="OverflowTextLabel.Padding" Value="0,11,0,13" />
+                                            <Setter Target="OverflowCheckGlyph.Margin" Value="12,12,12,12" />
                                         </VisualState.Setters>
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <Rectangle x:Name="CheckedHighlightBackground" Fill="#33000000" Opacity="0"/>
-                            <Rectangle x:Name="AccentOverlayBackground"/>
+                            <Rectangle x:Name="CheckedHighlightBackground" Fill="#33000000" Opacity="0" />
+                            <Rectangle x:Name="AccentOverlayBackground" />
                             <StackPanel x:Name="ContentRoot" MinHeight="{ThemeResource AppBarThemeCompactHeight}">
-                                <ContentPresenter x:Name="Content" AutomationProperties.AccessibilityView="Raw" Content="{TemplateBinding Icon}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Stretch" Height="20" Margin="0,14,0,4"/>
-                                <TextBlock x:Name="TextLabel" Foreground="{TemplateBinding Foreground}" FontSize="12" FontFamily="{TemplateBinding FontFamily}" Margin="0,0,0,6" TextAlignment="Center" TextWrapping="Wrap" Text="{TemplateBinding Label}"/>
+                                <ContentPresenter x:Name="Content" AutomationProperties.AccessibilityView="Raw" Content="{TemplateBinding Icon}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Stretch" Height="20" Margin="0,14,0,4" />
+                                <TextBlock x:Name="TextLabel" Foreground="{TemplateBinding Foreground}" FontSize="12" FontFamily="{TemplateBinding FontFamily}" Margin="0,0,0,6" TextAlignment="Center" TextWrapping="Wrap" Text="{TemplateBinding Label}" />
                             </StackPanel>
                             <Grid x:Name="OverflowContentRoot">
-                                <TextBlock x:Name="OverflowCheckGlyph" Foreground="{TemplateBinding Foreground}" FontSize="18" FontFamily="{ThemeResource SymbolThemeFontFamily}" HorizontalAlignment="Left" Height="14" Margin="12,6,12,6" Opacity="0" Text="&#xE73E;" Visibility="Collapsed" VerticalAlignment="Center" Width="14"/>
-                                <TextBlock x:Name="OverflowTextLabel" Foreground="{TemplateBinding Foreground}" FontSize="15" FontFamily="{TemplateBinding FontFamily}" HorizontalAlignment="Stretch" Margin="38,0,12,0" Padding="0,5,0,7" TextAlignment="Left" TextWrapping="NoWrap" Text="{TemplateBinding Label}" TextTrimming="Clip" Visibility="Collapsed" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="OverflowCheckGlyph" Foreground="{TemplateBinding Foreground}" FontSize="18" FontFamily="{ThemeResource SymbolThemeFontFamily}" HorizontalAlignment="Left" Height="14" Margin="12,6,12,6" Opacity="0" Text="&#xE73E;" Visibility="Collapsed" VerticalAlignment="Center" Width="14" />
+                                <TextBlock x:Name="OverflowTextLabel" Foreground="{TemplateBinding Foreground}" FontSize="15" FontFamily="{TemplateBinding FontFamily}" HorizontalAlignment="Stretch" Margin="38,0,12,0" Padding="0,5,0,7" TextAlignment="Left" TextWrapping="NoWrap" Text="{TemplateBinding Label}" TextTrimming="Clip" Visibility="Collapsed" VerticalAlignment="Center" />
                             </Grid>
                         </Grid>
                     </ControlTemplate>
@@ -1013,17 +1013,17 @@
         </Style>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource Bili-Background}" >
+    <Grid Background="{ThemeResource Bili-Background}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="column_left" />
-            <ColumnDefinition x:Name="column_right"/>
+            <ColumnDefinition x:Name="column_right" />
         </Grid.ColumnDefinitions>
 
         <!--<VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="wide">
                 <VisualState x:Name="w1">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="801"/>
+                        <AdaptiveTrigger MinWindowWidth="801" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="grid_o.BorderThickness" Value="0 0 1 0"></Setter>
@@ -1034,12 +1034,11 @@
                         <Setter Target="sp_View.DisplayMode" Value="CompactOverlay"></Setter>
                         <Setter Target="bottom.Visibility" Value="Collapsed"></Setter>
                         <Setter Target="btn_OpenMenu.Visibility"  Value="Visible"></Setter>
-                     
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="w2">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0"/>
+                        <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="grid_o.BorderThickness" Value="0"></Setter>
@@ -1053,32 +1052,31 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>-->
-      
+
         <Image  x:Name="img_bg" Grid.ColumnSpan="2"></Image>
-        <Canvas x:Name="GlassHost" Grid.ColumnSpan="2"/>
+        <Canvas x:Name="GlassHost" Grid.ColumnSpan="2" />
         <Grid x:Name="grid_o" BorderThickness="0 0 1 0" BorderBrush="{ThemeResource Bili-ForeColor}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="48"/>
-                <RowDefinition/>
-                <RowDefinition Height="auto" x:Name="row_bottom"/>
+                <RowDefinition Height="48" />
+                <RowDefinition />
+                <RowDefinition Height="auto" x:Name="row_bottom" />
             </Grid.RowDefinitions>
             <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
-                <AppBarToggleButton x:Name="btn_OpenMenu" Style="{StaticResource OpenMenuButton}" Foreground="White" Width="48" Height="48"  >
+                <AppBarToggleButton x:Name="btn_OpenMenu" Style="{StaticResource OpenMenuButton}" Foreground="White" Width="48" Height="48">
                     <AppBarToggleButton.Icon>
                         <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Glyph="&#xe649;" />
                     </AppBarToggleButton.Icon>
-
                 </AppBarToggleButton>
                 <TextBlock x:Name="txt_Header" Grid.Column="1" Margin="10 0" VerticalAlignment="Center" Foreground="White">首页</TextBlock>
                 <Button x:Name="btn_Test" Visibility="Collapsed" Click="btn_Test_Click" Grid.Column="1" Foreground="White" Width="48" Height="48" Background="#00000000">
@@ -1089,34 +1087,33 @@
                 </Button>
 
                 <Button x:Name="btn_User" Grid.Column="4"  Foreground="White" Width="48" Height="48" Background="#00000000">
-                    <Grid >
-                        <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Glyph="&#xe6c9;" FontSize="20"/>
+                    <Grid>
+                        <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Glyph="&#xe6c9;" FontSize="20" />
                         <Ellipse  Visibility="{Binding ElementName=bor_TZ,Path=Visibility,Mode=OneWay}" Fill="Red"  Width="5" Height="5" HorizontalAlignment="Right" VerticalAlignment="Top" />
                     </Grid>
 
                     <Button.Flyout>
                         <Flyout x:Name="fy">
                             <StackPanel x:Name="gv_user">
-                                <Button x:Name="btn_Login" HorizontalAlignment="Stretch" Click="btn_Login_Click" Background="#00000000" >
+                                <Button x:Name="btn_Login" HorizontalAlignment="Stretch" Click="btn_Login_Click" Background="#00000000">
                                     <StackPanel Orientation="Horizontal">
                                         <Grid>
                                             <Ellipse Height="36" Width="36">
                                                 <Ellipse.Fill>
-                                                    <ImageBrush Stretch="Fill" ImageSource="Assets/avatar/NoAvatar.png"/>
+                                                    <ImageBrush Stretch="Fill" ImageSource="Assets/avatar/NoAvatar.png" />
                                                 </Ellipse.Fill>
                                             </Ellipse>
-
                                         </Grid>
 
                                         <TextBlock VerticalAlignment="Center" Margin="5 0">请登录</TextBlock>
                                     </StackPanel>
                                 </Button>
-                                <Button x:Name="btn_UserInfo" Click="btn_UserInfo_Click" Visibility="Collapsed" HorizontalAlignment="Stretch" Background="#00000000" >
+                                <Button x:Name="btn_UserInfo" Click="btn_UserInfo_Click" Visibility="Collapsed" HorizontalAlignment="Stretch" Background="#00000000">
                                     <StackPanel Orientation="Horizontal" MinWidth="120">
                                         <Grid>
                                             <Ellipse Height="36" Width="36">
                                                 <Ellipse.Fill>
-                                                    <ImageBrush Stretch="Fill" ImageSource="{Binding face}"/>
+                                                    <ImageBrush Stretch="Fill" ImageSource="{Binding face}" />
                                                 </Ellipse.Fill>
                                             </Ellipse>
                                             <Image Source="Assets/Icon/ic_vip_v_22.png" x:Name="img_VIP" Visibility="Collapsed" Width="16" Height="16" VerticalAlignment="Bottom" HorizontalAlignment="Right"></Image>
@@ -1127,95 +1124,92 @@
                                 </Button>
                                 <StackPanel x:Name="gv_User" Visibility="Collapsed">
                                     <MenuFlyoutItem x:Name="dtzz" Visibility="Collapsed" Click="dtzz_Click">答题转正</MenuFlyoutItem>
-                                    <MenuFlyoutSeparator Background="#19000000"/>
+                                    <MenuFlyoutSeparator Background="#19000000" />
                                     <!--<MenuFlyoutItem x:Name="btn_user_myvip" Click="btn_user_myvip_Click">我的大会员</MenuFlyoutItem>-->
                                     <MenuFlyoutItem x:Name="btn_user_mywallet" Click="btn_user_mywallet_Click">我的钱包</MenuFlyoutItem>
                                     <MenuFlyoutItem x:Name="btn_user_Qr" Click="btn_user_Qr_Click">二维码名片</MenuFlyoutItem>
-                                    <MenuFlyoutSeparator Background="#19000000"/>
+                                    <MenuFlyoutSeparator Background="#19000000" />
                                     <MenuFlyoutItem x:Name="btn_user_mycollect" Click="btn_user_mycollect_Click">我的收藏</MenuFlyoutItem>
                                     <MenuFlyoutItem x:Name="btn_user_seasoncollect" Click="btn_user_seasoncollect_Click">我的追番</MenuFlyoutItem>
                                     <MenuFlyoutItem x:Name="btn_user_moviecollect" Click="btn_user_moviecollect_Click">我的追剧</MenuFlyoutItem>
-                                    <MenuFlyoutSeparator Background="#19000000"/>
+                                    <MenuFlyoutSeparator Background="#19000000" />
                                     <Grid>
                                         <MenuFlyoutItem x:Name="btn_user_mymessage" Click="btn_user_mymessage_Click">消息中心</MenuFlyoutItem>
-                                        <Ellipse x:Name="bor_TZ"  Visibility="Collapsed" Fill="Red"  Width="5" Height="5" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30 10"/>
+                                        <Ellipse x:Name="bor_TZ"  Visibility="Collapsed" Fill="Red"  Width="5" Height="5" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="30 10" />
                                     </Grid>
 
                                     <MenuFlyoutItem x:Name="btn_user_myGuanzhu" Click="btn_user_myGuanzhu_Click">关注的人</MenuFlyoutItem>
-                                  
+
                                     <MenuFlyoutItem x:Name="btn_user_mychistory" Click="btn_user_mychistory_Click">历史记录</MenuFlyoutItem>
                                     <MenuFlyoutItem x:Name="btn_user_toView" Click="btn_user_toView_Click">稍后再看</MenuFlyoutItem>
-                                    <MenuFlyoutSeparator Background="#19000000"/>
+                                    <MenuFlyoutSeparator Background="#19000000" />
                                     <MenuFlyoutItem x:Name="btn_LogOut" Click="btn_LogOut_Click">退出登录</MenuFlyoutItem>
                                 </StackPanel>
-
                             </StackPanel>
                         </Flyout>
                     </Button.Flyout>
                 </Button>
 
                 <Button x:Name="btn_Qr" Click="btn_Qr_Click" Grid.Column="5"  Foreground="White" Width="48" Height="48" Background="#00000000">
-                    <FontIcon FontFamily="ms-appx:///Assets/logo.ttf#iconfont" Glyph="&#xe6fa;" FontSize="18"/>
+                    <FontIcon FontFamily="ms-appx:///Assets/logo.ttf#iconfont" Glyph="&#xe6fa;" FontSize="18" />
                 </Button>
                 <Button x:Name="btn_Search" Click="btn_Search_Click" Grid.Column="7"  Foreground="White" Width="48" Height="48" Background="#00000000">
-                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Glyph="&#xe60a;" FontSize="20"/>
+                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Glyph="&#xe60a;" FontSize="20" />
                 </Button>
             </Grid>
             <SplitView x:Name="sp_View" Grid.Row="1"  IsPaneOpen="{Binding ElementName=btn_OpenMenu,Path=IsChecked,Mode=TwoWay}" OpenPaneLength="220" PaneBackground="{ThemeResource Bili-ForeColor-Dark}" DisplayMode="CompactOverlay">
                 <SplitView.Pane>
                     <Grid>
                         <ListView x:Name="menu_List" Foreground="White" SelectionChanged="menu_List_SelectionChanged">
-                            <ListViewItem Style="{StaticResource SelectItem}" Height="48" >
+                            <ListViewItem Style="{StaticResource SelectItem}" Height="48">
                                 <StackPanel Orientation="Horizontal">
-                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" VerticalAlignment="Center" FontSize="18" Margin="4 0" Glyph="&#x3435;" Foreground="White"/>
+                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" VerticalAlignment="Center" FontSize="18" Margin="4 0" Glyph="&#x3435;" Foreground="White" />
                                     <!--<SymbolIcon Symbol="Home"  Width="24" Height="24" />-->
                                     <TextBlock Text="首页" VerticalAlignment="Center" Margin="18,2" Foreground="White" />
                                 </StackPanel>
                             </ListViewItem>
-                            <ListViewItem  Style="{StaticResource SelectItem}" Height="48" >
+                            <ListViewItem  Style="{StaticResource SelectItem}" Height="48">
                                 <StackPanel Orientation="Horizontal">
-                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xE62A;" Foreground="White"/>
+                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xE62A;" Foreground="White" />
                                     <!--<SymbolIcon Symbol="Home"  Width="24" Height="24" />-->
                                     <TextBlock Text="频道" VerticalAlignment="Center" Margin="18,2" Foreground="White" />
                                 </StackPanel>
                             </ListViewItem>
-                            <ListViewItem  Style="{StaticResource SelectItem}" Height="48" >
+                            <ListViewItem  Style="{StaticResource SelectItem}" Height="48">
                                 <StackPanel Orientation="Horizontal">
-                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xe648;" Foreground="White"/>
+                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xe648;" Foreground="White" />
                                     <!--<SymbolIcon Symbol="Home"  Width="24" Height="24" />-->
                                     <TextBlock Text="直播" VerticalAlignment="Center" Margin="18,2" Foreground="White" />
                                 </StackPanel>
                             </ListViewItem>
-                            <ListViewItem  Style="{StaticResource SelectItem}" Height="48" >
+                            <ListViewItem  Style="{StaticResource SelectItem}" Height="48">
                                 <StackPanel Orientation="Horizontal">
-                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" VerticalAlignment="Center" Margin="4 0" Glyph="&#xe662;" Foreground="White"/>
+                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" VerticalAlignment="Center" Margin="4 0" Glyph="&#xe662;" Foreground="White" />
                                     <!--<SymbolIcon Symbol="Home"  Width="24" Height="24" />-->
                                     <TextBlock Text="番剧" VerticalAlignment="Center" Margin="18,2" Foreground="White" />
                                 </StackPanel>
                             </ListViewItem>
 
-                           
-                            <ListViewItem  Style="{StaticResource SelectItem}" Height="48" >
+                            <ListViewItem  Style="{StaticResource SelectItem}" Height="48">
                                 <StackPanel Orientation="Horizontal">
-                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xe637;" Foreground="White"/>
-                                    <!--<SymbolIcon Symbol="Filter" Width="26" Height="26" Foreground="White"/>-->
+                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xe637;" Foreground="White" />
+                                    <!--<SymbolIcon Symbol="Filter" Width="26" Height="26" Foreground="White" />-->
                                     <TextBlock Text="动态" VerticalAlignment="Center" Margin="18,2" Foreground="White" />
                                 </StackPanel>
                             </ListViewItem>
 
-
-                            <ListViewItem  Style="{StaticResource SelectItem}"  Height="48" >
+                            <ListViewItem  Style="{StaticResource SelectItem}"  Height="48">
                                 <StackPanel Orientation="Horizontal">
-                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Glyph="&#xe62c;"  FontSize="18" Margin="4 0" Foreground="White"/>
-                                    <!--<SymbolIcon Symbol="Download" Width="26" Height="26" Foreground="White"/>-->
+                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Glyph="&#xe62c;"  FontSize="18" Margin="4 0" Foreground="White" />
+                                    <!--<SymbolIcon Symbol="Download" Width="26" Height="26" Foreground="White" />-->
                                     <TextBlock Text="发现" VerticalAlignment="Center" Margin="18,2" Foreground="White" />
                                 </StackPanel>
                             </ListViewItem>
-                            <!--<ListViewItem  Style="{StaticResource SelectItem}"  Height="48" >
+                            <!--<ListViewItem  Style="{StaticResource SelectItem}"  Height="48">
                                 <StackPanel Orientation="Horizontal">
-                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Glyph="&#xe702;" VerticalAlignment="Center"  FontSize="18" Margin="4 0" Foreground="White"/>
+                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Glyph="&#xe702;" VerticalAlignment="Center"  FontSize="18" Margin="4 0" Foreground="White" />
                                     -->
-                            <!--<SymbolIcon Symbol="Setting" Width="26" Height="26" Foreground="White"/>-->
+                            <!--<SymbolIcon Symbol="Setting" Width="26" Height="26" Foreground="White" />-->
                             <!--
                                     <TextBlock Text="设置" VerticalAlignment="Center" Margin="20,0" Foreground="White" />
                                 </StackPanel>
@@ -1223,91 +1217,80 @@
                         </ListView>
                         <AppBarButton VerticalAlignment="Bottom" Margin="0 0 0 100" Visibility="Collapsed" Foreground="White" Icon="Clear" Width="48" Height="48" x:Name="btn_CG" Click="btn_CG_Click"></AppBarButton>
                         <ListView VerticalAlignment="Bottom" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
-                            <ListViewItem Visibility="Collapsed" Style="{StaticResource SelectItem}" Height="48" >
+                            <ListViewItem Visibility="Collapsed" Style="{StaticResource SelectItem}" Height="48">
                                 <StackPanel Orientation="Horizontal" Tag="Test">
-                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xe633;" Foreground="White"/>
+                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xe633;" Foreground="White" />
                                     <TextBlock Text="测试" VerticalAlignment="Center" Margin="18 -2 18 0" Foreground="White" />
                                 </StackPanel>
                             </ListViewItem>
-                            <ListViewItem  Style="{StaticResource SelectItem}" Height="48" >
+                            <ListViewItem  Style="{StaticResource SelectItem}" Height="48">
                                 <StackPanel Orientation="Horizontal" Tag="ToView">
-                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xe633;" Foreground="White"/>
+                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xe633;" Foreground="White" />
                                     <!--<SymbolIcon Symbol="Home"  Width="24" Height="24" />-->
                                     <TextBlock Text="稍后再看" VerticalAlignment="Center" Margin="18 -2 18 0" Foreground="White" />
                                 </StackPanel>
                             </ListViewItem>
-                            <ListViewItem  Style="{StaticResource SelectItem}" Height="48" >
+                            <ListViewItem  Style="{StaticResource SelectItem}" Height="48">
                                 <StackPanel Orientation="Horizontal" Tag="Setting">
-                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xE658;" Foreground="White"/>
+                                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" FontSize="18" Margin="4 0" Glyph="&#xE658;" Foreground="White" />
                                     <!--<SymbolIcon Symbol="Home"  Width="24" Height="24" />-->
                                     <TextBlock Text="应用设置" VerticalAlignment="Center" Margin="18,2" Foreground="White" />
                                 </StackPanel>
                             </ListViewItem>
-                            
                         </ListView>
                     </Grid>
-
                 </SplitView.Pane>
                 <Grid>
-                    <Frame x:Name="main_frame" Navigating="main_frame_Navigating" Navigated="main_frame_Navigated" >
-                        <Frame.ContentTransitions >
+                    <Frame x:Name="main_frame" Navigating="main_frame_Navigating" Navigated="main_frame_Navigated">
+                        <Frame.ContentTransitions>
                             <TransitionCollection>
 
-                                <PopupThemeTransition/>
+                                <PopupThemeTransition />
                             </TransitionCollection>
                         </Frame.ContentTransitions>
                     </Frame>
                 </Grid>
             </SplitView>
-           
         </Grid>
         <Grid x:Name="bg" Visibility="Visible" Grid.Column="1">
 
             <Frame x:Name="bg_Frame" Margin="0 -48 0 0">
-
             </Frame>
-
-
-
-
         </Grid>
         <Frame x:Name="frame"  Grid.RowSpan="2"  Visibility="Collapsed" Navigating="frame_Navigating" Navigated="frame_Navigated">
-            <Frame.ContentTransitions >
+            <Frame.ContentTransitions>
                 <TransitionCollection>
-                    <EdgeUIThemeTransition Edge="Right"/>
+                    <EdgeUIThemeTransition Edge="Right" />
                 </TransitionCollection>
             </Frame.ContentTransitions>
         </Frame>
-       
+
             <StackPanel x:Name="music" Visibility="Visible"  Opacity="0.7" Background="{ThemeResource Bili-ForeColor}" Grid.RowSpan="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="12 64">
 
             <Grid   HorizontalAlignment="Right">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="48"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="48" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Button  BorderThickness="0" Click="Button_Click" Padding="0"  Grid.RowSpan="2"  Background="#00000000">
                     <Image x:Name="music_img" Height="48" Width="48" Stretch="UniformToFill" ></Image>
                     <Button.Flyout>
-                     
-                            <Flyout >
+
+                            <Flyout>
                                 <StackPanel  Width="320">
                                     <TextBlock Margin="4" x:Name="txt_musicInfo" TextWrapping="Wrap"></TextBlock>
                                     <MediaPlayerElement x:Name="musicplayer"  AreTransportControlsEnabled="True">
                                         <MediaPlayerElement.TransportControls>
                                             <MediaTransportControls  Style="{StaticResource mediaTransportControls}" IsFullWindowButtonVisible="False" IsSeekEnabled="True"  IsZoomButtonVisible="False" IsZoomEnabled="False" IsPreviousTrackButtonVisible="True" IsNextTrackButtonVisible="True">
-
                                             </MediaTransportControls>
                                         </MediaPlayerElement.TransportControls>
                                     </MediaPlayerElement>
                                 </StackPanel>
-
                             </Flyout>
-                       
                     </Button.Flyout>
                 </Button>
                 <StackPanel Grid.Column="1"  Grid.Row="1" Orientation="Horizontal" Height="48">
@@ -1318,7 +1301,7 @@
                     </AppBarButton>
                     <AppBarButton x:Name="btn_MediaList"  ToolTipService.ToolTip="播放列表" Foreground="White" Icon="List"  Width="48" Height="48">
                         <AppBarButton.Flyout>
-                            <Flyout >
+                            <Flyout>
                                 <ListView  x:Name="ls_music" SelectionMode="Single" SelectionChanged="ls_music_SelectionChanged" Width="240" Height="240">
                                     <ListView.Header>
                                         <Grid Margin="0 4">
@@ -1331,13 +1314,11 @@
                                             </HyperlinkButton>
                                             <HyperlinkButton x:Name="btn_music_List" Visibility="Collapsed" Click="btn_music_List_Click" HorizontalAlignment="Right">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <SymbolIcon Symbol="ReShare"/>
+                                                    <SymbolIcon Symbol="ReShare" />
                                                     <TextBlock>列表循环</TextBlock>
                                                 </StackPanel>
                                             </HyperlinkButton>
                                         </Grid>
-                                       
-                                        
                                     </ListView.Header>
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
@@ -1355,17 +1336,13 @@
                     </AppBarButton>
                     <AppBarButton x:Name="btn_MiniPlayer" Visibility="Collapsed" Click="btn_MiniPlayer_Click" Width="48" Height="48" Icon="Upload" Foreground="White"></AppBarButton>
                 </StackPanel>
-
             </Grid>
-
-
-
         </StackPanel>
 
-        <Frame x:Name="play_frame" Visibility="Collapsed" Navigated="play_frame_Navigated" Grid.RowSpan="2" Grid.ColumnSpan="2" >
-            <Frame.ContentTransitions >
+        <Frame x:Name="play_frame" Visibility="Collapsed" Navigated="play_frame_Navigated" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <Frame.ContentTransitions>
                 <TransitionCollection>
-                    <EdgeUIThemeTransition Edge="Bottom"/>
+                    <EdgeUIThemeTransition Edge="Bottom" />
                 </TransitionCollection>
             </Frame.ContentTransitions>
         </Frame>
@@ -1381,11 +1358,6 @@
                     </Border>
                 </HyperlinkButton>
             </StackPanel>
-           
         </Grid>
-        
-
     </Grid>
-
-
 </Page>

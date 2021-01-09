@@ -9,26 +9,26 @@
 
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition />
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="grid_top" Background="{ThemeResource Bili-ForeColor}" Height="48">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Icon="Back" Foreground="White" Width="48" Height="48"  >
+            <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Icon="Back" Foreground="White" Width="48" Height="48">
             </AppBarButton>
             <TextBlock x:Name="txt_Header" Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White" Text="本机历史"></TextBlock>
             <AppBarButton Icon="Delete" x:Name="btn_Clear" Click="btn_Clear_Click" Foreground="White" Grid.Column="2" Width="48" Height="48"></AppBarButton>
         </Grid>
         <Grid Grid.Row="1" Visibility="Visible">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <!--<ColumnDefinition/>-->
+                <ColumnDefinition />
+                <!--<ColumnDefinition />-->
             </Grid.ColumnDefinitions>
             <ComboBox HorizontalAlignment="Right" x:Name="cb_select" SelectionChanged="cb_select_SelectionChanged" Margin="5" PlaceholderText="条数" BorderThickness="1">
                 <ComboBoxItem>前30条</ComboBoxItem>
@@ -51,11 +51,10 @@
                         <DataTemplate>
                             <Grid  Margin="0 5">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
                                 </Grid.RowDefinitions>
-
 
                                 <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="2" Text="{Binding title}"></TextBlock>
                                 <TextBlock Grid.Row="1" Foreground="Gray" FontSize="14">UP:<Run Text="{Binding up}"></Run> AV:<Run Text="{Binding _aid}"></Run></TextBlock>
@@ -63,9 +62,7 @@
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                   
                 </ListView>
-                
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -7,19 +7,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    SizeChanged="Page_SizeChanged"
-    >
+    SizeChanged="Page_SizeChanged">
     <Page.Resources>
-        <Style x:Key="gvitemStyle" TargetType="GridViewItem" >
+        <Style x:Key="gvitemStyle" TargetType="GridViewItem">
             <Setter Property="Margin" Value="5"></Setter>
         </Style>
         <DataTemplate x:Key="gvitemTemplate">
-            <Border  Width="{Binding ElementName=ViewBox2_num,Path=Width}" >
-                <Grid >
+            <Border  Width="{Binding ElementName=ViewBox2_num,Path=Width}">
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="42"/>
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition />
+                        <RowDefinition Height="42" />
+                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <Grid>
                         <Image   Stretch="UniformToFill" Source="ms-appx:///Assets/Logo/PI640_480.png"></Image>
@@ -27,17 +26,16 @@
                         <Grid VerticalAlignment="Bottom">
                             <Grid.Background>
                                 <LinearGradientBrush EndPoint="0,0.5" StartPoint="0,0">
-                                    <GradientStop Color="#4C000000" Offset="1"/>
-                                    <GradientStop Color="Transparent"/>
+                                    <GradientStop Color="#4C000000" Offset="1" />
+                                    <GradientStop Color="Transparent" />
                                 </LinearGradientBrush>
                             </Grid.Background>
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Foreground="White" FontSize="14" Margin="5"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE121;" />
                                 <TextBlock Foreground="White" Padding="0 5" FontSize="12" Text="{Binding ontime}"></TextBlock>
                             </StackPanel>
-
                         </Grid>
-                        <Border VerticalAlignment="Top" Padding="5 2"  Visibility="{Binding vis}" HorizontalAlignment="Right" Background="#FFFFAE00" >
+                        <Border VerticalAlignment="Top" Padding="5 2"  Visibility="{Binding vis}" HorizontalAlignment="Right" Background="#FFFFAE00">
                             <TextBlock FontSize="12" Foreground="White" Text="{Binding badge}"></TextBlock>
                         </Border>
                     </Grid>
@@ -51,15 +49,15 @@
     <Grid  Background="{ThemeResource Bili-Background}" x:Name="g">
         <Grid x:Name="grid_o" BorderThickness="0 0 1 0" BorderBrush="{ThemeResource Bili-ForeColor}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="48"/>
-                <RowDefinition/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="48" />
+                <RowDefinition />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
                 <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis" Text="时间表" Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White"></TextBlock>
@@ -75,7 +73,7 @@
                     <Border x:Name="ViewBox2_num" Background="Gray" Width="120"></Border>
                     <TextBlock FontSize="12" Foreground="Gray" TextAlignment="Center" Margin="10">已经回顾了一整周的更新啦</TextBlock>
                     <!--1-->
-                    <GridView ItemClick="gv1_ItemClick"  x:Name="gv1" ItemsSource="{Binding Path=per1.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True" >
+                    <GridView ItemClick="gv1_ItemClick"  x:Name="gv1" ItemsSource="{Binding Path=per1.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
                             <Grid Margin="5">
                                 <StackPanel Orientation="Horizontal">
@@ -95,7 +93,7 @@
                         </GridView.Footer>
                     </GridView>
                     <!--2-->
-                    <GridView ItemClick="gv1_ItemClick"  x:Name="gv2" ItemsSource="{Binding Path=per2.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True" >
+                    <GridView ItemClick="gv1_ItemClick"  x:Name="gv2" ItemsSource="{Binding Path=per2.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
                             <Grid Margin="5">
                                 <StackPanel Orientation="Horizontal">
@@ -115,7 +113,7 @@
                         </GridView.Footer>
                     </GridView>
                     <!--3-->
-                    <GridView ItemClick="gv1_ItemClick"  x:Name="gv3" ItemsSource="{Binding Path=per3.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True" >
+                    <GridView ItemClick="gv1_ItemClick"  x:Name="gv3" ItemsSource="{Binding Path=per3.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
                             <Grid Margin="5">
                                 <StackPanel Orientation="Horizontal">
@@ -135,7 +133,7 @@
                         </GridView.Footer>
                     </GridView>
                     <!--4-->
-                    <GridView ItemClick="gv1_ItemClick"  x:Name="gv4" ItemsSource="{Binding Path=per4.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True" >
+                    <GridView ItemClick="gv1_ItemClick"  x:Name="gv4" ItemsSource="{Binding Path=per4.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
                             <Grid Margin="5">
                                 <StackPanel Orientation="Horizontal">
@@ -155,7 +153,7 @@
                         </GridView.Footer>
                     </GridView>
                     <!--5-->
-                    <GridView ItemClick="gv1_ItemClick"  x:Name="gv5" ItemsSource="{Binding Path=per5.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True" >
+                    <GridView ItemClick="gv1_ItemClick"  x:Name="gv5" ItemsSource="{Binding Path=per5.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
                             <Grid Margin="5">
                                 <StackPanel Orientation="Horizontal">
@@ -175,7 +173,7 @@
                         </GridView.Footer>
                     </GridView>
                     <!--6-->
-                    <GridView ItemClick="gv1_ItemClick"  x:Name="gv6" ItemsSource="{Binding Path=per6.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True" >
+                    <GridView ItemClick="gv1_ItemClick"  x:Name="gv6" ItemsSource="{Binding Path=per6.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
                             <Grid Margin="5">
                                 <StackPanel Orientation="Horizontal">
@@ -195,7 +193,7 @@
                         </GridView.Footer>
                     </GridView>
                     <!--今天-->
-                    <GridView ItemClick="gv1_ItemClick" ItemsSource="{Binding Path=today.ls}" x:Name="gv_today" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True" >
+                    <GridView ItemClick="gv1_ItemClick" ItemsSource="{Binding Path=today.ls}" x:Name="gv_today" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
                             <Grid Margin="5">
                                 <StackPanel Orientation="Horizontal">
@@ -214,10 +212,9 @@
                                 <TextBlock FontSize="12" Foreground="Gray" TextAlignment="Center" Margin="5" Text="{Binding NoStr}" ></TextBlock>
                             </Grid>
                         </GridView.Footer>
-
                     </GridView>
                     <!--1-->
-                    <GridView ItemClick="gv1_ItemClick"  ItemsSource="{Binding Path=next1.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True" >
+                    <GridView ItemClick="gv1_ItemClick"  ItemsSource="{Binding Path=next1.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
                             <Grid Margin="5">
                                 <StackPanel Orientation="Horizontal">
@@ -237,7 +234,7 @@
                         </GridView.Footer>
                     </GridView>
                     <!--2-->
-                    <GridView ItemClick="gv1_ItemClick"  ItemsSource="{Binding Path=next2.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True" >
+                    <GridView ItemClick="gv1_ItemClick"  ItemsSource="{Binding Path=next2.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
                             <Grid Margin="5">
                                 <StackPanel Orientation="Horizontal">
@@ -257,7 +254,7 @@
                         </GridView.Footer>
                     </GridView>
                     <!--3-->
-                    <GridView ItemClick="gv1_ItemClick"  ItemsSource="{Binding Path=next3.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True" >
+                    <GridView ItemClick="gv1_ItemClick"  ItemsSource="{Binding Path=next3.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
                             <Grid Margin="5">
                                 <StackPanel Orientation="Horizontal">
@@ -277,7 +274,7 @@
                         </GridView.Footer>
                     </GridView>
                     <!--4-->
-                    <GridView ItemClick="gv1_ItemClick"  ItemsSource="{Binding Path=next4.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True" >
+                    <GridView ItemClick="gv1_ItemClick"  ItemsSource="{Binding Path=next4.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
                             <Grid Margin="5">
                                 <StackPanel Orientation="Horizontal">
@@ -297,7 +294,7 @@
                         </GridView.Footer>
                     </GridView>
                     <!--5-->
-                    <GridView ItemClick="gv1_ItemClick"  ItemsSource="{Binding Path=next5.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True" >
+                    <GridView ItemClick="gv1_ItemClick"  ItemsSource="{Binding Path=next5.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
                             <Grid Margin="5">
                                 <StackPanel Orientation="Horizontal">
@@ -317,7 +314,7 @@
                         </GridView.Footer>
                     </GridView>
                     <!--6-->
-                    <GridView ItemClick="gv1_ItemClick"  ItemsSource="{Binding Path=next6.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True" >
+                    <GridView ItemClick="gv1_ItemClick"  ItemsSource="{Binding Path=next6.ls}" ItemContainerStyle="{StaticResource gvitemStyle}" ItemTemplate="{StaticResource gvitemTemplate}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"   Margin="5 0" SelectionMode="None" IsItemClickEnabled="True">
                         <GridView.Header>
                             <Grid Margin="5">
                                 <StackPanel Orientation="Horizontal">
@@ -341,7 +338,7 @@
             </ScrollViewer>
         </Grid>
         <AppBarButton x:Name="b_btn_Refresh" Click="b_btn_Refresh_Click" Width="48" Height="48" Margin="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Icon="Refresh" Background="{ThemeResource Bili-ForeColor}" Opacity="0.6" Foreground="White"></AppBarButton>
-       
+
         <ProgressRing Width="56" Height="56" x:Name="pr_Load" IsActive="True" Visibility="Collapsed"></ProgressRing>
     </Grid>
 </Page>

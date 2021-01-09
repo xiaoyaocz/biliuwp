@@ -8,8 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"    Tag="Cn"
-    SizeChanged="Page_SizeChanged"
-    >
+    SizeChanged="Page_SizeChanged">
     <Page.Resources>
         <Style x:Key="GridViewItemStyle" TargetType="GridViewItem">
             <Setter  Property="HorizontalContentAlignment" Value="Stretch"></Setter>
@@ -21,22 +20,21 @@
             <Setter Property="Margin" Value="0 5"></Setter>
         </Style>
         <DataTemplate  x:Name="FootItemTemplate">
-            <StackPanel Background="#19D4D4D4" >
+            <StackPanel Background="#19D4D4D4">
                 <Image Source="{Binding cover}"></Image>
                 <TextBlock Margin="5"  Foreground="{ThemeResource Bili-FontColor}" Text="{Binding title}"></TextBlock>
                 <TextBlock FontSize="14" Margin="5 0 5 5"  Foreground="Gray" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding desc}"></TextBlock>
             </StackPanel>
-
         </DataTemplate>
     </Page.Resources>
-    <Grid >
+    <Grid>
         <pr:PullToRefreshBox RefreshInvoked="PullToRefreshBox_RefreshInvoked">
             <ScrollViewer  x:Name="sv" ViewChanged="sv_ViewChanged" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel>
                     <Border x:Name="ViewBox2_num" Background="Gray" Width="200"></Border>
                     <StackPanel x:Name="sp_Home">
-                        <Viewbox MaxWidth="640"  Grid.Column="1" >
-                            <FlipView  x:Name="home_flipView" ItemsSource="{Binding Path=ad.head}" Height="300" Width="960" Grid.Column="1"   VerticalAlignment="Top" >
+                        <Viewbox MaxWidth="640"  Grid.Column="1">
+                            <FlipView  x:Name="home_flipView" ItemsSource="{Binding Path=ad.head}" Height="300" Width="960" Grid.Column="1"   VerticalAlignment="Top">
                                 <FlipView.ItemTemplate>
                                     <DataTemplate>
                                         <HyperlinkButton Padding="0"  Click="btn_Banner_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
@@ -57,27 +55,27 @@
                             <HyperlinkButton x:Name="btn_NewBan" Click="btn_NewBan_Click" HorizontalAlignment="Right" Margin="5 0" Foreground="{ThemeResource Bili-Highlight-TextColor}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock VerticalAlignment="Center" FontSize="14">时间表</TextBlock>
-                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" Margin="5" FontSize="12"/>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" Margin="5" FontSize="12" />
                                 </StackPanel>
                             </HyperlinkButton>
                         </Grid>
-                        <GridView x:Name="list_ban_jp" ItemClick="list_ban_jp_ItemClick" ItemsSource="{Binding Path=serializing}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center"   ItemContainerStyle="{StaticResource GridViewItemStyle}" Margin="10 0" SelectionMode="None" IsItemClickEnabled="True" >
+                        <GridView x:Name="list_ban_jp" ItemClick="list_ban_jp_ItemClick" ItemsSource="{Binding Path=serializing}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center"   ItemContainerStyle="{StaticResource GridViewItemStyle}" Margin="10 0" SelectionMode="None" IsItemClickEnabled="True">
                             <GridView.ItemTemplate>
-                                <DataTemplate >
-                                    <Border  Width="{Binding ElementName=ViewBox2_num,Path=Width}" >
-                                        <Grid >
+                                <DataTemplate>
+                                    <Border  Width="{Binding ElementName=ViewBox2_num,Path=Width}">
+                                        <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition/>
-                                                <RowDefinition Height="42"/>
-                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition />
+                                                <RowDefinition Height="42" />
+                                                <RowDefinition Height="auto" />
                                             </Grid.RowDefinitions>
                                             <Grid>
                                                 <Image Source="{Binding cover}" Stretch="UniformToFill"></Image>
                                                 <Grid VerticalAlignment="Bottom">
                                                     <Grid.Background>
                                                         <LinearGradientBrush EndPoint="0,0.5" StartPoint="0,0">
-                                                            <GradientStop Color="#4C000000" Offset="1"/>
-                                                            <GradientStop Color="Transparent"/>
+                                                            <GradientStop Color="#4C000000" Offset="1" />
+                                                            <GradientStop Color="Transparent" />
                                                         </LinearGradientBrush>
                                                     </Grid.Background>
                                                     <TextBlock Foreground="White" Padding="5" FontSize="12"><Run Text="{Binding watching_count}"></Run>人在看</TextBlock>
@@ -88,7 +86,6 @@
                                             <TextBlock Grid.Row="2" Foreground="Gray"  FontSize="12">更新至<Run Text="{Binding newest_ep_index}"></Run>话</TextBlock>
                                         </Grid>
                                     </Border>
-
                                 </DataTemplate>
                             </GridView.ItemTemplate>
                         </GridView>
@@ -100,28 +97,27 @@
                             <HyperlinkButton x:Name="btn_10Ban" Click="btn_10Ban_Click" HorizontalAlignment="Right" Margin="5 0" Foreground="{ThemeResource Bili-Highlight-TextColor}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock VerticalAlignment="Center" FontSize="14">查看更多</TextBlock>
-                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" Margin="5" FontSize="12"/>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" Margin="5" FontSize="12" />
                                 </StackPanel>
                             </HyperlinkButton>
-
                         </Grid>
-                        <GridView x:Name="list_ban_new" ItemClick="list_ban_new_ItemClick" ItemsSource="{Binding Path=end_recommend}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center"   ItemContainerStyle="{StaticResource GridViewItemStyle}" Margin="10 0" SelectionMode="None" IsItemClickEnabled="True" >
+                        <GridView x:Name="list_ban_new" ItemClick="list_ban_new_ItemClick" ItemsSource="{Binding Path=end_recommend}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center"   ItemContainerStyle="{StaticResource GridViewItemStyle}" Margin="10 0" SelectionMode="None" IsItemClickEnabled="True">
                             <GridView.ItemTemplate>
                                 <DataTemplate  x:Name="HomeItemTemplate">
-                                    <Border  Width="{Binding ElementName=ViewBox2_num,Path=Width}" >
-                                        <Grid >
+                                    <Border  Width="{Binding ElementName=ViewBox2_num,Path=Width}">
+                                        <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition/>
-                                                <RowDefinition Height="42"/>
-                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition />
+                                                <RowDefinition Height="42" />
+                                                <RowDefinition Height="auto" />
                                             </Grid.RowDefinitions>
                                             <Grid>
                                                 <Image Source="{Binding cover}" Stretch="UniformToFill"></Image>
                                                 <Grid VerticalAlignment="Bottom">
                                                     <Grid.Background>
                                                         <LinearGradientBrush EndPoint="0,0.5" StartPoint="0,0">
-                                                            <GradientStop Color="#4C000000" Offset="1"/>
-                                                            <GradientStop Color="Transparent"/>
+                                                            <GradientStop Color="#4C000000" Offset="1" />
+                                                            <GradientStop Color="Transparent" />
                                                         </LinearGradientBrush>
                                                     </Grid.Background>
                                                     <TextBlock Foreground="White" Padding="5" FontSize="12"><Run Text="{Binding favouritesCount}"></Run>人追番</TextBlock>
@@ -129,14 +125,11 @@
                                             </Grid>
 
                                             <TextBlock Grid.Row="1" MaxLines="2" TextWrapping="Wrap" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Foreground="{ThemeResource Bili-FontColor}" FontSize="14" Text="{Binding title}"></TextBlock>
-
                                         </Grid>
                                     </Border>
-
                                 </DataTemplate>
                             </GridView.ItemTemplate>
                         </GridView>
-
                     </StackPanel>
 
                     <Grid>
@@ -149,9 +142,9 @@
                 </StackPanel>
             </ScrollViewer>
         </pr:PullToRefreshBox>
-       
+
         <AppBarButton x:Name="b_btn_Refresh" Click="b_btn_Refresh_Click" Width="48" Height="48" Margin="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Icon="Refresh" Background="{ThemeResource Bili-ForeColor}" Opacity="0.6" Foreground="White"></AppBarButton>
-      
+
         <ProgressRing Width="56" Height="56" x:Name="pr_Load" IsActive="True" Visibility="Collapsed"></ProgressRing>
     </Grid>
 </Page>

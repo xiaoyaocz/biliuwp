@@ -7,8 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    SizeChanged="Page_SizeChanged"
-    >
+    SizeChanged="Page_SizeChanged">
     <Page.Resources>
         <ResourceDictionary>
             <Style x:Key="itemStyle" TargetType="GridViewItem">
@@ -27,10 +26,10 @@
                     <Image   Source="{Binding Path=cover}" Stretch="UniformToFill"  ></Image>
                     <Grid  Grid.Row="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Orientation="Horizontal" Margin="10,0,10,5" >
+                        <StackPanel Orientation="Horizontal" Margin="10,0,10,5">
 
                             <TextBlock Text="{Binding Path=uname}" FontSize="13" TextTrimming="CharacterEllipsis" Foreground="Gray" VerticalAlignment="Center"></TextBlock>
                         </StackPanel>
@@ -40,7 +39,7 @@
                         </StackPanel>
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10 5 10 0" VerticalAlignment="Top">
-                        <TextBlock  MaxWidth="320" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" FontSize="13" >
+                        <TextBlock  MaxWidth="320" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" FontSize="13">
                                              <Run Foreground="{ThemeResource Bili-Highlight-TextColor}" >#</Run>
                                              <Run Foreground="{ThemeResource Bili-Highlight-TextColor}" Text="{Binding area_name}"></Run>
                                              <Run Foreground="{ThemeResource Bili-Highlight-TextColor}" >#</Run>
@@ -48,28 +47,24 @@
                         </TextBlock>
                     </StackPanel>
                 </Grid>
-
-
             </DataTemplate>
-        
         </ResourceDictionary>
     </Page.Resources>
     <Grid Background="{ThemeResource Bili-Background}" x:Name="g">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <Grid Background="{ThemeResource Bili-ForeColor}" Grid.Row="0" Height="48" >
+        <Grid Background="{ThemeResource Bili-ForeColor}" Grid.Row="0" Height="48">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="48"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="48" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <AppBarButton x:Name="btn_back" Click="btn_Back_Click" Icon="Back" Width="48" Height="48" Foreground="White"/>
+            <AppBarButton x:Name="btn_back" Click="btn_Back_Click" Icon="Back" Width="48" Height="48" Foreground="White" />
             <TextBlock  Text="全部直播" Margin="5 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
-
         </Grid>
-     
+
         <Pivot Grid.Row="1" x:Name="pivot" SelectionChanged="pivot_SelectionChanged">
             <PivotItem Margin="0">
                 <PivotItem.Header>

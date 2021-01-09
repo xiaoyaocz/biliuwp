@@ -7,28 +7,26 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    SizeChanged="Page_SizeChanged"
-    >
+    SizeChanged="Page_SizeChanged">
 
     <Grid  Background="{ThemeResource Bili-Background}">
-        <Grid x:Name="grid_o" >
+        <Grid x:Name="grid_o">
             <Grid.RowDefinitions>
-                <RowDefinition Height="48"/>
-                <RowDefinition/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="48" />
+                <RowDefinition />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
                 <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis" Text="话题中心" Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White"></TextBlock>
-              
             </Grid>
             <ScrollViewer Grid.Row="1"  x:Name="sv" ViewChanged="sv_ViewChanged">
                 <StackPanel>
@@ -42,23 +40,22 @@
                         </GridView.ItemContainerStyle>
                         <GridView.ItemTemplate>
                             <DataTemplate>
-                                <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
-                                    <Grid >
+                                <Border Width="{Binding ElementName=bor_Width,Path=Width}">
+                                    <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition />
+                                            <RowDefinition Height="auto" />
                                         </Grid.RowDefinitions>
                                         <Image   Stretch="UniformToFill" Source="ms-appx:///Assets/Logo/PI900_300.png"></Image>
                                         <Image  Source="{Binding cover}" Stretch="UniformToFill"></Image>
 
                                         <Grid Grid.Row="1"   Margin="5">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="auto" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding title}"></TextBlock>
                                         </Grid>
-
                                     </Grid>
                                 </Border>
                             </DataTemplate>

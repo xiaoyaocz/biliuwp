@@ -10,28 +10,28 @@
     d:DesignWidth="400">
 
     <UserControl.Resources>
-        <Storyboard x:Name="sbIn" >
+        <Storyboard x:Name="sbIn">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="mainGrid"
                                 Storyboard.TargetProperty="Opacity"
                                 BeginTime="0:0:0">
-                <SplineDoubleKeyFrame  KeyTime="00:00:00.00" Value="0.0"/>
-                <SplineDoubleKeyFrame  KeyTime="00:00:00.200" Value="1"/>
+                <SplineDoubleKeyFrame  KeyTime="00:00:00.00" Value="0.0" />
+                <SplineDoubleKeyFrame  KeyTime="00:00:00.200" Value="1" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
-        <Storyboard x:Name="sbOut" >
+        <Storyboard x:Name="sbOut">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="mainGrid"
                                 Storyboard.TargetProperty="Opacity"
                                 BeginTime="0:0:0">
-                <SplineDoubleKeyFrame  KeyTime="00:00:00.00" Value="1"/>
-                <SplineDoubleKeyFrame  KeyTime="00:00:00.200" Value="0.0"/>
+                <SplineDoubleKeyFrame  KeyTime="00:00:00.00" Value="1" />
+                <SplineDoubleKeyFrame  KeyTime="00:00:00.200" Value="0.0" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
 
     <Grid x:Name="mainGrid" Background="#CC000000">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <Grid Background="#7F000000" Visibility="Collapsed">
@@ -42,13 +42,11 @@
                 <AppBarButton Icon="Rotate"  Click="btn_Rotate_Click" Label="旋转"  Foreground="White"></AppBarButton>
                 <AppBarButton Icon="ZoomOut"  Click="ZoomOut_Click" Label="缩小"  Foreground="White"></AppBarButton>
 
-
                 <AppBarButton Label="分享"  Click="btn_Share_Click" Foreground="White">
                     <AppBarButton.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
-
             </StackPanel>
         </Grid>
 
@@ -60,27 +58,21 @@
             <FlipView x:Name="imgs" SelectionChanged="imgs_SelectionChanged">
                 <FlipView.ItemTemplate>
                     <DataTemplate>
-                        <Grid  Tapped="sv1_Tapped" >
-                            <ScrollViewer  ZoomMode="Enabled"  HorizontalScrollBarVisibility="Auto"   HorizontalScrollMode="Auto"  VerticalScrollBarVisibility="Auto"  VerticalScrollMode="Auto" >
+                        <Grid  Tapped="sv1_Tapped">
+                            <ScrollViewer  ZoomMode="Enabled"  HorizontalScrollBarVisibility="Auto"   HorizontalScrollMode="Auto"  VerticalScrollBarVisibility="Auto"  VerticalScrollMode="Auto">
                                 <ContentControl  Content="{Binding image}" HorizontalAlignment="Center" VerticalAlignment="Center"></ContentControl>
                             </ScrollViewer>
-                            
                         </Grid>
                     </DataTemplate>
                 </FlipView.ItemTemplate>
             </FlipView>
-
-
-
         </Grid>
 
         <Grid Grid.Row="1" VerticalAlignment="Bottom" Margin="24 48">
             <Border Padding="8 4" HorizontalAlignment="Left" CornerRadius="8" Background="#33000000">
                 <TextBlock Foreground="White" x:Name="txt_Count"></TextBlock>
-                
             </Border>
             <Button HorizontalAlignment="Right"  Background="#33000000" Padding="16 4" Foreground="White" Click="btn_Save_Click">保存</Button>
         </Grid>
-        
     </Grid>
 </UserControl>

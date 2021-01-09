@@ -34,84 +34,72 @@ using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace BiliBili.UWP
 {
-    /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
-    /// </summary>
-    public sealed partial class SplashPage : Page
-    {
-        public SplashPage()
-        {
-            this.InitializeComponent();
-            var bg = new Color() { R = 233, G = 233, B = 233 };
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                // StatusBar.GetForCurrentView().HideAsync();
-                StatusBar statusBar = StatusBar.GetForCurrentView();
-                statusBar.ForegroundColor = Colors.Black;
-                statusBar.BackgroundColor = bg;
-                statusBar.BackgroundOpacity = 100;
-            }
+	/// <summary>
+	/// 可用于自身或导航至 Frame 内部的空白页。
+	/// </summary>
+	public sealed partial class SplashPage : Page
+	{
+		private StartModel m;
 
-            var titleBar = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.BackgroundColor = bg;
-            titleBar.ForegroundColor = Colors.Black;//Colors.White纯白用不了。。。
-            titleBar.ButtonHoverBackgroundColor = Colors.White;
-            titleBar.ButtonBackgroundColor = bg;
-            titleBar.ButtonForegroundColor = Color.FromArgb(255, 254, 254, 254);
-            titleBar.InactiveBackgroundColor = bg;
-            titleBar.ButtonInactiveBackgroundColor = bg;
-        }
-        
-        StartModel m;
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            #region
-            try
-            {
-                //注册后台任务
-                RegisterBackgroundTask();
-                //读取已下载的文件
-                DownloadHelper2.LoadDowned();
-                //加载分区
-                ApiHelper.SetRegions();
-                //加载直播头衔
-                LiveRoom.GetTitleItems();
-                //ApiHelper.SetEmojis();
-            }
-            catch (Exception)
-            {
-            }
-            #endregion
+		public SplashPage()
+		{
+			this.InitializeComponent();
+			var bg = new Color() { R = 233, G = 233, B = 233 };
+			var titleBar = Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().TitleBar;
+			titleBar.BackgroundColor = bg;
+			titleBar.ForegroundColor = Colors.Black;//Colors.White纯白用不了。。。
+			titleBar.ButtonHoverBackgroundColor = Colors.White;
+			titleBar.ButtonBackgroundColor = bg;
+			titleBar.ButtonForegroundColor = Color.FromArgb(255, 254, 254, 254);
+			titleBar.InactiveBackgroundColor = bg;
+			titleBar.ButtonInactiveBackgroundColor = bg;
+		}
 
-            m = e.Parameter as StartModel;
-            await Task.Delay(1000);
-            this.Frame.Navigate(typeof(MainPage), m);
-           
+		protected async override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+			#region
+			try
+			{
+				//注册后台任务
+				RegisterBackgroundTask();
+				//读取已下载的文件
+				DownloadHelper2.LoadDowned();
+				//加载分区
+				ApiHelper.SetRegions();
+				//加载直播头衔
+				LiveRoom.GetTitleItems();
+				//ApiHelper.SetEmojis();
+			}
+			catch (Exception)
+			{
+			}
+			#endregion
 
-        }
+			m = e.Parameter as StartModel;
+			await Task.Delay(1000);
+			this.Frame.Navigate(typeof(MainPage), m);
+		}
 
-        #region 后台任务注册
+		#region 后台任务注册
 
-        private void RegisterBackgroundTask()
-        {
-            var task = BackgroundTaskHelper.Register(typeof(BiliBili.Background.BackgroundTask), new TimeTrigger(15, true),true,true,null);
-            task.Progress += TaskOnProgress;
-            task.Completed += TaskOnCompleted;
-        }
+		private void RegisterBackgroundTask()
+		{
+			var task = BackgroundTaskHelper.Register(typeof(BiliBili.Background.BackgroundTask), new TimeTrigger(15, true), true, true, null);
+			task.Progress += TaskOnProgress;
+			task.Completed += TaskOnCompleted;
+		}
 
-        private void TaskOnProgress(BackgroundTaskRegistration sender, BackgroundTaskProgressEventArgs args)
-        {
-            Debug.WriteLine($"Background {sender.Name} TaskOnProgress.");
-        }
+		private void TaskOnCompleted(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
+		{
+			Debug.WriteLine($"Background {sender.Name} TaskOnCompleted.");
+		}
 
-        private void TaskOnCompleted(BackgroundTaskRegistration sender, BackgroundTaskCompletedEventArgs args)
-        {
-            Debug.WriteLine($"Background {sender.Name} TaskOnCompleted.");
-        }
+		private void TaskOnProgress(BackgroundTaskRegistration sender, BackgroundTaskProgressEventArgs args)
+		{
+			Debug.WriteLine($"Background {sender.Name} TaskOnProgress.");
+		}
 
-        #endregion
-
-
-    }
+		#endregion
+	}
 }

@@ -1,215 +1,237 @@
 ﻿using System;
 using System.Windows.Input;
-
+using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
-using Windows.Foundation.Metadata;
 
 namespace BiliBili.UWP.Controls
 {
-    partial class Carousel
-    {
-        private DispatcherTimer _slideTimer = null;
+	partial class Carousel
+	{
+		private DispatcherTimer _slideTimer = null;
 
-        #region ItemsSource
-        public object ItemsSource
-        {
-            get { return (object)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
-        }
+		#region ItemsSource
 
-        public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(object), typeof(Carousel), new PropertyMetadata(null));
-        #endregion
+		public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(object), typeof(Carousel), new PropertyMetadata(null));
 
-        #region SelectedIndex
-        public int SelectedIndex
-        {
-            get { return (int)GetValue(SelectedIndexProperty); }
-            set
-            {
-                // NOTE: Avoid external exceptions when this property is binded
-                try
-                {
-                    SetValue(SelectedIndexProperty, value);
-                }
-                catch { }
-            }
-        }
+		public object ItemsSource
+		{
+			get { return (object)GetValue(ItemsSourceProperty); }
+			set { SetValue(ItemsSourceProperty, value); }
+		}
 
-        private static void SelectedIndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as Carousel;
-            control.SetIndex((int)e.NewValue);
-        }
+		#endregion ItemsSource
 
-        private void SetIndex(int index)
-        {
-            int itemCount = _panel.Items.Count;
-            index = index.Mod(itemCount);
-            if (index != this.Index.Mod(itemCount))
-            {
-                this.Index = index;
-                this.Position = -index * this.ItemWidth;
-            }
-        }
+		#region SelectedIndex
 
-        public static readonly DependencyProperty SelectedIndexProperty = DependencyProperty.Register("SelectedIndex", typeof(int), typeof(Carousel), new PropertyMetadata(-1, SelectedIndexChanged));
-        #endregion
+		public static readonly DependencyProperty SelectedIndexProperty = DependencyProperty.Register("SelectedIndex", typeof(int), typeof(Carousel), new PropertyMetadata(-1, SelectedIndexChanged));
 
-        #region Index
-        public int Index
-        {
-            get { return (int)GetValue(IndexProperty); }
-            set { SetValue(IndexProperty, value); }
-        }
+		public int SelectedIndex
+		{
+			get { return (int)GetValue(SelectedIndexProperty); }
+			set
+			{
+				// NOTE: Avoid external exceptions when this property is binded
+				try
+				{
+					SetValue(SelectedIndexProperty, value);
+				}
+				catch { }
+			}
+		}
 
-        private static void IndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as Carousel;
-            control.SetIndexInternal((int)e.NewValue);
-        }
+		private static void SelectedIndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var control = d as Carousel;
+			control.SetIndex((int)e.NewValue);
+		}
 
-        private void SetIndexInternal(int index)
-        {
-            int itemCount = _panel.Items.Count;
-            this.SelectedIndex = index.Mod(itemCount);
-        }
+		private void SetIndex(int index)
+		{
+			int itemCount = _panel.Items.Count;
+			index = index.Mod(itemCount);
+			if (index != this.Index.Mod(itemCount))
+			{
+				this.Index = index;
+				this.Position = -index * this.ItemWidth;
+			}
+		}
 
-        public static readonly DependencyProperty IndexProperty = DependencyProperty.Register("Index", typeof(int), typeof(Carousel), new PropertyMetadata(0, IndexChanged));
-        #endregion
+		#endregion SelectedIndex
 
-        #region ContentTemplate
-        public DataTemplate ContentTemplate
-        {
-            get { return (DataTemplate)GetValue(ContentTemplateProperty); }
-            set { SetValue(ContentTemplateProperty, value); }
-        }
+		#region Index
 
-        public static readonly DependencyProperty ContentTemplateProperty = DependencyProperty.Register("ContentTemplate", typeof(DataTemplate), typeof(Carousel), new PropertyMetadata(null));
-        #endregion
+		public static readonly DependencyProperty IndexProperty = DependencyProperty.Register("Index", typeof(int), typeof(Carousel), new PropertyMetadata(0, IndexChanged));
 
-        #region MaxItems
-        public int MaxItems
-        {
-            get { return (int)GetValue(MaxItemsProperty); }
-            set { SetValue(MaxItemsProperty, value); }
-        }
+		public int Index
+		{
+			get { return (int)GetValue(IndexProperty); }
+			set { SetValue(IndexProperty, value); }
+		}
 
-        private static void MaxItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as Carousel;
-            control.InvalidateMeasure();
-        }
+		private static void IndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var control = d as Carousel;
+			control.SetIndexInternal((int)e.NewValue);
+		}
 
-        public static readonly DependencyProperty MaxItemsProperty = DependencyProperty.Register("MaxItems", typeof(int), typeof(Carousel), new PropertyMetadata(3, MaxItemsChanged));
-        #endregion
+		private void SetIndexInternal(int index)
+		{
+			int itemCount = _panel.Items.Count;
+			this.SelectedIndex = index.Mod(itemCount);
+		}
 
-        #region AspectRatio
-        public double AspectRatio
-        {
-            get { return (double)GetValue(AspectRatioProperty); }
-            set { SetValue(AspectRatioProperty, value); }
-        }
+		#endregion Index
 
-        private static void AspectRatioChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as Carousel;
-            control.InvalidateMeasure();
-        }
+		#region ContentTemplate
 
-        public static readonly DependencyProperty AspectRatioProperty = DependencyProperty.Register("AspectRatio", typeof(double), typeof(Carousel), new PropertyMetadata(1.6, AspectRatioChanged));
-        #endregion
+		public static readonly DependencyProperty ContentTemplateProperty = DependencyProperty.Register("ContentTemplate", typeof(DataTemplate), typeof(Carousel), new PropertyMetadata(null));
 
-        #region GradientOpacity
-        public double GradientOpacity
-        {
-            get { return (double)GetValue(GradientOpacityProperty); }
-            set { SetValue(GradientOpacityProperty, value); }
-        }
+		public DataTemplate ContentTemplate
+		{
+			get { return (DataTemplate)GetValue(ContentTemplateProperty); }
+			set { SetValue(ContentTemplateProperty, value); }
+		}
 
-        public static readonly DependencyProperty GradientOpacityProperty = DependencyProperty.Register("GradientOpacity", typeof(double), typeof(Carousel), new PropertyMetadata(0.0));
-        #endregion
+		#endregion ContentTemplate
 
-        #region ArrowsVisibility
-        public Visibility ArrowsVisibility
-        {
-            get { return (Visibility)GetValue(ArrowsVisibilityProperty); }
-            set { SetValue(ArrowsVisibilityProperty, value); }
-        }
+		#region MaxItems
 
-        public static readonly DependencyProperty ArrowsVisibilityProperty = DependencyProperty.Register("ArrowsVisibility", typeof(Visibility), typeof(Carousel), new PropertyMetadata(Visibility.Visible));
-        #endregion
+		public static readonly DependencyProperty MaxItemsProperty = DependencyProperty.Register("MaxItems", typeof(int), typeof(Carousel), new PropertyMetadata(3, MaxItemsChanged));
 
-        #region ItemClickCommand
-        public ICommand ItemClickCommand
-        {
-            get { return (ICommand)GetValue(ItemClickCommandProperty); }
-            set { SetValue(ItemClickCommandProperty, value); }
-        }
+		public int MaxItems
+		{
+			get { return (int)GetValue(MaxItemsProperty); }
+			set { SetValue(MaxItemsProperty, value); }
+		}
 
-        public static readonly DependencyProperty ItemClickCommandProperty = DependencyProperty.Register("ItemClickCommand", typeof(ICommand), typeof(Carousel), new PropertyMetadata(null));
-        #endregion
+		private static void MaxItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var control = d as Carousel;
+			control.InvalidateMeasure();
+		}
 
-        #region SlideInterval
-        public double SlideInterval
-        {
-            get { return (double)GetValue(SlideIntervalProperty); }
-            set { SetValue(SlideIntervalProperty, value); }
-        }
+		#endregion MaxItems
 
-        private static void SlideIntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as Carousel;
-            control.SetSlideInterval((double)e.NewValue);
-        }
+		#region AspectRatio
 
-        public static readonly DependencyProperty SlideIntervalProperty = DependencyProperty.Register("SlideInterval", typeof(double), typeof(Carousel), new PropertyMetadata(0.0, SlideIntervalChanged));
-        #endregion
+		public static readonly DependencyProperty AspectRatioProperty = DependencyProperty.Register("AspectRatio", typeof(double), typeof(Carousel), new PropertyMetadata(1.6, AspectRatioChanged));
 
-        private void SetSlideInterval(double milliseconds)
-        {
-            if (milliseconds > 150.0)
-            {
-                if (_slideTimer == null)
-                {
-                    _slideTimer = new DispatcherTimer();
-                    _slideTimer.Tick += OnSlideTimerTick;
-                }
-                _slideTimer.Interval = TimeSpan.FromMilliseconds(milliseconds);
-                _slideTimer.Start();
-            }
-            else
-            {
-                if (_slideTimer != null)
-                {
-                    _slideTimer.Stop();
-                }
-            }
-        }
+		public double AspectRatio
+		{
+			get { return (double)GetValue(AspectRatioProperty); }
+			set { SetValue(AspectRatioProperty, value); }
+		}
 
-        private void OnSlideTimerTick(object sender, object e)
-        {
-            if (!_isBusy)
-            {
-                this.AnimateNext();
-            }
-        }
+		private static void AspectRatioChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var control = d as Carousel;
+			control.InvalidateMeasure();
+		}
 
-        public double ItemWidth
-        {
-            get { return _panel.ItemWidth; }
-        }
+		#endregion AspectRatio
 
-        // Obsolete
-        #region AlignmentX
-        [Deprecated("AligmentX property will be removed in future versions.", DeprecationType.Deprecate, 65536)]
-        public AlignmentX AlignmentX
-        {
-            get { return (AlignmentX)GetValue(AlignmentXProperty); }
-            set { SetValue(AlignmentXProperty, value); }
-        }
+		#region GradientOpacity
 
-        public static readonly DependencyProperty AlignmentXProperty = DependencyProperty.Register("AlignmentX", typeof(AlignmentX), typeof(Carousel), new PropertyMetadata(AlignmentX.Left));
-        #endregion
-    }
+		public static readonly DependencyProperty GradientOpacityProperty = DependencyProperty.Register("GradientOpacity", typeof(double), typeof(Carousel), new PropertyMetadata(0.0));
+
+		public double GradientOpacity
+		{
+			get { return (double)GetValue(GradientOpacityProperty); }
+			set { SetValue(GradientOpacityProperty, value); }
+		}
+
+		#endregion GradientOpacity
+
+		#region ArrowsVisibility
+
+		public static readonly DependencyProperty ArrowsVisibilityProperty = DependencyProperty.Register("ArrowsVisibility", typeof(Visibility), typeof(Carousel), new PropertyMetadata(Visibility.Visible));
+
+		public Visibility ArrowsVisibility
+		{
+			get { return (Visibility)GetValue(ArrowsVisibilityProperty); }
+			set { SetValue(ArrowsVisibilityProperty, value); }
+		}
+
+		#endregion ArrowsVisibility
+
+		#region ItemClickCommand
+
+		public static readonly DependencyProperty ItemClickCommandProperty = DependencyProperty.Register("ItemClickCommand", typeof(ICommand), typeof(Carousel), new PropertyMetadata(null));
+
+		public ICommand ItemClickCommand
+		{
+			get { return (ICommand)GetValue(ItemClickCommandProperty); }
+			set { SetValue(ItemClickCommandProperty, value); }
+		}
+
+		#endregion ItemClickCommand
+
+		#region SlideInterval
+
+		public static readonly DependencyProperty SlideIntervalProperty = DependencyProperty.Register("SlideInterval", typeof(double), typeof(Carousel), new PropertyMetadata(0.0, SlideIntervalChanged));
+
+		public double SlideInterval
+		{
+			get { return (double)GetValue(SlideIntervalProperty); }
+			set { SetValue(SlideIntervalProperty, value); }
+		}
+
+		private static void SlideIntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var control = d as Carousel;
+			control.SetSlideInterval((double)e.NewValue);
+		}
+
+		#endregion SlideInterval
+
+		public double ItemWidth
+		{
+			get { return _panel.ItemWidth; }
+		}
+
+		private void OnSlideTimerTick(object sender, object e)
+		{
+			if (!_isBusy)
+			{
+				this.AnimateNext();
+			}
+		}
+
+		private void SetSlideInterval(double milliseconds)
+		{
+			if (milliseconds > 150.0)
+			{
+				if (_slideTimer == null)
+				{
+					_slideTimer = new DispatcherTimer();
+					_slideTimer.Tick += OnSlideTimerTick;
+				}
+				_slideTimer.Interval = TimeSpan.FromMilliseconds(milliseconds);
+				_slideTimer.Start();
+			}
+			else
+			{
+				if (_slideTimer != null)
+				{
+					_slideTimer.Stop();
+				}
+			}
+		}
+
+		// Obsolete
+
+		#region AlignmentX
+
+		public static readonly DependencyProperty AlignmentXProperty = DependencyProperty.Register("AlignmentX", typeof(AlignmentX), typeof(Carousel), new PropertyMetadata(AlignmentX.Left));
+
+		[Deprecated("AligmentX property will be removed in future versions.", DeprecationType.Deprecate, 65536)]
+		public AlignmentX AlignmentX
+		{
+			get { return (AlignmentX)GetValue(AlignmentXProperty); }
+			set { SetValue(AlignmentXProperty, value); }
+		}
+
+		#endregion AlignmentX
+	}
 }

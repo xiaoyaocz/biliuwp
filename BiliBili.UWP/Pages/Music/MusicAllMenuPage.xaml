@@ -9,18 +9,18 @@
 
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">歌单</TextBlock>
@@ -46,7 +46,7 @@
 
         <SplitView x:Name="sp" Grid.Row="1" PanePlacement="Right" PaneBackground="{ThemeResource Bili-List-Background}">
             <SplitView.Pane>
-                <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="8 4">
                         <Button x:Name="btn_All" Click="btn_All_Click" HorizontalAlignment="Stretch" Background="#00000000" BorderBrush="#33808080" BorderThickness="1" Height="40">全部</Button>
                         <ItemsControl x:Name="cats">
@@ -63,13 +63,10 @@
                                                 <Setter Property="BorderBrush" Value="#33808080"></Setter>
                                             </Style>
                                         </GridView.ItemContainerStyle>
-
                                     </GridView>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        
-                        
                     </StackPanel>
                 </ScrollViewer>
             </SplitView.Pane>
@@ -82,13 +79,13 @@
                             <DataTemplate>
                                 <Grid Height="86">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
                                     </Grid.RowDefinitions>
                                     <Grid Margin="0 0 8 0" Grid.RowSpan="3">
                                         <Border Background="{ThemeResource Bili-List-Background}"></Border>
@@ -96,8 +93,8 @@
                                         <Grid VerticalAlignment="Bottom" Padding="4">
                                             <Grid.Background>
                                                 <LinearGradientBrush EndPoint="0,0.5" StartPoint="0,0">
-                                                    <GradientStop Color="#33000000" Offset="1.3"/>
-                                                    <GradientStop Color="Transparent"/>
+                                                    <GradientStop Color="#33000000" Offset="1.3" />
+                                                    <GradientStop Color="Transparent" />
                                                 </LinearGradientBrush>
                                             </Grid.Background>
                                             <StackPanel Orientation="Horizontal">
@@ -109,8 +106,7 @@
                                             <TextBlock FontSize="12" Foreground="White">付费</TextBlock>
                                         </Border>
                                     </Grid>
-                                    
-                                   
+
                                     <TextBlock Grid.Column="1" Text="{Binding title}"></TextBlock>
                                     <TextBlock Grid.Column="1" Grid.Row="1" Margin="0 4" FontSize="14" Foreground="Gray"><Run Text="{Binding ctimeStr}"></Run></TextBlock>
                                     <TextBlock Grid.Column="1" Grid.Row="2" Margin="0 4" FontSize="14" Foreground="Gray"><Run Text="{Binding songNum}"></Run>首歌曲 <Run Text="{Binding collectNumStr}"></Run>收藏</TextBlock>
@@ -124,7 +120,6 @@
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                             </Style>
                         </ListView.ItemContainerStyle>
-
                     </ListView>
                     <ProgressBar x:Name="pr_load" Visibility="Collapsed" VerticalAlignment="Top" Background="#00000000" IsIndeterminate="True"></ProgressBar>
                     <HyperlinkButton x:Name="btn_LoadMore" Click="btn_LoadMore_Click" Foreground="Gray" HorizontalAlignment="Center">
@@ -133,6 +128,5 @@
                 </StackPanel>
             </ScrollViewer>
         </SplitView>
-        
     </Grid>
 </Page>

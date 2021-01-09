@@ -10,20 +10,18 @@
 
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Grid Background="{ThemeResource Bili-ForeColor}" Grid.Row="0" Height="48" >
+        <Grid Background="{ThemeResource Bili-ForeColor}" Grid.Row="0" Height="48">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="48"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="48" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <AppBarButton x:Name="btn_back" Click="btn_Back_Click" Icon="Back" Width="48" Height="48" Foreground="White"/>
+            <AppBarButton x:Name="btn_back" Click="btn_Back_Click" Icon="Back" Width="48" Height="48" Foreground="White" />
             <TextBlock  Text="{Binding toptitle}" Margin="5 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
-
-           
         </Grid>
         <Pivot Grid.Row="1">
             <PivotItem Margin="0">
@@ -35,17 +33,17 @@
                     <StackPanel Margin="12 0">
                         <Grid Background="{ThemeResource Bili-List-Background}" Padding="8">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Grid Height="100" Width="100" >
+                            <Grid Height="100" Width="100">
                                 <Border Background="{ThemeResource Bili-List-Background}"></Border>
                                 <Image  Source="{Binding coverUrl}"  Stretch="UniformToFill"></Image>
                                 <Grid VerticalAlignment="Bottom" Padding="4">
                                     <Grid.Background>
                                         <LinearGradientBrush EndPoint="0,0.5" StartPoint="0,0">
-                                            <GradientStop Color="#33000000" Offset="1.3"/>
-                                            <GradientStop Color="Transparent"/>
+                                            <GradientStop Color="#33000000" Offset="1.3" />
+                                            <GradientStop Color="Transparent" />
                                         </LinearGradientBrush>
                                     </Grid.Background>
                                     <StackPanel Orientation="Horizontal">
@@ -75,13 +73,9 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
-                          
                         </ListView>
-                        
                     </StackPanel>
                 </ScrollViewer>
-                
-                
             </PivotItem>
             <PivotItem Margin="0">
                 <PivotItem.Header>
@@ -89,23 +83,21 @@
                 </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition />
+                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
-                    <ScrollViewer  x:Name="sv" ViewChanged="sv_ViewChanged" VerticalScrollBarVisibility="Auto" >
+                    <ScrollViewer  x:Name="sv" ViewChanged="sv_ViewChanged" VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="8 4" Background="{ThemeResource Bili-List-Background}">
                             <controls:CommentV2Control  x:Name="comment"  Margin="4" ></controls:CommentV2Control>
                         </StackPanel>
                     </ScrollViewer>
                     <Button x:Name="btn_ShowComment" Click="btn_ShowComment_Click" Grid.Row="1" Margin="4" Background="{ThemeResource Bili-ForeColor}" Foreground="White" HorizontalAlignment="Stretch">我要评论</Button>
                 </Grid>
-               
-              
             </PivotItem>
         </Pivot>
         <CommandBar Grid.RowSpan="2" HorizontalAlignment="Right" Grid.Column="3" Foreground="White" Background="{ThemeResource Bili-ForeColor}">
             <CommandBar.SecondaryCommands>
-                <AppBarButton x:Name="btn_Share" Click="btn_Share_Click" Label="分享" >
+                <AppBarButton x:Name="btn_Share" Click="btn_Share_Click" Label="分享">
                     <AppBarButton.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
                     </AppBarButton.Icon>

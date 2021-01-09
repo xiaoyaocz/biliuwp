@@ -1,5 +1,5 @@
-﻿<Page 
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+﻿<Page
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     x:Class="BiliBili.UWP.Pages.LiveHistoryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,20 +8,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:live="using:BiliBili.UWP.Modules.Live"
-    mc:Ignorable="d" 
-    >
+    mc:Ignorable="d">
     <Page.Resources>
-        <covert:DatetimeConvert x:Key="ts"/>
+        <covert:DatetimeConvert x:Key="ts" />
     </Page.Resources>
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis" Text="观看历史" Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White"></TextBlock>
@@ -43,7 +42,7 @@
                 <DataTemplate x:DataType="live:LiveWatchHistoryItemModel">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="160" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid Margin="4">
@@ -53,10 +52,10 @@
                             </Border>
                         </Grid>
 
-                        <StackPanel Grid.Column="1" Margin="4 0 0 0" >
+                        <StackPanel Grid.Column="1" Margin="4 0 0 0">
                             <TextBlock MaxLines="2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Text="{x:Bind title}"></TextBlock>
                             <TextBlock Margin="0 2 0 0" TextTrimming="CharacterEllipsis" Foreground="Gray" Text="{x:Bind name}"></TextBlock>
-                            <TextBlock Margin="0 2 0 0" TextTrimming="CharacterEllipsis" Foreground="Gray" ><Run Text="{x:Bind Path=view_at,Converter={StaticResource ts},ConverterParameter='ts'}"/> <Run Text="{x:Bind tag_name}"/></TextBlock>
+                            <TextBlock Margin="0 2 0 0" TextTrimming="CharacterEllipsis" Foreground="Gray" ><Run Text="{x:Bind Path=view_at,Converter={StaticResource ts},ConverterParameter='ts'}" /> <Run Text="{x:Bind tag_name}" /></TextBlock>
                         </StackPanel>
                         <!--<TextBlock  Grid.Row="2" Margin="4 0 4 4" FontSize="12" Foreground="Gray" MaxLines="2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Text="{Binding desc}"></TextBlock>-->
                     </Grid>

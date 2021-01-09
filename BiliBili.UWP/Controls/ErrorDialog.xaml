@@ -19,6 +19,5 @@
             <TextBlock>详细信息</TextBlock>
             <TextBox x:Name="txt_message" Height="100" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBox>
         </StackPanel>
-       
     </Grid>
 </ContentDialog>

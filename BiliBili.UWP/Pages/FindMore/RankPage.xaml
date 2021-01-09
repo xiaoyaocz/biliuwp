@@ -6,24 +6,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Tag="排行榜"
-    xmlns:convert="using:BiliBili.UWP.Converters" 
-    xmlns:modules="using:BiliBili.UWP.Modules" 
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+    xmlns:convert="using:BiliBili.UWP.Converters"
+    xmlns:modules="using:BiliBili.UWP.Modules"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     Background="{ThemeResource Bili-Background}">
     <Page.Resources>
-        <convert:RankColorConvert x:Key="RankConvert"/>
+        <convert:RankColorConvert x:Key="RankConvert" />
         <convert:NumberToStringConvert x:Key="numberToStringConvert"></convert:NumberToStringConvert>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid Background="{ThemeResource Bili-ForeColor}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <AppBarButton Icon="Back" Foreground="White" Width="48" Height="48" x:Name="btnBack" Click="btn_back_Click"></AppBarButton>
             <TextBlock Grid.Column="1" Foreground="White" VerticalAlignment="Center">排行榜</TextBlock>
@@ -45,12 +45,12 @@
             </Pivot.ItemContainerStyle>
             <Pivot.ItemTemplate>
                 <DataTemplate x:DataType="modules:RankRegionModel">
-                    <toolkit:AdaptiveGridView 
+                    <toolkit:AdaptiveGridView
                     OneRowModeEnabled="False"
                         ItemClick="AdaptiveGridView_ItemClick"
                     StretchContentForSingleRow="False"
                     ItemsSource="{x:Bind Path=Items,Mode=OneWay}"
-                    ItemHeight="100" DesiredWidth="500" 
+                    ItemHeight="100" DesiredWidth="500"
                     Padding="8"
                     SelectionMode="None" IsItemClickEnabled="True">
                         <toolkit:AdaptiveGridView.ItemContainerStyle>
@@ -62,7 +62,7 @@
                             <DataTemplate x:DataType="modules:RankItemModel">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="160"/>
+                                        <ColumnDefinition Width="160" />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Grid Margin="4">
@@ -74,13 +74,13 @@
                                             <TextBlock Foreground="White" Text="{x:Bind Path=rank}" FontWeight="Bold" ></TextBlock>
                                         </Border>
                                     </Grid>
-                                    <StackPanel Grid.Column="1" Margin="4 0 0 0" >
+                                    <StackPanel Grid.Column="1" Margin="4 0 0 0">
                                         <TextBlock TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" Text="{x:Bind Path=title}"></TextBlock>
-                                        <TextBlock Foreground="Gray" Margin="0 2 0 0">观看:<Run Text="{x:Bind Path=play,Converter={StaticResource numberToStringConvert}}"/> 弹幕:<Run Text="{x:Bind Path=video_review,Converter={StaticResource numberToStringConvert}}"/></TextBlock>
+                                        <TextBlock Foreground="Gray" Margin="0 2 0 0">观看:<Run Text="{x:Bind Path=play,Converter={StaticResource numberToStringConvert}}" /> 弹幕:<Run Text="{x:Bind Path=video_review,Converter={StaticResource numberToStringConvert}}" /></TextBlock>
 
-                                        <TextBlock Margin="0 2 0 0" Foreground="Gray" VerticalAlignment="Center" >UP:<Run Text="{x:Bind Path=author}"/></TextBlock>
+                                        <TextBlock Margin="0 2 0 0" Foreground="Gray" VerticalAlignment="Center" >UP:<Run Text="{x:Bind Path=author}" /></TextBlock>
 
-                                        <TextBlock Foreground="Gray" Margin="0 2 0 0">综合评分 <Run Text="{x:Bind Path=pts}"/></TextBlock>
+                                        <TextBlock Foreground="Gray" Margin="0 2 0 0">综合评分 <Run Text="{x:Bind Path=pts}" /></TextBlock>
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>

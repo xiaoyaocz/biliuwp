@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BiliBili.UWP.Modules.Live
+﻿namespace BiliBili.UWP.Modules.Live
 {
-    public class LiveCenterVM:IModules
-    {
-
-    }
+	public class LiveCenterVM : IModules
+	{
+	}
 }

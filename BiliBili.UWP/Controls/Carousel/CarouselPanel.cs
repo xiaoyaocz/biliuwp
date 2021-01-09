@@ -1,118 +1,119 @@
 ﻿using System;
-
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.Foundation;
 
 namespace BiliBili.UWP.Controls
 {
-    public partial class CarouselPanel : Panel
-    {
-        public CarouselPanel()
-        {
-            this.UseLayoutRounding = true;
-            this.HorizontalAlignment = HorizontalAlignment.Left;
-            this.VerticalAlignment = VerticalAlignment.Center;
-        }
+	public partial class CarouselPanel : Panel
+	{
+		public CarouselPanel()
+		{
+			this.UseLayoutRounding = true;
+			this.HorizontalAlignment = HorizontalAlignment.Left;
+			this.VerticalAlignment = VerticalAlignment.Center;
+		}
 
-        protected override Size MeasureOverride(Size availableSize)
-        {
-            if (_items.Count > 0)
-            {
-                this.ArrangePanes(availableSize.Width);
+		protected override Size ArrangeOverride(Size finalSize)
+		{
+			if (_items.Count > 0)
+			{
+				int index = this.Index;
+				int paneCount = base.Children.Count;
 
-                int index = this.Index;
-                int itemCount = _items.Count;
-                int paneCount = base.Children.Count;
-                int leftCount = (paneCount - 1) / 2;
+				double itemWidth = this.ItemWidth;
+				double x = index * ItemWidth;
 
-                for (int n = 0; n < paneCount; n++)
-                {
-                    int paneIndex = (index + n).Mod(paneCount);
-                    var pane = base.Children[paneIndex] as ContentControl;
+				x -= (paneCount * this.ItemWidth - finalSize.Width) / 2.0;
 
-                    int itemIndex = (index + n - leftCount).Mod(itemCount);
-                    pane.ContentTemplate = this.ItemTemplate;
-                    pane.Content = _items[itemIndex];
-                    pane.Tag = itemIndex;
+				for (int n = 0; n < paneCount; n++)
+				{
+					int paneIndex = (index + n).Mod(paneCount);
+					var pane = base.Children[paneIndex] as ContentControl;
 
-                    pane.Measure(new Size(this.ItemWidth, this.ItemHeight));
-                }
+					pane.Arrange(new Rect(x, 0, itemWidth, finalSize.Height));
 
-                return availableSize;
-            }
+					x += itemWidth;
+				}
 
-            return base.MeasureOverride(availableSize);
-        }
+				return new Size(0, finalSize.Height);
+			}
+			return base.ArrangeOverride(finalSize);
+		}
 
-        protected override Size ArrangeOverride(Size finalSize)
-        {
-            if (_items.Count > 0)
-            {
-                int index = this.Index;
-                int paneCount = base.Children.Count;
+		protected override Size MeasureOverride(Size availableSize)
+		{
+			if (_items.Count > 0)
+			{
+				this.ArrangePanes(availableSize.Width);
 
-                double itemWidth = this.ItemWidth;
-                double x = index * ItemWidth;
+				int index = this.Index;
+				int itemCount = _items.Count;
+				int paneCount = base.Children.Count;
+				int leftCount = (paneCount - 1) / 2;
 
-                x -= (paneCount * this.ItemWidth - finalSize.Width) / 2.0;
+				for (int n = 0; n < paneCount; n++)
+				{
+					int paneIndex = (index + n).Mod(paneCount);
+					var pane = base.Children[paneIndex] as ContentControl;
 
-                for (int n = 0; n < paneCount; n++)
-                {
-                    int paneIndex = (index + n).Mod(paneCount);
-                    var pane = base.Children[paneIndex] as ContentControl;
+					int itemIndex = (index + n - leftCount).Mod(itemCount);
+					pane.ContentTemplate = this.ItemTemplate;
+					pane.Content = _items[itemIndex];
+					pane.Tag = itemIndex;
 
-                    pane.Arrange(new Rect(x, 0, itemWidth, finalSize.Height));
+					pane.Measure(new Size(this.ItemWidth, this.ItemHeight));
+				}
 
-                    x += itemWidth;
-                }
+				return availableSize;
+			}
 
-                return new Size(0, finalSize.Height);
-            }
-            return base.ArrangeOverride(finalSize);
-        }
+			return base.MeasureOverride(availableSize);
+		}
 
-        #region ArrangePanes
-        private void ArrangePanes(double availableWidth)
-        {
-            double visibleWidth = Math.Min(Window.Current.Bounds.Width, availableWidth);
-            double viewportWidth = visibleWidth + 2 * this.ItemWidth;
+		#region ArrangePanes
 
-            int visibleItems = (int)Math.Ceiling(viewportWidth / this.ItemWidth);
-            int totalItems = visibleItems;
+		private void ArrangePanes(double availableWidth)
+		{
+			double visibleWidth = Math.Min(Window.Current.Bounds.Width, availableWidth);
+			double viewportWidth = visibleWidth + 2 * this.ItemWidth;
 
-            totalItems = totalItems + (totalItems + 1) % 2;
+			int visibleItems = (int)Math.Ceiling(viewportWidth / this.ItemWidth);
+			int totalItems = visibleItems;
 
-            int diff = totalItems - base.Children.Count;
+			totalItems = totalItems + (totalItems + 1) % 2;
 
-            if (diff > 0)
-            {
-                for (int n = 0; n < diff; n++)
-                {
-                    var pane = CreatePane();
-                    base.Children.Add(pane);
-                }
-            }
-            else
-            {
-                for (int n = 0; n < -diff; n++)
-                {
-                    base.Children.RemoveAt(base.Children.Count - 1);
-                }
-            }
-        }
+			int diff = totalItems - base.Children.Count;
 
-        private ContentControl CreatePane()
-        {
-            var pane = new ContentControl
-            {
-                UseLayoutRounding = true,
-                HorizontalContentAlignment = HorizontalAlignment.Stretch,
-                VerticalContentAlignment = VerticalAlignment.Stretch
-            };
-            pane.Tapped += OnPaneTapped;
-            return pane;
-        }
-        #endregion
-    }
+			if (diff > 0)
+			{
+				for (int n = 0; n < diff; n++)
+				{
+					var pane = CreatePane();
+					base.Children.Add(pane);
+				}
+			}
+			else
+			{
+				for (int n = 0; n < -diff; n++)
+				{
+					base.Children.RemoveAt(base.Children.Count - 1);
+				}
+			}
+		}
+
+		private ContentControl CreatePane()
+		{
+			var pane = new ContentControl
+			{
+				UseLayoutRounding = true,
+				HorizontalContentAlignment = HorizontalAlignment.Stretch,
+				VerticalContentAlignment = VerticalAlignment.Stretch
+			};
+			pane.Tapped += OnPaneTapped;
+			return pane;
+		}
+
+		#endregion ArrangePanes
+	}
 }

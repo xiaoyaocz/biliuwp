@@ -8,22 +8,22 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="grid_bg"  Background="{ThemeResource Bili-Background}" >
-        <Grid x:Name="grid_o" >
+    <Grid x:Name="grid_bg"  Background="{ThemeResource Bili-Background}">
+        <Grid x:Name="grid_o">
             <Grid.RowDefinitions>
-                <RowDefinition Height="48"/>
-                <RowDefinition/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="48" />
+                <RowDefinition />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-         
+
             <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Visibility="Collapsed" x:Name="txt_color">1223</TextBlock>
                 <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
@@ -34,7 +34,6 @@
                     </AppBarButton.Icon>
                 </AppBarButton>
                 <AppBarButton Visibility="Collapsed" Foreground="White" Icon="More" Grid.Column="4" Width="48" Height="48">
-
                 </AppBarButton>
             </Grid>
             <Grid Grid.Row="1">

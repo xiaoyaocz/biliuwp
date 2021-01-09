@@ -16,22 +16,21 @@
     </Page.Resources>
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">离线缓存</TextBlock>
-
         </Grid>
         <Pivot Grid.Row="1">
             <PivotItem Margin="0">
@@ -40,26 +39,26 @@
                 </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition />
+                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <ListView x:Name="listDown" SelectionMode="None" IsItemClickEnabled="False">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                <Setter Property="BorderBrush" Value="#FFCBCBCB"/>
-                                <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"/>
-                                <Setter Property="Margin" Value="8 4"/>
-                                <Setter Property="Padding" Value="8 4"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="BorderBrush" Value="#FFCBCBCB" />
+                                <Setter Property="Background" Value="{ThemeResource Bili-List-Background}" />
+                                <Setter Property="Margin" Value="8 4" />
+                                <Setter Property="Padding" Value="8 4" />
                             </Style>
                         </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <Grid >
+                                    <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock VerticalAlignment="Center" FontSize="16" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" Text="{Binding title}"></TextBlock>
                                         <StackPanel Grid.Column="1" Orientation="Horizontal">
@@ -67,7 +66,6 @@
                                             <Button x:Name="btn_Resume_Items" Click="Btn_Resume_Items_Click" Visibility="Collapsed" FontSize="14" Margin="0" VerticalAlignment="Stretch" Padding="0" Background="Transparent" Width="36">继续</Button>
                                             <Button x:Name="btn_Cancel_Items" Click="Btn_Cancel_Items_Click" Grid.Column="1" Margin="0" FontSize="14" Padding="0" VerticalAlignment="Stretch" Background="Transparent" Width="36">取消</Button>
                                         </StackPanel>
-
                                     </Grid>
 
                                     <ItemsControl Margin="0 4 0 0" ItemsSource="{Binding items}">
@@ -75,8 +73,8 @@
                                             <DataTemplate>
                                                 <Grid BorderThickness="0 1 0 0" BorderBrush="#33808080">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="Auto" />
                                                     </Grid.ColumnDefinitions>
                                                     <StackPanel>
                                                         <TextBlock Foreground="Gray" FontSize="12" Grid.Row="1">分段<Run Text="{Binding index}"></Run></TextBlock>
@@ -95,25 +93,21 @@
                                                 </Grid>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
-
-
-
                                     </ItemsControl>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
-
                     </ListView>
                     <ListView x:Name="list_Downing2" Visibility="Collapsed" SelectionMode="None" IsItemClickEnabled="False">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
 
-                                <Setter Property="BorderBrush" Value="#FFCBCBCB"/>
-                                <Setter Property="Background" Value="{ThemeResource Bili-List-Background}"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="BorderBrush" Value="#FFCBCBCB" />
+                                <Setter Property="Background" Value="{ThemeResource Bili-List-Background}" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                 <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
-                                <Setter Property="Margin" Value="8 4"/>
-                                <Setter Property="Padding" Value="4"/>
+                                <Setter Property="Margin" Value="8 4" />
+                                <Setter Property="Padding" Value="4" />
                             </Style>
                         </ListView.ItemContainerStyle>
 
@@ -129,8 +123,8 @@
                                     </Grid>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
                                         <Button  x:Name="btn_D_Pause" Visibility="{Binding btnPause}" Click="btn_D_Pause_Click" FontSize="14" HorizontalAlignment="Stretch" Margin="0 0 2 0">
                                             <StackPanel Orientation="Horizontal">
@@ -146,7 +140,7 @@
                                         </Button>
                                         <Button x:Name="btn_D_Refresh" Visibility="{Binding btnRefresh}" Click="btn_D_Refresh_Click"  FontSize="14" HorizontalAlignment="Stretch" Margin="0 0 2 0">
                                             <StackPanel Orientation="Horizontal">
-                                                <SymbolIcon Symbol="Refresh"/>
+                                                <SymbolIcon Symbol="Refresh" />
                                                 <TextBlock Margin="4 0 0 0">重试</TextBlock>
                                             </StackPanel>
                                         </Button>
@@ -157,20 +151,16 @@
                                             </StackPanel>
                                         </Button>
                                     </Grid>
-
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
-
-
                     </ListView>
-                    <CommandBar Grid.Row="1"  Foreground="White" Background="{ThemeResource Bili-ForeColor}" >
+                    <CommandBar Grid.Row="1"  Foreground="White" Background="{ThemeResource Bili-ForeColor}">
                         <AppBarButton Icon="Download" x:Name="btn_StartAll" Click="btn_StartAll_Click" Foreground="White" Label="全部开始"></AppBarButton>
                         <AppBarButton Icon="Pause" x:Name="btn_PauseAll" Click="btn_PauseAll_Click" Foreground="White" Label="全部暂停"></AppBarButton>
                     </CommandBar>
                     <ProgressRing x:Name="pr_loading" Width="56" IsActive="True" Height="56"></ProgressRing>
                 </Grid>
-
             </PivotItem>
             <PivotItem Margin="0">
                 <PivotItem.Header>
@@ -178,8 +168,8 @@
                 </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition />
+                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <ScrollViewer>
                         <ItemsControl x:Name="list_Downed" ScrollViewer.VerticalScrollBarVisibility="Hidden">
@@ -188,18 +178,18 @@
                                     <Grid Background="{ThemeResource  Bili-List-Background}" Margin="0 0 0 8">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto" />
-                                            <RowDefinition  Height="auto"/>
+                                            <RowDefinition  Height="auto" />
                                         </Grid.RowDefinitions>
                                         <Grid>
                                             <Grid  Margin="8 4">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="auto" />
                                                 </Grid.ColumnDefinitions>
                                                 <Image Width="80" Source="{Binding thumb_img}" Margin="0 0 8 0"></Image>
 
-                                                <StackPanel Grid.Column="1" >
+                                                <StackPanel Grid.Column="1">
                                                     <TextBlock TextWrapping="Wrap" MaxLines="2" Text="{Binding title}"></TextBlock>
                                                     <TextBlock TextWrapping="Wrap" Foreground="Gray" Margin="0 4 0 0">视频数量:<Run Text="{Binding Path=videolist.Count}"></Run></TextBlock>
                                                 </StackPanel>
@@ -225,7 +215,6 @@
                                                         </AppBarButton.Icon>
                                                     </AppBarButton>
                                                 </StackPanel>
-
                                             </Grid>
                                         </Grid>
 
@@ -234,23 +223,22 @@
                                             <ListView.ItemContainerStyle>
                                                 <Style TargetType="ListViewItem">
 
-                                                    <Setter Property="BorderBrush" Value="#FFCBCBCB"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                                    <Setter Property="Padding" Value="0"/>
-                                                    <Setter Property="Margin" Value="8 0"/>
+                                                    <Setter Property="BorderBrush" Value="#FFCBCBCB" />
+                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                    <Setter Property="Padding" Value="0" />
+                                                    <Setter Property="Margin" Value="8 0" />
                                                 </Style>
                                             </ListView.ItemContainerStyle>
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
                                                     <Grid Holding="Grid_Holding" RightTapped="Grid_RightTapped">
                                                         <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition/>
-                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition />
+                                                            <ColumnDefinition Width="Auto" />
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Padding="8 0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="{Binding eptitle}"></TextBlock>
                                                         <AppBarButton Grid.Column="1"  Width="48" Height="48" Icon="More" Flyout="{StaticResource menu}"></AppBarButton>
                                                     </Grid>
-
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
                                         </ListView>
@@ -258,21 +246,16 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-
                     </ScrollViewer>
                     <StackPanel  x:Name="loading" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <ProgressBar IsIndeterminate="True" Width="120"></ProgressBar>
                         <TextBlock Margin="0 4" Foreground="Gray" HorizontalAlignment="Center">正在读取视频</TextBlock>
                     </StackPanel>
-                    <CommandBar Grid.Row="1"  Foreground="White" Background="{ThemeResource Bili-ForeColor}" >
+                    <CommandBar Grid.Row="1"  Foreground="White" Background="{ThemeResource Bili-ForeColor}">
                         <AppBarButton Icon="Refresh" x:Name="btn_Refresh" Click="btn_Refresh_Click" Foreground="White" Label="刷新"></AppBarButton>
                         <AppBarButton Icon="CellPhone" x:Name="btn_SendToPhone" Visibility="Collapsed" Click="btn_SendToPhone_Click" Foreground="White" Label="发送到手机"></AppBarButton>
-
                     </CommandBar>
                 </Grid>
-
-
-
             </PivotItem>
         </Pivot>
     </Grid>

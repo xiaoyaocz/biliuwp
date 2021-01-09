@@ -10,23 +10,23 @@
     d:DesignWidth="400">
 
     <UserControl.Resources>
-        <Storyboard x:Name="sbOut" >
+        <Storyboard x:Name="sbOut">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="mainGrid"
                                 Storyboard.TargetProperty="Opacity"
                                 BeginTime="0:0:0">
-                <SplineDoubleKeyFrame  KeyTime="00:00:00.00" Value="1"/>
-                <SplineDoubleKeyFrame  KeyTime="00:00:00.400" Value="0.0"/>
+                <SplineDoubleKeyFrame  KeyTime="00:00:00.00" Value="1" />
+                <SplineDoubleKeyFrame  KeyTime="00:00:00.400" Value="0.0" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
 
-    <Grid x:Name="mainGrid" >
+    <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Border Grid.Row="1"  Background="#7F000000" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,72" Padding="12,8" CornerRadius="4">
-            <TextBlock x:Name="tbNotify" TextWrapping="Wrap" Foreground="#daffffff"/>
+            <TextBlock x:Name="tbNotify" TextWrapping="Wrap" Foreground="#daffffff" />
         </Border>
     </Grid>
 </UserControl>

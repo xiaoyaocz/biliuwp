@@ -52,55 +52,552 @@ namespace BiliBili.UWP.Pages
         ad,
         cn
     }
-    /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
-    /// </summary>
-    public sealed partial class PartsPage : Page
+	public static class TestClass
+	{
+		public static DataTemplate d1;
+		public static DataTemplate d2;
+	}
+
+	public class DHModel
+	{
+		public string aid { get; set; }
+		public string author { get; set; }
+		public object banners { get; set; }
+		public string img { get; set; }
+		public string link { get; set; }
+		public object list { get; set; }
+		public string mid { get; set; }
+		public object news { get; set; }
+		public string pic { get; set; }
+		public string play { get; set; }
+		public object recommends { get; set; }
+		public object result { get; set; }
+		public string title { get; set; }
+		public string video_review { get; set; }
+	}
+
+	public class MessageItemDataTemplateSelector2 : DataTemplateSelector
+	{
+		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+		{
+			var s = item as PartModel;
+			if (s.isHome)
+			{
+				return TestClass.d1;
+				//return App.Current.Resources["HomeTemplate"] as DataTemplate;
+			}
+			else
+			{
+				return TestClass.d2;
+				//return App.Current.Resources["ItemsTemplate"] as DataTemplate;
+			}
+
+		}
+	}
+
+	public class PartModel : INotifyPropertyChanged
+	{
+		private List<DHModel> _Banner;
+		private List<DHModel> _DTs;
+		private FontWeight _fontWeight;
+		private GridLength _grid_c_center;
+
+		private GridLength _grid_c_left;
+
+		private GridLength _grid_c_right;
+
+		private DHModel _homeBanner;
+
+		private DHModel _leftBanner;
+
+		private Visibility _leftVisibility;
+
+		private DHModel _rightBanner;
+
+		private Visibility _rightVisibility;
+
+		private TagsModel _SelectTag;
+
+		private Visibility _ShowTags;
+
+		private ObservableCollection<TagsModel> _TagsList;
+
+		private ObservableCollection<DHModel> _VideoList;
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public List<DHModel> Banner
+		{
+			get { return _Banner; }
+			set { _Banner = value; RaisePropertyChanged("Banner"); }
+		}
+
+		public List<DHModel> DTs
+		{
+			get { return _DTs; }
+			set { _DTs = value; RaisePropertyChanged("DTs"); }
+		}
+
+		public FontWeight fontWeight
+		{
+			get { return _fontWeight; }
+			set { _fontWeight = value; RaisePropertyChanged("fontWeight"); }
+		}
+		public GridLength grid_c_center
+		{
+			get { return _grid_c_center; }
+			set { _grid_c_center = value; RaisePropertyChanged("grid_c_center"); }
+		}
+
+		public GridLength grid_c_left
+		{
+			get { return _grid_c_left; }
+			set { _grid_c_left = value; RaisePropertyChanged("grid_c_left"); }
+		}
+
+		public GridLength grid_c_right
+		{
+			get { return _grid_c_right; }
+			set { _grid_c_right = value; RaisePropertyChanged("grid_c_right"); }
+		}
+
+		public string HanderText { get; set; }
+		public DHModel homeBanner
+		{
+			get { return _homeBanner; }
+			set
+			{
+				_homeBanner = value;
+				RaisePropertyChanged("homeBanner");
+				if (Banner.Count == 0)
+				{
+					return;
+				}
+				if (leftVisibility == Visibility.Collapsed || rightVisibility == Visibility.Collapsed)
+				{
+					return;
+				}
+				try
+				{
+					if (Banner.IndexOf(value) == 0)
+					{
+						leftBanner = Banner[Banner.Count - 1];
+						//this.fvLeft.SelectedIndex = this.fvLeft.Items.Count - 1;
+						//this.fvRight.SelectedIndex = 1;
+						rightBanner = Banner[1];
+					}
+					else if (Banner.IndexOf(value) == 1)
+					{
+						leftBanner = Banner[0];
+						rightBanner = Banner[Banner.Count - 1];
+						//this.fvLeft.SelectedIndex = 0;
+						// this.fvRight.SelectedIndex = this.fvRight.Items.Count - 1;
+					}
+					else if (Banner.IndexOf(value) == Banner.Count - 1)
+					{
+						leftBanner = Banner[Banner.Count - 2];
+						rightBanner = Banner[0];
+						//this.fvLeft.SelectedIndex = this.fvLeft.Items.Count - 2;
+						// this.fvRight.SelectedIndex = 0;
+					}
+					else if ((Banner.IndexOf(value) < (Banner.Count - 1)) && Banner.IndexOf(value) > -1)
+					{
+						leftBanner = Banner[Banner.IndexOf(value) - 1];//  this.home_flipView.SelectedIndex - 1;
+						rightBanner = Banner[Banner.IndexOf(value) + 1];
+						//this.fvLeft.SelectedIndex = this.home_flipView.SelectedIndex - 1;
+						//this.fvRight.SelectedIndex = this.home_flipView.SelectedIndex + 1;
+					}
+					else
+					{
+						return;
+					}
+				}
+				catch (Exception)
+				{
+				}
+
+
+			}
+		}
+
+		public bool isHome { get; set; }
+
+		public DHModel leftBanner
+		{
+			get { return _leftBanner; }
+			set { _leftBanner = value; RaisePropertyChanged("leftBanner"); }
+		}
+
+		public Visibility leftVisibility
+		{
+			get { return _leftVisibility; }
+			set { _leftVisibility = value; RaisePropertyChanged("leftVisibility"); }
+		}
+
+		public PartOrderBy orderBy { get; set; }
+
+		public int PageNum { get; set; }
+
+		public int PartId { get; set; }
+
+		public DHModel rightBanner
+		{
+			get { return _rightBanner; }
+			set { _rightBanner = value; RaisePropertyChanged("rightBanner"); }
+		}
+
+		public Visibility rightVisibility
+		{
+			get { return _rightVisibility; }
+			set { _rightVisibility = value; RaisePropertyChanged("rightVisibility"); }
+		}
+
+		public TagsModel SelectTag
+		{
+			get { return _SelectTag; }
+			set { _SelectTag = value; RaisePropertyChanged("SelectTag"); }
+		}
+
+		public Visibility ShowTags
+		{
+			get { return _ShowTags; }
+			set { _ShowTags = value; RaisePropertyChanged("ShowTags"); }
+		}
+
+		public ObservableCollection<TagsModel> TagsList
+		{
+			get { return _TagsList; }
+			set { _TagsList = value; RaisePropertyChanged("TagsList"); }
+		}
+
+		public ObservableCollection<DHModel> VideoList
+		{
+			get { return _VideoList; }
+			set { _VideoList = value; RaisePropertyChanged("VideoList"); }
+		}
+		public void RaisePropertyChanged(string propertyName)
+		{
+			if (PropertyChanged != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+
+	/// <summary>
+	/// 可用于自身或导航至 Frame 内部的空白页。
+	/// </summary>
+	public sealed partial class PartsPage : Page
     {
-        public PartsPage()
-        {
+		string defu_Order = "senddate";
+
+		bool isLoading = false;
+
+		int Part_Id = 1;
+
+		public PartsPage()
+		{
             this.InitializeComponent();
             TestClass.d1 = this.Resources["HomeTemplate"] as DataTemplate;
             TestClass.d2 = this.Resources["ItemsTemplate"] as DataTemplate;
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
-        int Part_Id = 1;
-        private void btn_back_Click(object sender, RoutedEventArgs e)
-        {
+		protected async override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			await Task.Delay(200);
+			if (e.NavigationMode == NavigationMode.New)
+			{
+				pivot.ItemsSource = null;
+				GetSetting();
+				pr_Laod.Visibility = Visibility.Visible;
+				if ((e.Parameter as object[])[0] is Parts)
+				{
+					await LoadPart((Parts)(e.Parameter as object[])[0]);
+				}
+				else
+				{
+					await LoadPart((RegionModel)(e.Parameter as object[])[0]);
+				}
+				pr_Laod.Visibility = Visibility.Collapsed;
+			}
+		}
+
+		private void btn_back_Click(object sender, RoutedEventArgs e)
+		{
             if (this.Frame.CanGoBack)
             {
                 this.Frame.GoBack();
             }
            
         }
+		private void btn_Banner_Ban_Click(object sender, RoutedEventArgs e)
+		{
+			var m = (DHModel)(sender as HyperlinkButton).DataContext;
+			if (m.aid != "0")
+			{
+				MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), m.aid);
+				//this.Frame.Navigate(typeof(VideoInfoPage), m.aid);
+				return;
+			}
+			string ban = Regex.Match(m.link, @"^http://bangumi.bilibili.com/anime/(.*?)$").Groups[1].Value;
+			if (ban.Length != 0)
+			{
+				MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), ban);
+				//this.Frame.Navigate(typeof(BanInfoPage), ban);
+				return;
+			}
+			string ban2 = Regex.Match(m.link, @"^http://www.bilibili.com/bangumi/i/(.*?)$").Groups[1].Value;
+			if (ban2.Length != 0)
+			{
+				MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), ban2);
+				//this.Frame.Navigate(typeof(BanInfoPage), ban2);
+				return;
+			}
+			string aid = Regex.Match(m.link, @"^http://www.bilibili.com/video/av(.*?)/$").Groups[1].Value;
+			if (aid.Length != 0)
+			{
+				MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), aid);
+				// this.Frame.Navigate(typeof(VideoInfoPage), aid);
+				return;
+			}
+			MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), m.link);
+			//this.Frame.Navigate(typeof(WebViewPage), m.link);
+		}
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            await Task.Delay(200);
-            if (e.NavigationMode == NavigationMode.New)
-            {
-                pivot.ItemsSource = null;
-                GetSetting();
-                pr_Laod.Visibility = Visibility.Visible;
-                if ((e.Parameter as object[])[0] is Parts)
-                {
-                    await LoadPart((Parts)(e.Parameter as object[])[0]);
-                }
-                else
-                {
-                    await LoadPart((RegionModel)(e.Parameter as object[])[0]);
-                }
-                pr_Laod.Visibility = Visibility.Collapsed;
-            }
-        }
-        private void GetSetting()
-        {
+		private async void btn_LoadMore_Click(object sender, RoutedEventArgs e)
+		{
+			if (!isLoading)
+			{
+				isLoading = true;
+				var m = (sender as Button).DataContext as PartModel;
+				m.PageNum++;
+				foreach (var item in await GetVideos(m.PartId, m.orderBy.ToString(), m.PageNum, m.SelectTag.tag_name))
+				{
+					m.VideoList.Add(item);
+				}
+
+				isLoading = false;
+			}
+
+		}
+
+		private void btn_New_Click(object sender, RoutedEventArgs e)
+		{
+			foreach (ToggleMenuFlyoutItem item in menu.Items)
+			{
+				item.IsChecked = false;
+			}
+			int se = Convert.ToInt32((sender as ToggleMenuFlyoutItem).Tag);
+			switch (se)
+			{
+				case 0:
+					(pivot.SelectedItem as PartModel).orderBy = PartOrderBy.senddate;
+					break;
+				case 1:
+					(pivot.SelectedItem as PartModel).orderBy = PartOrderBy.danmaku;
+					break;
+				case 2:
+					(pivot.SelectedItem as PartModel).orderBy = PartOrderBy.view;
+					break;
+				case 3:
+					(pivot.SelectedItem as PartModel).orderBy = PartOrderBy.reply;
+					break;
+				case 4:
+					(pivot.SelectedItem as PartModel).orderBy = PartOrderBy.favorite;
+					break;
+				default:
+					break;
+			}
+			switch ((pivot.SelectedItem as PartModel).orderBy)
+			{
+				case PartOrderBy.view:
+					btn_Play.IsChecked = true;
+					break;
+				case PartOrderBy.danmaku:
+					btn_Danmaku.IsChecked = true;
+					break;
+				case PartOrderBy.reply:
+					btn_Comment.IsChecked = true;
+					break;
+				case PartOrderBy.favorite:
+					btn_Sc.IsChecked = true;
+					break;
+				case PartOrderBy.senddate:
+					btn_New.IsChecked = true;
+					break;
+				default:
+					break;
+			}
+			btn_Refresh_Click(this, e);
+		}
+
+		private async void btn_Refresh_Click(object sender, RoutedEventArgs e)
+		{
+			(pivot.SelectedItem as PartModel).PageNum = 1;
+			(pivot.SelectedItem as PartModel).VideoList.Clear();
+			var m = pivot.SelectedItem as PartModel;
+			m.VideoList = await GetVideos(m.PartId, m.orderBy.ToString(), m.PageNum, m.SelectTag.tag_name);
+		}
+
+		private async void btn_Refresh_DT_Click(object sender, RoutedEventArgs e)
+		{
+			var m = (pivot.ItemsSource as List<PartModel>)[0];
+			m.DTs = await GetTuiJianDT(Part_Id);
+		}
+
+		private void btn_Type_Checked(object sender, RoutedEventArgs e)
+		{
+			(pivot.SelectedItem as PartModel).ShowTags = Visibility.Visible;
+		}
+
+		private void btn_Type_Unchecked(object sender, RoutedEventArgs e)
+		{
+			(pivot.SelectedItem as PartModel).ShowTags = Visibility.Collapsed;
+		}
+
+		private async Task<List<DHModel>> GetBanner(int Id)
+		{
+			List<DHModel> BannerModel = new List<DHModel>();
+			try
+			{
+
+				string results = await WebClientClass.GetResultsUTF8Encode(new Uri("http://app.bilibili.com/api/region2/" + Id + ".json"));
+				DHModel model = JsonConvert.DeserializeObject<DHModel>(results);
+				DHModel model2 = JsonConvert.DeserializeObject<DHModel>(model.result.ToString());
+				BannerModel = JsonConvert.DeserializeObject<List<DHModel>>(model2.banners.ToString());
+				return BannerModel;
+			}
+			catch (Exception)
+			{
+				return BannerModel;
+			}
+		}
+
+		private void GetSetting()
+		{
             defu_Order = "senddate";
 
         }
-        string defu_Order = "senddate";
-        private async Task LoadPart(Parts parts)
-        {
+		private async Task<ObservableCollection<TagsModel>> GetTags(int id)
+		{
+			ObservableCollection<TagsModel> list = new ObservableCollection<TagsModel>();
+			try
+			{
+				string zh_result = await WebClientClass.GetResults(new Uri("http://api.bilibili.com/x/tag/hots?rid=" + id + "&type=0&jsonp=json?rnd=" + new Random().Next(1, 9999)));
+				var zh = JsonConvert.DeserializeObject<TagsModel>(zh_result);
+				list = JsonConvert.DeserializeObject<ObservableCollection<TagsModel>>(zh.data.ToString())[0].tags;
+				list.Insert(0, new TagsModel() { tag_name = "全部" });
+				return list;
+			}
+			catch (Exception)
+			{
+				return list;
+			}
+		}
+
+		private async Task<List<DHModel>> GetTuiJianDT(int Id)
+		{
+			List<DHModel> DTModel = new List<DHModel>();
+			try
+			{
+
+				string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/ding/" + Id + ".json?rnd=" + new Random().Next(1, 9999)));
+				DHModel model = JsonConvert.DeserializeObject<DHModel>(results);
+				DTModel = JsonConvert.DeserializeObject<List<DHModel>>(model.list.ToString());
+				return DTModel;
+			}
+			catch (Exception)
+			{
+				return DTModel;
+			}
+
+		}
+
+		private async Task<ObservableCollection<DHModel>> GetVideos(int id, string orderBy, int Num, string tag)
+		{
+			ObservableCollection<DHModel> list = new ObservableCollection<DHModel>();
+			try
+			{
+				if (Num != 1)
+				{
+					pr_Laod.Visibility = Visibility.Visible;
+				}
+
+				#region
+				string uri = "";
+				uri = string.Format("https://app.bilibili.com/x/v2/region/show/child/list?appkey={0}&build={1}&channel=bili&order={4}&platform=android&pn={2}&ps=20&rid={3}",
+					ApiHelper.AndroidKey.Appkey, ApiHelper.build, Num, id, orderBy);
+				if (tag.Length != 0 && tag != "全部")
+				{
+					uri += "&tag_name=" + Uri.EscapeDataString(tag);
+				}
+				uri += "&sign=" + ApiHelper.GetSign(uri);
+				#endregion
+				string results = await WebClientClass.GetResults(new Uri(uri));
+				JObject jObject = JObject.Parse(results);
+
+
+				//DHModel model = JsonConvert.DeserializeObject<DHModel>(results);
+				//JObject json = JObject.Parse(model.list.ToString());
+				List<DHModel> ReList = new List<DHModel>();
+				//LZ_NewList.Items.Clear();
+				foreach (var item in jObject["data"])
+				{
+					list.Add(new DHModel
+					{
+						aid = (string)item["uri"],
+						title = (string)item["title"],
+						pic = (string)item["cover"] + "@200w.jpg",
+						author = (string)item["name"],
+						play = (string)item["play"],
+						video_review = (string)item["danmaku"],
+					});
+				}
+
+				return list;
+			}
+			catch (Exception)
+			{
+				return list;
+			}
+			finally
+			{
+				if (Num != 1)
+				{
+					pr_Laod.Visibility = Visibility.Collapsed;
+				}
+				//pr_Laod.Visibility = Visibility.Collapsed;
+			}
+		}
+
+		private async void grid_tag_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+
+			(pivot.SelectedItem as PartModel).PageNum = 1;
+			if ((pivot.SelectedItem as PartModel).VideoList != null)
+			{
+				(pivot.SelectedItem as PartModel).VideoList.Clear();
+			}
+
+			var m = pivot.SelectedItem as PartModel;
+			m.SelectTag = (sender as GridView).SelectedItem as TagsModel;
+			m.VideoList = await GetVideos(m.PartId, m.orderBy.ToString(), m.PageNum, ((sender as GridView).SelectedItem as TagsModel).tag_name);
+
+		}
+
+		private void GridView_DT_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), ((DHModel)e.ClickedItem).aid);
+			//this.Frame.Navigate(typeof(VideoInfoPage), ((DHModel)e.ClickedItem).aid);
+		}
+
+		private void home_flipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+
+		}
+
+		private async Task LoadPart(Parts parts)
+		{
            
             com_bar.Visibility = Visibility.Collapsed;
             List<PartModel> l = new List<PartModel>();
@@ -1701,117 +2198,14 @@ namespace BiliBili.UWP.Pages
             UpdateBannerState();
 
         }
+		private async void LZ_List_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			await MessageCenter.HandelUrl(((DHModel)e.ClickedItem).aid);
+			// MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), ((DHModel)e.ClickedItem).aid);
+		}
 
-        private async Task<ObservableCollection<TagsModel>> GetTags(int id)
-        {
-            ObservableCollection<TagsModel> list = new ObservableCollection<TagsModel>();
-            try
-            {
-                string zh_result = await WebClientClass.GetResults(new Uri("http://api.bilibili.com/x/tag/hots?rid=" + id + "&type=0&jsonp=json?rnd=" + new Random().Next(1, 9999)));
-                var zh = JsonConvert.DeserializeObject<TagsModel>(zh_result);
-                list = JsonConvert.DeserializeObject<ObservableCollection<TagsModel>>(zh.data.ToString())[0].tags;
-                list.Insert(0, new TagsModel() { tag_name = "全部" });
-                return list;
-            }
-            catch (Exception)
-            {
-                return list;
-            }
-        }
-        private async Task<ObservableCollection<DHModel>> GetVideos(int id, string orderBy, int Num, string tag)
-        {
-            ObservableCollection<DHModel> list = new ObservableCollection<DHModel>();
-            try
-            {
-                if (Num!=1)
-                {
-                    pr_Laod.Visibility = Visibility.Visible;
-                }
-              
-                #region
-                string uri = "";
-                uri = string.Format("https://app.bilibili.com/x/v2/region/show/child/list?appkey={0}&build={1}&channel=bili&order={4}&platform=android&pn={2}&ps=20&rid={3}",
-                    ApiHelper.AndroidKey.Appkey,ApiHelper.build, Num, id, orderBy);
-                if (tag.Length != 0 && tag != "全部")
-                {
-                    uri += "&tag_name=" + Uri.EscapeDataString(tag);
-                }
-                uri += "&sign=" + ApiHelper.GetSign(uri);
-                #endregion
-                string results = await WebClientClass.GetResults(new Uri(uri));
-                JObject jObject = JObject.Parse(results);
-               
-
-                //DHModel model = JsonConvert.DeserializeObject<DHModel>(results);
-                //JObject json = JObject.Parse(model.list.ToString());
-                List<DHModel> ReList = new List<DHModel>();
-                //LZ_NewList.Items.Clear();
-                foreach (var item in jObject["data"])
-                {
-                    list.Add(new DHModel
-                    {
-                        aid = (string)item["uri"],
-                        title = (string)item["title"],
-                        pic = (string)item["cover"] + "@200w.jpg",
-                        author = (string)item["name"],
-                        play = (string)item["play"],
-                        video_review = (string)item["danmaku"],
-                    });
-                }
-               
-                return list;
-            }
-            catch (Exception)
-            {
-                return list;
-            }
-            finally
-            {
-                if (Num != 1)
-                {
-                    pr_Laod.Visibility = Visibility.Collapsed;
-                }
-                //pr_Laod.Visibility = Visibility.Collapsed;
-            }
-        }
-        private async Task<List<DHModel>> GetBanner(int Id)
-        {
-            List<DHModel> BannerModel = new List<DHModel>();
-            try
-            {
-
-                string results = await WebClientClass.GetResultsUTF8Encode(new Uri("http://app.bilibili.com/api/region2/" + Id + ".json"));
-                DHModel model = JsonConvert.DeserializeObject<DHModel>(results);
-                DHModel model2 = JsonConvert.DeserializeObject<DHModel>(model.result.ToString());
-                BannerModel = JsonConvert.DeserializeObject<List<DHModel>>(model2.banners.ToString());
-                return BannerModel;
-            }
-            catch (Exception)
-            {
-                return BannerModel;
-            }
-        }
-        private async Task<List<DHModel>> GetTuiJianDT(int Id)
-        {
-            List<DHModel> DTModel = new List<DHModel>();
-            try
-            {
-
-                string results = await WebClientClass.GetResults(new Uri("http://www.bilibili.com/index/ding/" + Id + ".json?rnd=" + new Random().Next(1, 9999)));
-                DHModel model = JsonConvert.DeserializeObject<DHModel>(results);
-                DTModel = JsonConvert.DeserializeObject<List<DHModel>>(model.list.ToString());
-                return DTModel;
-            }
-            catch (Exception)
-            {
-                return DTModel;
-            }
-
-        }
-
-
-        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
+		private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
             int d = Convert.ToInt32(this.ActualWidth / 400);
             if (d > 3)
             {
@@ -1868,8 +2262,82 @@ namespace BiliBili.UWP.Pages
 
 
         }
-        private void UpdateBannerState()
-        {
+		private void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (pivot.Items.Count == 0)
+			{
+
+				return;
+			}
+			if (pivot.SelectedIndex == 0)
+			{
+				com_bar.Visibility = Visibility.Collapsed;
+			}
+			else
+			{
+				com_bar.Visibility = Visibility.Visible;
+			}
+			btn_Type.IsChecked = false;
+
+			foreach (ToggleMenuFlyoutItem item in menu.Items)
+			{
+				item.IsChecked = false;
+			}
+			switch ((pivot.SelectedItem as PartModel).orderBy)
+			{
+				case PartOrderBy.view:
+					btn_Play.IsChecked = true;
+					break;
+				case PartOrderBy.danmaku:
+					btn_Danmaku.IsChecked = true;
+					break;
+				case PartOrderBy.reply:
+					btn_Comment.IsChecked = true;
+					break;
+				case PartOrderBy.favorite:
+					btn_Sc.IsChecked = true;
+					break;
+				case PartOrderBy.senddate:
+					btn_New.IsChecked = true;
+					break;
+				default:
+					break;
+			}
+			//(pivot.SelectedItem as PartModel).fontWeight = FontWeights.Bold;
+
+		}
+
+		private async void PullToRefreshBox_RefreshInvoked(DependencyObject sender, object args)
+		{
+			var m = (pivot.ItemsSource as List<PartModel>)[0];
+			m.Banner = await GetBanner(Part_Id);
+			m.DTs = await GetTuiJianDT(Part_Id);
+
+		}
+
+		private async void sv_LZ_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+		{
+			if ((sender as ScrollViewer).VerticalOffset == (sender as ScrollViewer).ScrollableHeight)
+			{
+				if (!isLoading)
+				{
+					isLoading = true;
+					var m = (sender as ScrollViewer).DataContext as PartModel;
+					m.PageNum++;
+					foreach (var item in await GetVideos(m.PartId, m.orderBy.ToString(), m.PageNum, m.SelectTag.tag_name))
+					{
+						m.VideoList.Add(item);
+					}
+
+					isLoading = false;
+				}
+
+			}
+
+		}
+
+		private void UpdateBannerState()
+		{
             if (pivot.Items.Count == 0)
             {
                 return;
@@ -1894,458 +2362,16 @@ namespace BiliBili.UWP.Pages
             }
 
         }
-
-
-        private async void LZ_List_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            await MessageCenter.HandelUrl(((DHModel)e.ClickedItem).aid);
-           // MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), ((DHModel)e.ClickedItem).aid);
-        }
-        bool isLoading = false;
-        private async void sv_LZ_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-            if ((sender as ScrollViewer).VerticalOffset == (sender as ScrollViewer).ScrollableHeight)
-            {
-                if (!isLoading)
-                {
-                    isLoading = true;
-                    var m = (sender as ScrollViewer).DataContext as PartModel;
-                    m.PageNum++;
-                    foreach (var item in await GetVideos(m.PartId, m.orderBy.ToString(), m.PageNum, m.SelectTag.tag_name))
-                    {
-                        m.VideoList.Add(item);
-                    }
-
-                    isLoading = false;
-                }
-
-            }
-
-        }
-
-        private async void grid_tag_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-            (pivot.SelectedItem as PartModel).PageNum = 1;
-            if ((pivot.SelectedItem as PartModel).VideoList!=null)
-            {
-                (pivot.SelectedItem as PartModel).VideoList.Clear();
-            }
-           
-            var m = pivot.SelectedItem as PartModel;
-            m.SelectTag = (sender as GridView).SelectedItem as TagsModel;
-            m.VideoList = await GetVideos(m.PartId, m.orderBy.ToString(), m.PageNum, ((sender as GridView).SelectedItem as TagsModel).tag_name);
-
-        }
-
-        private void pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (pivot.Items.Count == 0)
-            {
-
-                return;
-            }
-            if (pivot.SelectedIndex == 0)
-            {
-                com_bar.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                com_bar.Visibility = Visibility.Visible;
-            }
-            btn_Type.IsChecked = false;
-            
-            foreach (ToggleMenuFlyoutItem item in menu.Items)
-            {
-                item.IsChecked = false;
-            }
-            switch ((pivot.SelectedItem as PartModel).orderBy)
-            {
-                case PartOrderBy.view:
-                    btn_Play.IsChecked = true;
-                    break;
-                case PartOrderBy.danmaku:
-                    btn_Danmaku.IsChecked = true;
-                    break;
-                case PartOrderBy.reply:
-                    btn_Comment.IsChecked = true;
-                    break;
-                case PartOrderBy.favorite:
-                    btn_Sc.IsChecked = true;
-                    break;
-                case PartOrderBy.senddate:
-                    btn_New.IsChecked = true;
-                    break;
-                default:
-                    break;
-            }
-            //(pivot.SelectedItem as PartModel).fontWeight = FontWeights.Bold;
-
-        }
-
-        private void btn_Type_Checked(object sender, RoutedEventArgs e)
-        {
-            (pivot.SelectedItem as PartModel).ShowTags = Visibility.Visible;
-        }
-
-        private void btn_Type_Unchecked(object sender, RoutedEventArgs e)
-        {
-            (pivot.SelectedItem as PartModel).ShowTags = Visibility.Collapsed;
-        }
-
-        private async void btn_Refresh_Click(object sender, RoutedEventArgs e)
-        {
-            (pivot.SelectedItem as PartModel).PageNum = 1;
-            (pivot.SelectedItem as PartModel).VideoList.Clear();
-            var m = pivot.SelectedItem as PartModel;
-            m.VideoList = await GetVideos(m.PartId, m.orderBy.ToString(), m.PageNum, m.SelectTag.tag_name);
-        }
-
-        private void btn_New_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (ToggleMenuFlyoutItem item in menu.Items)
-            {
-                item.IsChecked = false;
-            }
-            int se = Convert.ToInt32((sender as ToggleMenuFlyoutItem).Tag);
-            switch (se)
-            {
-                case 0:
-                    (pivot.SelectedItem as PartModel).orderBy = PartOrderBy.senddate;
-                    break;
-                case 1:
-                    (pivot.SelectedItem as PartModel).orderBy = PartOrderBy.danmaku;
-                    break;
-                case 2:
-                    (pivot.SelectedItem as PartModel).orderBy = PartOrderBy.view;
-                    break;
-                case 3:
-                    (pivot.SelectedItem as PartModel).orderBy = PartOrderBy.reply;
-                    break;
-                case 4:
-                    (pivot.SelectedItem as PartModel).orderBy = PartOrderBy.favorite;
-                    break;
-                default:
-                    break;
-            }
-            switch ((pivot.SelectedItem as PartModel).orderBy)
-            {
-                case PartOrderBy.view:
-                    btn_Play.IsChecked = true;
-                    break;
-                case PartOrderBy.danmaku:
-                    btn_Danmaku.IsChecked = true;
-                    break;
-                case PartOrderBy.reply:
-                    btn_Comment.IsChecked = true;
-                    break;
-                case PartOrderBy.favorite:
-                    btn_Sc.IsChecked = true;
-                    break;
-                case PartOrderBy.senddate:
-                    btn_New.IsChecked = true;
-                    break;
-                default:
-                    break;
-            }
-            btn_Refresh_Click(this, e);
-        }
-
-        private void home_flipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void btn_Banner_Ban_Click(object sender, RoutedEventArgs e)
-        {
-            var m = (DHModel)(sender as HyperlinkButton).DataContext;
-            if (m.aid != "0")
-            {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), m.aid);
-                //this.Frame.Navigate(typeof(VideoInfoPage), m.aid);
-                return;
-            }
-            string ban = Regex.Match(m.link, @"^http://bangumi.bilibili.com/anime/(.*?)$").Groups[1].Value;
-            if (ban.Length != 0)
-            {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), ban);
-                //this.Frame.Navigate(typeof(BanInfoPage), ban);
-                return;
-            }
-            string ban2 = Regex.Match(m.link, @"^http://www.bilibili.com/bangumi/i/(.*?)$").Groups[1].Value;
-            if (ban2.Length != 0)
-            {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(BanInfoPage), ban2);
-                //this.Frame.Navigate(typeof(BanInfoPage), ban2);
-                return;
-            }
-            string aid = Regex.Match(m.link, @"^http://www.bilibili.com/video/av(.*?)/$").Groups[1].Value;
-            if (aid.Length != 0)
-            {
-                MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage),aid);
-               // this.Frame.Navigate(typeof(VideoInfoPage), aid);
-                return;
-            }
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(WebPage), m.link);
-            //this.Frame.Navigate(typeof(WebViewPage), m.link);
-        }
-
-        private async void PullToRefreshBox_RefreshInvoked(DependencyObject sender, object args)
-        {
-            var m = (pivot.ItemsSource as List<PartModel>)[0];
-            m.Banner = await GetBanner(Part_Id);
-            m.DTs = await GetTuiJianDT(Part_Id);
-
-        }
-
-        private async void btn_Refresh_DT_Click(object sender, RoutedEventArgs e)
-        {
-            var m = (pivot.ItemsSource as List<PartModel>)[0];
-            m.DTs = await GetTuiJianDT(Part_Id);
-        }
-
-        private void GridView_DT_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            MessageCenter.SendNavigateTo(NavigateMode.Info, typeof(VideoViewPage), ((DHModel)e.ClickedItem).aid);
-            //this.Frame.Navigate(typeof(VideoInfoPage), ((DHModel)e.ClickedItem).aid);
-        }
-
-        private async void btn_LoadMore_Click(object sender, RoutedEventArgs e)
-        {
-            if (!isLoading)
-            {
-                isLoading = true;
-                var m = (sender as Button).DataContext as PartModel;
-                m.PageNum++;
-                foreach (var item in await GetVideos(m.PartId, m.orderBy.ToString(), m.PageNum, m.SelectTag.tag_name))
-                {
-                    m.VideoList.Add(item);
-                }
-
-                isLoading = false;
-            }
-
-        }
-    }
-    public static class TestClass
-    {
-        public static DataTemplate d1;
-        public static DataTemplate d2;
-    }
-    public class MessageItemDataTemplateSelector2 : DataTemplateSelector
-    {
-        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
-        {
-            var s = item as PartModel;
-            if (s.isHome)
-            {
-                return TestClass.d1;
-                //return App.Current.Resources["HomeTemplate"] as DataTemplate;
-            }
-            else
-            {
-                return TestClass.d2;
-                //return App.Current.Resources["ItemsTemplate"] as DataTemplate;
-            }
-
-        }
-    }
-
-    public class PartModel : INotifyPropertyChanged
-    {
-        private FontWeight _fontWeight;
-        public FontWeight fontWeight
-        {
-            get { return _fontWeight; }
-            set { _fontWeight = value; RaisePropertyChanged("fontWeight"); }
-        }
-        public string HanderText { get; set; }
-        private ObservableCollection<DHModel> _VideoList;
-        public ObservableCollection<DHModel> VideoList
-        {
-            get { return _VideoList; }
-            set { _VideoList = value; RaisePropertyChanged("VideoList"); }
-        }
-        private List<DHModel> _Banner;
-        public List<DHModel> Banner
-        {
-            get { return _Banner; }
-            set { _Banner = value;RaisePropertyChanged("Banner"); }
-        }
-        private List<DHModel> _DTs;
-        public List<DHModel> DTs
-        {
-            get { return _DTs; }
-            set { _DTs = value; RaisePropertyChanged("DTs"); }
-        }
-        private DHModel _homeBanner;
-        public DHModel homeBanner
-        {
-            get { return _homeBanner; }
-            set
-            {
-                _homeBanner = value;
-                RaisePropertyChanged("homeBanner");
-                if (Banner.Count == 0)
-                {
-                    return;
-                }
-                if (leftVisibility == Visibility.Collapsed || rightVisibility == Visibility.Collapsed)
-                {
-                    return;
-                }
-                try
-                {
-                    if (Banner.IndexOf(value) == 0)
-                    {
-                        leftBanner = Banner[Banner.Count - 1];
-                        //this.fvLeft.SelectedIndex = this.fvLeft.Items.Count - 1;
-                        //this.fvRight.SelectedIndex = 1;
-                        rightBanner = Banner[1];
-                    }
-                    else if (Banner.IndexOf(value) == 1)
-                    {
-                        leftBanner = Banner[0];
-                        rightBanner = Banner[Banner.Count - 1];
-                        //this.fvLeft.SelectedIndex = 0;
-                        // this.fvRight.SelectedIndex = this.fvRight.Items.Count - 1;
-                    }
-                    else if (Banner.IndexOf(value) == Banner.Count - 1)
-                    {
-                        leftBanner = Banner[Banner.Count - 2];
-                        rightBanner = Banner[0];
-                        //this.fvLeft.SelectedIndex = this.fvLeft.Items.Count - 2;
-                        // this.fvRight.SelectedIndex = 0;
-                    }
-                    else if ((Banner.IndexOf(value) < (Banner.Count - 1)) && Banner.IndexOf(value) > -1)
-                    {
-                        leftBanner = Banner[Banner.IndexOf(value) - 1];//  this.home_flipView.SelectedIndex - 1;
-                        rightBanner = Banner[Banner.IndexOf(value) + 1];
-                        //this.fvLeft.SelectedIndex = this.home_flipView.SelectedIndex - 1;
-                        //this.fvRight.SelectedIndex = this.home_flipView.SelectedIndex + 1;
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
-                catch (Exception)
-                {
-                }
-                
-
-            }
-        }
-        private DHModel _leftBanner;
-        public DHModel leftBanner
-        {
-            get { return _leftBanner; }
-            set { _leftBanner = value; RaisePropertyChanged("leftBanner"); }
-        }
-        private DHModel _rightBanner;
-        public DHModel rightBanner
-        {
-            get { return _rightBanner; }
-            set { _rightBanner = value; RaisePropertyChanged("rightBanner"); }
-        }
-
-        private Visibility _leftVisibility;
-        public Visibility leftVisibility
-        {
-            get { return _leftVisibility; }
-            set { _leftVisibility = value; RaisePropertyChanged("leftVisibility"); }
-        }
-
-        private Visibility _rightVisibility;
-        public Visibility rightVisibility
-        {
-            get { return _rightVisibility; }
-            set { _rightVisibility = value; RaisePropertyChanged("rightVisibility"); }
-        }
-        private GridLength _grid_c_left;
-        public GridLength grid_c_left
-        {
-            get { return _grid_c_left; }
-            set { _grid_c_left = value; RaisePropertyChanged("grid_c_left"); }
-        }
-        private GridLength _grid_c_right;
-        public GridLength grid_c_right
-        {
-            get { return _grid_c_right; }
-            set { _grid_c_right = value; RaisePropertyChanged("grid_c_right"); }
-        }
-        private GridLength _grid_c_center;
-        public GridLength grid_c_center
-        {
-            get { return _grid_c_center; }
-            set { _grid_c_center = value; RaisePropertyChanged("grid_c_center"); }
-        }
-
-
-        private ObservableCollection<TagsModel> _TagsList;
-        public ObservableCollection<TagsModel> TagsList
-        {
-            get { return _TagsList; }
-            set { _TagsList = value; RaisePropertyChanged("TagsList"); }
-        }
-        public bool isHome { get; set; }
-        public int PartId { get; set; }
-        public int PageNum { get; set; }
-        public PartOrderBy orderBy { get; set; }
-
-        private TagsModel _SelectTag;
-        public TagsModel SelectTag
-        {
-            get { return _SelectTag; }
-            set { _SelectTag = value; RaisePropertyChanged("SelectTag"); }
-        }
-
-        private Visibility _ShowTags;
-        public Visibility ShowTags
-        {
-            get { return _ShowTags; }
-            set { _ShowTags = value; RaisePropertyChanged("ShowTags"); }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void RaisePropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
     }
     public class TagsModel
     {
         public int code { get; set; }
         public object data { get; set; }
-        public int rid { get; set; }
-        public ObservableCollection<TagsModel> tags { get; set; }
-        public int tag_id { get; set; }
-        public string tag_name { get; set; }
-        public int highlight { get; set; }
-        public string message { get; set; }
-    }
-    public class DHModel
-    {
-        public object result { get; set; }
-        public object list { get; set; }
-
-        public object recommends { get; set; }
-        public string aid { get; set; }
-        public string title { get; set; }
-        public string play { get; set; }
-        public string video_review { get; set; }
-        public string mid { get; set; }
-        public string pic { get; set; }
-        public string author { get; set; }
-
-        public object banners { get; set; }
-        public string img { get; set; }
-
-        public object news { get; set; }
-        public string link { get; set; }
-    }
-
+		public int highlight { get; set; }
+		public string message { get; set; }
+		public int rid { get; set; }
+		public int tag_id { get; set; }
+		public string tag_name { get; set; }
+		public ObservableCollection<TagsModel> tags { get; set; }
+	}
 }

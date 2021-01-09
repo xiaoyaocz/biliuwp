@@ -10,24 +10,23 @@
 
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Grid Background="{ThemeResource Bili-ForeColor}" Grid.Row="0" Height="48" >
+        <Grid Background="{ThemeResource Bili-ForeColor}" Grid.Row="0" Height="48">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="48"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="48" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <AppBarButton x:Name="btn_back" Click="btn_Back_Click" Icon="Back" Width="48" Height="48" Foreground="White"/>
+            <AppBarButton x:Name="btn_back" Click="btn_Back_Click" Icon="Back" Width="48" Height="48" Foreground="White" />
             <TextBlock  Text="我的头衔" Margin="5 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
             <TextBlock x:Name="signed" Visibility="Collapsed" Grid.Column="2" Margin="10 0"  Foreground="White" VerticalAlignment="Center">我的勋章</TextBlock>
-          
         </Grid>
-        <ScrollViewer Grid.Row="1" >
+        <ScrollViewer Grid.Row="1">
             <StackPanel>
-             
+
                 <ListView SelectionMode="None" x:Name="list">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
@@ -42,8 +41,8 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition  Width="100" />
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition  Width="auto"/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition  Width="auto" />
                                 </Grid.ColumnDefinitions>
                                 <Image HorizontalAlignment="Left" Source="{Binding Path= title_pic.img}" Height="24" MaxWidth="100"></Image>
                                 <TextBlock Grid.Column="1" TextTrimming="CharacterEllipsis" Margin="10 0" VerticalAlignment="Center" Text="{Binding activity}"></TextBlock>
@@ -51,14 +50,13 @@
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-
                 </ListView>
             </StackPanel>
         </ScrollViewer>
         <StackPanel x:Name="NoDT" Visibility="Collapsed" Grid.Row="1" VerticalAlignment="Center">
             <Image Source="ms-appx:///Assets/null.png" Width="72"></Image>
             <TextBlock Margin="10" HorizontalAlignment="Center" Foreground="Gray">
-										<Run Text="啥都没有"/>
+										<Run Text="啥都没有" />
             </TextBlock>
         </StackPanel>
         <ProgressRing Width="56" Height="56" x:Name="pr_Load" Grid.RowSpan="2"  IsActive="True" Visibility="Collapsed"></ProgressRing>
