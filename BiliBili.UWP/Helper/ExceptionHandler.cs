@@ -1,143 +1,128 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
 namespace BiliBili.UWP.Helper
 {
-    internal class ExceptionHandlingSynchronizationContext : SynchronizationContext
-    {
-        /// <summary>
-        /// 注册事件.  需要在OnLaunched和OnActivated事件中调用
-        /// </summary>
-        /// <returns></returns>
-        public static ExceptionHandlingSynchronizationContext Register()
-        {
-            var syncContext = Current;
-            if (syncContext == null)
-                throw new InvalidOperationException("Ensure a synchronization context exists before calling this method.");
+	public class AysncUnhandledExceptionEventArgs : EventArgs
+	{
+		public Exception Exception { get; set; }
+		public bool Handled { get; set; }
+	}
 
+	internal class ExceptionHandlingSynchronizationContext : SynchronizationContext
+	{
+		private readonly SynchronizationContext _syncContext;
 
-            var customSynchronizationContext = syncContext as ExceptionHandlingSynchronizationContext;
+		public ExceptionHandlingSynchronizationContext(SynchronizationContext syncContext)
+		{
+			_syncContext = syncContext;
+		}
 
+		public event EventHandler<AysncUnhandledExceptionEventArgs> UnhandledException;
 
-            if (customSynchronizationContext == null)
-            {
-                customSynchronizationContext = new ExceptionHandlingSynchronizationContext(syncContext);
-                SetSynchronizationContext(customSynchronizationContext);
-            }
+		/// <summary>
+		/// 注册事件. 需要在OnLaunched和OnActivated事件中调用
+		/// </summary>
+		/// <returns></returns>
+		public static ExceptionHandlingSynchronizationContext Register()
+		{
+			var syncContext = Current;
+			if (syncContext == null)
+				throw new InvalidOperationException("Ensure a synchronization context exists before calling this method.");
 
+			var customSynchronizationContext = syncContext as ExceptionHandlingSynchronizationContext;
 
-            return customSynchronizationContext;
-        }
+			if (customSynchronizationContext == null)
+			{
+				customSynchronizationContext = new ExceptionHandlingSynchronizationContext(syncContext);
+				SetSynchronizationContext(customSynchronizationContext);
+			}
 
-        /// <summary>
-        /// 将线程的上下文绑定到特定的Frame上面
-        /// </summary>
-        /// <param name="rootFrame"></param>
-        /// <returns></returns>
-        public static ExceptionHandlingSynchronizationContext RegisterForFrame(Frame rootFrame)
-        {
-            if (rootFrame == null)
-                throw new ArgumentNullException("rootFrame");
+			return customSynchronizationContext;
+		}
 
-            var synchronizationContext = Register();
+		/// <summary>
+		/// 将线程的上下文绑定到特定的Frame上面
+		/// </summary>
+		/// <param name="rootFrame"></param>
+		/// <returns></returns>
+		public static ExceptionHandlingSynchronizationContext RegisterForFrame(Frame rootFrame)
+		{
+			if (rootFrame == null)
+				throw new ArgumentNullException("rootFrame");
 
-            rootFrame.Navigating += (sender, args) => EnsureContext(synchronizationContext);
-            rootFrame.Loaded += (sender, args) => EnsureContext(synchronizationContext);
+			var synchronizationContext = Register();
 
-            return synchronizationContext;
-        }
+			rootFrame.Navigating += (sender, args) => EnsureContext(synchronizationContext);
+			rootFrame.Loaded += (sender, args) => EnsureContext(synchronizationContext);
 
-        private static void EnsureContext(SynchronizationContext context)
-        {
-            if (Current != context)
-                SetSynchronizationContext(context);
-        }
+			return synchronizationContext;
+		}
 
+		public override SynchronizationContext CreateCopy()
+		{
+			return new ExceptionHandlingSynchronizationContext(_syncContext.CreateCopy());
+		}
 
-        private readonly SynchronizationContext _syncContext;
+		public override void OperationCompleted()
+		{
+			_syncContext.OperationCompleted();
+		}
 
+		public override void OperationStarted()
+		{
+			_syncContext.OperationStarted();
+		}
 
-        public ExceptionHandlingSynchronizationContext(SynchronizationContext syncContext)
-        {
-            _syncContext = syncContext;
-        }
+		public override void Post(SendOrPostCallback d, object state)
+		{
+			_syncContext.Post(WrapCallback(d), state);
+		}
 
+		public override void Send(SendOrPostCallback d, object state)
+		{
+			_syncContext.Send(d, state);
+		}
 
-        public override SynchronizationContext CreateCopy()
-        {
-            return new ExceptionHandlingSynchronizationContext(_syncContext.CreateCopy());
-        }
+		private static void EnsureContext(SynchronizationContext context)
+		{
+			if (Current != context)
+				SetSynchronizationContext(context);
+		}
 
+		private bool HandleException(Exception exception)
+		{
+			if (UnhandledException == null)
+				return false;
 
-        public override void OperationCompleted()
-        {
-            _syncContext.OperationCompleted();
-        }
+			var exWrapper = new AysncUnhandledExceptionEventArgs
+			{
+				Exception = exception
+			};
 
-
-        public override void OperationStarted()
-        {
-            _syncContext.OperationStarted();
-        }
-
-
-        public override void Post(SendOrPostCallback d, object state)
-        {
-            _syncContext.Post(WrapCallback(d), state);
-        }
-
-
-        public override void Send(SendOrPostCallback d, object state)
-        {
-            _syncContext.Send(d, state);
-        }
-
-
-        private SendOrPostCallback WrapCallback(SendOrPostCallback sendOrPostCallback)
-        {
-            return state =>
-            {
-                try
-                {
-                    sendOrPostCallback(state);
-                }
-                catch (Exception ex)
-                {
-                    if (!HandleException(ex))
-                        throw;
-                }
-            };
-        }
-
-        private bool HandleException(Exception exception)
-        {
-            if (UnhandledException == null)
-                return false;
-
-            var exWrapper = new AysncUnhandledExceptionEventArgs
-            {
-                Exception = exception
-            };
-
-            UnhandledException(this, exWrapper);
+			UnhandledException(this, exWrapper);
 
 #if DEBUG && !DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION
-            if (System.Diagnostics.Debugger.IsAttached) System.Diagnostics.Debugger.Break();
+			if (System.Diagnostics.Debugger.IsAttached) System.Diagnostics.Debugger.Break();
 #endif
-            return exWrapper.Handled;
-        }
+			return exWrapper.Handled;
+		}
 
-        public event EventHandler<AysncUnhandledExceptionEventArgs> UnhandledException;
-    }
-
-    public class AysncUnhandledExceptionEventArgs : EventArgs
-    {
-        public bool Handled { get; set; }
-        public Exception Exception { get; set; }
-    }
+		private SendOrPostCallback WrapCallback(SendOrPostCallback sendOrPostCallback)
+		{
+			return state =>
+			{
+				try
+				{
+					sendOrPostCallback(state);
+				}
+				catch (Exception ex)
+				{
+					if (!HandleException(ex))
+						throw;
+				}
+			};
+		}
+	}
 }

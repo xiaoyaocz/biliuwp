@@ -16,30 +16,29 @@
         <DataTemplate x:Key="Feed0">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.RowSpan="2">
-                        <HyperlinkButton  Click="btn_User_Click" Padding="0" Margin="0"  >
+                        <HyperlinkButton  Click="btn_User_Click" Padding="0" Margin="0">
                             <Ellipse Width="36" Height="36">
                                 <Ellipse.Fill>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=desc.user_profile.info.face}"/>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=desc.user_profile.info.face}" />
                                 </Ellipse.Fill>
                             </Ellipse>
                         </HyperlinkButton>
                         <Image Width="16" Height="16" VerticalAlignment="Bottom" HorizontalAlignment="Right" Source="{Binding Path=desc.user_profile.card.verify}"></Image>
                     </Grid>
-
 
                     <TextBlock Grid.Column="1" Margin="8 0" VerticalAlignment="Center" Text="{Binding Path=desc.user_profile.info.uname}"></TextBlock>
                     <TextBlock Grid.Column="1" Grid.Row="1" Foreground="Gray" FontSize="14" Margin="8 0" VerticalAlignment="Center" Text="{Binding Path=desc.time}"></TextBlock>
@@ -48,12 +47,11 @@
                 <StackPanel Margin="0 4" Grid.Row="1">
 
                     <ContentControl Content="{Binding  Path=feed.item.Content}">
-
                     </ContentControl>
 
                     <!--<RichTextBlock IsTextSelectionEnabled="True" Margin="0 4">
                         <RichTextBlock.Blocks>
-                            <Paragraph >
+                            <Paragraph>
                                 <Run Text="{Binding Path=feed.item.content}"></Run>
                             </Paragraph>
                         </RichTextBlock.Blocks>
@@ -65,8 +63,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Ellipse Width="24" Height="24">
                                         <Ellipse.Fill>
-                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=feed.video.owner.face}"/>
-
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=feed.video.owner.face}" />
                                         </Ellipse.Fill>
                                     </Ellipse>
                                     <TextBlock Margin="4 0" VerticalAlignment="Center" Text="{Binding Path=feed.video.owner.name}"></TextBlock>
@@ -78,19 +75,18 @@
                         <ContentControl Visibility="{Binding Path=feed.video.showdynamic}" Content="{Binding  Path=feed.video.Content}">
                             <!--<RichTextBlock  IsTextSelectionEnabled="True" Margin="0 4">
                                 <RichTextBlock.Blocks>
-                                    <Paragraph >
+                                    <Paragraph>
                                         <Run Text="{Binding Path=feed.video.dynamic}"></Run>
                                     </Paragraph>
                                 </RichTextBlock.Blocks>
                             </RichTextBlock>-->
                         </ContentControl>
 
-
                         <Button Background="Transparent" BorderThickness="0" Click="btn_OpenVideo_Click" Margin="0" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0">
                             <Grid BorderThickness="1" BorderBrush="#4C808080"  Margin="0 0 0 4">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="120"/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Grid>
                                     <Image Source="{Binding Path=feed.video.pic}"></Image>
@@ -105,7 +101,6 @@
                                 </StackPanel>
                             </Grid>
                         </Button>
-
                     </StackPanel>
                     <StackPanel  Visibility="{Binding Path=feed.showArticle}" Margin="0 0 0 4" Background="#19BDBCBC">
                         <StackPanel Orientation="Horizontal">
@@ -113,8 +108,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Ellipse Width="24" Height="24">
                                         <Ellipse.Fill>
-                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=feed.article.author.face}"/>
-
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=feed.article.author.face}" />
                                         </Ellipse.Fill>
                                     </Ellipse>
                                     <TextBlock Margin="4 0" VerticalAlignment="Center" Text="{Binding Path=feed.article.author.name}"></TextBlock>
@@ -127,8 +121,8 @@
                                 <StackPanel>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock TextTrimming="CharacterEllipsis" Margin="4 0" Text="{Binding Path=feed.article.title}" VerticalAlignment="Center"></TextBlock>
                                         <Border Grid.Column="1" Background="#CC008BFF" CornerRadius="8 0 0 8" Margin="4 4 0 4" Padding="8 4" VerticalAlignment="Top" HorizontalAlignment="Right">
@@ -139,8 +133,6 @@
                                     <TextBlock Margin="4 4 4 0" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" MaxLines="2" Text="{Binding Path=feed.article.summary}" FontSize="14" Foreground="Gray"></TextBlock>
                                     <TextBlock Margin="4"  FontSize="14" Foreground="Gray"><Run Text="{Binding Path=feed.article.stats.View}"></Run>阅读</TextBlock>
                                 </StackPanel>
-
-
                             </Grid>
                         </Button>
                     </StackPanel>
@@ -152,8 +144,7 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Ellipse Width="24" Height="24">
                                                 <Ellipse.Fill>
-                                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=feed.photo.user.head_url}"/>
-
+                                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=feed.photo.user.head_url}" />
                                                 </Ellipse.Fill>
                                             </Ellipse>
                                             <TextBlock Margin="4 0" VerticalAlignment="Center" Text="{Binding Path=feed.photo.user.name}"></TextBlock>
@@ -165,14 +156,12 @@
                                 <ContentControl  Content="{Binding  Path=feed.photo.item.Content}">
                                     <!--<RichTextBlock  IsTextSelectionEnabled="True" Margin="0 4">
                                 <RichTextBlock.Blocks>
-                                    <Paragraph >
+                                    <Paragraph>
                                         <Run Text="{Binding Path=feed.video.dynamic}"></Run>
                                     </Paragraph>
                                 </RichTextBlock.Blocks>
                             </RichTextBlock>-->
                                 </ContentControl>
-
-
 
                                 <GridView  ItemTemplateSelector="{StaticResource PhotoItemDataTemplateSelector}" Visibility="{Binding Path=feed1.item.showPic}"  ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" ItemsSource="{Binding Path=feed.photo.item.pics}" ItemClick="GridView_ItemClick" SelectionMode="None" IsItemClickEnabled="True">
                                     <!--<GridView.ItemTemplate>
@@ -187,7 +176,6 @@
                                     </GridView.ItemTemplate>-->
                                 </GridView>
                             </StackPanel>
-
                         </Button>
                     </StackPanel>
                     <StackPanel  Visibility="{Binding Path=feed.showWeb}" Margin="0 0 0 4" Background="#19BDBCBC">
@@ -196,39 +184,31 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Ellipse Width="24" Height="24">
                                         <Ellipse.Fill>
-                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=feed.web.user.face}"/>
-
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=feed.web.user.face}" />
                                         </Ellipse.Fill>
                                     </Ellipse>
                                     <TextBlock Margin="4 0" VerticalAlignment="Center" Text="{Binding Path=feed.web.user.uname}"></TextBlock>
                                 </StackPanel>
                             </HyperlinkButton>
-
                         </StackPanel>
                         <Button Background="Transparent"  BorderThickness="0" Click="btn_OpenWeb_Click" Margin="0" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0">
                             <StackPanel Grid.Row="1" Margin="0 4">
                                 <ContentControl  Visibility="{Binding Path=feed.web.vest.showweb}" Content="{Binding  Path=feed.web.vest.Content}">
-
                                 </ContentControl>
                                 <Grid BorderThickness="1" BorderBrush="#4C808080" Margin="0 4">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="64"/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="64" />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="auto" />
                                     </Grid.ColumnDefinitions>
 
                                     <Image Source="{Binding Path=feed.web.sketch.cover_url}" Width="64" Height="64"></Image>
-
 
                                     <StackPanel Grid.Column="1" Margin="8 0 4 0">
                                         <TextBlock TextWrapping="Wrap" ><Run Text="{Binding Path=feed.web.sketch.title}"></Run></TextBlock>
                                         <TextBlock TextWrapping="Wrap" Foreground="Gray" FontSize="14"><Run Text="{Binding Path=feed.web.sketch.desc_text}"></Run></TextBlock>
                                     </StackPanel>
-
-
                                 </Grid>
-
-
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -237,18 +217,16 @@
                         <Button Background="Transparent"  BorderThickness="0"  Click="btn_OpenBnagumi_Click" Margin="0" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0">
                             <StackPanel Grid.Row="1" Margin="0 4">
 
-
                                 <TextBlock TextTrimming="CharacterEllipsis"  Text="{Binding Path=feed.bangumi.apiSeasonInfo.title}"></TextBlock>
 
                                 <Grid BorderThickness="1" BorderBrush="#4C808080" Margin="0 4">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="120"/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="120" />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="auto" />
                                     </Grid.ColumnDefinitions>
 
                                     <Image Source="{Binding Path=feed.bangumi.apiSeasonInfo.cover}"></Image>
-
 
                                     <StackPanel Grid.Column="1" Margin="8 0 4 0">
                                         <TextBlock TextWrapping="Wrap" ><Run Text="{Binding Path=feed.bangumi.new_desc}"></Run></TextBlock>
@@ -258,7 +236,6 @@
                                         <TextBlock Foreground="White" FontSize="12">番剧</TextBlock>
                                     </Border>
                                 </Grid>
-
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -268,8 +245,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Ellipse Width="24" Height="24">
                                         <Ellipse.Fill>
-                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=feed.music.upperAvatar}"/>
-
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=feed.music.upperAvatar}" />
                                         </Ellipse.Fill>
                                     </Ellipse>
                                     <TextBlock Margin="4 0" VerticalAlignment="Center" Text="{Binding Path=feed.music.upper}"></TextBlock>
@@ -278,23 +254,20 @@
                             <TextBlock Foreground="Gray" VerticalAlignment="Center" Margin="4 0">的投稿</TextBlock>
                         </StackPanel>
                         <ContentControl Visibility="{Binding Path=feed.music.showdynamic}" Content="{Binding  Path=feed.music.Content}">
-
                         </ContentControl>
                         <!--<TextBlock TextWrapping="Wrap"  IsTextSelectionEnabled="True" Text="{Binding Path=feed.music.intro}"></TextBlock>-->
                         <Button Background="Transparent" BorderThickness="0"  Click="btn_OpenMusic_Click" Margin="0" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0">
                             <Grid BorderThickness="1" BorderBrush="#4C808080" Margin="0 4">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="64"/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="64" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
 
                                 <Image Source="{Binding Path=feed.music.cover}" Width="64" Height="64"></Image>
 
-
                                 <StackPanel Grid.Column="1" Margin="8 0 4 0">
                                     <TextBlock TextWrapping="Wrap" ><Run Text="{Binding Path=feed.music.title}"></Run></TextBlock>
-
                                 </StackPanel>
 
                                 <Border Grid.Column="2" Background="#99FF7400" CornerRadius="8 0 0 8" Margin="4 4 0 4" Padding="8 4" VerticalAlignment="Top" HorizontalAlignment="Right">
@@ -302,7 +275,6 @@
                                 </Border>
                             </Grid>
                         </Button>
-
                     </StackPanel>
                     <StackPanel  Visibility="{Binding Path=feed.showMiniVideo}" Margin="0 0 0 4" Background="#19BDBCBC">
                         <StackPanel Orientation="Horizontal">
@@ -310,8 +282,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Ellipse Width="24" Height="24">
                                         <Ellipse.Fill>
-                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=feed.minivideo.user.head_url}"/>
-
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=feed.minivideo.user.head_url}" />
                                         </Ellipse.Fill>
                                     </Ellipse>
                                     <TextBlock Margin="4 0" VerticalAlignment="Center" Text="{Binding Path=feed.minivideo.user.name}"></TextBlock>
@@ -327,9 +298,6 @@
                                 <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="36" Foreground="White" Glyph="&#xE102;" />
                             </Grid>
                         </Grid>
-
-
-
                     </StackPanel>
                     <StackPanel  Visibility="{Binding Path=feed.showText}" Margin="0 0 0 4" Background="#19BDBCBC">
                         <Button Background="Transparent"  BorderThickness="0"  Click="btn_OpenPhoto_Click" Margin="0" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0">
@@ -337,20 +305,19 @@
                                 <StackPanel Orientation="Horizontal">
                                     <HyperlinkButton  Click="btn_OpenUser_Click" Tag="{Binding Path=feed.text.user.uid}">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Margin="4 0" VerticalAlignment="Center" >@<Run Text="{Binding Path=feed.text.user.uname}"/></TextBlock>
+                                            <TextBlock Margin="4 0" VerticalAlignment="Center" >@<Run Text="{Binding Path=feed.text.user.uname}" /></TextBlock>
                                         </StackPanel>
                                     </HyperlinkButton>
                                     <TextBlock Foreground="Gray" VerticalAlignment="Center" Margin="4 0"></TextBlock>
                                 </StackPanel>
 
                                 <ContentControl  Content="{Binding  Path=feed.text.item.Content}">
-
                                 </ContentControl>
                                 <HyperlinkButton x:Name="btn_vote" Click="btn_vote_Click" Tag="{Binding Path=feed.origin_extension.vote_cfg.vote_id}" Visibility="{Binding Path=feed.showExtension}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
                                     <Grid BorderThickness="1" BorderBrush="#4C808080" Margin="0 4">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="auto" />
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" Margin="8 0 4 0">
                                             <TextBlock TextWrapping="Wrap" Margin="0 4"><Run Text="{Binding Path=feed.origin_extension.vote_cfg.desc}"></Run></TextBlock>
@@ -363,17 +330,15 @@
                                     </Grid>
                                 </HyperlinkButton>
                             </StackPanel>
-
                         </Button>
                     </StackPanel>
                 </StackPanel>
 
-
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <HyperlinkButton Click="btn_Repost_Click" HorizontalAlignment="Stretch" FontSize="14" Foreground="Gray">
                         <StackPanel Orientation="Horizontal">
@@ -399,24 +364,24 @@
         <DataTemplate x:Key="Feed1">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.RowSpan="2">
-                        <HyperlinkButton  Click="btn_User_Click" Padding="0" Margin="0"  >
+                        <HyperlinkButton  Click="btn_User_Click" Padding="0" Margin="0">
                             <Ellipse Width="36" Height="36">
                                 <Ellipse.Fill>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=desc.user_profile.info.face}"/>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=desc.user_profile.info.face}" />
                                 </Ellipse.Fill>
                             </Ellipse>
                         </HyperlinkButton>
@@ -432,13 +397,12 @@
                     </ContentControl>
 
                     <GridView  ItemTemplateSelector="{StaticResource PhotoItemDataTemplateSelector}" Visibility="{Binding Path=feed1.item.showPic}" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" ItemsSource="{Binding Path=feed1.item.showpictures}" ItemClick="GridView_ItemClick" SelectionMode="None" IsItemClickEnabled="True">
-
                     </GridView>
                     <HyperlinkButton x:Name="btn_vote" Click="btn_vote_Click" Tag="{Binding Path=extension.vote_cfg.vote_id}" Visibility="{Binding showExtension}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0" Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
                         <Grid BorderThickness="1" BorderBrush="#4C808080" Margin="0 4">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" Margin="8 0 4 0">
                                 <TextBlock TextWrapping="Wrap" Margin="0 4"><Run Text="{Binding Path=extension.vote_cfg.desc}"></Run></TextBlock>
@@ -454,9 +418,9 @@
 
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <HyperlinkButton Click="btn_Repost_Click" HorizontalAlignment="Stretch" FontSize="14" Foreground="Gray">
                         <StackPanel Orientation="Horizontal">
@@ -482,24 +446,24 @@
         <DataTemplate x:Key="FeedMiniVideo">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.RowSpan="2">
-                        <HyperlinkButton  Click="btn_User_Click" Padding="0" Margin="0"  >
+                        <HyperlinkButton  Click="btn_User_Click" Padding="0" Margin="0">
                             <Ellipse Width="36" Height="36">
                                 <Ellipse.Fill>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=desc.user_profile.info.face}"/>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=desc.user_profile.info.face}" />
                                 </Ellipse.Fill>
                             </Ellipse>
                         </HyperlinkButton>
@@ -515,7 +479,7 @@
                     </ContentControl>
                     <!--<RichTextBlock IsTextSelectionEnabled="True" Margin="0 4">
                         <RichTextBlock.Blocks>
-                            <Paragraph >
+                            <Paragraph>
                                 <Run Text="{Binding Path=minivideo.item.description}"></Run>
                             </Paragraph>
                         </RichTextBlock.Blocks>
@@ -527,21 +491,18 @@
                             <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="36" Foreground="White" Glyph="&#xE102;" />
                         </Grid>
                     </Grid>-->
-                    <MediaElement AutoPlay="False" MaxHeight="200" Source="{Binding Path=minivideo.item.video_playurl}" AreTransportControlsEnabled="True" >
+                    <MediaElement AutoPlay="False" MaxHeight="200" Source="{Binding Path=minivideo.item.video_playurl}" AreTransportControlsEnabled="True">
                         <MediaElement.TransportControls>
                             <MediaTransportControls IsCompact="True"></MediaTransportControls>
                         </MediaElement.TransportControls>
                     </MediaElement>
-
-
-
                 </StackPanel>
 
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <HyperlinkButton Click="btn_Repost_Click" HorizontalAlignment="Stretch" FontSize="14" Foreground="Gray">
                         <StackPanel Orientation="Horizontal">
@@ -567,24 +528,24 @@
         <DataTemplate x:Key="FeedVideo">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.RowSpan="2">
-                        <HyperlinkButton  Click="btn_User_Click" Padding="0" Margin="0"  >
+                        <HyperlinkButton  Click="btn_User_Click" Padding="0" Margin="0">
                             <Ellipse Width="36" Height="36">
                                 <Ellipse.Fill>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=desc.user_profile.info.face}"/>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=desc.user_profile.info.face}" />
                                 </Ellipse.Fill>
                             </Ellipse>
                         </HyperlinkButton>
@@ -599,8 +560,8 @@
                     <ContentControl Content="{Binding  Path=video.Content}"  Visibility="{Binding Path=video.showdynamic}"></ContentControl>
                     <Grid BorderThickness="1" BorderBrush="#4C808080" Margin="0 4">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid>
                             <Image Source="{Binding Path=video.pic}"></Image>
@@ -614,15 +575,13 @@
                             <TextBlock Foreground="Gray" Margin="0 4" FontSize="14" TextWrapping="Wrap"><Run Text="{Binding Path=video.stat.View}"></Run>播放 <Run Text="{Binding Path=video.stat.Danmaku}"></Run>弹幕</TextBlock>
                         </StackPanel>
                     </Grid>
-
-
                 </StackPanel>
 
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <HyperlinkButton Click="btn_Repost_Click" HorizontalAlignment="Stretch" FontSize="14" Foreground="Gray">
                         <StackPanel Orientation="Horizontal">
@@ -648,22 +607,22 @@
         <DataTemplate x:Key="FeedBangumi">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Ellipse Width="36" Height="36" Grid.RowSpan="2">
                         <Ellipse.Fill>
-                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=bangumi.season.cover}"/>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=bangumi.season.cover}" />
                         </Ellipse.Fill>
                     </Ellipse>
                     <TextBlock Grid.Column="1" Margin="8 0" VerticalAlignment="Center" ><Run Text="{Binding Path=bangumi.season.title}"></Run> <Run Foreground="Gray">更新了</Run></TextBlock>
@@ -673,13 +632,12 @@
                 <StackPanel Grid.Row="1" Margin="0 8">
                     <Grid BorderThickness="1" BorderBrush="#4C808080" Margin="0 4">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
 
                         <Image Source="{Binding Path=bangumi.cover}"></Image>
-
 
                         <StackPanel Grid.Column="1" Margin="8 0 4 0">
                             <TextBlock TextWrapping="Wrap" ><Run Text="{Binding Path=bangumi.new_desc}"></Run></TextBlock>
@@ -688,15 +646,13 @@
                             <TextBlock Foreground="White" FontSize="12" Text="{Binding mode}"></TextBlock>
                         </Border>
                     </Grid>
-
-
                 </StackPanel>
 
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <HyperlinkButton Click="btn_Repost_Click" HorizontalAlignment="Stretch" FontSize="14" Foreground="Gray">
                         <StackPanel Orientation="Horizontal">
@@ -722,24 +678,24 @@
         <DataTemplate x:Key="FeedMusic">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.RowSpan="2">
-                        <HyperlinkButton  Click="btn_User_Click" Padding="0" Margin="0"  >
+                        <HyperlinkButton  Click="btn_User_Click" Padding="0" Margin="0">
                             <Ellipse Width="36" Height="36">
                                 <Ellipse.Fill>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=desc.user_profile.info.face}"/>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=desc.user_profile.info.face}" />
                                 </Ellipse.Fill>
                             </Ellipse>
                         </HyperlinkButton>
@@ -751,38 +707,33 @@
 
                 <StackPanel Grid.Row="1" Margin="0 8">
                     <ContentControl Visibility="{Binding Path=music.showdynamic}" Content="{Binding  Path=music.Content}">
-
                     </ContentControl>
                     <!--<TextBlock TextWrapping="Wrap" Visibility="{Binding Path=music.showdynamic}" IsTextSelectionEnabled="True" Text="{Binding Path=music.intro}"></TextBlock>-->
 
                     <Grid BorderThickness="1" BorderBrush="#4C808080" Margin="0 4">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="64"/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="64" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
 
                         <Image Source="{Binding Path=music.cover}" Width="64" Height="64"></Image>
 
-
                         <StackPanel Grid.Column="1" Margin="8 0 4 0">
                             <TextBlock TextWrapping="Wrap" ><Run Text="{Binding Path=music.title}"></Run></TextBlock>
-
                         </StackPanel>
 
                         <Border Grid.Column="2" Background="#99FF7400" CornerRadius="8 0 0 8" Margin="4 4 0 4" Padding="8 4" VerticalAlignment="Top" HorizontalAlignment="Right">
                             <TextBlock Foreground="White" FontSize="12">音频</TextBlock>
                         </Border>
                     </Grid>
-
-
                 </StackPanel>
 
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <HyperlinkButton Click="btn_Repost_Click" HorizontalAlignment="Stretch" FontSize="14" Foreground="Gray">
                         <StackPanel Orientation="Horizontal">
@@ -808,24 +759,24 @@
         <DataTemplate x:Key="FeedWeb">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.RowSpan="2">
-                        <HyperlinkButton  Click="btn_User_Click" Padding="0" Margin="0"  >
+                        <HyperlinkButton  Click="btn_User_Click" Padding="0" Margin="0">
                             <Ellipse Width="36" Height="36">
                                 <Ellipse.Fill>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=desc.user_profile.info.face}"/>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=desc.user_profile.info.face}" />
                                 </Ellipse.Fill>
                             </Ellipse>
                         </HyperlinkButton>
@@ -837,36 +788,30 @@
 
                 <StackPanel Grid.Row="1" Margin="0 8">
                     <ContentControl  Visibility="{Binding Path=web.vest.showweb}" Content="{Binding  Path=web.vest.Content}">
-
                     </ContentControl>
                     <!--<TextBlock TextWrapping="Wrap" Visibility="{Binding Path=web.vest.showweb}" IsTextSelectionEnabled="True" Text="{Binding Path=web.vest.content}"></TextBlock>-->
 
                     <Grid BorderThickness="1" BorderBrush="#4C808080" Margin="0 4">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="64"/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="64" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
 
                         <Image Source="{Binding Path=web.sketch.cover_url}" Width="64" Height="64"></Image>
-
 
                         <StackPanel Grid.Column="1" Margin="8 0 4 0">
                             <TextBlock TextWrapping="Wrap" ><Run Text="{Binding Path=web.sketch.title}"></Run></TextBlock>
                             <TextBlock TextWrapping="Wrap" Foreground="Gray" FontSize="14"><Run Text="{Binding Path=web.sketch.desc_text}"></Run></TextBlock>
                         </StackPanel>
-
-
                     </Grid>
-
-
                 </StackPanel>
 
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <HyperlinkButton Click="btn_Repost_Click" HorizontalAlignment="Stretch" FontSize="14" Foreground="Gray">
                         <StackPanel Orientation="Horizontal">
@@ -892,24 +837,24 @@
         <DataTemplate x:Key="FeedArticle">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.RowSpan="2">
-                        <HyperlinkButton  Click="btn_User_Click" Padding="0" Margin="0"  >
+                        <HyperlinkButton  Click="btn_User_Click" Padding="0" Margin="0">
                             <Ellipse Width="36" Height="36">
                                 <Ellipse.Fill>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=desc.user_profile.info.face}"/>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=desc.user_profile.info.face}" />
                                 </Ellipse.Fill>
                             </Ellipse>
                         </HyperlinkButton>
@@ -919,14 +864,12 @@
                     <TextBlock Grid.Column="1" Grid.Row="1" Foreground="Gray" FontSize="14" Margin="8 0" VerticalAlignment="Center" Text="{Binding Path=desc.time}"></TextBlock>
                 </Grid>
 
-
-
                 <Grid BorderThickness="1" Grid.Row="1" BorderBrush="#4C808080" Margin="0 8">
                     <StackPanel>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock TextTrimming="CharacterEllipsis" Margin="4 0" Text="{Binding Path=article.title}" VerticalAlignment="Center"></TextBlock>
                             <Border Grid.Column="1" Background="#CC008BFF" CornerRadius="8 0 0 8" Margin="4 4 0 4" Padding="8 4" VerticalAlignment="Top" HorizontalAlignment="Right">
@@ -937,18 +880,13 @@
                         <TextBlock Margin="4 4 4 0" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" MaxLines="2" Text="{Binding Path=article.summary}" FontSize="14" Foreground="Gray"></TextBlock>
                         <TextBlock Margin="4"  FontSize="14" Foreground="Gray"><Run Text="{Binding Path=article.stats.View}"></Run>阅读</TextBlock>
                     </StackPanel>
-
-
                 </Grid>
-
-
-
 
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <HyperlinkButton Click="btn_Repost_Click" HorizontalAlignment="Stretch" FontSize="14" Foreground="Gray">
                         <StackPanel Orientation="Horizontal">
@@ -984,7 +922,6 @@
                     <TextBlock Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" Text="{Binding plus}"></TextBlock>
                 </Border>
             </Grid>
-
         </DataTemplate>
         <DataTemplate x:Key="Photos22">
 
@@ -994,15 +931,13 @@
                     <TextBlock Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" Text="{Binding plus}"></TextBlock>
                 </Border>
             </Grid>
-
         </DataTemplate>
-        
     </UserControl.Resources>
     <Grid>
         <Border Margin="4 0" VerticalAlignment="Top" Width="100" x:Name="bor_width" Height="0"></Border>
         <Border Margin="4 0" VerticalAlignment="Top" Width="100" x:Name="bor_Width1" Height="0"></Border>
         <pr:PullToRefreshBox RefreshInvoked="PullToRefreshBox_RefreshInvoked">
-            <ScrollViewer x:Name="sv_dynamic"  VerticalScrollBarVisibility="Auto" ViewChanged="sv_dynamic_ViewChanged" >
+            <ScrollViewer x:Name="sv_dynamic"  VerticalScrollBarVisibility="Auto" ViewChanged="sv_dynamic_ViewChanged">
                 <StackPanel>
                     <ListView x:Name="list_dynamic" ItemTemplateSelector="{StaticResource ResourceKey=DynamicItemDataTemplateSelector}" ItemClick="list_dynamic_ItemClick"  SelectionMode="None" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                         <ListView.ItemContainerStyle>
@@ -1014,14 +949,10 @@
                                 <Setter Property="Padding" Value="4"></Setter>
                             </Style>
                         </ListView.ItemContainerStyle>
-
                     </ListView>
                     <HyperlinkButton x:Name="btn_LoadMore" Click="btn_LoadMore_Click" Foreground="Gray" Margin="4" HorizontalAlignment="Center">加载更多</HyperlinkButton>
                 </StackPanel>
-             
             </ScrollViewer>
         </pr:PullToRefreshBox>
     </Grid>
-   
-
 </UserControl>

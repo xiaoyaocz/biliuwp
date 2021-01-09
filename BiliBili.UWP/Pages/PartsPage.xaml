@@ -8,8 +8,7 @@
     mc:Ignorable="d"
     Tag="分区"
     SizeChanged="Page_SizeChanged"
-    xmlns:my="using:AppArrange.WrapPanel"
-    >
+    xmlns:my="using:AppArrange.WrapPanel">
     <Page.Resources>
 
         <Style x:Key="GridViewItemStyle" TargetType="GridViewItem">
@@ -20,7 +19,7 @@
         </Style>
         <DataTemplate x:Name="HomeItemTemplate">
             <Border Width="{Binding ElementName=ViewBox_num,Path=Width}">
-                <Grid >
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition ></RowDefinition>
                         <RowDefinition Height="48"></RowDefinition>
@@ -47,7 +46,7 @@
         </DataTemplate>
         <DataTemplate x:Name="HomeItemTemplate2">
             <Viewbox MaxWidth="{Binding ElementName=ViewBox2_num,Path=Width}">
-                <Grid MaxWidth="170" >
+                <Grid MaxWidth="170">
                     <Grid.RowDefinitions>
                         <RowDefinition ></RowDefinition>
                         <RowDefinition Height="50"></RowDefinition>
@@ -93,23 +92,23 @@
             </Border>
         </DataTemplate>
         <Style x:Key="FlipViewStyle1" TargetType="FlipView">
-            <Setter Property="Background" Value="{ThemeResource SystemControlPageBackgroundListLowBrush}"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="TabNavigation" Value="Once"/>
-            <Setter Property="IsTabStop" Value="False"/>
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
-            <Setter Property="ScrollViewer.IsHorizontalRailEnabled" Value="False"/>
-            <Setter Property="ScrollViewer.IsVerticalRailEnabled" Value="False"/>
-            <Setter Property="ScrollViewer.IsHorizontalScrollChainingEnabled" Value="True"/>
-            <Setter Property="ScrollViewer.IsVerticalScrollChainingEnabled" Value="True"/>
-            <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False"/>
-            <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="True"/>
-            <Setter Property="UseSystemFocusVisuals" Value="True"/>
+            <Setter Property="Background" Value="{ThemeResource SystemControlPageBackgroundListLowBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="TabNavigation" Value="Once" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+            <Setter Property="ScrollViewer.IsHorizontalRailEnabled" Value="False" />
+            <Setter Property="ScrollViewer.IsVerticalRailEnabled" Value="False" />
+            <Setter Property="ScrollViewer.IsHorizontalScrollChainingEnabled" Value="True" />
+            <Setter Property="ScrollViewer.IsVerticalScrollChainingEnabled" Value="True" />
+            <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
+            <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="True" />
+            <Setter Property="UseSystemFocusVisuals" Value="True" />
             <Setter Property="ItemsPanel">
                 <Setter.Value>
                     <ItemsPanelTemplate>
-                        <VirtualizingStackPanel AreScrollSnapPointsRegular="True" Orientation="Horizontal"/>
+                        <VirtualizingStackPanel AreScrollSnapPointsRegular="True" Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </Setter.Value>
             </Setter>
@@ -122,130 +121,130 @@
                                     <Border x:Name="Root" BorderBrush="{ThemeResource SystemControlForegroundTransparentBrush}" BorderThickness="{ThemeResource FlipViewButtonBorderThemeThickness}" Background="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}">
                                         <VisualStateManager.VisualStateGroups>
                                             <VisualStateGroup x:Name="CommonStates">
-                                                <VisualState x:Name="Normal"/>
+                                                <VisualState x:Name="Normal" />
                                                 <VisualState x:Name="PointerOver">
                                                     <Storyboard>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Root">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Arrow">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                     </Storyboard>
                                                 </VisualState>
                                                 <VisualState x:Name="Pressed">
                                                     <Storyboard>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Root">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumHighBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumHighBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Arrow">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                     </Storyboard>
                                                 </VisualState>
                                             </VisualStateGroup>
                                         </VisualStateManager.VisualStateGroups>
-                                        <FontIcon x:Name="Arrow" Foreground="{ThemeResource SystemControlForegroundAltMediumHighBrush}" FontSize="12" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE0E3;" HorizontalAlignment="Center" MirroredWhenRightToLeft="True" UseLayoutRounding="False" VerticalAlignment="Center"/>
+                                        <FontIcon x:Name="Arrow" Foreground="{ThemeResource SystemControlForegroundAltMediumHighBrush}" FontSize="12" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE0E3;" HorizontalAlignment="Center" MirroredWhenRightToLeft="True" UseLayoutRounding="False" VerticalAlignment="Center" />
                                     </Border>
                                 </ControlTemplate>
                                 <ControlTemplate x:Key="HorizontalPreviousTemplate" TargetType="Button">
                                     <Border x:Name="Root" BorderBrush="{ThemeResource SystemControlForegroundTransparentBrush}" BorderThickness="{ThemeResource FlipViewButtonBorderThemeThickness}" Background="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}">
                                         <VisualStateManager.VisualStateGroups>
                                             <VisualStateGroup x:Name="CommonStates">
-                                                <VisualState x:Name="Normal"/>
+                                                <VisualState x:Name="Normal" />
                                                 <VisualState x:Name="PointerOver">
                                                     <Storyboard>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Root">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Arrow">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                     </Storyboard>
                                                 </VisualState>
                                                 <VisualState x:Name="Pressed">
                                                     <Storyboard>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Root">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumHighBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumHighBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Arrow">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                     </Storyboard>
                                                 </VisualState>
                                             </VisualStateGroup>
                                         </VisualStateManager.VisualStateGroups>
-                                        <FontIcon x:Name="Arrow" Foreground="{ThemeResource SystemControlForegroundAltMediumHighBrush}" FontSize="12" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE0E2;" HorizontalAlignment="Center" MirroredWhenRightToLeft="True" UseLayoutRounding="False" VerticalAlignment="Center"/>
+                                        <FontIcon x:Name="Arrow" Foreground="{ThemeResource SystemControlForegroundAltMediumHighBrush}" FontSize="12" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE0E2;" HorizontalAlignment="Center" MirroredWhenRightToLeft="True" UseLayoutRounding="False" VerticalAlignment="Center" />
                                     </Border>
                                 </ControlTemplate>
                                 <ControlTemplate x:Key="VerticalNextTemplate" TargetType="Button">
                                     <Border x:Name="Root" BorderBrush="{ThemeResource SystemControlForegroundTransparentBrush}" BorderThickness="{ThemeResource FlipViewButtonBorderThemeThickness}" Background="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}">
                                         <VisualStateManager.VisualStateGroups>
                                             <VisualStateGroup x:Name="CommonStates">
-                                                <VisualState x:Name="Normal"/>
+                                                <VisualState x:Name="Normal" />
                                                 <VisualState x:Name="PointerOver">
                                                     <Storyboard>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Root">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Arrow">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                     </Storyboard>
                                                 </VisualState>
                                                 <VisualState x:Name="Pressed">
                                                     <Storyboard>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Root">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumHighBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumHighBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Arrow">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                     </Storyboard>
                                                 </VisualState>
                                             </VisualStateGroup>
                                         </VisualStateManager.VisualStateGroups>
-                                        <FontIcon x:Name="Arrow" Foreground="{ThemeResource SystemControlForegroundAltMediumHighBrush}" FontSize="12" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE0E5;" HorizontalAlignment="Center" UseLayoutRounding="False" VerticalAlignment="Center"/>
+                                        <FontIcon x:Name="Arrow" Foreground="{ThemeResource SystemControlForegroundAltMediumHighBrush}" FontSize="12" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE0E5;" HorizontalAlignment="Center" UseLayoutRounding="False" VerticalAlignment="Center" />
                                     </Border>
                                 </ControlTemplate>
                                 <ControlTemplate x:Key="VerticalPreviousTemplate" TargetType="Button">
                                     <Border x:Name="Root" BorderBrush="{ThemeResource SystemControlForegroundTransparentBrush}" BorderThickness="{ThemeResource FlipViewButtonBorderThemeThickness}" Background="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}">
                                         <VisualStateManager.VisualStateGroups>
                                             <VisualStateGroup x:Name="CommonStates">
-                                                <VisualState x:Name="Normal"/>
+                                                <VisualState x:Name="Normal" />
                                                 <VisualState x:Name="PointerOver">
                                                     <Storyboard>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Root">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Arrow">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                     </Storyboard>
                                                 </VisualState>
                                                 <VisualState x:Name="Pressed">
                                                     <Storyboard>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Root">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumHighBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumHighBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Arrow">
-                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}"/>
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}" />
                                                         </ObjectAnimationUsingKeyFrames>
                                                     </Storyboard>
                                                 </VisualState>
                                             </VisualStateGroup>
                                         </VisualStateManager.VisualStateGroups>
-                                        <FontIcon x:Name="Arrow" Foreground="{ThemeResource SystemControlForegroundAltMediumHighBrush}" FontSize="12" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE0E4;" HorizontalAlignment="Center" UseLayoutRounding="False" VerticalAlignment="Center"/>
+                                        <FontIcon x:Name="Arrow" Foreground="{ThemeResource SystemControlForegroundAltMediumHighBrush}" FontSize="12" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE0E4;" HorizontalAlignment="Center" UseLayoutRounding="False" VerticalAlignment="Center" />
                                     </Border>
                                 </ControlTemplate>
                             </Grid.Resources>
                             <ScrollViewer x:Name="ScrollingHost" AutomationProperties.AccessibilityView="Raw" BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalSnapPointsType="MandatorySingle" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsTabStop="False" IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}" IsVerticalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsVerticalScrollChainingEnabled}" IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" Padding="{TemplateBinding Padding}" TabNavigation="{TemplateBinding TabNavigation}" VerticalSnapPointsType="MandatorySingle" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" ZoomMode="Disabled">
                                 <ItemsPresenter />
                             </ScrollViewer>
-                            <Button x:Name="PreviousButtonHorizontal"  HorizontalAlignment="Left" Height="220" IsTabStop="False" Template="{StaticResource HorizontalPreviousTemplate}" UseSystemFocusVisuals="False" VerticalAlignment="Center" Width="1"/>
-                            <Button x:Name="NextButtonHorizontal"  HorizontalAlignment="Right" Height="220" IsTabStop="False" Template="{StaticResource HorizontalNextTemplate}" UseSystemFocusVisuals="False" VerticalAlignment="Center" Width="1"/>
-                            <Button x:Name="PreviousButtonVertical"  HorizontalAlignment="Center" Height="20" IsTabStop="False" Template="{StaticResource VerticalPreviousTemplate}" UseSystemFocusVisuals="False" VerticalAlignment="Top" Width="1"/>
-                            <Button x:Name="NextButtonVertical"  HorizontalAlignment="Center" Height="20" IsTabStop="False" Template="{StaticResource VerticalNextTemplate}" UseSystemFocusVisuals="False" VerticalAlignment="Bottom" Width="1"/>
+                            <Button x:Name="PreviousButtonHorizontal"  HorizontalAlignment="Left" Height="220" IsTabStop="False" Template="{StaticResource HorizontalPreviousTemplate}" UseSystemFocusVisuals="False" VerticalAlignment="Center" Width="1" />
+                            <Button x:Name="NextButtonHorizontal"  HorizontalAlignment="Right" Height="220" IsTabStop="False" Template="{StaticResource HorizontalNextTemplate}" UseSystemFocusVisuals="False" VerticalAlignment="Center" Width="1" />
+                            <Button x:Name="PreviousButtonVertical"  HorizontalAlignment="Center" Height="20" IsTabStop="False" Template="{StaticResource VerticalPreviousTemplate}" UseSystemFocusVisuals="False" VerticalAlignment="Top" Width="1" />
+                            <Button x:Name="NextButtonVertical"  HorizontalAlignment="Center" Height="20" IsTabStop="False" Template="{StaticResource VerticalNextTemplate}" UseSystemFocusVisuals="False" VerticalAlignment="Bottom" Width="1" />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -255,17 +254,16 @@
         <DataTemplate x:Key="ItemsTemplate">
             <Grid>
 
-                <ScrollViewer x:Name="sv_LZ"    HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" ViewChanged="sv_LZ_ViewChanged" >
+                <ScrollViewer x:Name="sv_LZ"    HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" ViewChanged="sv_LZ_ViewChanged">
                     <StackPanel>
                         <GridView x:Name="LZ_List" ItemsSource="{Binding VideoList}" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" ItemClick="LZ_List_ItemClick" ItemTemplate="{StaticResource RankItem}" IsItemClickEnabled="True" ItemContainerStyle="{StaticResource ListViewItemStyle}"></GridView>
                         <Button x:Name="btn_LoadMore" Click="btn_LoadMore_Click" HorizontalAlignment="Center" Margin="5" FontSize="14" Foreground="Gray" Background="#00000000" >加载更多</Button>
                     </StackPanel>
-
                 </ScrollViewer>
-                <GridView x:Name="grid_tag" SelectedItem="{Binding SelectTag}" Visibility="{Binding ShowTags}" ItemsSource="{Binding TagsList}" VerticalAlignment="Top" SelectionChanged="grid_tag_SelectionChanged" Background="{ThemeResource Bili-MenuBack}"  >
+                <GridView x:Name="grid_tag" SelectedItem="{Binding SelectTag}" Visibility="{Binding ShowTags}" ItemsSource="{Binding TagsList}" VerticalAlignment="Top" SelectionChanged="grid_tag_SelectionChanged" Background="{ThemeResource Bili-MenuBack}">
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <my:WrapPanel/>
+                            <my:WrapPanel />
                         </ItemsPanelTemplate>
                     </GridView.ItemsPanel>
                     <GridView.ItemTemplate>
@@ -279,26 +277,25 @@
                         </Style>
                     </GridView.ItemContainerStyle>
                 </GridView>
-
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="HomeTemplate">
 
-            <ScrollViewer x:Name="sv"  VerticalScrollBarVisibility="Auto" >
+            <ScrollViewer x:Name="sv"  VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <Grid >
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition x:Name="grid_c_left" Width="{Binding Path=grid_c_left,Mode=TwoWay}"/>
+                            <ColumnDefinition x:Name="grid_c_left" Width="{Binding Path=grid_c_left,Mode=TwoWay}" />
                             <ColumnDefinition x:Name="grid_c_center" Width="{Binding Path=grid_c_center,Mode=TwoWay}" />
-                            <ColumnDefinition x:Name="grid_c_right" Width="{Binding Path=grid_c_right,Mode=TwoWay}"/>
+                            <ColumnDefinition x:Name="grid_c_right" Width="{Binding Path=grid_c_right,Mode=TwoWay}" />
                         </Grid.ColumnDefinitions>
                         <Grid  Grid.Column="0" MaxHeight="200">
                             <Grid.Background>
                                 <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                     <LinearGradientBrush.GradientStops>
                                         <GradientStopCollection>
-                                            <GradientStop Offset="1" Color="Black"/>
-                                            <GradientStop Offset="0.101" Color="Gray"/>
+                                            <GradientStop Offset="1" Color="Black" />
+                                            <GradientStop Offset="0.101" Color="Gray" />
                                         </GradientStopCollection>
                                     </LinearGradientBrush.GradientStops>
                                 </LinearGradientBrush>
@@ -306,20 +303,20 @@
                             <FlipView x:Name="fvLeft" Visibility="{Binding Path=leftVisibility,Mode=TwoWay}" SelectedItem="{Binding Path=leftBanner,Mode=TwoWay}" ItemsSource="{Binding Banner}" Opacity="0.5" IsEnabled="False">
                                 <FlipView.ItemTemplate>
                                     <DataTemplate>
-                                        <Image Source="{Binding img}" Height="200" Width="640" Stretch="UniformToFill"/>
+                                        <Image Source="{Binding img}" Height="200" Width="640" Stretch="UniformToFill" />
                                     </DataTemplate>
                                 </FlipView.ItemTemplate>
                             </FlipView>
                         </Grid>
                         <Viewbox MaxWidth="640"  Grid.Column="1">
-                            <FlipView  x:Name="home_flipView"  SelectedItem="{Binding Path=homeBanner,Mode=TwoWay}" ItemsSource="{Binding Banner}" Height="200" Width="640" Grid.Column="1"   SelectionChanged="home_flipView_SelectionChanged"   Style="{StaticResource FlipViewStyle1}" VerticalAlignment="Top" >
+                            <FlipView  x:Name="home_flipView"  SelectedItem="{Binding Path=homeBanner,Mode=TwoWay}" ItemsSource="{Binding Banner}" Height="200" Width="640" Grid.Column="1"   SelectionChanged="home_flipView_SelectionChanged"   Style="{StaticResource FlipViewStyle1}" VerticalAlignment="Top">
                                 <FlipView.ItemTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <Image Source="{Binding img}"  Height="200" Stretch="UniformToFill"/>
+                                            <Image Source="{Binding img}"  Height="200" Stretch="UniformToFill" />
                                             <HyperlinkButton x:Name="btn_Banner_Ban" Click="btn_Banner_Ban_Click">
-                                                <Grid Width="640" Height="200" >
-                                                    <TextBlock/>
+                                                <Grid Width="640" Height="200">
+                                                    <TextBlock />
                                                 </Grid>
                                             </HyperlinkButton>
                                         </Grid>
@@ -327,13 +324,13 @@
                                 </FlipView.ItemTemplate>
                             </FlipView>
                         </Viewbox>
-                        <Grid Grid.Column="2" MaxHeight="200" >
+                        <Grid Grid.Column="2" MaxHeight="200">
                             <Grid.Background>
                                 <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                     <LinearGradientBrush.GradientStops>
                                         <GradientStopCollection>
-                                            <GradientStop Offset="0.101" Color="Black"/>
-                                            <GradientStop Offset="1" Color="Gray"/>
+                                            <GradientStop Offset="0.101" Color="Black" />
+                                            <GradientStop Offset="1" Color="Gray" />
                                         </GradientStopCollection>
                                     </LinearGradientBrush.GradientStops>
                                 </LinearGradientBrush>
@@ -341,66 +338,65 @@
                             <FlipView x:Name="fvRight" Visibility="{Binding Path=rightVisibility,Mode=TwoWay}" SelectedItem="{Binding Path=rightBanner,Mode=TwoWay}" ItemsSource="{Binding Banner}" Opacity="0.3" IsEnabled="False">
                                 <FlipView.ItemTemplate>
                                     <DataTemplate>
-                                        <Image Source="{Binding img}" Height="200" Width="640" Stretch="UniformToFill"/>
+                                        <Image Source="{Binding img}" Height="200" Width="640" Stretch="UniformToFill" />
                                     </DataTemplate>
                                 </FlipView.ItemTemplate>
                             </FlipView>
                         </Grid>
                     </Grid>
                     <Grid Visibility="Collapsed">
-                        <StackPanel Orientation="Horizontal" Margin="0,5" >
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
                             <Border Background="{ThemeResource Bili-ForeColor}" Width="10" Margin="5 0" Height="24" ></Border>
                             <TextBlock Text="全区热门" FontSize="18" ></TextBlock>
                         </StackPanel>
-                        <HyperlinkButton x:Name="btn_Refresh_DT1" HorizontalAlignment="Right" Margin="10 0" Foreground="{ThemeResource Bili-FontColor}" >
+                        <HyperlinkButton x:Name="btn_Refresh_DT1" HorizontalAlignment="Right" Margin="10 0" Foreground="{ThemeResource Bili-FontColor}">
                             <Grid>
                                 <Ellipse Fill="{ThemeResource Bili-ForeColor}"></Ellipse>
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" Margin="5" FontSize="12" Foreground="White"/>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE00F;" Margin="5" FontSize="12" Foreground="White" />
                             </Grid>
                         </HyperlinkButton>
                     </Grid>
 
                     <Grid>
-                        <StackPanel Orientation="Horizontal" Margin="0,5" >
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
                             <Border Background="{ThemeResource Bili-ForeColor}" Width="10" Margin="5 0" Height="24" ></Border>
                             <TextBlock Text="全区动态" FontSize="18" ></TextBlock>
                         </StackPanel>
                         <HyperlinkButton x:Name="btn_Refresh_DT" HorizontalAlignment="Right" Margin="10 0" Foreground="{ThemeResource Bili-FontColor}" Click="btn_Refresh_DT_Click">
                             <Grid>
                                 <Ellipse Fill="{ThemeResource Bili-ForeColor}"></Ellipse>
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" Margin="5" FontSize="12" Foreground="White"/>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" Margin="5" FontSize="12" Foreground="White" />
                             </Grid>
                         </HyperlinkButton>
                     </Grid>
 
-                    <GridView x:Name="GridView_DT" ItemsSource="{Binding DTs}" HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled" HorizontalContentAlignment="Center" ItemClick="GridView_DT_ItemClick" ItemTemplate="{StaticResource HomeItemTemplate}" IsItemClickEnabled="True"   SelectionMode="None" ItemContainerStyle="{StaticResource GridViewItemStyle}" >
+                    <GridView x:Name="GridView_DT" ItemsSource="{Binding DTs}" HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled" HorizontalContentAlignment="Center" ItemClick="GridView_DT_ItemClick" ItemTemplate="{StaticResource HomeItemTemplate}" IsItemClickEnabled="True"   SelectionMode="None" ItemContainerStyle="{StaticResource GridViewItemStyle}">
                     </GridView>
                     <!--</ScrollViewer>-->
                 </StackPanel>
             </ScrollViewer>
-
         </DataTemplate>
         <local:MessageItemDataTemplateSelector2 x:Key="MessageItemDataTemplateSelector"></local:MessageItemDataTemplateSelector2>
     </Page.Resources>
     <Grid  Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Border x:Name="ViewBox_num"  VerticalAlignment="Top" Width="170"></Border>
         <Border x:Name="ViewBox2_num" VerticalAlignment="Top" Width="170"></Border>
-        <Grid Background="{ThemeResource Bili-ForeColor}" Grid.Row="0" Height="48" >
+        <Grid Background="{ThemeResource Bili-ForeColor}" Grid.Row="0" Height="48">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="48"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="48" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <AppBarButton x:Name="btn_back" Click="btn_back_Click" Icon="Back" Width="48" Height="48" Foreground="White"/>
+            <AppBarButton x:Name="btn_back" Click="btn_back_Click" Icon="Back" Width="48" Height="48" Foreground="White" />
             <TextBlock  Text="分区" Margin="5 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
         </Grid>
         <Border x:Name="bor_Width" Width="450" VerticalAlignment="Top"></Border>
-        <Pivot x:Name="pivot"  ItemTemplateSelector="{StaticResource MessageItemDataTemplateSelector}"  Grid.Row="1" SelectionChanged="pivot_SelectionChanged" >
+        <Pivot x:Name="pivot"  ItemTemplateSelector="{StaticResource MessageItemDataTemplateSelector}"  Grid.Row="1" SelectionChanged="pivot_SelectionChanged">
 
             <Pivot.ItemContainerStyle>
                 <Style TargetType="PivotItem">
@@ -412,8 +408,6 @@
                     <TextBlock  FontSize="16"  Text="{Binding HanderText}" ></TextBlock>
                 </DataTemplate>
             </Pivot.HeaderTemplate>
-
-
         </Pivot>
 
         <CommandBar x:Name="com_bar" Grid.Row="2" VerticalAlignment="Bottom" Background="{ThemeResource Bili-ForeColor}" Foreground="White">

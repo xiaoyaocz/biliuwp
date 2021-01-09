@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="800"
-    
+
     d:DesignWidth="600">
     <UserControl.Resources>
         <Style TargetType="ListViewItem" x:Key="commentStyle">
@@ -30,10 +30,10 @@
         <Flyout x:Key="EmojiFlyout" x:Name="EmojiFlyout">
             <Flyout.FlyoutPresenterStyle>
                 <Style TargetType="FlyoutPresenter">
-                    <Setter Property="ScrollViewer.ZoomMode" Value="Enabled"/>
-                    <Setter Property="Background" Value="#FFF9F9F9"/>
-                    <Setter Property="MinHeight" Value="300"/>
-                    <Setter Property="MinWidth" Value="300"/>
+                    <Setter Property="ScrollViewer.ZoomMode" Value="Enabled" />
+                    <Setter Property="Background" Value="#FFF9F9F9" />
+                    <Setter Property="MinHeight" Value="300" />
+                    <Setter Property="MinWidth" Value="300" />
                 </Style>
             </Flyout.FlyoutPresenterStyle>
             <Grid>
@@ -108,13 +108,12 @@
                                             </GridView.ItemContainerStyle>-->
                                 <GridView.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel >
+                                        <StackPanel>
                                             <Image Source="{Binding url}" Width="56" Margin="5 0"></Image>
                                             <TextBlock HorizontalAlignment="Center" Text="{Binding vname}"></TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridView.ItemTemplate>
-
                             </GridView>
                         </DataTemplate>
                     </Pivot.ItemTemplate>
@@ -129,21 +128,21 @@
         <DataTemplate x:Key="commentTemplate">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <HyperlinkButton  Click="btn_User_Click" Tag="{Binding mid}" Padding="0" Margin="0" Grid.RowSpan="2">
                     <Grid>
                         <Ellipse Width="36" Height="36" Margin="12">
                             <Ellipse.Fill>
-                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=member.avatar}"/>
+                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=member.avatar}" />
                             </Ellipse.Fill>
                         </Ellipse>
                         <Image Width="56"  Height="56" Source="{Binding Path=member.pendant_str}"></Image>
@@ -151,17 +150,15 @@
                     </Grid>
                 </HyperlinkButton>
 
-                <StackPanel Orientation="Horizontal" Margin="4 0" Grid.Column="1" >
+                <StackPanel Orientation="Horizontal" Margin="4 0" Grid.Column="1">
                     <TextBlock VerticalAlignment="Center" Visibility="{Binding showTop}" FontSize="14" Margin="0 0 8 0" Foreground="DeepPink">[置顶]</TextBlock>
                     <TextBlock  Text="{Binding Path=member.uname}" Foreground="{Binding Path=member.vip_co}" VerticalAlignment="Center"></TextBlock>
                     <Image Height="12" Margin="8 0" Source="{Binding Path=member.LV}"></Image>
-                  
                 </StackPanel>
                 <AppBarButton Grid.Column="1" Flyout="{StaticResource ResourceKey=menu}" HorizontalAlignment="Right" Icon="More" Grid.RowSpan="2" Width="48" Height="48"></AppBarButton>
                 <TextBlock Grid.Column="1" Grid.Row="1" ToolTipService.ToolTip="{Binding Path=time_str}" FontSize="14" Foreground="Gray" Margin="4 0" VerticalAlignment="Top"><!--#<Run Text="{Binding Path=floor}"></Run>--> <Run Text="{Binding Path=time}"></Run> <Run Text="{Binding Path=content.plat_str}"></Run></TextBlock>
 
                 <ContentControl  Grid.Row="2" Grid.Column="1" Margin="4 0" Content="{Binding Path=content.text}">
-                   
                 </ContentControl>
 
                 <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="3">
@@ -207,7 +204,6 @@
                                         <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="12" Glyph="&#xE170;" />
                                         <TextBlock Margin="4 0 0 0">表情</TextBlock>
                                     </StackPanel>
-                                    
                                 </Button>
                             </StackPanel>
 
@@ -215,13 +211,12 @@
                         </Grid>
                     </StackPanel>
 
-                    
                     <ListView  ItemsSource="{Binding replies}" ItemContainerStyle="{StaticResource replyStyle}"  SelectionMode="None" IsItemClickEnabled="False" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
                                     <HyperlinkButton Foreground="{Binding Path=member.vip_co}" Tag="{Binding Path=mid}" Click="btn_User_Click">
-                                        <StackPanel Orientation="Horizontal"  >
+                                        <StackPanel Orientation="Horizontal">
                                             <TextBlock  Text="{Binding Path=member.uname}" VerticalAlignment="Center"></TextBlock>
                                             <Image Height="12" Margin="8 0" Source="{Binding Path=member.LV}"></Image>
                                         </StackPanel>
@@ -229,9 +224,8 @@
 
                                     <!--<TextBlock Text="{Binding Path=content.message}" IsTextSelectionEnabled="True" TextWrapping="Wrap"></TextBlock>-->
                                     <ContentControl Content="{Binding Path=content.text}">
-
                                     </ContentControl>
-                                   
+
                                     <Grid>
                                         <StackPanel Margin="0 4" Orientation="Horizontal">
                                             <TextBlock FontSize="14" IsTextSelectionEnabled="True" Foreground="Gray" VerticalAlignment="Center" Text="{Binding Path=time}"></TextBlock>
@@ -255,28 +249,23 @@
                                             </HyperlinkButton>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="0 4" HorizontalAlignment="Right">
-                                            <HyperlinkButton Visibility="{Binding showDelete}" Click="btn_DeleteComment_Click" Foreground="Gray" >
+                                            <HyperlinkButton Visibility="{Binding showDelete}" Click="btn_DeleteComment_Click" Foreground="Gray">
                                                 <StackPanel Orientation="Horizontal">
 
                                                     <TextBlock  Margin="4 0">删除</TextBlock>
                                                 </StackPanel>
                                             </HyperlinkButton>
-                                            <HyperlinkButton Foreground="Gray" >
+                                            <HyperlinkButton Foreground="Gray">
                                                 <StackPanel Orientation="Horizontal">
 
                                                     <TextBlock  Margin="4 0">举报</TextBlock>
                                                 </StackPanel>
                                             </HyperlinkButton>
-                                            
                                         </StackPanel>
-                                        
-                                        
-                                        
                                     </Grid>
 
                                     <StackPanel Background="#19AAAAAA" Padding="4 8" Visibility="{Binding showReplyBox}">
                                         <TextBox TextWrapping="Wrap" MaxLength="233" BorderThickness="0" AcceptsReturn="True" Text="{Binding Path=replyText,Mode=TwoWay}" FontSize="14" MinHeight="48" PlaceholderText="{Binding replyAt}">
-                                           
                                         </TextBox>
                                         <Grid Margin="0 4 0 0">
                                             <StackPanel Orientation="Horizontal">
@@ -298,30 +287,22 @@
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
-                          
                         </ListView.ItemTemplate>
-
                     </ListView>
                     <ProgressBar   Visibility="{Binding showLoading}" IsIndeterminate="True" ></ProgressBar>
-                    <StackPanel HorizontalAlignment="Center" >
+                    <StackPanel HorizontalAlignment="Center">
 
-                        <HyperlinkButton HorizontalAlignment="Center"  FontSize="14" Click="btn_LoadMoreReply_Click" Visibility="{Binding showReplyMore}" >
+                        <HyperlinkButton HorizontalAlignment="Center"  FontSize="14" Click="btn_LoadMoreReply_Click" Visibility="{Binding showReplyMore}">
                             <TextBlock>查看更多回复</TextBlock> </HyperlinkButton>
-                        <HyperlinkButton HorizontalAlignment="Center" FontSize="14" Click="btn_ShowComment_Click"  >
+                        <HyperlinkButton HorizontalAlignment="Center" FontSize="14" Click="btn_ShowComment_Click">
                             <TextBlock>收起回复</TextBlock>
                         </HyperlinkButton>
                     </StackPanel>
-                      
                 </StackPanel>
             </Grid>
         </DataTemplate>
-
-      
-        
-        
-
     </UserControl.Resources>
-    <Grid >
+    <Grid>
 
         <Grid>
             <StackPanel>
@@ -333,7 +314,7 @@
                 </Grid>
                 <Grid x:Name="_new">
                     <TextBlock Margin="12 8" FontSize="18">最新评论</TextBlock>
-                    <HyperlinkButton x:Name="btn_HotSort"  Margin="8" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Right"  Click="btn_HotSort_Click" >
+                    <HyperlinkButton x:Name="btn_HotSort"  Margin="8" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Right"  Click="btn_HotSort_Click">
                         <TextBlock>按热门排序</TextBlock>
                     </HyperlinkButton>
                 </Grid>
@@ -344,20 +325,10 @@
                 <HyperlinkButton x:Name="btn_LoadMore" Click="btn_LoadMore_Click" HorizontalAlignment="Center">
                     <TextBlock>加载更多</TextBlock>
                 </HyperlinkButton>
-
-
             </StackPanel>
-
 
             <TextBlock x:Name="noRepost" Visibility="Collapsed" Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 24">还没有人评论</TextBlock>
             <TextBlock x:Name="closeRepost" Visibility="Collapsed" Foreground="Gray" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 24">禁止评论</TextBlock>
-
-           
-
         </Grid>
-
-
-
     </Grid>
-   
 </UserControl>

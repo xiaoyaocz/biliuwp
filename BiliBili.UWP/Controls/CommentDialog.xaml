@@ -28,21 +28,18 @@
                                             </GridView.ItemContainerStyle>-->
                                 <GridView.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel >
+                                        <StackPanel>
                                             <Image Visibility="{Binding isFace}" Source="{Binding url}" Width="36" Margin="4 0"></Image>
                                             <TextBlock Width="90" TextAlignment="Center" Visibility="{Binding isText}" FontSize="12" HorizontalAlignment="Center" Text="{Binding text}"></TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridView.ItemTemplate>
-
                             </GridView>
                         </DataTemplate>
                     </Pivot.ItemTemplate>
                 </Pivot>
             </Grid>
         </Flyout>
-      
-       
     </ContentDialog.Resources>
     <Grid>
 
@@ -50,11 +47,10 @@
             <TextBox MinHeight="120" TextChanged="txt_Comment_TextChanged"  TextWrapping="Wrap" x:Name="txt_Comment" AcceptsReturn="True" PlaceholderText="说点什么吧..."></TextBox>
             <Grid Margin="0 4 0 0">
                 <StackPanel Orientation="Horizontal">
-                  
+
                     <Button Width="36" Height="36" Flyout="{StaticResource FaceFlyout}" x:Name="btn_F" Click="btn_F_Click"  Foreground="White" Background="{ThemeResource Bili-ForeColor}">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14"  Glyph="&#xE170;" />
-
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -65,7 +61,5 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
-
-
     </Grid>
 </ContentDialog>

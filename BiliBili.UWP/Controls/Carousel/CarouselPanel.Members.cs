@@ -5,100 +5,109 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
-
 namespace BiliBili.UWP.Controls
 {
-    public class IntEventArgs : EventArgs
-    {
-        public int Value { get; private set; }
-        public IntEventArgs(int value)
-        {
-            this.Value = value;
-        }
-    }
-    partial class CarouselPanel
-    {
-        public event EventHandler<IntEventArgs> SelectedIndexChanged;
+	public class IntEventArgs : EventArgs
+	{
+		public IntEventArgs(int value)
+		{
+			this.Value = value;
+		}
 
-        #region ItemTemplate
-        public DataTemplate ItemTemplate
-        {
-            get { return (DataTemplate)GetValue(ItemTemplateProperty); }
-            set { SetValue(ItemTemplateProperty, value); }
-        }
+		public int Value { get; private set; }
+	}
 
-        private static void ItemTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as CarouselPanel;
-            control.InvalidateMeasure();
-        }
+	partial class CarouselPanel
+	{
+		public event EventHandler<IntEventArgs> SelectedIndexChanged;
 
-        public static readonly DependencyProperty ItemTemplateProperty = DependencyProperty.Register("ItemTemplate", typeof(DataTemplate), typeof(CarouselPanel), new PropertyMetadata(null, ItemTemplateChanged));
-        #endregion
+		#region ItemTemplate
 
-        #region ItemWidth
-        public double ItemWidth
-        {
-            get { return (double)GetValue(ItemWidthProperty); }
-            set { SetValue(ItemWidthProperty, value); }
-        }
+		public static readonly DependencyProperty ItemTemplateProperty = DependencyProperty.Register("ItemTemplate", typeof(DataTemplate), typeof(CarouselPanel), new PropertyMetadata(null, ItemTemplateChanged));
 
-        private static void ItemWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as CarouselPanel;
-            control.InvalidateMeasure();
-        }
+		public DataTemplate ItemTemplate
+		{
+			get { return (DataTemplate)GetValue(ItemTemplateProperty); }
+			set { SetValue(ItemTemplateProperty, value); }
+		}
 
-        public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(double), typeof(CarouselPanel), new PropertyMetadata(400.0, ItemWidthChanged));
-        #endregion
+		private static void ItemTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var control = d as CarouselPanel;
+			control.InvalidateMeasure();
+		}
 
-        #region ItemHeight
-        public double ItemHeight
-        {
-            get { return (double)GetValue(ItemHeightProperty); }
-            set { SetValue(ItemHeightProperty, value); }
-        }
+		#endregion ItemTemplate
 
-        private static void ItemHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as CarouselPanel;
-            control.InvalidateMeasure();
-        }
+		#region ItemWidth
 
-        public static readonly DependencyProperty ItemHeightProperty = DependencyProperty.Register("ItemHeight", typeof(double), typeof(CarouselPanel), new PropertyMetadata(300.0, ItemHeightChanged));
-        #endregion
+		public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(double), typeof(CarouselPanel), new PropertyMetadata(400.0, ItemWidthChanged));
 
-        #region ItemClickCommand
-        public ICommand ItemClickCommand
-        {
-            get { return (ICommand)GetValue(ItemClickCommandProperty); }
-            set { SetValue(ItemClickCommandProperty, value); }
-        }
+		public double ItemWidth
+		{
+			get { return (double)GetValue(ItemWidthProperty); }
+			set { SetValue(ItemWidthProperty, value); }
+		}
 
-        public static readonly DependencyProperty ItemClickCommandProperty = DependencyProperty.Register("ItemClickCommand", typeof(ICommand), typeof(CarouselPanel), new PropertyMetadata(null));
-        #endregion
+		private static void ItemWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var control = d as CarouselPanel;
+			control.InvalidateMeasure();
+		}
 
-        private void OnPaneTapped(object sender, TappedRoutedEventArgs e)
-        {
-            var contentControl = sender as ContentControl;
-            if (contentControl != null)
-            {
-                if (SelectedIndexChanged != null)
-                {
-                    if (contentControl.Tag != null)
-                    {
-                        SelectedIndexChanged(this, new IntEventArgs((int)contentControl.Tag));
-                    }
-                }
+		#endregion ItemWidth
 
-                if (ItemClickCommand != null)
-                {
-                    if (ItemClickCommand.CanExecute(contentControl.Content))
-                    {
-                        ItemClickCommand.Execute(contentControl.Content);
-                    }
-                }
-            }
-        }
-    }
+		#region ItemHeight
+
+		public static readonly DependencyProperty ItemHeightProperty = DependencyProperty.Register("ItemHeight", typeof(double), typeof(CarouselPanel), new PropertyMetadata(300.0, ItemHeightChanged));
+
+		public double ItemHeight
+		{
+			get { return (double)GetValue(ItemHeightProperty); }
+			set { SetValue(ItemHeightProperty, value); }
+		}
+
+		private static void ItemHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var control = d as CarouselPanel;
+			control.InvalidateMeasure();
+		}
+
+		#endregion ItemHeight
+
+		#region ItemClickCommand
+
+		public static readonly DependencyProperty ItemClickCommandProperty = DependencyProperty.Register("ItemClickCommand", typeof(ICommand), typeof(CarouselPanel), new PropertyMetadata(null));
+
+		public ICommand ItemClickCommand
+		{
+			get { return (ICommand)GetValue(ItemClickCommandProperty); }
+			set { SetValue(ItemClickCommandProperty, value); }
+		}
+
+		#endregion ItemClickCommand
+
+		private void OnPaneTapped(object sender, TappedRoutedEventArgs e)
+		{
+			var contentControl = sender as ContentControl;
+			if (contentControl != null)
+			{
+				if (SelectedIndexChanged != null)
+				{
+					if (contentControl.Tag != null)
+					{
+						SelectedIndexChanged(this, new IntEventArgs((int)contentControl.Tag));
+					}
+				}
+
+				if (ItemClickCommand != null)
+				{
+					if (ItemClickCommand.CanExecute(contentControl.Content))
+					{
+						ItemClickCommand.Execute(contentControl.Content);
+					}
+				}
+			}
+		}
+	}
 }

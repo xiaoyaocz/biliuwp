@@ -20,7 +20,7 @@
         <local:HomeTabTemplateSelector x:Key="homeTabSelector" RecommendTemplate="{StaticResource recommend}" HotTemplate="{StaticResource hot}" TopicTemplate="{StaticResource topic}"></local:HomeTabTemplateSelector>
     </Page.Resources>
     <Grid>
-        <Pivot x:Name="pivot_home" ItemTemplateSelector="{StaticResource homeTabSelector}" ItemsSource="{x:Bind Path=homeVM.Tabs,Mode=OneWay}" Style="{StaticResource PivotHeaderCenterStyle}" >
+        <Pivot x:Name="pivot_home" ItemTemplateSelector="{StaticResource homeTabSelector}" ItemsSource="{x:Bind Path=homeVM.Tabs,Mode=OneWay}" Style="{StaticResource PivotHeaderCenterStyle}">
             <Pivot.HeaderTemplate>
                 <DataTemplate x:DataType="home:HomeTabItem">
                     <TextBlock FontSize="15" Text="{x:Bind name}"></TextBlock>
@@ -31,7 +31,6 @@
                     <Setter Property="Margin" Value="0"></Setter>
                 </Style>
             </Pivot.ItemContainerStyle>
-            
         </Pivot>
     </Grid>
 </Page>

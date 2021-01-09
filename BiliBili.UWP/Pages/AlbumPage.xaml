@@ -9,23 +9,22 @@
 
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">相簿</TextBlock>
         </Grid>
-
 
         <Pivot x:Name="pivot" SelectionChanged="pivot_SelectionChanged" Grid.Row="1">
             <Pivot.RightHeader>
@@ -42,7 +41,6 @@
                         <ComboBoxItem>私服</ComboBoxItem>
                     </ComboBox>
                 </Grid>
-                  
             </Pivot.RightHeader>
             <PivotItem Margin="0">
                 <PivotItem.Header>
@@ -68,12 +66,11 @@
                                         <StackPanel Orientation="Horizontal" Margin="8 0 8 4">
                                             <Ellipse Width="24" Height="24">
                                                 <Ellipse.Fill>
-                                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=user.head_url}"/>
+                                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=user.head_url}" />
                                                 </Ellipse.Fill>
                                             </Ellipse>
                                             <TextBlock Margin="4 0" FontSize="14" VerticalAlignment="Center" Foreground="Gray" Text="{Binding Path=user.name}"></TextBlock>
                                         </StackPanel>
-
                                     </StackPanel>
                                 </DataTemplate>
                             </GridView.ItemTemplate>
@@ -90,7 +87,7 @@
                 </PivotItem.Header>
                 <ScrollViewer x:Name="sv_cos" ViewChanged="sv_cos_ViewChanged" VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="8 0">
-                  
+
                         <GridView x:Name="gv_cos" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="None" IsItemClickEnabled="True" ItemClick="gv_draw_ItemClick">
                             <GridView.ItemContainerStyle>
                                 <Style TargetType="GridViewItem">
@@ -108,12 +105,11 @@
                                         <StackPanel Orientation="Horizontal" Margin="8 0 8 4">
                                             <Ellipse Width="24" Height="24">
                                                 <Ellipse.Fill>
-                                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=user.head_url}"/>
+                                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=user.head_url}" />
                                                 </Ellipse.Fill>
                                             </Ellipse>
                                             <TextBlock Margin="4 0" FontSize="14" VerticalAlignment="Center" Foreground="Gray" Text="{Binding Path=user.name}"></TextBlock>
                                         </StackPanel>
-
                                     </StackPanel>
                                 </DataTemplate>
                             </GridView.ItemTemplate>

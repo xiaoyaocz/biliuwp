@@ -7,8 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    SizeChanged="Page_SizeChanged"
-    >
+    SizeChanged="Page_SizeChanged">
     <Page.Resources>
         <Style x:Key="itemStyle" TargetType="GridViewItem">
             <Setter Property="Margin" Value="5"></Setter>
@@ -26,10 +25,10 @@
                 <Image   Source="{Binding Path=_cover}" Stretch="UniformToFill"  ></Image>
                 <Grid  Grid.Row="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal" Margin="10,0,10,5" >
+                    <StackPanel Orientation="Horizontal" Margin="10,0,10,5">
 
                         <TextBlock Text="{Binding Uname}" FontSize="13" TextTrimming="CharacterEllipsis" Foreground="Gray" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
@@ -39,37 +38,35 @@
                     </StackPanel>
                 </Grid>
                 <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10 5 10 0" VerticalAlignment="Top">
-                    <TextBlock  MaxWidth="320" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" FontSize="13" >
-                                           
+                    <TextBlock  MaxWidth="320" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" FontSize="13">
+
                                             <Run Text="{Binding Title}"></Run>
                     </TextBlock>
                 </StackPanel>
             </Grid>
-            
-
         </DataTemplate>
     </Page.Resources>
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Grid Background="{ThemeResource Bili-ForeColor}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
-                <AppBarButton x:Name="btn_back" Click="btn_back_Click" Icon="Back" Width="48" Height="48" Foreground="White"/>
-                <TextBlock x:Name="text_Title" Visibility="Collapsed" Text="搜索" Margin="5 0" HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center"  FontSize="16" Foreground="White"/>
+                <AppBarButton x:Name="btn_back" Click="btn_back_Click" Icon="Back" Width="48" Height="48" Foreground="White" />
+                <TextBlock x:Name="text_Title" Visibility="Collapsed" Text="搜索" Margin="5 0" HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center"  FontSize="16" Foreground="White" />
                 <AutoSuggestBox x:Name="autoSug_Box" BorderBrush="#00808080" BorderThickness="1" Margin="5 0" Grid.Column="1" PlaceholderText="输入关键字搜索房间、主播" QueryIcon="Find" VerticalAlignment="Center" QuerySubmitted="autoSug_Box_QuerySubmitted"   ></AutoSuggestBox>
             </Grid>
             <Pivot x:Name="pivot"  Grid.Row="1">
                 <PivotItem Margin="0">
                     <PivotItem.Header>
-                        <TextBlock x:Name="txt_hea_0"  Text="正在直播" FontSize="16"/>
+                        <TextBlock x:Name="txt_hea_0"  Text="正在直播" FontSize="16" />
                     </PivotItem.Header>
                     <ScrollViewer Grid.Row="1"  x:Name="sv_room" ViewChanged="sv_room_ViewChanged">
                         <StackPanel>
@@ -79,10 +76,10 @@
                         </StackPanel>
                     </ScrollViewer>
                 </PivotItem>
-                
+
                 <PivotItem Margin="0">
                     <PivotItem.Header>
-                        <TextBlock x:Name="txt_hea_1"  Text="主播" FontSize="16"/>
+                        <TextBlock x:Name="txt_hea_1"  Text="主播" FontSize="16" />
                     </PivotItem.Header>
                     <ScrollViewer Grid.Row="1"  x:Name="sv" ViewChanged="sv_ViewChanged">
                         <StackPanel>
@@ -99,7 +96,7 @@
                                 <GridView.ItemTemplate>
                                     <DataTemplate>
                                         <Border Width="{Binding ElementName=bor_Width,Path=Width}" Margin="5">
-                                            <Grid >
+                                            <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="auto"></ColumnDefinition>
                                                     <ColumnDefinition></ColumnDefinition>
@@ -110,16 +107,15 @@
                                                 </Grid.RowDefinitions>
                                                 <Ellipse Width="56" Height="56" Grid.RowSpan="2">
                                                     <Ellipse.Fill>
-                                                        <ImageBrush Stretch="Fill" ImageSource="{Binding face}"/>
+                                                        <ImageBrush Stretch="Fill" ImageSource="{Binding face}" />
                                                     </Ellipse.Fill>
-
                                                 </Ellipse>
                                                 <StackPanel  Margin="10,0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                                                     <TextBlock Text="{Binding Uname}"  FontSize="14" VerticalAlignment="Center" TextWrapping="Wrap" MaxLines="2"></TextBlock>
                                                     <Grid Background="#FFDF85A0" Padding="5 2" Margin="5 0" Visibility="{Binding liveing}">
                                                         <TextBlock Foreground="White" FontSize="12" >直播中</TextBlock>
                                                     </Grid>
-                                                   
+
                                                     <Grid Background="#FFB2B2B2" Padding="5 2" Margin="5 0" Visibility="{Binding stop}">
                                                         <TextBlock Foreground="White" FontSize="12" >闲置中</TextBlock>
                                                     </Grid>
@@ -129,14 +125,10 @@
                                                     <TextBlock  FontSize="12" Foreground="Gray" TextWrapping="Wrap" MaxLines="2"   VerticalAlignment="Center">分区:<Run Text="{Binding Path=tags}"></Run></TextBlock>
                                                     <TextBlock  FontSize="12" Margin="10 0" Foreground="Gray" TextWrapping="Wrap" MaxLines="2"   VerticalAlignment="Center">关注数:<Run Text="{Binding Path=FansNum}"></Run></TextBlock>
                                                 </StackPanel>
-
                                             </Grid>
                                         </Border>
-
                                     </DataTemplate>
                                 </GridView.ItemTemplate>
-
-
                             </GridView>
                             <Button Margin="10" HorizontalAlignment="Center" x:Name="btn_LoadMore" Click="btn_LoadMore_Click" FontSize="14" Foreground="Gray" Background="#00000000">点我加载更多</Button>
                         </StackPanel>
@@ -146,7 +138,6 @@
             <Grid x:Name="search" Grid.Row="1"  Background="{ThemeResource Bili-Background}">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Image Source="ms-appx:///Assets/Icon/ic_search_holder_default.png" Width="150"></Image>
-
                 </StackPanel>
             </Grid>
         </Grid>

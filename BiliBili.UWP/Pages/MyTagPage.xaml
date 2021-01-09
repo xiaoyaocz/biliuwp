@@ -15,18 +15,18 @@
     </Page.Resources>
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">我的频道</TextBlock>
@@ -51,7 +51,6 @@
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                 </Style>
             </GridView.ItemContainerStyle>
-
         </GridView>
         <AppBarButton x:Name="b_btn_Refresh" Click="b_btn_Refresh_Click" Width="48" Grid.RowSpan="2" Height="48" Margin="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Icon="Refresh" Background="{ThemeResource Bili-ForeColor}" Opacity="0.6" Foreground="White"></AppBarButton>
         <ProgressRing Width="56" Height="56" Grid.RowSpan="2" IsActive="True" x:Name="pr_Load" Visibility="Collapsed"></ProgressRing>

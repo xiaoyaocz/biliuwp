@@ -9,22 +9,21 @@
 
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">关注音乐人</TextBlock>
-
         </Grid>
         <ListView x:Name="list_up" ItemClick="list_up_ItemClick" Grid.Row="1" SelectionMode="None" IsItemClickEnabled="True">
             <ListView.ItemTemplate>
@@ -32,13 +31,12 @@
                     <StackPanel Orientation="Horizontal" Margin="0 8">
                         <Ellipse Width="48" Height="48">
                             <Ellipse.Fill>
-                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding face}"/>
+                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding face}" />
                             </Ellipse.Fill>
                         </Ellipse>
                         <TextBlock Margin="8 0" VerticalAlignment="Center" Text="{Binding uname}"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
-              
             </ListView.ItemTemplate>
         </ListView>
     </Grid>

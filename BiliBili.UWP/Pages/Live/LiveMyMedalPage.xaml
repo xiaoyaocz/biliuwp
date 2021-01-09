@@ -10,22 +10,22 @@
 
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Grid Background="{ThemeResource Bili-ForeColor}" Grid.Row="0" Height="48" >
+        <Grid Background="{ThemeResource Bili-ForeColor}" Grid.Row="0" Height="48">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="48"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="48" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <AppBarButton x:Name="btn_back" Click="btn_Back_Click" Icon="Back" Width="48" Height="48" Foreground="White"/>
+            <AppBarButton x:Name="btn_back" Click="btn_Back_Click" Icon="Back" Width="48" Height="48" Foreground="White" />
             <TextBlock  Text="我的勋章" Margin="5 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
             <TextBlock x:Name="signed" Visibility="Collapsed" Grid.Column="2" Margin="10 0"  Foreground="White" VerticalAlignment="Center">我的勋章</TextBlock>
             <Button  x:Name="btn_Edit" Click="btn_Edit_Click" Grid.Column="2" Margin="10 0" Background="#00000000"  Foreground="White" Visibility="Collapsed">编辑</Button>
         </Grid>
-        <ScrollViewer Grid.Row="1" >
+        <ScrollViewer Grid.Row="1">
             <StackPanel>
                 <ListView SelectionMode="None" x:Name="list">
                     <ListView.ItemContainerStyle>
@@ -39,9 +39,9 @@
                         <DataTemplate>
                             <Grid Height="64">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition  Width="auto"/>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition  Width="auto" />
                                 </Grid.ColumnDefinitions>
                                 <Border x:Name="bor_Medal" CornerRadius="2" VerticalAlignment="Center" Background="{Binding _Color}"  Padding="10 5" Margin="5 0">
                                     <TextBlock Foreground="White"  ><Run Text="{Binding Path=medal_name}"></Run><Run Text="{Binding Path=level}"></Run></TextBlock>
@@ -51,7 +51,6 @@
                                     <TextBlock FontSize="14" Foreground="Gray"><Run Text="{Binding intimacy}"></Run>/<Run Text="{Binding next_intimacy}"></Run></TextBlock>
                                 </StackPanel>
                                 <Button Grid.Column="2" Click="Button_Click" Content="{Binding Status}"></Button>
-
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -62,13 +61,12 @@
                     <TextBlock FontSize="14" Foreground="Gray">满额后，需删除已拥有的勋章才能获得新的勋章；</TextBlock>
                     <TextBlock FontSize="14" Foreground="Gray">删除的勋章无法找回，该勋章的等级亲密度将清空。</TextBlock>
                 </StackPanel>
-              
             </StackPanel>
         </ScrollViewer>
         <StackPanel x:Name="NoDT" Visibility="Collapsed" Grid.Row="1" VerticalAlignment="Center">
             <Image Source="ms-appx:///Assets/null.png" Width="72"></Image>
             <TextBlock Margin="10" HorizontalAlignment="Center" Foreground="Gray">
-										<Run Text="啥都没有"/>
+										<Run Text="啥都没有" />
             </TextBlock>
         </StackPanel>
         <ProgressRing Width="56" Height="56" x:Name="pr_Load" Grid.RowSpan="2"  IsActive="True" Visibility="Collapsed"></ProgressRing>

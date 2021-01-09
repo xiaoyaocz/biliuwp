@@ -1,90 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
 namespace BiliBili.UWP.Helper
 {
-    public class AppHelper
-    {
-        public async void GetDeveloperMessage()
-        {
-            try
-            {
-                var results = await WebClientClass.GetResultsUTF8Encode(new Uri("http://pic.iliili.cn/bilimessageV3.json?rnd=" + ApiHelper.GetTimeSpan_2));
-                DeveloperMessageModel messageModel = JsonConvert.DeserializeObject<DeveloperMessageModel>(results);
-                if (!messageModel.showAD)
-                {
-                    MessageCenter.SendHideAd();
-                }
-                if (Get_FirstShowMessage(messageModel.messageId) && messageModel.startdate < DateTime.Now && messageModel.enddate > DateTime.Now)
-                {
-                    var cd = new ContentDialog();
-                    StackPanel stackPanel = new StackPanel();
-                    //TextBlock title = new TextBlock() {
-                    //    Text= messageModel.title,
-                    //    TextWrapping= Windows.UI.Xaml.TextWrapping.Wrap,
-                    //    IsTextSelectionEnabled = true
-                    //};
-                    //stackPanel.Children.Add(title);
-                    cd.Title = messageModel.title;
-                    TextBlock content = new TextBlock()
-                    {
-                        Text = messageModel.message,
-                        TextWrapping = Windows.UI.Xaml.TextWrapping.Wrap,
-                        IsTextSelectionEnabled = true
-                    };
-                    stackPanel.Children.Add(content);
-                    cd.Content = stackPanel;
-                    cd.PrimaryButtonText = "不再显示";
-                    cd.SecondaryButtonText = "知道了";
-
-                    cd.PrimaryButtonClick += new Windows.Foundation.TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs>((sender, e) =>
-                    {
-                        Set_FirstShowMessage(messageModel.messageId, false);
-                    });
-                    await cd.ShowAsync();
-                }
-
-            }
-            catch (Exception)
-            {
-
-            }
-
-        }
-
-        static ApplicationDataContainer container;
-        public static bool Get_FirstShowMessage(string code)
-        {
-            container = ApplicationData.Current.LocalSettings;
-            if (container.Values["FirstShowMessage" + code] != null)
-            {
-                return (bool)container.Values["FirstShowMessage" + code];
-            }
-            else
-            {
-                Set_FirstShowMessage(code, true);
-                return true;
-            }
-        }
-
-        public static void Set_FirstShowMessage(string code, bool value)
-        {
-            container = ApplicationData.Current.LocalSettings;
-            container.Values["FirstShowMessage" + code] = value;
-        }
-
-        public static string GetLastVersionStr()
-        {
-            return verStr.Split('/')[0];
-        }
-        public static string verStr = string.Format(@"Ver {0} 2020-12-14
+	public class AppHelper
+	{
+		public static string verStr = string.Format(@"Ver {0} 2020-12-14
 01、修复一些小问题
 
 /Ver 3.9.99&3.9.100 2020-11-19
@@ -221,7 +144,7 @@ namespace BiliBili.UWP.Helper
 04、修复直播搜索失败问题
 05、去除了付费相关功能
 
-/Ver 3.9.10.0 
+/Ver 3.9.10.0
 01、修复视频无法播放
 
 /Ver 3.9.8.0 2018-11
@@ -336,7 +259,6 @@ namespace BiliBili.UWP.Helper
 /Ver 3.3.0.0 2017-04-21
 1、[修复]无法播放
 
-
 /Ver 3.2.8.0 2017-04-09
 1、[修改]我的追番api
 2、[修改]个人中心api
@@ -372,19 +294,19 @@ namespace BiliBili.UWP.Helper
 06.[其它]修复其它
 
 /Ver 3.1.5.0  2017-2-24
-01.[增加]概念版首页(设置-其它中开启) 
+01.[增加]概念版首页(设置-其它中开启)
 02.[新增]标签订阅
-03.[新增]鼠标播放隐藏 
+03.[新增]鼠标播放隐藏
 04.[修复]投稿时间BUG
 05.[修复]无法显示评论客户端
 06.[新增]下载完成不显示导入
 07.[其它]修复其它
 
 /Ver 3.1.3.0  2017-2-22
-01.|[增加]流量观看提醒 
+01.|[增加]流量观看提醒
 02.[修复]菜单点击不收回
 03.[修复]夜间模式分区背景不变
-04.[新增]小黑屋 
+04.[新增]小黑屋
 05.[修复]昵称无法修改
 06.[新增]后台播放关闭选项
 07.[修复]二维码扫码摄像头不释放
@@ -398,17 +320,85 @@ namespace BiliBili.UWP.Helper
 3.0版本发布
 ", SettingHelper.GetVersion());
 
+		private static ApplicationDataContainer container;
 
-    }
+		public static bool Get_FirstShowMessage(string code)
+		{
+			container = ApplicationData.Current.LocalSettings;
+			if (container.Values["FirstShowMessage" + code] != null)
+			{
+				return (bool)container.Values["FirstShowMessage" + code];
+			}
+			else
+			{
+				Set_FirstShowMessage(code, true);
+				return true;
+			}
+		}
 
-    public class DeveloperMessageModel
-    {
-        public string title { get; set; }
-        public string messageId { get; set; }
-        public string message { get; set; }
-        public DateTime startdate { get; set; }
-        public DateTime enddate { get; set; }
-        public bool showAD { get; set; }
-    }
+		public static string GetLastVersionStr()
+		{
+			return verStr.Split('/')[0];
+		}
 
+		public static void Set_FirstShowMessage(string code, bool value)
+		{
+			container = ApplicationData.Current.LocalSettings;
+			container.Values["FirstShowMessage" + code] = value;
+		}
+
+		public async void GetDeveloperMessage()
+		{
+			try
+			{
+				var results = await WebClientClass.GetResultsUTF8Encode(new Uri("http://pic.iliili.cn/bilimessageV3.json?rnd=" + ApiHelper.GetTimeSpan_2));
+				DeveloperMessageModel messageModel = JsonConvert.DeserializeObject<DeveloperMessageModel>(results);
+				if (!messageModel.showAD)
+				{
+					MessageCenter.SendHideAd();
+				}
+				if (Get_FirstShowMessage(messageModel.messageId) && messageModel.startdate < DateTime.Now && messageModel.enddate > DateTime.Now)
+				{
+					var cd = new ContentDialog();
+					StackPanel stackPanel = new StackPanel();
+					//TextBlock title = new TextBlock() {
+					//    Text= messageModel.title,
+					//    TextWrapping= Windows.UI.Xaml.TextWrapping.Wrap,
+					//    IsTextSelectionEnabled = true
+					//};
+					//stackPanel.Children.Add(title);
+					cd.Title = messageModel.title;
+					TextBlock content = new TextBlock()
+					{
+						Text = messageModel.message,
+						TextWrapping = Windows.UI.Xaml.TextWrapping.Wrap,
+						IsTextSelectionEnabled = true
+					};
+					stackPanel.Children.Add(content);
+					cd.Content = stackPanel;
+					cd.PrimaryButtonText = "不再显示";
+					cd.SecondaryButtonText = "知道了";
+
+					cd.PrimaryButtonClick += new Windows.Foundation.TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs>((sender, e) =>
+					{
+						Set_FirstShowMessage(messageModel.messageId, false);
+					});
+					await cd.ShowAsync();
+				}
+			}
+			catch (Exception)
+			{
+			}
+		}
+	}
+
+	public class DeveloperMessageModel
+	{
+		public DateTime enddate { get; set; }
+		public string message { get; set; }
+		public string messageId { get; set; }
+		public bool showAD { get; set; }
+		public DateTime startdate { get; set; }
+		public string title { get; set; }
+	}
 }

@@ -9,18 +9,18 @@
 
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis"  Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White">音乐人</TextBlock>
@@ -30,26 +30,25 @@
             <StackPanel Margin="12 8">
                 <Grid  Background="{ThemeResource Bili-List-Background}" Padding="8">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <Ellipse Width="56" Height="56" Grid.RowSpan="2" Margin="0 0 8 0">
                         <Ellipse.Fill>
-                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding avater}"/>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding avater}" />
                         </Ellipse.Fill>
-
                     </Ellipse>
                     <TextBlock Grid.Column="1" Text="{Binding uName}"></TextBlock>
                     <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.Row="1">
                         <TextBlock FontSize="14"><Run Foreground="Gray">粉丝</Run> <Run Text="{Binding Fans}"></Run></TextBlock>
                         <TextBlock FontSize="14" Margin="8 0 0 0"><Run Foreground="Gray" >播放</Run> <Run Text="{Binding Plays}"></Run></TextBlock>
                     </StackPanel>
-                   
+
                     <HyperlinkButton  x:Name="btn_FollowUser" Grid.RowSpan="2" Click="btn_FollowUser_Click" Grid.Column="2"   HorizontalAlignment="Center">
                         <Border BorderThickness="1" Padding="8 4" CornerRadius="4" BorderBrush="{ThemeResource HyperlinkButtonForeground}">
                             <TextBlock VerticalAlignment="Center" >关注</TextBlock>
@@ -60,7 +59,6 @@
                             <TextBlock VerticalAlignment="Center" >取消关注</TextBlock>
                         </Border>
                     </HyperlinkButton>
-                    
                 </Grid>
 
                 <ListView x:Name="ls_songs" Margin="0 12 0 0" ItemClick="ls_songs_ItemClick" SelectionMode="None" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{ThemeResource Bili-List-Background}">
@@ -89,10 +87,8 @@
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
-                       
                     </ListView.ItemTemplate>
                 </ListView>
-                
             </StackPanel>
         </ScrollViewer>
         <ProgressRing Grid.RowSpan="2" x:Name="pr_Load" Visibility="Collapsed"  Width="56" Height="56" IsActive="True"></ProgressRing>

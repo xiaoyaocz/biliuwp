@@ -9,21 +9,20 @@
 
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
+            <RowDefinition Height="48" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid x:Name="grid_Top" Background="{ThemeResource Bili-ForeColor}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <AppBarButton x:Name="btn_Back" Click="btn_Back_Click" Foreground="White" Width="48" Icon="Back" Height="48"  ></AppBarButton>
             <TextBlock x:Name="txt_Header" TextTrimming="CharacterEllipsis" Text="专栏分区" Grid.Column="1" Margin="5 0" VerticalAlignment="Center" Foreground="White"></TextBlock>
-
         </Grid>
         <Border x:Name="bor_Width" Width="450" VerticalAlignment="Top"></Border>
         <Pivot Grid.Row="1" x:Name="pivot" SelectionChanged="pivot_SelectionChanged">
@@ -37,20 +36,18 @@
                     <Setter Property="Margin" Value="8 0"></Setter>
                 </Style>
             </Pivot.ItemContainerStyle>
-          
+
             <Pivot.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
                         <ComboBox DisplayMemberPath="name" PlaceholderText="选择子分区" BorderThickness="1" SelectionChanged="cb_Change_SelectionChanged" SelectedIndex="{Binding Path=selectIndex,Mode=TwoWay}" ItemsSource="{Binding children}"  HorizontalAlignment="Stretch">
-
                         </ComboBox>
                         <ScrollViewer x:Name="sv" Grid.Row="1" ViewChanged="sv_ViewChanged" ScrollViewer.VerticalScrollBarVisibility="Auto">
                             <StackPanel>
-                              
 
                                 <GridView ItemsSource="{Binding articles}" ItemClick="GridView_ItemClick" SelectionMode="None" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                                     <GridView.ItemContainerStyle>
@@ -67,19 +64,18 @@
                                                 <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
                                                     <Ellipse Width="16" Height="16">
                                                         <Ellipse.Fill>
-                                                            <ImageBrush Stretch="Fill" ImageSource="{Binding Path=author.face}"/>
+                                                            <ImageBrush Stretch="Fill" ImageSource="{Binding Path=author.face}" />
                                                         </Ellipse.Fill>
-
                                                     </Ellipse>
                                                     <TextBlock FontSize="14" Foreground="Gray" VerticalAlignment="Center" Margin="4 0" Text="{Binding Path=author.name}"></TextBlock>
                                                 </StackPanel>
                                                 <TextBlock TextTrimming="CharacterEllipsis" Margin="0 4" Text="{Binding title}"></TextBlock>
-                                                <Image  Source="{Binding bannerImage}"  Height="120"  Stretch="UniformToFill"/>
+                                                <Image  Source="{Binding bannerImage}"  Height="120"  Stretch="UniformToFill" />
                                                 <TextBlock Margin="0 4" FontSize="14" TextTrimming="CharacterEllipsis" Foreground="Gray" MaxLines="2" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding summary}"></TextBlock>
                                                 <Grid>
-                                                    <TextBlock  FontSize="14" Foreground="Gray"><Run Text="{Binding Path=category.name}"></Run> · <Run Text="{Binding Path=stats.view}"/>阅读</TextBlock>
+                                                    <TextBlock  FontSize="14" Foreground="Gray"><Run Text="{Binding Path=category.name}"></Run> · <Run Text="{Binding Path=stats.view}" />阅读</TextBlock>
 
-                                                    <TextBlock HorizontalAlignment="Right"  FontSize="14" Foreground="Gray"><Run Text="{Binding Path=stats.reply}"/>评论 <Run Text="{Binding Path=stats.like}"/>赞</TextBlock>
+                                                    <TextBlock HorizontalAlignment="Right"  FontSize="14" Foreground="Gray"><Run Text="{Binding Path=stats.reply}" />评论 <Run Text="{Binding Path=stats.like}" />赞</TextBlock>
                                                 </Grid>
                                             </StackPanel>
                                         </DataTemplate>
@@ -92,11 +88,8 @@
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>
-             
                 </DataTemplate>
             </Pivot.ItemTemplate>
-           
-            
         </Pivot>
         <ProgressRing Width="56" Grid.RowSpan="2" Height="56" x:Name="pr_Load" IsActive="True" Visibility="Collapsed" VerticalAlignment="Center"></ProgressRing>
     </Grid>

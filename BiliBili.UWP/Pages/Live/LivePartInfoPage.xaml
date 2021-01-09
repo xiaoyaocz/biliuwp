@@ -28,10 +28,10 @@
                     <Image   Source="{Binding Path=cover}" Stretch="UniformToFill"  ></Image>
                     <Grid  Grid.Row="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Orientation="Horizontal" Margin="10,0,10,5" >
+                        <StackPanel Orientation="Horizontal" Margin="10,0,10,5">
 
                             <TextBlock Text="{Binding Path=uname}" FontSize="13" TextTrimming="CharacterEllipsis" Foreground="Gray" VerticalAlignment="Center"></TextBlock>
                         </StackPanel>
@@ -41,34 +41,30 @@
                         </StackPanel>
                     </Grid>
                     <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10 5 10 0" VerticalAlignment="Top">
-                        <TextBlock  MaxWidth="320" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" FontSize="13" >
-                                          
+                        <TextBlock  MaxWidth="320" TextWrapping="Wrap" MaxLines="2" TextTrimming="CharacterEllipsis" FontSize="13">
+
                                             <Run Text="{Binding title}"></Run>
                         </TextBlock>
                     </StackPanel>
                 </Grid>
-
-
             </DataTemplate>
-        
         </ResourceDictionary>
     </Page.Resources>
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <Grid Background="{ThemeResource Bili-ForeColor}" Grid.Row="0" Height="48" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="48"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <AppBarButton x:Name="btn_back" Click="btn_Back_Click" Icon="Back" Width="48" Height="48" Foreground="White"/>
-            <TextBlock  Margin="5 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
+            <RowDefinition Height="48" />
 
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid Background="{ThemeResource Bili-ForeColor}" Grid.Row="0" Height="48">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="48" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <AppBarButton x:Name="btn_back" Click="btn_Back_Click" Icon="Back" Width="48" Height="48" Foreground="White" />
+            <TextBlock  Margin="5 0" FontSize="16" x:Name="top_txt_Header" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" />
         </Grid>
         <ScrollViewer Grid.Row="1"  x:Name="sv" ViewChanged="sv_ViewChanged">
             <StackPanel>
@@ -77,10 +73,10 @@
                 <Button Margin="10" HorizontalAlignment="Center" x:Name="btn_LoadMore" Click="btn_LoadMore_Click" FontSize="14" Foreground="Gray" Background="#00000000">点我加载更多</Button>
             </StackPanel>
         </ScrollViewer>
-        <GridView x:Name="grid_tag"  Grid.Row="1"  Visibility="Collapsed" VerticalAlignment="Top" SelectionChanged="grid_tag_SelectionChanged" Background="{ThemeResource Main-Background}"  >
+        <GridView x:Name="grid_tag"  Grid.Row="1"  Visibility="Collapsed" VerticalAlignment="Top" SelectionChanged="grid_tag_SelectionChanged" Background="{ThemeResource Main-Background}">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <w:WrapPanel/>
+                    <w:WrapPanel />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
             <GridView.ItemTemplate>
@@ -96,7 +92,7 @@
         </GridView>
         <CommandBar x:Name="com_bar" Grid.Row="2" VerticalAlignment="Bottom" Background="{ThemeResource Bili-ForeColor}" Foreground="White">
             <AppBarToggleButton x:Name="btn_Type" Visibility="Visible" Checked="btn_Type_Checked" Unchecked="btn_Type_Unchecked" Icon="Sort" Foreground="White" Label="分类" ></AppBarToggleButton>
-          
+
             <AppBarButton x:Name="btn_Refresh" Icon="Refresh" Label="刷新" Foreground="White" Click="btn_Refresh_Click"></AppBarButton>
         </CommandBar>
         <ProgressRing Width="56" Height="56" x:Name="pr_Load" Grid.RowSpan="2"  IsActive="True" Visibility="Collapsed"></ProgressRing>

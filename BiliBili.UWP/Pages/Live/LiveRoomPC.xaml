@@ -7,13 +7,12 @@
     xmlns:danmu="using:NSDanmaku.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    >
+    mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="chat" x:Name="chat">
             <RichTextBlock TextWrapping="Wrap" Margin="4 0" LineHeight="24">
                 <Paragraph>
-                    <InlineUIContainer >
+                    <InlineUIContainer>
                         <StackPanel  Orientation="Horizontal" VerticalAlignment="Center" Padding="0 0 0 -4">
                             <Border Visibility="{Binding isAdmin}" BorderThickness="1" BorderBrush="DarkOrange" Background="DarkOrange" Margin="0 0 4 0" CornerRadius="2" Padding="2">
                                 <TextBlock FontSize="12" Foreground="White">房管</TextBlock>
@@ -27,8 +26,8 @@
                             <Border Visibility="{Binding hasMedal}" VerticalAlignment="Center" BorderThickness="1" BorderBrush="{Binding medal_color}" CornerRadius="2" Margin="0 0 4 0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Grid Background="{Binding medal_color}" Padding="2 0">
                                         <TextBlock FontSize="12" Foreground="White" Text="{Binding medal_name}"></TextBlock>
@@ -50,8 +49,8 @@
                 </Paragraph>
             </RichTextBlock>
         </DataTemplate>
-        <Flyout x:Name="fy" x:Key="fy_gift" >
-            <StackPanel >
+        <Flyout x:Name="fy" x:Key="fy_gift">
+            <StackPanel>
                 <Pivot Width="300" Height="300">
                     <PivotItem Margin="0">
                         <PivotItem.Header>
@@ -71,11 +70,9 @@
                                                 <TextBlock FontSize="12" Foreground="White" Text="{Binding corner_mark}"></TextBlock>
                                             </Border>
                                         </Grid>
-
                                     </DataTemplate>
                                 </GridView.ItemTemplate>
                             </GridView>
-
                         </Grid>
                     </PivotItem>
                     <PivotItem Margin="0">
@@ -96,30 +93,24 @@
                                                 <TextBlock FontSize="12" Foreground="White" Text="{Binding corner_mark}"></TextBlock>
                                             </Border>
                                         </Grid>
-
                                     </DataTemplate>
                                 </GridView.ItemTemplate>
-
                             </GridView>
                         </Grid>
-
                     </PivotItem>
                 </Pivot>
                 <TextBlock FontSize="14" Margin="10 0">金瓜子:<Run x:Name="txt_gold"></Run> 银瓜子:<Run  x:Name="txt_silver"></Run></TextBlock>
-
             </StackPanel>
-
         </Flyout>
-
     </Page.Resources>
     <Grid Background="{ThemeResource Bili-Background}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.7*"/>
-            <ColumnDefinition Width="0.3*" MaxWidth="320" x:Name="wide"/>
+            <ColumnDefinition Width="0.7*" />
+            <ColumnDefinition Width="0.3*" MaxWidth="320" x:Name="wide" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.36*"/>
-            <RowDefinition x:Name="height" Height="auto"/>
+            <RowDefinition Height="0.36*" />
+            <RowDefinition x:Name="height" Height="auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="medias">
             <vlc:MediaElement x:Name="media" Background="Black"  CurrentStateChanged="media_CurrentStateChanged" MediaFailed="media_MediaFailed" MediaEnded="media_MediaEnded"></vlc:MediaElement>
@@ -131,19 +122,18 @@
             </Grid>
             <Grid x:Name="controls">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid Height="48" Background="#4C000000">
                     <StackPanel Orientation="Horizontal">
                         <AppBarButton Icon="Back" Foreground="White" Width="48" Height="48" x:Name="btn_Back" Click="btn_Back_Click"></AppBarButton>
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Foreground="White" x:Name="txt_Title" VerticalAlignment="Center" Text="{Binding title}"></TextBlock>
-                            <TextBlock Foreground="Gray" VerticalAlignment="Center" FontSize="14"><Run Text="{Binding parent_area_name}" /> · <Run Text="{Binding area_name}"/></TextBlock>
+                            <TextBlock Foreground="Gray" VerticalAlignment="Center" FontSize="14"><Run Text="{Binding parent_area_name}" /> · <Run Text="{Binding area_name}" /></TextBlock>
                         </StackPanel>
                     </StackPanel>
-
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <ComboBox x:Name="cb_quality" SelectionChanged="cb_quality_SelectionChanged" VerticalAlignment="Center" Margin="4" BorderThickness="0" DisplayMemberPath="desc"></ComboBox>
@@ -161,12 +151,10 @@
                         <AppBarButton x:Name="btn_Pause" Click="btn_Pause_Click" Icon="Pause" Foreground="White" Width="48"></AppBarButton>
                         <AppBarButton x:Name="btn_Play" Click="btn_Play_Click"  Visibility="Collapsed" Icon="Play" Foreground="White" Width="48"></AppBarButton>
                         <AppBarButton x:Name="btn_Refresh" Click="btn_Refresh_Click" Icon="Refresh" Foreground="White" Width="48"></AppBarButton>
-
                     </StackPanel>
 
-
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                        <HyperlinkButton x:Name="btn_UnGetAward" Visibility="Collapsed" Click="btn_UnGetAward_Click" Width="48" Height="48" Foreground="White" >
+                        <HyperlinkButton x:Name="btn_UnGetAward" Visibility="Collapsed" Click="btn_UnGetAward_Click" Width="48" Height="48" Foreground="White">
                             <Grid>
                                 <Image Source="ms-appx:///Assets/LiveIcon/ic_live_precious_box_closed.png" Width="36" Height="36"></Image>
                                 <Border CornerRadius="4" Padding="2 0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="#66000000">
@@ -174,7 +162,7 @@
                                 </Border>
                             </Grid>
                         </HyperlinkButton>
-                        <HyperlinkButton x:Name="btn_CanGetAward" Visibility="Collapsed" Click="btn_CanGetAward_Click" Width="48" Height="48" Foreground="White" >
+                        <HyperlinkButton x:Name="btn_CanGetAward" Visibility="Collapsed" Click="btn_CanGetAward_Click" Width="48" Height="48" Foreground="White">
                             <Grid>
                                 <Image Source="ms-appx:///Assets/LiveIcon/ic_live_precious_box_open.png" Width="36" Height="36"></Image>
                                 <Border CornerRadius="4" Padding="2 0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="#66000000">
@@ -182,7 +170,7 @@
                                 </Border>
                             </Grid>
                         </HyperlinkButton>
-                        <AppBarButton ToolTipService.ToolTip="赠送礼物"  Flyout="{StaticResource fy_gift}" Width="48" Height="48" Foreground="White" >
+                        <AppBarButton ToolTipService.ToolTip="赠送礼物"  Flyout="{StaticResource fy_gift}" Width="48" Height="48" Foreground="White">
                             <FontIcon FontFamily="ms-appx:///Assets/logo.ttf#iconfont" Glyph="&#xe602;" />
                         </AppBarButton>
                         <AppBarButton ToolTipService.ToolTip="关闭弹幕"  x:Name="btn_CloseDanmu" Click="btn_CloseDanmu_Click" Width="48" Height="48" Foreground="White">
@@ -225,50 +213,45 @@
             </Grid>
         </Grid>
 
-
         <Grid x:Name="info" Grid.Column="1"  BorderThickness="1 0 0 0" BorderBrush="#33808080" Background="{ThemeResource Bili-Background}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid Padding="8"  BorderThickness="0 0 0 1" BorderBrush="#33808080">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <HyperlinkButton Padding="0" x:Name="btn_ShowUserData" Click="btn_ShowUserData_Click">
                     <Grid>
 
-                        <Ellipse Width="48" Height="48" >
+                        <Ellipse Width="48" Height="48">
                             <Ellipse.Fill>
-                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=UserInfo.face}"/>
+                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=UserInfo.face}" />
                             </Ellipse.Fill>
                         </Ellipse>
                         <Image Width="56"  Height="56" Source="{Binding Path=new_pendants.mobile_frame.value}"></Image>
                     </Grid>
-
                 </HyperlinkButton>
-
 
                 <Grid Grid.Column="1" Margin="8 0">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock VerticalAlignment="Center" Text="{Binding Path=UserInfo.uname}"></TextBlock>
                         <Border Margin="8 0" BorderThickness="1" BorderBrush="{Binding Path=UserInfo.lvColor}" CornerRadius="2" VerticalAlignment="Center" Padding="2 0">
-                            <TextBlock VerticalAlignment="Center" Foreground="{Binding Path=UserInfo.lvColor}" FontSize="12">UP<Run Text="{Binding Path=UserInfo.level}"/></TextBlock>
+                            <TextBlock VerticalAlignment="Center" Foreground="{Binding Path=UserInfo.lvColor}" FontSize="12">UP<Run Text="{Binding Path=UserInfo.level}" /></TextBlock>
                         </Border>
-
                     </StackPanel>
 
                     <TextBlock Grid.Row="1" FontSize="14" Foreground="Gray" VerticalAlignment="Center">
                         人气:<Run x:Name="txt_online"></Run>  粉丝:<Run Text="{Binding Attention}"></Run>
                     </TextBlock>
                 </Grid>
-
             </Grid>
             <Pivot Grid.Row="1" x:Name="pivot" SelectionChanged="pivot_SelectionChanged">
                 <PivotItem  Margin="0">
@@ -277,14 +260,14 @@
                     </PivotItem.Header>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <ListView x:Name="list_chat" ItemTemplate="{StaticResource chat}" SelectionMode="None" IsItemClickEnabled="False" >
+                        <ListView x:Name="list_chat" ItemTemplate="{StaticResource chat}" SelectionMode="None" IsItemClickEnabled="False">
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <ItemsStackPanel ItemsUpdatingScrollMode="KeepLastItemInView"/>
+                                    <ItemsStackPanel ItemsUpdatingScrollMode="KeepLastItemInView" />
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>
                             <ListView.ItemContainerStyle>
@@ -298,14 +281,13 @@
                         </ListView>
                         <Grid Grid.Row="1"  BorderThickness="0 1 0 0" BorderBrush="#33808080">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition  Width="auto"/>
-                                <ColumnDefinition  Width="auto"/>
-                                <ColumnDefinition/>
+                                <ColumnDefinition  Width="auto" />
+                                <ColumnDefinition  Width="auto" />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Button Flyout="{StaticResource fy_gift}" Width="48" Height="48" Padding="0" Background="#00000000" Foreground="{ThemeResource Bili-Highlight-TextColor}">
 
                                 <FontIcon  FontFamily="ms-appx:///Assets/logo.ttf#iconfont" Glyph="&#xe602;" />
-
                             </Button>
                             <Button Grid.Column="1" Width="48" Height="48" Padding="0" Background="#00000000" Foreground="{ThemeResource Bili-Highlight-TextColor}">
 
@@ -314,13 +296,11 @@
                                 <Button.Flyout>
                                     <Flyout x:Name="flyout_hotword">
                                         <ListView x:Name="list_hot" ItemClick="list_hot_ItemClick" MaxHeight="400" ItemsSource="{Binding hot_words}" SelectionMode="None" IsItemClickEnabled="True">
-
                                         </ListView>
                                     </Flyout>
                                 </Button.Flyout>
                             </Button>
                             <AutoSuggestBox x:Name="txt_message"  QueryIcon="Send"   Grid.Column="2" VerticalAlignment="Center" Margin="8 0" BorderThickness="0" QuerySubmitted="AutoSuggestBox_QuerySubmitted"></AutoSuggestBox>
-
                         </Grid>
                     </Grid>
                 </PivotItem>
@@ -331,24 +311,23 @@
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel>
                             <Grid HorizontalAlignment="Center">
-                                <Ellipse Width="56" Height="56" >
+                                <Ellipse Width="56" Height="56">
                                     <Ellipse.Fill>
-                                        <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=UserInfo.face}"/>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Path=UserInfo.face}" />
                                     </Ellipse.Fill>
                                 </Ellipse>
                                 <Image Width="24" Height="24" HorizontalAlignment="Right" VerticalAlignment="Bottom" Source="{Binding Path=UserInfo.verify}"></Image>
                             </Grid>
-
 
                             <TextBlock TextAlignment="Center" Text="{Binding Path=UserInfo.uname}"></TextBlock>
                             <TextBlock TextAlignment="Center" FontSize="12" Foreground="Gray" Text="{Binding Path=UserInfo.desc}"></TextBlock>
 
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <HyperlinkButton Margin="4 0" Click="btn_User_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" x:Name="btn_User" >
+                                <HyperlinkButton Margin="4 0" Click="btn_User_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" x:Name="btn_User">
                                     <Border BorderThickness="1" BorderBrush="{ThemeResource Bili-Highlight-TextColor}" CornerRadius="2" VerticalAlignment="Center" Padding="8 4">
                                         <TextBlock VerticalAlignment="Center" Foreground="{ThemeResource Bili-Highlight-TextColor}" FontSize="14" TextAlignment="Center">个人空间</TextBlock>
                                     </Border>
@@ -364,7 +343,6 @@
                                         <TextBlock VerticalAlignment="Center" Foreground="{ThemeResource Bili-ForeColor}" FontSize="14" TextAlignment="Center">取消关注</TextBlock>
                                     </Border>
                                 </HyperlinkButton>
-
                             </Grid>
                             <TextBlock Margin="4">标签</TextBlock>
                             <TextBlock Margin="4" Foreground="Gray" Text="{Binding tags}"></TextBlock>
@@ -380,7 +358,6 @@
                                                 <TextBlock FontSize="10" HorizontalAlignment="Center" Foreground="Gray" TextTrimming="CharacterEllipsis" Text="{Binding activity_date}"></TextBlock>
                                             </StackPanel>
                                         </HyperlinkButton>
-
                                     </DataTemplate>
                                 </GridView.ItemTemplate>
                                 <GridView.ItemContainerStyle>
@@ -393,26 +370,22 @@
                                     <ItemsPanelTemplate>
                                         <StackPanel Orientation="Horizontal"></StackPanel>
                                     </ItemsPanelTemplate>
-
                                 </GridView.ItemsPanel>
                             </GridView>
                             <TextBlock Margin="4">简介</TextBlock>
                             <ContentControl  Grid.Row="2" Grid.Column="1"  Content="{Binding Path=htmldesc}">
-
                             </ContentControl>
-
                         </StackPanel>
                     </ScrollViewer>
-
                 </PivotItem>
-                <PivotItem >
+                <PivotItem>
                     <PivotItem.Header>
                         <TextBlock FontSize="18">贡献榜</TextBlock>
                     </PivotItem.Header>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
                         <ComboBox x:Name="cb_rank_cate" SelectionChanged="cb_rank_cate_SelectionChanged" HorizontalAlignment="Stretch" BorderThickness="1" DisplayMemberPath="desc"></ComboBox>
                         <ListView x:Name="list_Rank" Grid.Row="1" Margin="0 8" SelectionMode="None" IsItemClickEnabled="False">
@@ -420,16 +393,16 @@
                                 <DataTemplate>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Orientation="Horizontal">
                                             <Image Width="24" Height="24" Source="{Binding rank_img}"></Image>
-                                            <Border Margin="8 0 0 0" Visibility="{Binding show_medal}" BorderBrush="{Binding medal_color}" BorderThickness="1" CornerRadius="4" VerticalAlignment="Center" >
+                                            <Border Margin="8 0 0 0" Visibility="{Binding show_medal}" BorderBrush="{Binding medal_color}" BorderThickness="1" CornerRadius="4" VerticalAlignment="Center">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
                                                     </Grid.ColumnDefinitions>
                                                     <Grid Background="{Binding medal_color}" Padding="2 2">
                                                         <TextBlock FontSize="12" Foreground="White" Text="{Binding medal_name}"></TextBlock>
@@ -457,9 +430,8 @@
                         </ListView>
                         <ProgressRing x:Name="pr_RankLoad" Grid.RowSpan="2" Width="56" Height="56" HorizontalAlignment="Center" VerticalAlignment="Center"></ProgressRing>
                     </Grid>
-
                 </PivotItem>
-                <PivotItem >
+                <PivotItem>
                     <PivotItem.Header>
                         <TextBlock FontSize="18">舰队</TextBlock>
                     </PivotItem.Header>
@@ -484,7 +456,6 @@
                         </ListView>
                         <TextBlock x:Name="noGuardRank" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray">好像没有舰队啊</TextBlock>
                     </Grid>
-
                 </PivotItem>
             </Pivot>
         </Grid>
@@ -505,8 +476,8 @@
 
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
                     <Button HorizontalAlignment="Stretch" Margin="0 0 5 0" BorderBrush="{ThemeResource Bili-ForeColor}" Foreground="{ThemeResource Bili-ForeColor}" Background="#00000000" x:Name="btn_cnacelSend_Buy" Click="btn_cnacelSend_Buy_Click">取消</Button>
@@ -553,7 +524,6 @@
                     <ToggleSwitch x:Name="sw_receiveSysMsg" Header="收取系统公告" Toggled="sw_receiveSysMsg_Toggled"></ToggleSwitch>
                 </StackPanel>
             </ScrollViewer>
-
         </ContentDialog>
     </Grid>
 </Page>
