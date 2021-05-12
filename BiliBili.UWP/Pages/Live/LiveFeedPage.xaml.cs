@@ -73,6 +73,7 @@ namespace BiliBili.UWP.Pages
             _loadend = false;
             list_Live.ItemsSource = null;
             list_UnLive.ItemsSource = null;
+            btn_LoadMore.Visibility = Visibility.Visible;
             await LoadLive();
             LoadUnLive();
         }
@@ -108,6 +109,8 @@ namespace BiliBili.UWP.Pages
                 if (data.data == null || data.data.Count == 0)
                 {
                     _loadend = true;
+                    pr_Load.Visibility = Visibility.Collapsed;
+                    btn_LoadMore.Visibility = Visibility.Collapsed;
                     Utils.ShowMessageToast("加载完了");
                     return;
                 }
